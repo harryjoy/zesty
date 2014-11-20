@@ -9,16 +9,16 @@ var errors = require('./components/errors');
 module.exports = function(app) {
 
   // Insert routes below
+  app.use('/api/shippers', require('./api/shipper'));
+  app.use('/api/suppilers', require('./api/suppiler'));
+  app.use('/api/categories', require('./api/category'));
   app.use('/api/profiles', require('./api/profile'));
   app.use('/api/favorites', require('./api/favorite'));
   app.use('/api/customers', require('./api/customer'));
-  app.use('/api/item_details', require('./api/item_details'));
-  app.use('/api/payment_history', require('./api/payment_history'));
   app.use('/api/orders', require('./api/order'));
   app.use('/api/reviewss', require('./api/reviews'));
   app.use('/api/carts', require('./api/cart'));
   app.use('/api/items', require('./api/item'));
-  app.use('/api/things', require('./api/thing'));
   app.use('/api/users', require('./api/user'));
 
   app.use('/auth', require('./auth'));

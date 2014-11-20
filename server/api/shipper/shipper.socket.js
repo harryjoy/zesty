@@ -4,21 +4,21 @@
 
 'use strict';
 
-var PaymentHistory = require('./payment_history.model');
+var Shipper = require('./shipper.model');
 
 exports.register = function(socket) {
-  PaymentHistory.schema.post('save', function (doc) {
+  Shipper.schema.post('save', function (doc) {
     onSave(socket, doc);
   });
-  PaymentHistory.schema.post('remove', function (doc) {
+  Shipper.schema.post('remove', function (doc) {
     onRemove(socket, doc);
   });
 }
 
 function onSave(socket, doc, cb) {
-  socket.emit('payment_history:save', doc);
+  socket.emit('shipper:save', doc);
 }
 
 function onRemove(socket, doc, cb) {
-  socket.emit('payment_history:remove', doc);
+  socket.emit('shipper:remove', doc);
 }

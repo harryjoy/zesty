@@ -5,19 +5,10 @@
 	<div class="thumbnail">
 	  <div class="row">
 	    <div class="col-sm-6">
-	      <img class="img-responsive" src="http://placehold.it/750x400" alt="" />
+	      <img class="img-responsive" src="{{itemDetails.mainImage}}" alt="" />
 	      <div class="thumbnails row">
-	        <div class="col-xs-3">
-	          <a href="#"><img src="http://placehold.it/750x600" alt="" class="img-thumbnail img-responsive" /></a>
-	        </div>
-	        <div class="col-xs-3">
-	          <a href="#"><img src="http://placehold.it/750x600" alt="" class="img-thumbnail img-responsive" /></a>
-	        </div>
-	        <div class="col-xs-3">
-	          <a href="#"><img src="http://placehold.it/750x600" alt="" class="img-thumbnail img-responsive" /></a>
-	        </div>
-	        <div class="col-xs-3">
-	          <a href="#"><img src="http://placehold.it/750x600" alt="" class="img-thumbnail img-responsive" /></a>
+	        <div class="col-xs-3" ng-repeat="image in itemDetails.images">
+	          <a href="#"><img src="{{image}}" alt="" class="img-thumbnail img-responsive" /></a>
 	        </div>
 	      </div>
 	    </div>

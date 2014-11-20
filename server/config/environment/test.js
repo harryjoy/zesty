@@ -5,6 +5,6 @@
 module.exports = {
   // MongoDB connection options
   mongo: {
-    uri: 'mongodb://localhost/full-test'
+    uri: 'mongodb://localhost/zesty-test'
   }
 };

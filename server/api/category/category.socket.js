@@ -4,21 +4,21 @@
 
 'use strict';
 
-var ItemDetails = require('./item_details.model');
+var Category = require('./category.model');
 
 exports.register = function(socket) {
-  ItemDetails.schema.post('save', function (doc) {
+  Category.schema.post('save', function (doc) {
     onSave(socket, doc);
   });
-  ItemDetails.schema.post('remove', function (doc) {
+  Category.schema.post('remove', function (doc) {
     onRemove(socket, doc);
   });
 }
 
 function onSave(socket, doc, cb) {
-  socket.emit('item_details:save', doc);
+  socket.emit('category:save', doc);
 }
 
 function onRemove(socket, doc, cb) {
-  socket.emit('item_details:remove', doc);
+  socket.emit('category:remove', doc);
 }

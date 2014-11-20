@@ -5,28 +5,112 @@
 
 'use strict';
 
-var Thing = require('../api/thing/thing.model');
+var Category = require('../api/category/category.model');
+var Item = require('../api/item/item.model');
 var User = require('../api/user/user.model');
 
-Thing.find({}).remove(function() {
-  Thing.create({
-    name : 'Development Tools',
-    info : 'Integration with popular tools such as Bower, Grunt, Karma, Mocha, JSHint, Node Inspector, Livereload, Protractor, Jade, Stylus, Sass, CoffeeScript, and Less.'
+Category.find({}).remove(function() {
+  Category.create({
+    name: 'Men',
+    info: 'Category for men items.',
+    active: true
   }, {
-    name : 'Server and Client integration',
-    info : 'Built with a powerful and fun stack: MongoDB, Express, AngularJS, and Node.'
-  }, {
-    name : 'Smart Build System',
-    info : 'Build system ignores `spec` files, allowing you to keep tests alongside code. Automatic injection of scripts and styles into your index.html'
-  },  {
-    name : 'Modular Structure',
-    info : 'Best practice client and server structures allow for more code reusability and maximum scalability'
-  },  {
-    name : 'Optimized Build',
-    info : 'Build process packs up your templates as a single JavaScript payload, minifies your scripts/css/images, and rewrites asset names for caching.'
-  },{
-    name : 'Deployment Ready',
-    info : 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators'
+    name: 'Women',
+    info: 'Category for women items.',
+    active: true
+  });
+});
+
+Item.find({}).remove(function() {
+  Category.find({ name: 'Men' }).exec(function(err, category){
+    Item.create({
+      title : 'Item 1',
+      price : '649',
+      currency: 'Rs',
+      categories: [{
+        _id: category[0]._id,
+        name: category[0].name
+      }],
+      active: true,
+      description : 'This item is very good and can give you a good return.',
+      mainImage : 'http://placehold.it/750x400',
+      images: ['http://placehold.it/750x400', 'http://placehold.it/750x410',
+                    'http://placehold.it/750x420', 'http://placehold.it/750x430'],
+      summary : 'This item is very good and can give you a good return. This is the summary of that item so it needs to be long and so I am adding radom stuff in it. This summary actually does not have any meaning so dont spend your time in reading it.',
+    }, {
+      title : 'Item 0',
+      price : '949',
+      currency: 'Rs',
+      active: false,
+      categories: [{
+        _id: category[0]._id,
+        name: category[0].name
+      }],
+      description : 'This item is very good and can give you a good return.',
+      mainImage : 'http://placehold.it/750x400',
+      images: ['http://placehold.it/750x400', 'http://placehold.it/750x410',
+                    'http://placehold.it/750x420', 'http://placehold.it/750x430'],
+      summary : 'This item is very good and can give you a good return. This is the summary of that item so it needs to be long and so I am adding radom stuff in it. This summary actually does not have any meaning so dont spend your time in reading it.',
+    });
+  });
+  Category.find({ name: 'Men' }).exec(function(err, category){
+    Item.create({
+      title : 'Item 2',
+      price : '249',
+      currency: 'Rs',
+      active: true,
+      categories: [{
+        _id: category[0]._id,
+        name: category[0].name
+      }],
+      description : 'This item is very good and can give you a good return.',
+      mainImage : 'http://placehold.it/750x400',
+      images: ['http://placehold.it/750x400', 'http://placehold.it/750x410',
+                    'http://placehold.it/750x420', 'http://placehold.it/750x430'],
+      summary : 'This item is very good and can give you a good return. This is the summary of that item so it needs to be long and so I am adding radom stuff in it. This summary actually does not have any meaning so dont spend your time in reading it.',
+    },  {
+      title : 'Item 3',
+      price : '349',
+      active: true,
+      categories: [{
+        _id: category[0]._id,
+        name: category[0].name
+      }],
+      currency: 'Rs',
+      description : 'This item is very good and can give you a good return.',
+      mainImage : 'http://placehold.it/750x400',
+      images: ['http://placehold.it/750x400', 'http://placehold.it/750x410',
+                    'http://placehold.it/750x420', 'http://placehold.it/750x430'],
+      summary : 'This item is very good and can give you a good return. This is the summary of that item so it needs to be long and so I am adding radom stuff in it. This summary actually does not have any meaning so dont spend your time in reading it.',
+    },  {
+      title : 'Item 4',
+      price : '449',
+      active: true,
+      categories: [{
+        _id: category[0]._id,
+        name: category[0].name
+      }],
+      currency: 'Rs',
+      description : 'This item is very good and can give you a good return.',
+      mainImage : 'http://placehold.it/750x400',
+      images: ['http://placehold.it/750x400', 'http://placehold.it/750x410',
+                    'http://placehold.it/750x420', 'http://placehold.it/750x430'],
+      summary : 'This item is very good and can give you a good return. This is the summary of that item so it needs to be long and so I am adding radom stuff in it. This summary actually does not have any meaning so dont spend your time in reading it.',
+    },{
+      title : 'Item 5',
+      price : '549',
+      active: true,
+      categories: [{
+        _id: category[0]._id,
+        name: category[0].name
+      }],
+      currency: 'Rs',
+      description : 'This item is very good and can give you a good return.',
+      mainImage : 'http://placehold.it/750x400',
+      images: ['http://placehold.it/750x400', 'http://placehold.it/750x410',
+                    'http://placehold.it/750x420', 'http://placehold.it/750x430'],
+      summary : 'This item is very good and can give you a good return. This is the summary of that item so it needs to be long and so I am adding radom stuff in it. This summary actually does not have any meaning so dont spend your time in reading it.',
+    });
   });
 });
 

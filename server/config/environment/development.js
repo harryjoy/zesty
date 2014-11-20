@@ -5,7 +5,7 @@
 module.exports = {
   // MongoDB connection options
   mongo: {
-    uri: 'mongodb://localhost/full-dev'
+    uri: 'mongodb://localhost/zesty-dev'
   },
 
   seedDB: true

@@ -46,6 +46,9 @@ angular.module('fullApp')
                        'Airtel is very good brand for mobile operators.' +
                        'Airtel is very good brand for mobile operators.' +
                        'Airtel is very good brand for mobile operators.',
+        'mainImage': 'http://placehold.it/750x400',
+        'images': ['http://placehold.it/750x400', 'http://placehold.it/750x410',
+                  'http://placehold.it/750x420', 'http://placehold.it/750x430'],
         'reviews': [{
             'name': 'Harsh Raval',
             'review': 'This is really good product.',
