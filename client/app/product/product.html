@@ -1,0 +1,127 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<!-- Main content -->
+<section class="content">
+	<h1>{{itemDetails.title}}</h1>
+	<div class="thumbnail">
+	  <div class="row">
+	    <div class="col-sm-6">
+	      <img class="img-responsive" src="http://placehold.it/750x400" alt="" />
+	      <div class="thumbnails row">
+	        <div class="col-xs-3">
+	          <a href="#"><img src="http://placehold.it/750x600" alt="" class="img-thumbnail img-responsive" /></a>
+	        </div>
+	        <div class="col-xs-3">
+	          <a href="#"><img src="http://placehold.it/750x600" alt="" class="img-thumbnail img-responsive" /></a>
+	        </div>
+	        <div class="col-xs-3">
+	          <a href="#"><img src="http://placehold.it/750x600" alt="" class="img-thumbnail img-responsive" /></a>
+	        </div>
+	        <div class="col-xs-3">
+	          <a href="#"><img src="http://placehold.it/750x600" alt="" class="img-thumbnail img-responsive" /></a>
+	        </div>
+	      </div>
+	    </div>
+		<div class="col-sm-6">
+		  <h4 class="pull-right">{{itemDetails.price}}</h4>
+		  <h4><a href="#">{{itemDetails.title}}</a></h4>
+	      <p>{{itemDetails.description}}</p>
+		  <form role="form">
+	        <div class="number form-group">
+	          <label class="control-label" for="number">Number</label>
+	          <input type="number" class="form-control input-sm" id="number" />
+	        </div>
+
+	        <div class="form-group">
+	          <label>Color</label>
+	          <select id="color">
+	            <option name="color">Blue</option>
+	            <option name="color">Green</option>
+	            <option name="color">Red</option>
+	            <option name="color">Yellow</option>
+	          </select>
+	        </div>
+
+	        <div class="form-group">
+	          <label>Size</label>
+	          <div class="btn-group">
+	            <button type="button" class="btn btn-default">XS</button>
+	            <button type="button" class="btn btn-default">S</button>
+	            <button type="button" class="btn btn-default">M</button>
+	            <button type="button" class="btn btn-default">L</button>
+	            <button type="button" class="btn btn-default">XL</button>
+	          </div>
+	        </div>
+
+	        <div class="form-group">
+	          <button type="submit" class="btn btn-default">Contact Seller</button>
+	          <button type="submit" class="btn btn-success">Add to Cart</button>
+	        </div>
+	      </form>
+	</div>
+
+	</div>
+	<div class="description">
+	    {{itemDetails.summary}}
+	  </div>
+	  <div class="ratings">
+	    <p class="pull-right">{{itemDetails.reviewsCount}} reviews</p>
+	    <p>
+	      <span class="glyphicon glyphicon-star"></span>
+	      <span class="glyphicon glyphicon-star"></span>
+	      <span class="glyphicon glyphicon-star"></span>
+	      <span class="glyphicon glyphicon-star"></span>
+	      <span class="glyphicon glyphicon-star-empty"></span>
+	      4.0 stars
+	    </p>
+	  </div>
+	</div>
+
+	<div class="well">
+
+	  <div class="text-right">
+	    <a class="btn btn-success">Leave a Review</a>
+	  </div>
+	</div>
+	<div class="row">
+	    <div class="col-md-12" ng-repeat="review in itemDetails.reviews">
+	      <span class="glyphicon glyphicon-star"></span>
+	      <span class="glyphicon glyphicon-star"></span>
+	      <span class="glyphicon glyphicon-star"></span>
+	      <span class="glyphicon glyphicon-star-empty"></span>
+	      <span class="glyphicon glyphicon-star-empty"></span>
+	      {{review.name}}
+	      <span class="pull-right">{{review.time}}</span>
+	      <p>From <em>United States</em></p>
+	      <p>{{review.review}}</p>
+	    </div>
+	  </div>
+
+	  <br><hr><hr>
+	  <h2>Related Products</h2>
+	  <div class="row">
+		<div ng-repeat="item in items" class="col-sm-4 col-md-3">
+            <div class="thumbnail">
+              <img src="http://placehold.it/750x500" alt="">
+              <div class="add-to-cart">
+                <a href="{{item.link}}" class="glyphicon glyphicon-plus-sign" data-toggle="tooltip" data-placement="top" title="Add to cart"></a>
+              </div>
+              <div class="caption">
+                <h4 class="pull-right">{{item.price}}</h4>
+                <h4><a href="product.html">{{item.title}}</a>
+                </h4>
+                <p>{{item.description}}</p>
+                <div class="ratings">
+                  <p class="pull-right"><a href="product#comments">{{item.reviews}} reviews</a></p>
+                  <p>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                  </p>
+                </div>
+              </div>
+            </div>
+        </div>	  
+	</div>
+</section>

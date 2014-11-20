@@ -1,0 +1,57 @@
+// Progress Bars
+// ====================
+
+/* size variation */
+.progress.sm {
+    height: $progress-bar-sm-height;
+}
+.progress.xs {
+    height: $progress-bar-xs-height;
+}
+
+/* Vertical bars */
+.progress.vertical {
+    position: relative;
+    width: $progress-bar-vertical-width;
+    height: $progress-bar-vertical-height;
+    display: inline-block;
+    margin-right: 10px;
+
+    > .progress-bar {
+        width: $hundred-percent !important;  
+        position: absolute;
+        bottom: $zero;
+    }
+
+    //Sizes
+    &.sm {
+        width: $progress-bar-sm-width;
+    }
+    &.xs {
+        width: $progress-bar-xs-width;
+    }
+}
+
+/* Remove margins from progress bars when put in a table */
+.table {
+    tr > td .progress {
+        margin: $zero;
+    }
+}
+
+// Variations -- Uses Mixins from Bootstrap to generate.
+.progress-bar-light-blue, .progress-bar-primary {
+    @include progress-bar-variant($progress-bar-bg);
+}
+.progress-bar-green, .progress-bar-success {
+    @include progress-bar-variant($progress-bar-success-bg);
+}
+.progress-bar-aqua, .progress-bar-info {
+    @include progress-bar-variant($progress-bar-info-bg);
+}
+.progress-bar-yellow, .progress-bar-warning {
+    @include progress-bar-variant($progress-bar-warning-bg);
+}
+.progress-bar-red, .progress-bar-danger {
+    @include progress-bar-variant($progress-bar-danger-bg);
+}

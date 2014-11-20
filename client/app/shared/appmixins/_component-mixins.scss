@@ -1,0 +1,14 @@
+// MIXINS for specific components
+// ==============
+
+// Solid box header variant
+@mixin box-solid-variant($color) {
+    > .box-header {
+        color: #fff;
+        background: $color;        
+        background-color: $color;   
+        a {
+            color: #444;
+        }
+    }
+}

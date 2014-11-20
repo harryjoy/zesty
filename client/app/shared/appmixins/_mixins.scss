@@ -1,0 +1,100 @@
+// MIXINS : Generic mixins
+// ==============
+
+// Border radius
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+       -o-border-radius: $radius;
+          border-radius: $radius;
+}
+
+// Border radius : each corner separately
+@mixin border-radius-sep($top-left, $top-right, $bottom-left, $bottom-right) {
+    -webkit-border-top-left-radius: $top-left;
+    -webkit-border-top-right-radius: $top-right;
+    -webkit-border-bottom-right-radius: $bottom-right;
+    -webkit-border-bottom-left-radius: $bottom-left;
+
+    -moz-border-radius-topleft: $top-left;
+    -moz-border-radius-topright: $top-right;
+    -moz-border-radius-bottomright: $bottom-right;
+    -moz-border-radius-bottomleft: $bottom-left;
+
+    -ms-border-top-left-radius: $top-left;
+    -ms-border-top-right-radius: $top-right;
+    -ms-border-bottom-right-radius: $bottom-right;
+    -ms-border-bottom-left-radius: $bottom-left;
+
+    -o-border-top-left-radius: $top-left;
+    -o-border-top-right-radius: $top-right;
+    -o-border-bottom-right-radius: $bottom-right;
+    -o-border-bottom-left-radius: $bottom-left;
+
+    border-top-left-radius: $top-left;
+    border-top-right-radius: $top-right;
+    border-bottom-right-radius: $bottom-right;
+    border-bottom-left-radius: $bottom-left;
+}
+
+// Clearfix patch
+@mixin clearfix {
+  display: block;
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+  * html & { height: 1px }
+}
+
+// Box-Shadow
+@mixin box-shadow($shadows...) {
+  -webkit-box-shadow: $shadows;
+     -moz-box-shadow: $shadows;
+      -ms-box-shadow: $shadows;
+       -o-box-shadow: $shadows;
+          box-shadow: $shadows;
+}
+
+//Transform function that rotates elements
+@mixin transform($degree) {
+  -webkit-transform:rotate($degree); /* Safari and Chrome */
+     -moz-transform:rotate($degree); /* FF */
+      -ms-transform:rotate($degree); /* IE 9 */
+       -o-transform:rotate($degree); /* opera */
+          transform:rotate($degree);
+}
+
+// Animations
+@mixin animation($animation) {
+    -webkit-animation: $animation;
+    animation: $animation;
+}
+
+// Transitions
+@mixin transitions($trans...) {
+  -webkit-transition: $trans;
+     -moz-transition: $trans;
+       -o-transition: $trans;
+          transition: $trans;
+}
+
+// Flex box
+@mixin flexbox() {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+@mixin flex($values) {
+  -webkit-box-flex: $values;
+  -moz-box-flex:  $values;
+  -webkit-flex:  $values;
+  -ms-flex:  $values;
+  flex:  $values;
+}
