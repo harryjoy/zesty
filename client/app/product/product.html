@@ -92,13 +92,13 @@
 	  <div class="row">
 		<div ng-repeat="item in items" class="col-sm-4 col-md-3">
             <div class="thumbnail">
-              <img src="http://placehold.it/750x500" alt="">
+              <img src="{{item.mainImage}}" alt="">
               <div class="add-to-cart">
                 <a href="{{item.link}}" class="glyphicon glyphicon-plus-sign" data-toggle="tooltip" data-placement="top" title="Add to cart"></a>
               </div>
               <div class="caption">
                 <h4 class="pull-right">{{item.price}}</h4>
-                <h4><a href="product.html">{{item.title}}</a>
+                <h4><a href="{{item.link}}">{{item.title}}</a>
                 </h4>
                 <p>{{item.description}}</p>
                 <div class="ratings">
@@ -109,6 +109,10 @@
                     <span class="glyphicon glyphicon-star"></span>
                     <span class="glyphicon glyphicon-star"></span>
                     <span class="glyphicon glyphicon-star"></span>
+                  </p>
+                  <p>
+                    <span class="glyphicon glyphicon-tags"></span>
+                    <span ng-repeat="category in item.categories"><a href="/category/{{category._id}}">{{category.name}}</a></span>
                   </p>
                 </div>
               </div>

@@ -18,6 +18,8 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/paymentMethods/paymentMethods.socket').register(socket);
+  require('../api/payment/payment.socket').register(socket);
   require('../api/shipper/shipper.socket').register(socket);
   require('../api/suppiler/suppiler.socket').register(socket);
   require('../api/category/category.socket').register(socket);

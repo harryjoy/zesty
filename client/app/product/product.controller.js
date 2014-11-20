@@ -1,54 +1,35 @@
 'use strict';
 
 angular.module('fullApp')
-  .controller('ProductCtrl', function ($scope) {
-    $scope.items = [{
-        'link': '#',
-        'title': 'Airtel 3G',
-        'price': 'Rs. 449',
-        'reviews': 5,
-        'description': 'This is product description for Airtel.' +
-                       'Airtel is very good brand for mobile operators.'
-      }, {
-        'link': '#',
-        'title': 'Vodafone 3G',
-        'price': 'Rs. 649',
-        'reviews': 50,
-        'description': 'This is product description for Vodafone.' +
-                       'Vodafone is very good brand for mobile operators.'
-      }, {
-        'link': '#',
-        'title': 'Airtel 3G',
-        'price': 'Rs. 449',
-        'reviews': 5,
-        'description': 'This is product description for Airtel.' +
-                       'Airtel is very good brand for mobile operators.'
-      }, {
-        'link': '#',
-        'title': 'Vodafone 3G',
-        'price': 'Rs. 649',
-        'reviews': 50,
-        'description': 'This is product description for Vodafone.' +
-                       'Vodafone is very good brand for mobile operators.'
-      }];
-    $scope.itemDetails = {
-        'link': '#',
-        'title': 'Airtel 3G',
-        'price': 'Rs. 449',
-        'reviewsCount': 5,
-        'description': 'This is product description for Airtel.' +
-                       'Airtel is very good brand for mobile operators.',
-        'summary': 'This is product description for Airtel.' +
-                       'Airtel is very good brand for mobile operators.' +
-                       'Airtel is very good brand for mobile operators.' +
-                       'Airtel is very good brand for mobile operators.' +
-                       'Airtel is very good brand for mobile operators.' +
-                       'Airtel is very good brand for mobile operators.' +
-                       'Airtel is very good brand for mobile operators.' +
-                       'Airtel is very good brand for mobile operators.',
-        'mainImage': 'http://placehold.it/750x400',
-        'images': ['http://placehold.it/750x400', 'http://placehold.it/750x410',
-                  'http://placehold.it/750x420', 'http://placehold.it/750x430'],
+  .controller('ProductCtrl', ['$scope', '$stateParams', 'DashboardServ', 'ProductServ',
+    function ($scope, $stateParams, DashboardServ, ProductServ) {
+    var productId = $stateParams.id;
+
+    $scope.items = [];
+    DashboardServ.items().then(function(items) {
+      $.each(items, function (key, item) {
+        $scope.items.push({
+          'link': '/product/' + item._id,
+          'title': item.title,
+          'price': item.currency + ' ' + item.price,
+          'reviews': item.reviews ? item.reviews : 0,
+          'description': item.description,
+          'categories': item.categories,
+          'mainImage': item.mainImage
+        });
+      });
+    });
+
+    ProductServ.details(productId).then(function (product) {
+      $scope.itemDetails = {
+        'link': '/product/' + product._id,
+        'title': product.title,
+        'price': product.currency + ' ' + product.price,
+        'reviewsCount': product.reviews ? product.reviews : 0,
+        'description': product.description,
+        'summary': product.summary,
+        'mainImage': product.mainImage,
+        'images': product.images,
         'reviews': [{
             'name': 'Harsh Raval',
             'review': 'This is really good product.',
@@ -69,4 +50,5 @@ angular.module('fullApp')
             'star': 1
           }]
         };
-  });
+    });
+  }]);

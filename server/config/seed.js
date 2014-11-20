@@ -53,7 +53,7 @@ Item.find({}).remove(function() {
       summary : 'This item is very good and can give you a good return. This is the summary of that item so it needs to be long and so I am adding radom stuff in it. This summary actually does not have any meaning so dont spend your time in reading it.',
     });
   });
-  Category.find({ name: 'Men' }).exec(function(err, category){
+  Category.find({ name: 'Women' }).exec(function(err, category){
     Item.create({
       title : 'Item 2',
       price : '249',

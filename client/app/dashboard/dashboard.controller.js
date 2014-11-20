@@ -1,71 +1,19 @@
 'use strict';
 
 angular.module('fullApp')
-  .controller('DashboardCtrl', function ($scope) {
-    $scope.items = [{
-        'link': '/product',
-        'title': 'Airtel 3G',
-        'price': 'Rs. 449',
-        'reviews': 5,
-        'description': 'This is product description for Airtel.' +
-                       'Airtel is very good brand for mobile operators.'
-      }, {
-        'link': '/product',
-        'title': 'Vodafone 3G',
-        'price': 'Rs. 649',
-        'reviews': 50,
-        'description': 'This is product description for Vodafone.' +
-                       'Vodafone is very good brand for mobile operators.'
-      }];
-    $scope.itemsDeals = [{
-        'link': '/product',
-        'title': 'Airtel 3G',
-        'price': 'Rs. 449',
-        'reviews': 5,
-        'description': 'This is product description for Airtel.' +
-                       'Airtel is very good brand for mobile operators.'
-      }, {
-        'link': '/product',
-        'title': 'Vodafone 3G',
-        'price': 'Rs. 649',
-        'reviews': 50,
-        'description': 'This is product description for Vodafone.' +
-                       'Vodafone is very good brand for mobile operators.'
-      }, {
-        'link': '/product',
-        'title': 'Airtel 3G',
-        'price': 'Rs. 449',
-        'reviews': 5,
-        'description': 'This is product description for Airtel.' +
-                       'Airtel is very good brand for mobile operators.'
-      }, {
-        'link': '/product',
-        'title': 'Vodafone 3G',
-        'price': 'Rs. 649',
-        'reviews': 50,
-        'description': 'This is product description for Vodafone.' +
-                       'Vodafone is very good brand for mobile operators.'
-      }];
-    $scope.itemsHot = [{
-        'link': '/product',
-        'title': 'Airtel 3G',
-        'price': 'Rs. 449',
-        'reviews': 5,
-        'description': 'This is product description for Airtel.' +
-                       'Airtel is very good brand for mobile operators.'
-      }, {
-        'link': '/product',
-        'title': 'Vodafone 3G',
-        'price': 'Rs. 649',
-        'reviews': 50,
-        'description': 'This is product description for Vodafone.' +
-                       'Vodafone is very good brand for mobile operators.'
-      }, {
-        'link': '/product',
-        'title': 'Vodafone 3G',
-        'price': 'Rs. 649',
-        'reviews': 50,
-        'description': 'This is product description for Vodafone.' +
-                       'Vodafone is very good brand for mobile operators.'
-      }];
-  });
+  .controller('DashboardCtrl', ['$scope', 'DashboardServ', function ($scope, DashboardServ) {
+    $scope.items = [];
+    DashboardServ.items().then(function(items) {
+      $.each(items, function (key, item) {
+        $scope.items.push({
+          'link': '/product/' + item._id,
+          'title': item.title,
+          'price': item.currency + ' ' + item.price,
+          'reviews': item.reviews ? item.reviews : 0,
+          'description': item.description,
+          'categories': item.categories,
+          'mainImage': item.mainImage
+        });
+      });
+    });
+  }]);
