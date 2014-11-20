@@ -18,8 +18,8 @@
 	      <p>{{itemDetails.description}}</p>
 		  <form role="form">
 	        <div class="number form-group">
-	          <label class="control-label" for="number">Number</label>
-	          <input type="number" class="form-control input-sm" id="number" />
+	          <label class="control-label" for="number">Quantity</label>
+	          <input type="number" class="form-control input-sm" id="number" value="1" />
 	        </div>
 
 	        <div class="form-group">
@@ -57,12 +57,8 @@
 	  <div class="ratings">
 	    <p class="pull-right">{{itemDetails.reviewsCount}} reviews</p>
 	    <p>
-	      <span class="glyphicon glyphicon-star"></span>
-	      <span class="glyphicon glyphicon-star"></span>
-	      <span class="glyphicon glyphicon-star"></span>
-	      <span class="glyphicon glyphicon-star"></span>
-	      <span class="glyphicon glyphicon-star-empty"></span>
-	      4.0 stars
+	      <rating ng-model="itemDetails.rating" readonly="true" />
+	      {{itemDetails.rating}} stars
 	    </p>
 	  </div>
 	</div>
@@ -74,15 +70,10 @@
 	  </div>
 	</div>
 	<div class="row">
-	    <div class="col-md-12" ng-repeat="review in itemDetails.reviews">
-	      <span class="glyphicon glyphicon-star"></span>
-	      <span class="glyphicon glyphicon-star"></span>
-	      <span class="glyphicon glyphicon-star"></span>
-	      <span class="glyphicon glyphicon-star-empty"></span>
-	      <span class="glyphicon glyphicon-star-empty"></span>
-	      {{review.name}}
-	      <span class="pull-right">{{review.time}}</span>
-	      <p>From <em>United States</em></p>
+	    <div class="col-md-12" ng-repeat="review in itemReviews">
+	      <strong>{{review.name}}</strong> <rating ng-model="review.rating" readonly="true" />
+	      <span class="pull-right">{{review.reviewTime}}</span>
+	      <p>From <em>{{review.place}}</em></p>
 	      <p>{{review.review}}</p>
 	    </div>
 	  </div>

@@ -4,21 +4,21 @@
 
 'use strict';
 
-var Reviews = require('./reviews.model');
+var Review = require('./review.model');
 
 exports.register = function(socket) {
-  Reviews.schema.post('save', function (doc) {
+  Review.schema.post('save', function (doc) {
     onSave(socket, doc);
   });
-  Reviews.schema.post('remove', function (doc) {
+  Review.schema.post('remove', function (doc) {
     onRemove(socket, doc);
   });
 }
 
 function onSave(socket, doc, cb) {
-  socket.emit('reviews:save', doc);
+  socket.emit('review:save', doc);
 }
 
 function onRemove(socket, doc, cb) {
-  socket.emit('reviews:remove', doc);
+  socket.emit('review:remove', doc);
 }

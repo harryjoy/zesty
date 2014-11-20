@@ -15,7 +15,8 @@ angular.module('fullApp')
           'reviews': item.reviews ? item.reviews : 0,
           'description': item.description,
           'categories': item.categories,
-          'mainImage': item.mainImage
+          'mainImage': item.mainImage,
+          'rating': item.rating ? item.rating : 0
         });
       });
     });
@@ -30,25 +31,11 @@ angular.module('fullApp')
         'summary': product.summary,
         'mainImage': product.mainImage,
         'images': product.images,
-        'reviews': [{
-            'name': 'Harsh Raval',
-            'review': 'This is really good product.',
-            'from': 'India',
-            'time': moment().startOf('day').fromNow(),
-            'star': 4
-          }, {
-            'name': 'Harsh Raval',
-            'review': 'This is really good product but when it comes to internet and especially 3G this is not up to the mark.',
-            'from': 'India',
-            'time': moment().startOf('hour').fromNow(),
-            'star': 3
-          }, {
-            'name': 'Harsh Raval',
-            'review': 'Not available in this country.',
-            'from': 'United States',
-            'time': moment().startOf('month').fromNow(),
-            'star': 1
-          }]
-        };
+        'rating': product.rating ? product.rating : 0
+      };
+    });
+
+    ProductServ.reviews(productId).then(function (reviews) {
+      $scope.itemReviews = reviews;
     });
   }]);

@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Item = require('./item.model');
+var Review = require('../review/review.model');
 
 // Get list of items
 exports.index = function(req, res) {
@@ -51,6 +52,13 @@ exports.destroy = function(req, res) {
       if(err) { return handleError(res, err); }
       return res.send(204);
     });
+  });
+};
+
+exports.reviews = function(req, res) {
+  Review.find({ productId : req.params.id }, function (err, reviews) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, reviews);
   });
 };
 

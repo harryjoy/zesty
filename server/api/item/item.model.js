@@ -14,11 +14,17 @@ var ItemSchema = new Schema({
   images: [String],
   tags: [String],
   updated: { type: Date, default: Date.now },
-  ranking: Number,
+  rating: Number,
 
   categories: [{
     id: Schema.Types.ObjectId,
     name: String
+  }],
+
+  extraFields: [{
+    name: String,
+    values: [String],
+    type: Number
   }],
   
   suppliers: [{

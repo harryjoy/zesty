@@ -18,6 +18,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/review/review.socket').register(socket);
   require('../api/paymentMethods/paymentMethods.socket').register(socket);
   require('../api/payment/payment.socket').register(socket);
   require('../api/shipper/shipper.socket').register(socket);
@@ -27,7 +28,6 @@ function onConnect(socket) {
   require('../api/favorite/favorite.socket').register(socket);
   require('../api/customer/customer.socket').register(socket);
   require('../api/order/order.socket').register(socket);
-  require('../api/reviews/reviews.socket').register(socket);
   require('../api/cart/cart.socket').register(socket);
   require('../api/item/item.socket').register(socket);
 }
