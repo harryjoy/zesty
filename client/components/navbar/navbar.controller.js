@@ -1,11 +1,24 @@
 'use strict';
 
 angular.module('fullApp')
-  .controller('NavbarCtrl', function ($scope, $location, Auth) {
+  .controller('NavbarCtrl', ['$scope', '$location', 'Auth', 'DashboardServ',
+    function ($scope, $location, Auth, DashboardServ) {
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
+    },{
+      'title': 'Deals',
+      'link': '/deals'
+    },{
+      'title': 'New',
+      'link': '/new'
     }];
+    $scope.cartItems = '';
+    $scope.appName = 'Zesty';
+
+    DashboardServ.categories().then(function(items) {
+        $scope.categories = items;
+      });
 
     $scope.isCollapsed = true;
     $scope.isLoggedIn = Auth.isLoggedIn;
@@ -20,4 +33,4 @@ angular.module('fullApp')
     $scope.isActive = function(route) {
       return route === $location.path();
     };
-  });
+  }]);

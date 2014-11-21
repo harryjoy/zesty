@@ -2,37 +2,53 @@
 
 <header class="hero-unit" id="banner">
   <div class="container">
-    <h1>'Allo, 'Allo!</h1>
-    <p class="lead">Kick-start your next web app with Angular Fullstack</p>
-    <img src="assets/images/yeoman.png" alt="I'm Yeoman">
+    <h1>Zesty</h1>
+    <p class="lead">One stop destination for e-commerce in node!</p>
+    <img src="assets/images/shopping_bag.png" alt="Zesty Logo">
   </div>
 </header>
 
 <div class="container">
   <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">Features:</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in awesomeThings">
-        <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}<button type="button" class="close" ng-click="deleteThing(thing)">&times;</button></a></li>
-      </ul>
+    <div class="col-sm-4 col-md-3">
+      <h3>Categories</h3>
+      <div class="list-group">
+        <a ng-repeat="category in categories" href="/category/{{category._id}}" class="list-group-item">{{category.name}}</a>
+      </div>
     </div>
+    <div class="col-sm-8 col-md-9">
+      <div class="row">
+        <div ng-repeat="item in items" class="col-sm-6 col-md-4">
+          <div class="thumbnail">
+            <img src="{{item.mainImage}}" alt="{{item.title}}">
+            <div class="add-to-cart">
+              <a href="{{item.link}}" class="glyphicon glyphicon-plus-sign" data-toggle="tooltip" data-placement="top" title="Add to cart"></a>
+            </div>
+            <div class="caption">
+              <h4 class="pull-right">{{item.price}}</h4>
+              <h4><a href="{{item.link}}">{{item.title}}</a>
+              </h4>
+              <p>{{item.description}}</p>
+              <div class="ratings">
+                <p class="pull-right"><a href="{{item.link}}#comments">{{item.reviews}} reviews</a></p>
+                <p>
+                  <span class="glyphicon glyphicon-star"></span>
+                  <span class="glyphicon glyphicon-star"></span>
+                  <span class="glyphicon glyphicon-star"></span>
+                  <span class="glyphicon glyphicon-star"></span>
+                  <span class="glyphicon glyphicon-star"></span>
+                </p>
+                <p>
+                  <span class="glyphicon glyphicon-tags"></span>
+                  <span ng-repeat="category in item.categories"><a href="/category/{{category._id}}">{{category.name}}</a></span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
   </div>
-
-  <form class="thing-form">
-    <label>Syncs in realtime across clients</label>
-    <p class="input-group">
-      <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="newThing">
-      <span class="input-group-btn">
-        <button type="submit" class="btn btn-primary" ng-click="addThing()">Add New</button>
-      </span>
-    </p>
-  </form>
 </div>
 
-<footer class="footer">
-  <div class="container">
-      <p>Zest v0.0.1 |
-        <a href="https://twitter.com/harshraval9">@harshraval9</a> |
-         2014</p>
-  </div>
-</footer>
+<div ng-include="'components/footer/footer.html'"></div>

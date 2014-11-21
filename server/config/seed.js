@@ -13,18 +13,50 @@ var moment = require('moment')
 
 Category.find({}).remove(function() {
   Category.create({
-    name: 'Men',
-    info: 'Category for men items.',
+    name: 'Apparel & Accessories',
+    info: 'Category for Apparel & Accessories items.',
     active: true
   }, {
-    name: 'Women',
-    info: 'Category for women items.',
+    name: 'Baby Products',
+    info: 'Category for Baby Products items.',
+    active: true
+  }, {
+    name: 'Beauty & Health',
+    info: 'Category for Beauty & Health items.',
+    active: true
+  }, {
+    name: 'Electronics',
+    info: 'Category for Electronics items.',
+    active: true
+  }, {
+    name: 'Furniture',
+    info: 'Category for Furniture items.',
+    active: true
+  }, {
+    name: 'Home & Garden',
+    info: 'Category for Home & Garden items.',
+    active: true
+  }, {
+    name: 'Luggage & Bags',
+    info: 'Category for Luggage & Bags items.',
+    active: true
+  }, {
+    name: 'Shoes',
+    info: 'Category for Shoes items.',
+    active: true
+  }, {
+    name: 'Sports & Entertainment',
+    info: 'Category for Sports & Entertainment items.',
+    active: true
+  }, {
+    name: 'Watches',
+    info: 'Category for Watches items.',
     active: true
   });
 });
 
 Item.find({}).remove(function() {
-  Category.findOne({ name: 'Men' }).exec(function(err, category){
+  Category.findOne({ name: 'Furniture' }).exec(function(err, category){
     Item.create({
       title : 'Item 1',
       price : '649',
@@ -77,7 +109,7 @@ Item.find({}).remove(function() {
       });
     });
   });
-  Category.findOne({ name: 'Women' }).exec(function(err, category){
+  Category.findOne({ name: 'Electronics' }).exec(function(err, category){
     Item.create({
       title : 'Item 2',
       price : '249',
