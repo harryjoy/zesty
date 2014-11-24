@@ -35,6 +35,7 @@ $gray: #EAEAEC;
 $white: #FFF;
 $light-white: #F6F6F6;
 $light-green: #649614;
+$dim-gray: #ddd;
 
 //Link colors (Aka: <a> tags)
 $link-color: $light-blue;
@@ -118,3 +119,6 @@ $box-success-border:        $green !default;
 $box-info-border:           $aqua !default;
 $box-warning-border:        $yellow !default;
 $box-danger-border:         $red !default;
+
+$cart-price-color: #444;
+$cart-description-color: #888;

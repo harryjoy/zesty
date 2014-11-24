@@ -1,6 +1,6 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="container">
+<!--div class="container">
 	<div class="process">
 	    <div class="process-row">
 	        <div class="process-step">
@@ -21,90 +21,152 @@
 	        </div> 
 	    </div>
 	</div>
-</div>
-
-<div class="container cart">
-	<h2>Your Cart</h2>
-	<table class="table table-bordered table-condensed table-responsive">
-		<thead>
-      <tr>
-        <th>#</th>
-        <th>Product</th>
-        <th>Qty</th>
-        <th>Price</th>
-        <th>Total</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>
-        	<div class="clearfix">
-        		<img class="product-img pull-left" src="http://placehold.it/750x400" />
-        		<h4 class="">Item 1</h4>
-        		<p>This is the description of item 1.</p>
-        	</div>
-       	</td>
-        <td>
-        	<input name="qty_1" value="1" class="form-control" />
-        </td>
-        <td>Rs 649</td>
-        <td>Rs 649</td>
-        <td><i class="fa fa-trash"></i></td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>
-        	<div class="clearfix">
-        		<img class="product-img pull-left" src="http://placehold.it/750x400" />
-        		<h4 class="">Item 2</h4>
-        		<p>This is the description of item 2.</p>
-        	</div>
-       	</td>
-        <td>
-        	<input name="qty_2" value="1" class="form-control" />
-        </td>
-        <td>Rs 649</td>
-        <td>Rs 649</td>
-        <td><i class="fa fa-trash"></i></td>
-      </tr>
-      <tr>
-      	<td colspan="6"></td>
-      </tr>
-      <tr>
-      	<td colspan="3"></td>
-      	<td><strong>Total Product</strong></td>
-      	<td colspan="2">Rs 1298</td>
-      </tr>
-      <tr>
-      	<td colspan="3"></td>
-      	<td><strong>Total Shipping</strong></td>
-      	<td colspan="2">-</td>
-      </tr>
-      <tr>
-      	<td colspan="3"></td>
-      	<td><strong>Apply Coupon</strong></td>
-      	<td colspan="2">
-      		<input name="coupon" placeholder="Enter your coupon code" class="form-control coupon-box" />
-      		<button class="btn btn-success">Apply</button>
-      	</td>
-      </tr>
-      <tr class="lead">
-      	<td colspan="3"></td>
-      	<td><strong>Total</strong></td>
-      	<td colspan="2">Rs 1298</td>
-      </tr>
-    </tbody>
-	</table>
-</div>
-
+</div-->
 <div class="container">
-  <button type="button" class="btn btn-danger">Cancel Order</button>
-  <a href="/" type="button" class="btn btn-info">Continue Sopping</a>
-  <div class="pull-right">
-    <button type="button" class="btn btn-success btn-lg">Place Order</button>
+  <div class="row">
+    <div class="col-lg-9 col-md-9 col-sm-7">
+      <h1>Your Cart</h1>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-5">
+      <h3 class="continueShopping"><a href="/"><i class="fa fa-angle-double-left"></i> &nbsp; Countinue Shopping</a></h3>
+    </div>
   </div>
-</div>
+  <div class="row">
+    <div class="col-lg-9 col-md-9 col-sm-7">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12">
+          <table class="cartTable table table-responsive">
+            <thead>
+              <tr class="header">
+                <th width="10%">Product</th>
+                <th width="40%">Details</th>
+                <th width="10%">Qty</th>
+                <th width="15%">Price</th>
+                <th width="15%">Total</th>
+                <th width="5%" class="delete">&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="item">
+                <td class="producThumb">
+                  <a href="#"><img alt="img" src="http://placehold.it/400x400" /></a>
+                </td>
+                <td class="description">
+                  <h4><a href="#">Item 1</a></h4>
+                  <span class="intro">This is description This is description This is description 
+                  This is description This is description This is description </span>
+                </td>
+                <td class="qty">
+                  <input placeholder="1" />
+                </td>
+                <td class="price">
+                  <span>Rs 649</span>
+                </td>
+                <td class="total">
+                  <span>Rs 649</span>
+                </td>
+                <td class="delete">
+                  <i class="fa fa-trash"></i>
+                </td>
+              </tr>
+              <tr class="item">
+                <td class="producThumb">
+                  <a href="#"><img alt="img" src="http://placehold.it/400x400" /></a>
+                </td>
+                <td class="description">
+                  <h4><a href="#">Item 1</a></h4>
+                  <span class="intro">This is description This is description This is description 
+                  This is description This is description This is description </span>
+                </td>
+                <td class="qty">
+                  <input placeholder="1" />
+                </td>
+                <td class="price">
+                  <span>Rs 649</span>
+                </td>
+                <td class="total">
+                  <span>Rs 649</span>
+                </td>
+                <td class="delete">
+                  <i class="fa fa-trash"></i>
+                </td>
+              </tr>
+              <tr class="item">
+                <td class="producThumb">
+                  <a href="#"><img alt="img" src="http://placehold.it/400x400" /></a>
+                </td>
+                <td class="description">
+                  <h4><a href="#">Item 1</a></h4>
+                  <span class="intro">This is description This is description This is description 
+                  This is description This is description This is description </span>
+                </td>
+                <td class="qty">
+                  <input placeholder="1" />
+                </td>
+                <td class="price">
+                  <span>Rs 649</span>
+                </td>
+                <td class="total">
+                  <span>Rs 649</span>
+                </td>
+                <td class="delete">
+                  <i class="fa fa-trash"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12">
+          <span class="pull-right">
+            <a class="btn btn-default" title="checkout" href="/"> <i class="fa fa-angle-double-left"></i> &nbsp; Continue Shopping </a>
+            <a class="btn btn-primary" title="checkout" href="#"> <i class="fa fa-refresh"></i> &nbsp; Update Cart </a>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-5">
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <ul class="summaryTable">
+            <li class="clearfix header">
+              <span>
+                <h3 class="text-middle">Order Summary</h3>
+              </span>
+            </li>
+            <li class="clearfix">
+              <span class="pull-left">Total</span>
+              <span class="pull-right price">Rs 1298</span>
+            </li>
+            <li class="clearfix">
+              <span class="pull-left">Shipping</span>
+              <span class="pull-right price successShip">Free</span>
+            </li>
+            <li class="clearfix">
+              <span class="pull-left">Tax</span>
+              <span class="pull-right">Rs 0</span>
+            </li>
+            <li class="clearfix">
+              <span class="pull-left">Grand Total</span>
+              <span class="pull-right grand">Rs 1298</span>
+            </li>
+            <li class="clearfix last">
+              <div class="couponForm">
+                <input class="col-lg-8" id="appendedInputButton" type="text" placeholder="Coupon code">
+                <button class="col-lg-4 btn btn-success" type="button">Apply</button>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <a class="btn btn-success btn-lg btn-block" title="checkout" href="#"> Proceed to checkout &nbsp; <i class="fa fa-chevron-circle-right"></i> </a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div>
 
 <div ng-include="'components/footer/footer.html'"></div>

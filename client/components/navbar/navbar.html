@@ -25,12 +25,60 @@
           </div>
         </form>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categories <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li ng-repeat="category in categories"><a href="/category/{{category._id}}">{{category.name}}</a></li>
           </ul>
         </li>
-        <li ng-class="{active: isActive('/cart')}"><a href="/cart"><i class="fa fa-shopping-cart"></i><span class="badge" style="background-color: transparent;">{{cartItems}}</span></a></li>
+        <li ng-class="{active: isActive('/cart')}">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-shopping-cart"></i><span class="badge" style="background-color: transparent;">{{cartItems}}</span></a>
+            <div class="dropdown-menu cart-dropdown">
+              <div class="body">
+                <table>
+                  <tbody>
+                    <tr class="productRow" ng-repeat="item in items">
+                      <td style="width:20%" class="productThumb">
+                        <div> 
+                          <a href="{{item.link}}">
+                            <img src="{{item.mainImage}}" alt="img">
+                          </a>
+                        </div>
+                      </td>
+                      <td style="width:40%">
+                        <div class="description">
+                          <h4>
+                            <a href="{{item.link}}"> {{item.title}} </a>
+                          </h4>
+                          <span class="size"> {{item.description}} </span>
+                          <div class="price">
+                            <span> {{item.price}} </span>
+                          </div>
+                        </div>
+                      </td>
+                      <td  style="width:10%" class="quantity">
+                        <a > X 1 </a>
+                      </td>
+                      <td  style="width:15%" class="subtotal">
+                        <span> {{item.price}} </span>
+                      </td>
+                      <td  style="width:5%" class="delete">
+                        <a > <i class="fa fa-trash"></i> </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--/.body-->
+              <div class="cartFooter text-right">
+                <h3 class="text-right subtotal"> Subtotal: $210 </h3>
+                <a href="/cart" class="btn btn-sm btn-danger">
+                  <i class="fa fa-shopping-cart"> </i> VIEW CART
+                </a>
+                <a class="btn btn-sm btn-primary"> CHECKOUT </a> 
+              </div>
+              <!--/.footer--> 
+            </div>
+        </li>
         <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
         <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
         <li ng-show="isLoggedIn()"><p class="navbar-text">Hello {{ getCurrentUser().name }}</p> </li>

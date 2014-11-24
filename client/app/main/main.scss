@@ -1,3 +1,5 @@
+@import 'shared/appmixins/_mixins.scss';
+
 .thing-form {
   margin: 20px 0;
 }
@@ -36,5 +38,20 @@
   
   img {
     margin: 0 auto;
+  }
+}
+
+.featureImg {
+  a {
+    display: block;
+    overflow: hidden;
+
+    img {
+      @include transitions(all 0.4s ease 0s);
+
+      &:hover {
+        @include transform(scale(1.15) rotate(-1.1deg));
+      }
+    }
   }
 }
