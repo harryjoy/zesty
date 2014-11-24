@@ -14,12 +14,12 @@ var SuppilerSchema = new Schema({
   address2: String,
   city: String,
   state: String,
-  postalCode: Number,
+  postalCode: String,
   country: String,
   phone: String,
   email: String,
   logo: String,
-  userId: Schema.Types.ObjectId
+  customerId: Schema.Types.ObjectId
 });
 
 module.exports = mongoose.model('Suppiler', SuppilerSchema);

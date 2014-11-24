@@ -15,6 +15,7 @@ var ItemSchema = new Schema({
   tags: [String],
   updated: { type: Date, default: Date.now },
   rating: Number,
+  reviews: Number,
 
   categories: [{
     id: Schema.Types.ObjectId,
@@ -32,7 +33,7 @@ var ItemSchema = new Schema({
     name: String,
     price: { type: Number, min: 0 },
     qty: { type: Number, min: 0 },
-    shiping_time: String,
+    shippingTime: String,
     discount: Number,
     discountUnit: String,
     offer: String

@@ -1,13 +1,12 @@
 'use strict';
 
 angular.module('fullApp')
-  .service('ProductServ', ['$rootScope', '$http', '$q', function ($rootScope, $http, $q) {
+  .service('CategoryServ', ['$rootScope', '$http', '$q', function ($rootScope, $http, $q) {
     return {
-      details: function (productId, callback) {
+      categories: function (callback) {
         var cb = callback || angular.noop;
         var deferred = $q.defer();
-        
-        $http.get('/api/items/' + productId).success(function(data) {
+        $http.get('/api/categories').success(function(data) {
           deferred.resolve(data);
           return cb();
         }).
@@ -17,11 +16,10 @@ angular.module('fullApp')
         }.bind(this));
         return deferred.promise;
       },
-      reviews: function (productId, callback) {
+      details: function (categoryId, callback) {
         var cb = callback || angular.noop;
         var deferred = $q.defer();
-        
-        $http.get('/api/items/' + productId + '/reviews').success(function(data) {
+        $http.get('/api/categories/' + categoryId).success(function(data) {
           deferred.resolve(data);
           return cb();
         }).
@@ -31,11 +29,10 @@ angular.module('fullApp')
         }.bind(this));
         return deferred.promise;
       },
-      related: function (productId, callback) {
+      items: function (categoryId, callback) {
         var cb = callback || angular.noop;
         var deferred = $q.defer();
-        
-        $http.get('/api/items/' + productId + '/related').success(function(data) {
+        $http.get('/api/categories/' + categoryId + '/items').success(function(data) {
           deferred.resolve(data);
           return cb();
         }).

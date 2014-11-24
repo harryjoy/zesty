@@ -61,12 +61,30 @@
 }
 
 //Transform function that rotates elements
-@mixin transform($degree) {
+@mixin transform($trans...) {
+  -webkit-transform:$trans; /* Safari and Chrome */
+     -moz-transform:$trans; /* FF */
+      -ms-transform:$trans; /* IE 9 */
+       -o-transform:$trans; /* opera */
+          transform:$trans;
+}
+
+//Transform function that rotates elements
+@mixin transform-rotate($degree) {
   -webkit-transform:rotate($degree); /* Safari and Chrome */
      -moz-transform:rotate($degree); /* FF */
       -ms-transform:rotate($degree); /* IE 9 */
        -o-transform:rotate($degree); /* opera */
           transform:rotate($degree);
+}
+
+//Transform function that rotates elements
+@mixin transform-scale($scale) {
+  -webkit-transform:scale($scale); /* Safari and Chrome */
+     -moz-transform:scale($scale); /* FF */
+      -ms-transform:scale($scale); /* IE 9 */
+       -o-transform:scale($scale); /* opera */
+          transform:scale($scale);
 }
 
 // Animations

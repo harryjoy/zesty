@@ -1,0 +1,110 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+	<div class="process">
+	    <div class="process-row">
+	        <div class="process-step">
+	            <button type="button" class="btn btn-success btn-circle" disabled="disabled"><i class="fa fa-user fa-3x"></i></button>
+	            <p>Confirm Order</p>
+	        </div>
+	        <div class="process-step">
+	            <button type="button" class="btn btn-default btn-circle" disabled="disabled"><i class="fa fa-comments-o fa-3x"></i></button>
+	            <p>Personal Data</p>
+	        </div>
+	        <div class="process-step">
+	            <button type="button" class="btn btn-default btn-circle" disabled="disabled"><i class="fa fa-thumbs-up fa-3x"></i></button>
+	            <p>Verification</p>
+	        </div> 
+	         <div class="process-step">
+	            <button type="button" class="btn btn-default btn-circle" disabled="disabled"><i class="fa fa-money fa-3x"></i></button>
+	            <p>You Pay</p>
+	        </div> 
+	    </div>
+	</div>
+</div>
+
+<div class="container cart">
+	<h2>Your Cart</h2>
+	<table class="table table-bordered table-condensed table-responsive">
+		<thead>
+      <tr>
+        <th>#</th>
+        <th>Product</th>
+        <th>Qty</th>
+        <th>Price</th>
+        <th>Total</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>
+        	<div class="clearfix">
+        		<img class="product-img pull-left" src="http://placehold.it/750x400" />
+        		<h4 class="">Item 1</h4>
+        		<p>This is the description of item 1.</p>
+        	</div>
+       	</td>
+        <td>
+        	<input name="qty_1" value="1" class="form-control" />
+        </td>
+        <td>Rs 649</td>
+        <td>Rs 649</td>
+        <td><i class="fa fa-trash"></i></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>
+        	<div class="clearfix">
+        		<img class="product-img pull-left" src="http://placehold.it/750x400" />
+        		<h4 class="">Item 2</h4>
+        		<p>This is the description of item 2.</p>
+        	</div>
+       	</td>
+        <td>
+        	<input name="qty_2" value="1" class="form-control" />
+        </td>
+        <td>Rs 649</td>
+        <td>Rs 649</td>
+        <td><i class="fa fa-trash"></i></td>
+      </tr>
+      <tr>
+      	<td colspan="6"></td>
+      </tr>
+      <tr>
+      	<td colspan="3"></td>
+      	<td><strong>Total Product</strong></td>
+      	<td colspan="2">Rs 1298</td>
+      </tr>
+      <tr>
+      	<td colspan="3"></td>
+      	<td><strong>Total Shipping</strong></td>
+      	<td colspan="2">-</td>
+      </tr>
+      <tr>
+      	<td colspan="3"></td>
+      	<td><strong>Apply Coupon</strong></td>
+      	<td colspan="2">
+      		<input name="coupon" placeholder="Enter your coupon code" class="form-control coupon-box" />
+      		<button class="btn btn-success">Apply</button>
+      	</td>
+      </tr>
+      <tr class="lead">
+      	<td colspan="3"></td>
+      	<td><strong>Total</strong></td>
+      	<td colspan="2">Rs 1298</td>
+      </tr>
+    </tbody>
+	</table>
+</div>
+
+<div class="container">
+  <button type="button" class="btn btn-danger">Cancel Order</button>
+  <a href="/" type="button" class="btn btn-info">Continue Sopping</a>
+  <div class="pull-right">
+    <button type="button" class="btn btn-success btn-lg">Place Order</button>
+  </div>
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>

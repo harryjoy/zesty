@@ -1,0 +1,43 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+	<div class="row pull-right">
+		<div class="col-md-12">
+		  <h2 title="{{category.info}}">{{category.name}}</h2>
+	  </div>
+	</div>
+	<h1>Prodcuts</h1>
+  <div class="row">
+  	<div class="col-sm-12 col-md-12 warningMessage" ng-show="items && items.length == 0">
+  		<div class="alert alert-danger" role="alert"><i class="fa fa-warning"></i> No products available in {{category.name}} category. Go to <a href="/" class="alert-link">home page</a> and browse other products.</div>
+  	</div>
+    <div class="col-sm-12 col-md-12">
+      <div class="row">
+        <div ng-repeat="item in items" class="col-sm-4 col-md-3">
+          <div class="thumbnail">
+            <img src="{{item.mainImage}}" alt="{{item.title}}">
+            <div class="add-to-cart">
+              <a href="{{item.link}}" class="glyphicon glyphicon-plus-sign" data-toggle="tooltip" data-placement="top" title="Add to cart"></a>
+            </div>
+            <div class="caption">
+              <h4 class="pull-right">{{item.price}}</h4>
+              <h4><a href="{{item.link}}">{{item.title}}</a>
+              </h4>
+              <p>{{item.description}}</p>
+              <div class="ratings">
+                <p class="pull-right"><a href="{{item.link}}#comments">{{item.reviewCount}} reviews</a></p>
+                <rating ng-model="item.rating" readonly="true" />
+                <p>
+                  <span class="glyphicon glyphicon-tags"></span>
+                  <span ng-repeat="category in item.categories"><a href="/category/{{category._id}}">{{category.name}}</a></span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>

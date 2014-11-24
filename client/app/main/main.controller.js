@@ -5,11 +5,6 @@ angular.module('fullApp')
     function ($scope, $http, socket, DashboardServ) {
     $scope.awesomeThings = [];
 
-    $http.get('/api/things').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
-      socket.syncUpdates('thing', $scope.awesomeThings);
-    });
-
     $scope.addThing = function() {
       if($scope.newThing === '') {
         return;
@@ -27,16 +22,23 @@ angular.module('fullApp')
     });
 
     $scope.items = [];
+    $scope.slides = [];
     DashboardServ.items().then(function(items) {
         $.each(items, function (key, item) {
           $scope.items.push({
             'link': '/product/' + item._id,
             'title': item.title,
             'price': item.currency + ' ' + item.price,
-            'reviews': item.reviews ? item.reviews : 0,
+            'reviewCount': item.reviews ? item.reviews : 0,
             'description': item.description,
             'categories': item.categories,
-            'mainImage': item.mainImage
+            'mainImage': item.mainImage,
+            'rating': item.rating ? item.rating : 0
+          });
+          $scope.slides.push({
+            image: 'http://placehold.it/1250x400',
+            title: item.title,
+            text: item.description
           });
         });
       });

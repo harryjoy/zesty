@@ -12,5 +12,6 @@ router.put('/:id', controller.update);
 router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);
 router.get('/:id/reviews', controller.reviews);
+router.get('/:id/related', controller.related);
 
 module.exports = router;

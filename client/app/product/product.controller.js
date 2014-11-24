@@ -1,12 +1,27 @@
 'use strict';
 
 angular.module('fullApp')
-  .controller('ProductCtrl', ['$scope', '$stateParams', 'DashboardServ', 'ProductServ',
-    function ($scope, $stateParams, DashboardServ, ProductServ) {
+  .controller('ProductCtrl', ['$scope', '$stateParams', 'ProductServ',
+    function ($scope, $stateParams, ProductServ) {
     var productId = $stateParams.id;
 
+    ProductServ.details(productId).then(function (product) {
+      $scope.itemDetails = {
+        'link': '/product/' + product._id,
+        'title': product.title,
+        'price': product.currency + ' ' + product.price,
+        'reviewsCount': product.reviews ? product.reviews : 0,
+        'description': product.description,
+        'summary': product.summary,
+        'mainImage': product.mainImage,
+        'images': product.images,
+        'rating': product.rating ? product.rating : 0,
+        'suppliers': product.suppliers
+      };
+    });
+
     $scope.items = [];
-    DashboardServ.items().then(function(items) {
+    ProductServ.related(productId).then(function(items) {
       $.each(items, function (key, item) {
         $scope.items.push({
           'link': '/product/' + item._id,
@@ -19,20 +34,6 @@ angular.module('fullApp')
           'rating': item.rating ? item.rating : 0
         });
       });
-    });
-
-    ProductServ.details(productId).then(function (product) {
-      $scope.itemDetails = {
-        'link': '/product/' + product._id,
-        'title': product.title,
-        'price': product.currency + ' ' + product.price,
-        'reviewsCount': product.reviews ? product.reviews : 0,
-        'description': product.description,
-        'summary': product.summary,
-        'mainImage': product.mainImage,
-        'images': product.images,
-        'rating': product.rating ? product.rating : 0
-      };
     });
 
     ProductServ.reviews(productId).then(function (reviews) {

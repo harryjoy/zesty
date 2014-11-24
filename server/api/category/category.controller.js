@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Category = require('./category.model');
+var Item = require('../item/item.model');
 
 // Get list of categorys
 exports.index = function(req, res) {
@@ -51,6 +52,14 @@ exports.destroy = function(req, res) {
       if(err) { return handleError(res, err); }
       return res.send(204);
     });
+  });
+};
+
+// Get items of this category
+exports.items = function(req, res) {
+  Item.find({'categories._id' : req.params.id}, function (err, items) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, items);
   });
 };
 

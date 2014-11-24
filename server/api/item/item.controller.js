@@ -62,6 +62,21 @@ exports.reviews = function(req, res) {
   });
 };
 
+exports.related = function(req, res) {
+  Item.findById(req.params.id, function (err, item) {
+    if(err) { return handleError(res, err); }
+    if(!item) { return res.send(404); }
+    var categories = [];
+    _.forEach(item.categories, function (category) {
+      categories.push(category.name);
+    });
+    Item.find({ 'categories.name' : { '$in' : categories }, '_id' : { '$ne' : item._id } }, function (err, items) {
+      if(err) { return handleError(res, err); }
+      return res.json(200, items);
+    });
+  });
+};
+
 function handleError(res, err) {
   return res.send(500, err);
 }
