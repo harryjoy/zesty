@@ -1,12 +1,12 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<header class="hero-unit" id="banner">
+<!--header class="hero-unit" id="banner">
   <div class="container">
     <h1>Zesty</h1>
     <p class="lead">One stop destination for e-commerce in node!</p>
     <img src="assets/images/shopping_bag.png" alt="Zesty Logo">
   </div>
-</header>
+</header-->
 
 <div class="container">
   <div class="slider-lg">
@@ -32,39 +32,16 @@
     </div>
     <div class="col-sm-8 col-md-9">
       <div class="row">
-        <div ng-repeat="item in items" class="col-sm-6 col-md-4">
-          <div class="thumbnail product">
-            <img src="{{item.mainImage}}" alt="{{item.title}}" class="image">
-            <!--div class="promotion">
-              <span class="new-product lbl text-normal"> NEW</span>
-              <span class="discount lbl text-normal">15% OFF</span>
-              <span class="exlusive lbl text-normal">Exclusive</span>
-            </div-->
-            <div class="add-to-cart">
-              <a href="{{item.link}}" class="glyphicon glyphicon-plus-sign" data-toggle="tooltip" data-placement="top" title="Add to cart"></a>
-            </div>
-            <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist" data-placement="left">
-              <i class="glyphicon glyphicon-star"></i>
-            </a>
-            <div class="caption">
-              <h4 class="pull-right">{{item.price}}</h4>
-              <h4><a href="{{item.link}}">{{item.title}}</a>
-              </h4>
-              <p>{{item.description}}</p>
-              <div class="ratings">
-                <p class="pull-right"><a href="{{item.link}}#comments">{{item.reviewCount}} reviews</a></p>
-                <rating ng-model="item.rating" readonly="true" />
-                <p class="text-normal">
-                  <span class="glyphicon glyphicon-tags"></span>
-                  <span ng-repeat="category in item.categories"><a href="/category/{{category._id}}">{{category.name}}</a></span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <product ng-repeat="item in items"/>
       </div>
       <div class="row">
         <div class="load-more-block text-center"> <a class="btn btn-thin" href="#"> <i class="fa fa-plus-sign">+</i> load more products</a> </div>
+      </div>
+      <hr/>
+      <hr/>
+      <div class="row">
+        <h2>Popular brands</h2>
+        <owl-carosel></owl-carosel>
       </div>
     </div> 
   </div>
