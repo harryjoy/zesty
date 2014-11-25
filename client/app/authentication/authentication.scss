@@ -1,0 +1,26 @@
+@import 'shared/appmixins/_mixins.scss';
+
+.auth_box {
+	padding: 10px;
+
+	.auth_header {
+		border-bottom: 1px solid #e0e0e0;
+		padding-bottom: 5px;
+	}
+
+	.auth_conent_area {
+
+		.auth_guest_notice {
+			margin-bottom: 10px;
+		}
+		
+		label {
+			font-weight: 400;
+		}
+
+		input[type='text'], input[type='password'], input[type='email'], text-area {
+			@include border-radius(0px);
+		}
+	}
+
+}

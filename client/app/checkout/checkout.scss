@@ -1,0 +1,153 @@
+@import 'shared/appmixins/_mixins.scss';
+
+.cart_steps {
+	/*display: inline-block;*/
+	line-height: 15px;
+	box-sizing: border-box;
+	@include border-radius(5px);
+
+	.cart_step {
+		display: inline-block;
+		position: relative;
+		margin: 0px 0px;
+		padding: 12px 18px 12px 25px;
+		vertical-align: top;
+		background: #ffffff;
+		color: rgba(0, 0, 0, 0.8);
+		@include box-shadow(0px 0px 0px 1px rgba(0, 0, 0, 0.15));
+		@include border-radius(0px);
+		font-size: 14px;
+
+		&:after {
+			@include transitions(background-color 0.1s ease, opacity 0.1s ease, color 0.1s ease, box-shadow 0.1s ease);
+			position: absolute;
+			z-index: 2;
+			content: '';
+			top: 50%;
+			right: 0px;
+			border: medium none;
+			background-color: #ffffff;
+			width: 18px;
+			height: 18px;
+			border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+			border-right: 1px solid rgba(0, 0, 0, 0.1);
+			@include transform(translateY(-50%) translateX(50%) rotate(-45deg));
+		}
+
+		&:first-child {
+			padding-left: 15px;
+			@include border-radius-sep(5px, 0px, 5px, 0px);
+		}
+
+		&:last-child {
+			margin-right: 0px;
+			@include border-radius-sep(0px, 5px, 0px, 5px);
+
+			&:after {
+				display: none;
+			}
+		}
+
+		&:only-child{
+			@include border-radius(5px);
+
+			&:after {
+				display: none;
+			}
+		}
+
+		&.active {
+			cursor: auto;
+			background: #f0f0f0;
+
+			.cart_step_icon {
+				color: #00a2a2;
+			}
+
+			.cart_step_content {
+				
+				.cart_step_heading {
+					color: #00a2a2;
+				}
+			}
+
+			&:after {
+				background: #f0f0f0;
+			}
+
+			.cart_step_done {
+				display: none;
+			}
+		}
+
+		&.disabled {
+			color: #c2c2c2;
+			cursor: auto;
+			background: #ffffff;
+			pointer-events: none;
+
+			.cart_step_description {
+
+				.cart_step_heading {
+					color: #c2c2c2;
+				}
+
+				.cart_step_description {
+					color: #c2c2c2;
+				}
+			}
+
+			.cart_step_done {
+
+				.cart_check {
+					background: #a0a0a0;
+				}
+			}
+		}
+
+		.cart_step_done {
+			display: table-cell;
+			vertical-align: middle;
+			padding-left: 15px;
+			width: 1%;
+
+			.cart_check {
+				font-size: 25px;
+				background: #00A65A;
+				@include border-radius(50%);
+				padding: 5px;
+				color: #fafafa;
+			}
+		}
+
+		.cart_step_icon {
+			font-size: 35px;
+			margin: 0px;
+			padding-right: 15px;
+			display: table-cell;
+			vertical-align: middle;
+		}
+
+		.cart_step_content {
+			display: table-cell;
+			vertical-align: middle;
+
+			.cart_step_heading {
+				font-size: 20px;
+				font-weight: bold;
+				margin-bottom: 0px;
+				margin-top: 0px;
+			}
+
+			.cart_step_description {
+				font-size: 11px;
+				color: #888;
+				margin-top: 1px;
+			}
+		}
+	}
+}
+
+.cart_step_body {
+	margin-top: 15px;
+}

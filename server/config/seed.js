@@ -72,7 +72,7 @@ Suppiler.find({}).remove(function() {
     country: 'India',
     phone: '(+91) 999-xx-x-xx-xx',
     email: 'supplier1@zesty.com',
-    logo: 'http://placehold.it/450x410',
+    logo: 'http://placehold.it/400x410',
   }, {
     name: 'Suppiler 2',
     info: 'Information about second supplier.',
@@ -88,7 +88,7 @@ Suppiler.find({}).remove(function() {
     country: 'India',
     phone: '(+91) 999-xx-x-xx-xx',
     email: 'supplier2@zesty.com',
-    logo: 'http://placehold.it/450x420',
+    logo: 'http://placehold.it/400x420',
   }, {
     name: 'Suppiler 3',
     info: 'Information about third supplier.',
@@ -104,7 +104,7 @@ Suppiler.find({}).remove(function() {
     country: 'India',
     phone: '(+91) 999-xx-x-xx-xx',
     email: 'supplier3@zesty.com',
-    logo: 'http://placehold.it/450x430',
+    logo: 'http://placehold.it/400x430',
   });
 });
 
@@ -137,9 +137,9 @@ Item.find({}).remove(function() {
             shippingTime: '5d',
           }],
           description : 'This item is very good and can give you a good return.',
-          mainImage : 'http://placehold.it/450x400',
-          images: ['http://placehold.it/450x400', 'http://placehold.it/450x410',
-                        'http://placehold.it/450x420', 'http://placehold.it/450x430'],
+          mainImage : 'http://placehold.it/400x400',
+          images: ['http://placehold.it/400x400', 'http://placehold.it/400x410',
+                        'http://placehold.it/400x420', 'http://placehold.it/400x430'],
           summary : 'This item is very good and can give you a good return.' + 
                     ' This is the summary of that item so it needs to be long and ' + 
                     'so I am adding radom stuff in it. This summary actually does not ' + 
@@ -181,9 +181,9 @@ Item.find({}).remove(function() {
             shippingTime: '5d',
           }],
           description : 'This item is very good and can give you a good return.',
-          mainImage : 'http://placehold.it/450x400',
-          images: ['http://placehold.it/450x400', 'http://placehold.it/450x410',
-                        'http://placehold.it/450x420', 'http://placehold.it/450x430'],
+          mainImage : 'http://placehold.it/400x400',
+          images: ['http://placehold.it/400x400', 'http://placehold.it/400x410',
+                        'http://placehold.it/400x420', 'http://placehold.it/400x430'],
           summary : 'This item is very good and can give you a good return. This is the summary of that item so it needs to be long and so I am adding radom stuff in it. This summary actually does not have any meaning so dont spend your time in reading it.',
         }, function () {
           Review.find({}).remove(function () {
@@ -223,9 +223,9 @@ Item.find({}).remove(function() {
       rating: 0,
       reviews: 0,
       description : 'This item is very good and can give you a good return.',
-      mainImage : 'http://placehold.it/450x400',
-      images: ['http://placehold.it/450x400', 'http://placehold.it/450x410',
-                        'http://placehold.it/450x420', 'http://placehold.it/450x430'],
+      mainImage : 'http://placehold.it/400x400',
+      images: ['http://placehold.it/400x400', 'http://placehold.it/400x410',
+                        'http://placehold.it/400x420', 'http://placehold.it/400x430'],
       summary : 'This item is very good and can give you a good return. This is the summary of that item so it needs to be long and so I am adding radom stuff in it. This summary actually does not have any meaning so dont spend your time in reading it.',
     },  {
       title : 'Item 3',
@@ -239,9 +239,9 @@ Item.find({}).remove(function() {
       reviews: 0,
       currency: 'Rs',
       description : 'This item is very good and can give you a good return.',
-      mainImage : 'http://placehold.it/450x400',
-      images: ['http://placehold.it/450x400', 'http://placehold.it/450x410',
-                        'http://placehold.it/450x420', 'http://placehold.it/450x430'],
+      mainImage : 'http://placehold.it/400x400',
+      images: ['http://placehold.it/400x400', 'http://placehold.it/400x410',
+                        'http://placehold.it/400x420', 'http://placehold.it/400x430'],
       summary : 'This item is very good and can give you a good return. This is the summary of that item so it needs to be long and so I am adding radom stuff in it. This summary actually does not have any meaning so dont spend your time in reading it.',
     },  {
       title : 'Item 4',
@@ -255,9 +255,9 @@ Item.find({}).remove(function() {
       reviews: 0,
       currency: 'Rs',
       description : 'This item is very good and can give you a good return.',
-      mainImage : 'http://placehold.it/450x400',
-      images: ['http://placehold.it/450x400', 'http://placehold.it/450x410',
-                        'http://placehold.it/450x420', 'http://placehold.it/450x430'],
+      mainImage : 'http://placehold.it/400x400',
+      images: ['http://placehold.it/400x400', 'http://placehold.it/400x410',
+                        'http://placehold.it/400x420', 'http://placehold.it/400x430'],
       summary : 'This item is very good and can give you a good return. This is the summary of that item so it needs to be long and so I am adding radom stuff in it. This summary actually does not have any meaning so dont spend your time in reading it.',
     },{
       title : 'Item 5',
@@ -271,9 +271,9 @@ Item.find({}).remove(function() {
       reviews: 0,
       currency: 'Rs',
       description : 'This item is very good and can give you a good return.',
-      mainImage : 'http://placehold.it/450x400',
-      images: ['http://placehold.it/450x400', 'http://placehold.it/450x410',
-                        'http://placehold.it/450x420', 'http://placehold.it/450x430'],
+      mainImage : 'http://placehold.it/400x400',
+      images: ['http://placehold.it/400x400', 'http://placehold.it/400x410',
+                        'http://placehold.it/400x420', 'http://placehold.it/400x430'],
       summary : 'This item is very good and can give you a good return. This is the summary of that item so it needs to be long and so I am adding radom stuff in it. This summary actually does not have any meaning so dont spend your time in reading it.',
     });
   });
