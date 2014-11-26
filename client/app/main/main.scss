@@ -27,9 +27,35 @@
 
 .footer {
   text-align: center;
-  padding: 30px 0;
+  padding: 10px 0 0;
   margin-top: 70px;
   border-top: 1px solid #E5E5E5;
+
+  .social-links {
+
+    .social-link {
+      display: block;
+      float: left;
+      background: #FFF;
+      width: 25px;
+      height: 25px;
+      overflow: hidden;
+      line-height: 25px;
+      border: 1px solid #DDD;
+      text-align: center;
+      margin-right: 5px;
+      color: #347e92;
+
+      &:hover {
+        background: #347e92;
+        color: #FFF;
+      }
+    }
+  }
+
+  .footer_divider {
+    border-top-color: #afafaf !important;
+  }
 }
 
 .slider-lg {

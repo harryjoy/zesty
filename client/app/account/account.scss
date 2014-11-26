@@ -1,0 +1,50 @@
+.account_box {
+
+	.account_header {
+		padding-bottom: 5px;
+		border-bottom: 1px solid #e0e0e0;
+	}
+
+	.box-footer {
+		padding: 5px !important;
+		background-color: #fafafa !important;
+	}
+
+	.default_selection {
+		font-size: 12px;
+	}
+
+	label {
+		font-weight: 400;
+	}
+
+	.order_history, .wishlist_history {
+
+		.header {
+			text-transform: uppercase;
+			font-weight: bold;
+			font-size: 14px;
+			background: #64B3C8;
+			color: #fff;
+		}
+	}
+
+	.wishlist_history {
+    
+    .product_image {
+			width: 100px;
+			height: 100px;
+			display: table-cell;
+			float: left;
+			margin-right: 10px;
+    }
+
+    .product_description {
+    	display: table-cell;
+    }
+	}
+
+	.dataTables_length {
+		display: none;
+	}
+}

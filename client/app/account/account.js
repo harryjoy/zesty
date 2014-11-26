@@ -13,7 +13,32 @@ angular.module('fullApp')
         templateUrl: 'app/account/signup/signup.html',
         controller: 'SignupCtrl'
       })
-      .state('settings', {
+      .state('profile', {
+        url: '/profile',
+        templateUrl: 'app/account/account.html',
+        controller: 'AccountCtrl',
+        authenticate: true,
+        abstract: true,
+      })
+      .state('profile.my', {
+        url: '',
+        templateUrl: 'app/account/profile/profile.html',
+        controller: 'ProfileCtrl',
+        authenticate: true
+      })
+      .state('profile.order', {
+        url: '/order',
+        templateUrl: 'app/account/order/order.html',
+        controller: 'OrderCtrl',
+        authenticate: true
+      })
+      .state('profile.wishlist', {
+        url: '/wishlist',
+        templateUrl: 'app/account/wishlist/wishlist.html',
+        controller: 'WishlistCtrl',
+        authenticate: true
+      })
+      .state('profile.settings', {
         url: '/settings',
         templateUrl: 'app/account/settings/settings.html',
         controller: 'SettingsCtrl',

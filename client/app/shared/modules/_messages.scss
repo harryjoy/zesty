@@ -14,7 +14,8 @@
 
 .error {
   @extend .message;
-  border-color: red;
+  border-color: #fa9999;
+	background: #fa9999;
 }
 
 .warning {

@@ -1,0 +1,52 @@
+<div class="account_box">
+	<div class="row">
+	  <div class="col-lg-12 col-md-12 col-sm-12">
+	    <h1 class="account_header">
+	    	<i class="fa fa-list-alt"></i> My Orders
+	    </h1>
+	  </div>
+	</div>
+	<div class="row">
+	  <div class="col-lg-12 col-md-12 col-sm-12">
+	  	<table id="order_data_table" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover order_history">
+        <thead>
+	        <tr class="header">
+	        	<th>&nbsp;</th>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>&nbsp;</th>
+	        </tr>
+        </thead>
+        <tbody>
+	        <tr ng-repeat="order in orders">
+	        	<td><i class="fa fa-info-circle fa-2x"></i></td>
+            <td>{{ order.id }}</td>
+            <td>{{ order.date }}</td>
+            <td>{{ order.price }}</td>
+            <td>
+            	<span ng-switch="order.status">
+	            	<span ng-switch-when="1">
+		        			<span class="label label-success">Delivered</span>
+		        		</span>
+		        		<span ng-switch-when="2">
+		        			<span class="label label-info">Processing</span>
+		        		</span>
+		        		<span ng-switch-when="3">
+		        			<span class="label label-default">Pending</span>
+		        		</span>
+		        		<span ng-switch-when="4">
+		        			<span class="label label-danger">Cancelled</span>
+		        		</span>
+		        	</span>
+            </td>
+            <td>
+            	<button class="btn btn-default btn-sm">View Order</button>
+            </td>
+	        </tr>
+        </tbody>
+    	</table>
+	  </div>
+	</div> <!-- end of row -->
+</div>
