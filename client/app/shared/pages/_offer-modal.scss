@@ -1,0 +1,34 @@
+.offer-box {
+
+  .header {
+    color: #444;
+    font-size: 26px;
+    font-weight: normal;
+    letter-spacing: 1px;
+    line-height: 29px;
+  }
+
+  .discount {
+    color: #000;
+    font-size: 46px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    line-height: 46px;
+    font-family: 'lora';
+  }
+
+  .shoplink {
+    margin-top: 10px;
+
+    .link {
+      font-size: 12px;
+    }
+  }
+}
+
+.signup-offer-box {
+  background: url('../../../assets/images/modal-img.jpg') right bottom no-repeat;
+  background-color: #F3F6FB;
+  max-width: 600px;
+  min-height: 340px;
+}

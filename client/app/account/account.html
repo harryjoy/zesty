@@ -1,12 +1,12 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-3 col-md-3 col-sm-5">
-      <h3> {{ getCurrentUser().name }}</h3>
+      <h3 class="page-header"> <i class="fa fa-male"></i> {{ getCurrentUser().name }}</h3>
       <div class="list-group">
-        <a href="/profile" class="list-group-item" ng-class="{active: isActive('/profile')}"><i class="fa fa-user fa-fw"></i> My Account</a>
-        <a href="/profile/order" class="list-group-item" ng-class="{active: isActive('/profile/order')}"><i class="fa fa-list-alt fa-fw"></i> My Orders</a>
-        <a href="/profile/wishlist" class="list-group-item" ng-class="{active: isActive('/profile/wishlist')}"><i class="fa fa-star fa-fw"></i> My Wishlist</a>
-        <a href="/profile/settings" class="list-group-item" ng-class="{active: isActive('/profile/settings')}"><i class="fa fa-cog fa-fw"></i> Change Password</a>
+        <a href="/my" class="list-group-item" ng-class="{active: isActive('/my')}"><i class="fa fa-user fa-fw"></i> My Account</a>
+        <a href="/my/orders" class="list-group-item" ng-class="{active: isActive('/my/orders')}"><i class="fa fa-list-alt fa-fw"></i> My Orders</a>
+        <a href="/my/wishlist" class="list-group-item" ng-class="{active: isActive('/my/wishlist')}"><i class="fa fa-star fa-fw"></i> My Wishlist</a>
+        <a href="/my/settings" class="list-group-item" ng-class="{active: isActive('/my/settings')}"><i class="fa fa-cog fa-fw"></i> Change Password</a>
       </div>
     </div>
     <div class="col-lg-9 col-md-9 col-sm-7">

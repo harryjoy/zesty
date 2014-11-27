@@ -1,0 +1,14 @@
+<div class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content {{extraClassForContent}}">
+			<div class="modal-header" ng-show="showModalHeader">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-close"></i></button>
+				<h4 class="modal-title">{{ title }}</h4>
+			</div>
+			<div class="modal-body">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-show="!showModalHeader"><i class="fa fa-close"></i></button>
+				<ng-transclude></ng-transclude>
+			</div>
+		</div>
+	</div>
+</div>

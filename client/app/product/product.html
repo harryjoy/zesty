@@ -4,7 +4,9 @@
 	<div class="thumbnail">
 	  <div class="row">
 	    <div class="col-sm-6">
-	      <img class="img-responsive" src="{{itemDetails.mainImage}}" alt="" />
+				<div class="thumbnail flat">
+					<img class="img-responsive" src="{{itemDetails.mainImage}}" alt="" />
+				</div>
 	      <div class="thumbnails row">
 	        <div class="col-xs-3" ng-repeat="image in itemDetails.images">
 	          <a href="#"><img src="{{image}}" alt="" class="img-thumbnail img-responsive" /></a>
@@ -17,18 +19,26 @@
 	      <p>{{itemDetails.description}}</p>
 		  <form role="form">
 	        <div class="number form-group">
-	          <label class="control-label" for="number">Quantity</label>
-	          <input type="number" class="form-control input-sm" id="number" value="1" />
+	          <label class="control-label" for="number">Quantity:</label>
+	          <input type="number" class="form-control input-sm flat" id="number" value="1" />
 	        </div>
 	        <div class="form-group">
-	          <label ng-show="itemDetails.suppliers && itemDetails.suppliers.length > 0">Suppliers</label>
+	          <label ng-show="itemDetails.suppliers && itemDetails.suppliers.length > 0">Suppliers:</label>
 	          <ul>
 	          	<li ng-repeat="supplier in itemDetails.suppliers"><u>{{supplier.name}}</u> at {{supplier.price}} (<i class="fa fa-clock-o"></i> {{supplier.shippingTime}})</li>
 	          </ul>
 	        </div>
-
 	        <div class="form-group">
-	          <button type="submit" class="btn btn-success">Add to Cart</button>
+	          <button type="submit" class="btn btn-primary btn-flat">Add to Cart</button>
+	          <button type="submit" class="btn btn-default btn-flat">Add to Wishlist</button>
+	        </div>
+	        <div class="form-group">
+	        	<label>Share:</label>
+	          <div class="social-links flat text-medium">
+		          <a href="#" class="social-link"><i class="fa fa-twitter"></i></a>
+		          <a href="#" class="social-link"><i class="fa fa-google-plus"></i></a>
+		          <a href="#" class="social-link"><i class="fa fa-facebook"></i></a>
+		        </div>
 	        </div>
 	      </form>
 	</div>

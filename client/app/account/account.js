@@ -14,7 +14,7 @@ angular.module('fullApp')
         controller: 'SignupCtrl'
       })
       .state('profile', {
-        url: '/profile',
+        url: '/my',
         templateUrl: 'app/account/account.html',
         controller: 'AccountCtrl',
         authenticate: true,
@@ -27,9 +27,15 @@ angular.module('fullApp')
         authenticate: true
       })
       .state('profile.order', {
-        url: '/order',
+        url: '/orders',
         templateUrl: 'app/account/order/order.html',
         controller: 'OrderCtrl',
+        authenticate: true
+      })
+      .state('profile.invoice', {
+        url: '/invoice/:id',
+        templateUrl: 'app/account/invoice/invoice.html',
+        controller: 'InvoiceCtrl',
         authenticate: true
       })
       .state('profile.wishlist', {

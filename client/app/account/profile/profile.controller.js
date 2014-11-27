@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fullApp')
-  .controller('ProfileCtrl', function ($scope) {
+  .controller('ProfileCtrl', ['$scope', '$modal', function ($scope, $modal) {
     $scope.user = {
       firstName: 'Harsh',
       lastName: 'Raval',
@@ -36,4 +36,43 @@ angular.module('fullApp')
         isDefault: false
       }]
     };
-  });
+
+    $scope.openAddAddressDialog = function () {
+      var modalInstance = $modal.open({
+        templateUrl: 'addAddressPopup',
+        controller: 'AddressPopupCtrl',
+        backdrop: 'static',
+        size: 'lg',
+        resolve: {
+          address: function () {
+            return {};
+          }
+        }
+      });
+      modalInstance.result.then(function (address) {
+        console.log('Save address:', address);
+      }, function () {
+        console.log('Modal dismissed at: ' + new Date());
+      });
+    };
+
+    $scope.openEditAddressDialog = function (addressToEdit) {
+      var modalInstance = $modal.open({
+        templateUrl: 'addAddressPopup',
+        controller: 'AddressPopupCtrl',
+        backdrop: 'static',
+        size: 'lg',
+        resolve: {
+          address: function () {
+            return addressToEdit;
+          }
+        }
+      });
+      modalInstance.result.then(function (address) {
+        console.log('Edit address:', address);
+      }, function () {
+        console.log('Modal dismissed at: ' + new Date());
+      });
+    };
+
+  }]);

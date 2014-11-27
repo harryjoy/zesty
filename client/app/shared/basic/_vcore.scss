@@ -4,9 +4,29 @@
 * -------------------------
 */
 
+@font-face {
+    font-family: 'lora';
+    src: url(shared/fonts/Lora-Regular.ttf);
+}
+@font-face {
+    font-family: 'lora';
+    src: url(shared/fonts/Lora-Italic.ttf);
+    font-style: italic, oblique;
+}
+@font-face {
+    font-family: 'raleway-light';
+    src: url(shared/fonts/Raleway-Light.ttf);
+}
+@font-face {
+    font-family: 'raleway';
+    src: url(shared/fonts/Raleway-Regular.ttf);
+}
+
+
+
 html, body {
     /*overflow-x: hidden!important;*/
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'raleway', 'Open Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
     min-height: 100%;
     background: $body-bg;
@@ -113,7 +133,7 @@ a:hover, a:active, a:focus {
 	font-size: 12px;
 }
 .text-medium {
-	font-size: 15px;
+	font-size: 18px;
 }
 .text-small {
 	font-size: 10px;
@@ -318,7 +338,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'lora', 'Open Sans', sans-serif;
 }
 
 /* Page Header */
@@ -378,4 +398,8 @@ table.text-center {
     td, th {
         text-align: center;
     }
+}
+
+.form-control {
+    font-family: 'lora';
 }

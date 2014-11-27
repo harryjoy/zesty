@@ -10,7 +10,7 @@
 	  <div class="col-lg-12 col-md-12 col-sm-12">
 	  	<table id="order_data_table" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover order_history">
         <thead>
-	        <tr class="header">
+	        <tr class="bg-teal">
             <th>ID</th>
             <th>Date</th>
             <th>Price</th>
@@ -40,7 +40,8 @@
 		        	</span>
             </td>
             <td>
-            	<button class="btn btn-default btn-sm">View Order</button>
+            	<a href="/my/invoice/{{order.id}}" class="btn btn-default btn-sm">View</a>
+            	<a href="#" class="btn btn-default btn-sm">Track</a>
             </td>
 	        </tr>
         </tbody>
