@@ -1,0 +1,91 @@
+<div class="container">
+	<div class="row">
+		<div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
+			<div class="review-product-sm box">
+				<div class="box-header">
+          <h4 class="header">You have selected to review</h4>
+        </div>
+				<div class="box-body">
+          <div class="product-xs">
+						<img class="thumbnail" title="Zesty" alt="Zesty" src="{{item.image}}">
+						<h5 class="review-item-title">{{item.title}}</h5>
+					</div>
+					<div class="clearfix">
+					</div>
+        </div>
+			</div>
+			
+			<div class="review-guideline-sm box box-solid box-primary">
+				<div class="box-header" ng-click="showFaq = !showFaq">
+          <h4 class="header">
+						What makes a good review
+						<small class="pull-right">
+							<span ng-switch="showFaq">
+								<i ng-switch-when="true" class="fa fa-caret-down"></i>
+								<i ng-switch-when="false" class="fa fa-caret-right"></i>
+							</span>
+						</small>
+					</h4>
+        </div>
+        <div class="review-faq-container box-body" collapse="!showFaq">
+					<div class="review-faq" ng-repeat="faq in reviewFaqs">
+						<h5 class="review-faq-question">{{faq.question}}</h5>
+						<span class="review-faq-answer">{{faq.answer}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-9 col-md-9 col-sm-8 col-xs-8">
+			<div class="alert alert-info write-review-note">
+        <i class="fa fa-question"></i>
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+        	<i class="fa fa-close"></i>
+        </button>
+        <h4 class="header">Why should I review a product?</h4>
+				Your rating of the product has a direct effect on customer perception for the product. Your rating contributes to the product’s overall rating. So, please be fair with your appraisal.
+      </div>
+
+			<div class="review-form box box-solid box-primary">
+				<div class="box-header">
+					<h2 class="header">
+						Write review and help others!
+						<small class="review-notice pull-right">All fields are mandatory.</small>
+					</h2>
+				</div>
+				<form role="form" name="review-form" id="review-form">
+					<div class="box-body">
+						<div class="form-group">
+							<label>Review Title:</label>
+							<input class="form-control" type="text" name="review-title" id="review-title" ng-modal="review.title" />
+						</div>
+						<div class="form-group">
+							<label>Your Review:</label><br/>
+							<rating ng-model="review.rating" class="review-form-rating"></rating>
+							<textarea class="form-control text-area-bg" col="30" row="10" name="review-title" id="review-title" ng-modal="review.comments"></textarea>
+						</div>
+					</div>
+					<div class="box-footer">
+						<button class="btn btn-default">Submit Review</button>
+					</div>
+				</form>
+			</div>
+
+			<div class="review-extra review-form box">
+				<div class="box-body">
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 review-extra-col">
+							<h3 class="header-review-extra">Have questions regarding this product?</h3>
+							<span>Please contact us by clicking here.</span>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 review-extra-col">
+							<h3 class="header-review-extra">Had a great experience buying!</h3>
+							<span>Or do you think we can do better? Tell us here.</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div> <!-- col -->
+	</div> <!-- row -->
+</div>
