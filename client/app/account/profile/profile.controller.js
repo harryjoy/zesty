@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fullApp')
-  .controller('ProfileCtrl', ['$scope', '$modal', function ($scope, $modal) {
+  .controller('ProfileCtrl', ['$scope', '$modal', 'Modal', function ($scope, $modal, Modal) {
     $scope.user = {
       firstName: 'Harsh',
       lastName: 'Raval',
@@ -46,6 +46,9 @@ angular.module('fullApp')
         resolve: {
           address: function () {
             return {};
+          },
+          title: function () {
+            return 'Add new address';
           }
         }
       });
@@ -65,6 +68,9 @@ angular.module('fullApp')
         resolve: {
           address: function () {
             return addressToEdit;
+          },
+          title: function () {
+            return 'Edit: ' + addressToEdit.title;
           }
         }
       });
@@ -74,5 +80,11 @@ angular.module('fullApp')
         console.log('Modal dismissed at: ' + new Date());
       });
     };
+
+    // Modal.confirm.delete returns a function that will open a modal when ran
+    // We use closure to define the callback for the modal's confirm action here in the controller
+    $scope.deleteAddress = Modal.confirm.delete(function() { // callback when modal is confirmed
+      console.log('confirmed... remove this item from address.');
+    });
 
   }]);
