@@ -49,5 +49,17 @@ angular.module('fullApp')
       templateUrl: 'app/account/settings/settings.html',
       controller: 'SettingsCtrl',
       authenticate: true
+    })
+    .state('profile.review', {
+      url: '/reviews',
+      templateUrl: 'app/account/review/review.html',
+      controller: 'ReviewCtrl',
+      authenticate: true
+    })
+    .state('profile.savedcard', {
+      url: '/savedcard',
+      templateUrl: 'app/account/savedcard/savedcard.html',
+      controller: 'SavedCardCtrl',
+      authenticate: true
     });
 });

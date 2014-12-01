@@ -1,0 +1,149 @@
+<div class="account_box">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <h1 class="account_header">
+        <i class="fa fa-comments"></i> My Ratings & Reviews
+      </h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+        <li role="presentation" class="active"><a href="#product_reviews" data-toggle="tab">Product Reviews</a></li>
+        <li role="presentation"><a href="#seller_reviews" data-toggle="tab">Seller Reviews</a></li>
+      </ul>
+
+      <div id="my-tab-content" class="tab-content">
+        <div class="tab-pane active" id="product_reviews">
+          <div class="box box-solid">
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-5 col-sm-6">
+                  <h4 class="page-header text-medium">Ratings by {{getCurrentUser().name}} ({{ratingCount}})</h4>
+                  <review-progress-bars></review-progress-bars>
+                </div> <!-- col end -->
+                <div class="col-md-7 col-sm-6">
+                  <h4 class="page-header text-medium">Recently rated</h4>
+                  <div class="recently-rated-box" ng-repeat="rating in recentRatings">
+                    <img src="{{rating.image}}" />
+                    <div class="recently-rated-box-descr">
+                      <h5><a href="/product/{{rating.id}}">{{rating.title}}</a></h5>
+                      <rating ng-model="rating.rate" readonly="true" />
+                    </div>
+                  </div>
+                </div> <!-- col end -->
+
+                <hr/>
+
+                <div class="col-md-12 col-sm-12">
+                  <h4 class="page-header text-medium">Reviews by {{getCurrentUser().name}} ({{reviewCount}})</h4>
+
+                  <div class="box user-review-box" ng-repeat="review in reviews">
+                    <div class="box-header">
+                      <div class="user-review-header">
+                        <img src="{{review.product.image}}" height="50" width="50" />
+                        <div class="user-review-header-descr">
+                          <h5 class="page-header"><a href="/product/{{review.product.id}}">{{review.product.title}}</a></h5>
+                          <div class="user-review-header-product-description">{{review.product.description}}</div>
+                        </div>
+                        <clearfix></clearfix>
+                      </div>
+                    </div>
+                    <div class="box-body">
+                      <span class="pull-right">on {{review.date}}</span> 
+                      <h5 class="user-review-title">{{review.title}}</h5>
+                      <rating ng-model="review.rate" readonly="true" />
+                      <br/>
+                      <div class="user-review-comments">
+                        {{review.comments}}
+                      </div>
+                    </div>
+                    <div class="box-footer">
+                      <div class="row">
+                        <div class="col-md-10 col-sm-9 text-normal">
+                          <strong>{{review.helpful}}</strong> of <strong>{{review.helpful + review.unhelpful}}</strong>
+                          found this review helpful.
+                          &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
+                          <strong>Share this review:</strong>
+                          <a href="#" class="btn btn-default btn-sm btn-mini"><i class="fa fa-twitter"></i></a>
+                          <a href="#" class="btn btn-default btn-sm btn-mini"><i class="fa fa-google-plus"></i></a>
+                          <a href="#" class="btn btn-default btn-sm btn-mini"><i class="fa fa-facebook"></i></a>
+                        </div>
+                        <div class="col-md-2 col-sm-3 text-right">
+                          <a href="/write-review/{{review.product.id}}?review={{review.id}}" class="text-small">Edit</a> |
+                          <a href="#" class="text-small">Delete</a>
+                          <clearfix></clearfix>
+                        </div>
+                      </div>
+                    </div> <!-- box body end -->
+                  </div> <!-- box end -->
+                </div> <!-- col end -->
+
+                <div class="col-md-12 col-sm-12">
+                  <nav class="text-center">
+                    <ul class="pagination pagination-sm user-review-pagination">
+                      <li class="disabled"><a href="#"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
+                      <li class="active"><a href="#">1</a></li>
+                      <li><a href="#">2</a></li>
+                      <li><a href="#"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
+                    </ul>
+                  </nav>
+                </div> <!-- col end -->
+
+              </div> <!-- outer row -->
+            </div> <!-- outer box body -->
+          </div> <!-- outer box -->
+        </div> <!-- product review tab end -->
+
+        <div class="tab-pane" id="seller_reviews">
+          <div class="box box-solid">
+            <div class="box-body">
+              <div class="row">
+                <div ng-switch="sellerReviewExists">
+                  <div class="col-md-12 col-sm-12" ng-switch-when="false">
+                    <h2>You have not written any seller reviews. Write one today!</h2>
+                    <br/>
+                    <div class="alert alert-info write-review-note">
+                      <i class="fa fa-info"></i>
+                      <h4 class="header">Why should I review a seller?</h4>
+                      Your rating of the seller has a direct effect on customer perception for the seller. Your rating contributes to the seller's overall rating. So, please be fair with your appraisal.
+                    </div>
+                  </div> <!-- col end -->
+                  <div class="col-md-12 col-sm-12" ng-switch-when="true">
+                    <h4 class="page-header text-medium">Seller Reviews by {{getCurrentUser().name}} ({{sellerReviewCount}})</h4>
+                    <div class="box user-review-box" ng-repeat="review in sellerReviews">
+                      <div class="box-body">
+                        <span class="pull-right">on {{review.date}}</span> 
+                        <h5 class="page-header user-review-title"><a href="/seller/{{review.seller.id}}">{{review.seller.name}}</a></h5>
+                        <rating ng-model="review.rate" readonly="true" />
+                        <br/>
+                        <div class="user-review-comments">
+                          {{review.comments}}
+                        </div>
+                      </div>
+                      <div class="box-footer">
+                        <div class="row">
+                          <div class="col-md-10 col-sm-9 text-normal">
+                            <strong>Share this review:</strong>
+                            <a href="#" class="btn btn-default btn-sm btn-mini"><i class="fa fa-twitter"></i></a>
+                            <a href="#" class="btn btn-default btn-sm btn-mini"><i class="fa fa-google-plus"></i></a>
+                            <a href="#" class="btn btn-default btn-sm btn-mini"><i class="fa fa-facebook"></i></a>
+                          </div>
+                          <div class="col-md-2 col-sm-3 text-right">
+                            <a href="/write-review/{{review.product.id}}?review={{review.id}}" class="text-small">Edit</a> |
+                            <a href="#" class="text-small">Delete</a>
+                            <clearfix></clearfix>
+                          </div>
+                        </div>
+                      </div> <!-- box body end -->
+                    </div>
+                  </div> <!-- col end -->
+                </div>
+              </div> <!-- outer row -->
+            </div> <!-- outer box body -->
+          </div> <!-- outer box -->
+        </div> <!-- seller review tab end -->
+      </div>
+    </div>
+  </div> <!-- end of row -->
+</div>

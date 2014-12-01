@@ -47,10 +47,99 @@
 	}
 }
 
+.recently-rated-box {
+	clear:both;
+	margin-bottom: 20px;
+
+	img {
+		width: 50px;
+		height: 50px;
+		display: inline-block;
+		float: left;
+		margin-right: 10px;
+	}
+
+	.recently-rated-box-descr {
+
+		h5 {
+			margin-top: 0px;
+			margin-bottom: 5px;
+		}
+	}
+}
+
+.user-review-box {
+
+	&.box {
+
+		.box-header {
+			padding-bottom: 0px;
+		}
+
+		.box-body {
+			padding-top: 0px;
+		}
+	}
+
+	.user-review-header {
+		padding: 10px;
+		border-bottom: 1px solid #f6f6f6;
+
+		img {
+			width: 50px;
+			height: 50px;
+			display: inline-block;
+			float: left;
+			margin-right: 10px;
+		}
+
+		.user-review-header-descr {
+
+			h5 {
+				margin-top: 0px;
+				margin-bottom: 5px;
+				font-size: 14px;
+				padding-bottom: 0px;
+				border-bottom: none;
+			}
+
+			.user-review-header-product-description {
+				font-size: 12px;
+			}
+		}
+	}
+
+	.user-review-title {
+		font-size: 14px;
+	}
+
+	.user-review-comments {
+		font-size: 12px;
+	}
+}
+
+.user-review-pagination {
+	margin: 0px;
+}
+
 .invoice {
 	position: relative;
 	width: 95%;
 	margin: 10px auto;
 	background: #fff !important;
 	border: 1px solid #f4f4f4;
+}
+
+.security-guarantee-box {
+
+	.security-guarantee-description {
+		float: left;
+		display: inline-block;
+	}
+
+	.security-guarantee-image {
+		float: right;
+		display: inline-block;
+		margin-left: 10px;
+	}
 }
