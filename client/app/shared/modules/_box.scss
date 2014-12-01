@@ -147,6 +147,9 @@
         &.box-success {
             @include box-solid-variant($box-success-border);
         }
+        &.box-black {
+            @include box-solid-variant($box-grey-border);
+        }
 
         > .box-header > .box-tools > .btn {
             border: 0;
