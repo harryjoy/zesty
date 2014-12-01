@@ -13,67 +13,114 @@
 	        </div>
 	      </div>
 	    </div>
-		<div class="col-sm-6">
-		  <h4 class="pull-right">{{itemDetails.price}}</h4>
-		  <h4><a href="#">{{itemDetails.title}}</a></h4>
-	      <p>{{itemDetails.description}}</p>
-		  <form role="form">
-	        <div class="number form-group">
-	          <label class="control-label" for="number">Quantity:</label>
-	          <input type="number" class="form-control input-sm flat" id="number" value="1" />
-	        </div>
-	        <div class="form-group">
-	          <label ng-show="itemDetails.suppliers && itemDetails.suppliers.length > 0">Suppliers:</label>
-	          <ul>
-	          	<li ng-repeat="supplier in itemDetails.suppliers"><u>{{supplier.name}}</u> at {{supplier.price}} (<i class="fa fa-clock-o"></i> {{supplier.shippingTime}})</li>
-	          </ul>
-	        </div>
-	        <div class="form-group">
-	          <button type="submit" class="btn btn-primary btn-flat">Add to Cart</button>
-	          <button type="submit" class="btn btn-default btn-flat">Add to Wishlist</button>
-	        </div>
-	        <div class="form-group">
-	        	<label>Share:</label>
-	          <div class="social-links flat text-medium">
-		          <a href="#" class="social-link"><i class="fa fa-twitter"></i></a>
-		          <a href="#" class="social-link"><i class="fa fa-google-plus"></i></a>
-		          <a href="#" class="social-link"><i class="fa fa-facebook"></i></a>
+			<div class="col-sm-6">
+			  <h4 class="pull-right">{{itemDetails.price}}</h4>
+			  <h4><a href="#">{{itemDetails.title}}</a></h4>
+		      <p>{{itemDetails.description}}</p>
+			  <form role="form">
+		        <div class="number form-group">
+		          <label class="control-label" for="number">Quantity:</label>
+		          <input type="number" class="form-control input-sm flat" id="number" value="1" />
 		        </div>
-	        </div>
-	      </form>
-	</div>
-
-	</div>
-	<div class="description">
+		        <div class="form-group">
+		          <label ng-show="itemDetails.suppliers && itemDetails.suppliers.length > 0">Suppliers:</label>
+		          <ul>
+		          	<li ng-repeat="supplier in itemDetails.suppliers"><u>{{supplier.name}}</u> at {{supplier.price}} (<i class="fa fa-clock-o"></i> {{supplier.shippingTime}})</li>
+		          </ul>
+		        </div>
+		        <div class="form-group">
+		          <button type="submit" class="btn btn-primary btn-flat">Add to Cart</button>
+		          <button type="submit" class="btn btn-default btn-flat">Add to Wishlist</button>
+		          <a href="/write-review/{{itemDetails.id}}" class="btn btn-default btn-flat">Write a Review</a>
+		        </div>
+		        <div class="form-group">
+		        	<label>Share:</label>
+		          <div class="social-links flat text-medium">
+			          <a href="#" class="social-link"><i class="fa fa-twitter"></i></a>
+			          <a href="#" class="social-link"><i class="fa fa-google-plus"></i></a>
+			          <a href="#" class="social-link"><i class="fa fa-facebook"></i></a>
+			        </div>
+		        </div>
+		      </form>
+				</div>
+		</div>
+		<div class="description">
 	    {{itemDetails.summary}}
 	  </div>
-	  <div class="ratings">
-	    <p class="pull-right">{{itemDetails.reviewsCount}} reviews</p>
-	    <p>
-	      <rating ng-model="itemDetails.rating" readonly="true" />
-	      {{itemDetails.rating}} stars
-	    </p>
-	  </div>
 	</div>
 
-	<div class="well">
-
-	  <div class="text-right">
-	    <a href="/write-review" class="btn btn-success">Leave a Review</a>
-	  </div>
-	</div>
 	<div class="row">
-	    <div class="col-md-12" ng-repeat="review in itemReviews">
-	      <strong>{{review.name}}</strong> <rating ng-model="review.rating" readonly="true" />
-	      <span class="pull-right">{{review.reviewTime}}</span>
-	      <p>From <em>{{review.place}}</em></p>
-	      <p>{{review.review}}</p>
-	    </div>
-	  </div>
+		<div class="col-md-12">
+			<h2 class="page-header">Reviews</h2>
 
-	  <br><hr><hr>
-	  <h2>Related Products</h2>
-	  <div class="row">
-			<product ng-repeat="item in items" small='true'/>
+			<div class="box box-solid">
+				<div class="box-body">
+					<div class="row review-list-summary-box">
+						<div class="col-md-4 col-sm-6 review-list-summary">
+							<div class="ratings">
+								<h4 class="page-header">Rating of {{itemDetails.title}}</h4>
+						    <p>Average rating based on {{itemDetails.reviewsCount}} ratings:</p>
+						    <p class="text-big">
+						    	{{itemDetails.rating}} stars <br/>
+						      <rating ng-model="itemDetails.rating" readonly="true" />
+						    </p>
+						  </div>
+						</div>
+
+						<div class="col-md-4 col-sm-6 review-list-summary">
+							<review-progress-bars></review-progress-bars>
+						</div>
+
+						<div class="col-md-4 col-sm-6 review-list-summary">
+							<div class="add-review-rate-box">
+								<h4 class="page-header">Have you used this product?</h4>
+								<span class="text-normal">Rate it now:</span><br/>
+								<rating ng-model="newRating" readonly="false" class="text-medium" /><br/>
+								<a href="/write-review/{{itemDetails.id}}" class="btn btn-default btn-flat">Write a review</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
+		<hr/>
+    <div class="col-md-12" ng-repeat="review in itemReviews">
+    	<div class="box box-solid review-list-box">
+    		<div class="box-header">
+    			<span class="pull-right review-time">{{review.reviewTime}}</span>
+    			<h3 class="box-title">
+    				{{review.name}} <rating ng-model="review.rating" readonly="true" />
+    				<p class="review-sub-header">From <em>{{review.place}}</em></p>
+    			</h3>
+    		</div>
+				<div class="box-body">
+		      <p>{{review.review}}</p>
+				</div>
+				<div class="box-footer">
+					<div class="row">
+						<div class="col-md-10 col-sm-9 text-normal">
+							<strong>Was this review helpful?</strong>
+							<a href="#" class="text-green"><i class="fa fa-thumbs-up"></i> Yes</a>
+							<a href="#" class="text-red"><i class="fa fa-thumbs-down"></i> No</a>
+							&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
+							<strong>Share this review:</strong>
+							<a href="#" class="btn btn-default btn-sm btn-mini"><i class="fa fa-twitter"></i></a>
+							<a href="#" class="btn btn-default btn-sm btn-mini"><i class="fa fa-google-plus"></i></a>
+							<a href="#" class="btn btn-default btn-sm btn-mini"><i class="fa fa-facebook"></i></a>
+						</div>
+						<div class="col-md-2 col-sm-3">
+							<a href="#" class="text-small pull-right">Report abuse</a>
+		      		<clearfix></clearfix>
+						</div>
+					</div>
+				</div>
+			</div>
+    </div>
+  </div>
+
+  <br><hr><hr>
+  <h2>Related Products</h2>
+  <div class="row">
+		<product ng-repeat="item in items" small='true'/>
+	</div>
 </section>

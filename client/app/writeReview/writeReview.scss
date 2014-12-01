@@ -1,3 +1,17 @@
+.review-list-box {
+	margin-bottom: 10px;
+
+	.review-time {
+		margin-right: 10px;
+		line-height: 35px;
+	}
+
+	.review-sub-header {
+		font-size: 12px;
+		margin-bottom: 0px;
+	}	
+}
+
 .review-product-sm {
 	margin-bottom: 10px;
 
@@ -30,6 +44,10 @@
 			vertical-align: top;
 			font-size: 16px;
 		}
+	}
+
+	.reviews-other-link {
+		font-size: 12px;
 	}
 }
 
@@ -105,6 +123,7 @@
 }
 
 .review-extra {
+	border-top: none;
 
 	.review-extra-col {
 		border-right: 1px dotted #e6e6e6;

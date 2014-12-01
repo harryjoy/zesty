@@ -10,11 +10,14 @@
 						<img class="thumbnail" title="Zesty" alt="Zesty" src="{{item.image}}">
 						<h5 class="review-item-title">{{item.title}}</h5>
 					</div>
-					<div class="clearfix">
-					</div>
+					<clearfix></clearfix>
         </div>
+        <div class="box-footer">
+					<a href="/product/{{item.id}}" class="reviews-other-link pull-right">See other reviews <i class="fa fa-angle-double-right"></i></a>
+					<clearfix></clearfix>
+				</div>
 			</div>
-			
+
 			<div class="review-guideline-sm box box-solid box-primary">
 				<div class="box-header" ng-click="showFaq = !showFaq">
           <h4 class="header">
@@ -58,11 +61,25 @@
 						<div class="form-group">
 							<label>Review Title:</label>
 							<input class="form-control" type="text" name="review-title" id="review-title" ng-modal="review.title" />
+							<span class="help-block text-small">
+								Enter at least 20 characters.
+							</span>
+						</div>
+						<div class="form-group">
+							<label>Name:</label>
+							<input class="form-control" type="text" name="review-name" id="review-name" ng-modal="review.name" />
+							<span class="help-block text-small">
+								Enter first and last name
+							</span>
 						</div>
 						<div class="form-group">
 							<label>Your Review:</label><br/>
 							<rating ng-model="review.rating" class="review-form-rating"></rating>
+							<small class="pull-right help-block text-small">(Enter at least 50 characters.)</small>
 							<textarea class="form-control text-area-bg" col="30" row="10" name="review-title" id="review-title" ng-modal="review.comments"></textarea>
+							<span class="help-block text-small">
+								<strong>Please do not include:</strong> HTML, references to other retailers, pricing, personal information, any profane, inflammatory or copyrighted comments, or any copied content.
+							</span>
 						</div>
 					</div>
 					<div class="box-footer">

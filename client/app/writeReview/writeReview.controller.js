@@ -1,9 +1,11 @@
 'use strict';
 
 angular.module('fullApp')
-  .controller('WritereviewCtrl', function ($scope) {
+  .controller('WritereviewCtrl', ['$scope', '$stateParams', function ($scope, $stateParams) {
+    var productId = $stateParams.id;
     $scope.showFaq = true;
     $scope.item = {
+      id: productId,
       title: 'Call Of Fame',
       image: '../../assets/images/shopping_bag.png'
     };
@@ -27,4 +29,4 @@ angular.module('fullApp')
       question: 'Easy to read, easy on the eyes',
       answer: 'A quick edit and spell check will work wonders for your credibility. Also, break reviews into small, digestible paragraphs.'
     }];
-  });
+  }]);

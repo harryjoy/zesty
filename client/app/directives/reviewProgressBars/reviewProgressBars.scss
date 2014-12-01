@@ -1,0 +1,31 @@
+.rating-progress-bars {
+
+	li {
+		padding: 5px 10px;
+	}
+
+	span.rate, a.rate-filter-link  {
+		font-size: 12px;
+		display: inline-block;
+		width: 15%;
+	}
+
+	a.rate-filter-link  {
+		width: 5%;
+		text-align: right;
+	}
+
+	.progress {
+		height: 15px;
+		margin-bottom: 0px;
+		width: 75%;
+		display: inline-block;
+		top: 3px;
+		position: relative;
+
+		.progress-bar {
+			font-size: 12px;
+			line-height: 15px;
+		}
+	}
+}

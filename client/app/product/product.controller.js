@@ -7,6 +7,7 @@ angular.module('fullApp')
 
     ProductServ.details(productId).then(function (product) {
       $scope.itemDetails = {
+        'id': product._id,
         'link': '/product/' + product._id,
         'title': product.title,
         'price': product.currency + ' ' + product.price,

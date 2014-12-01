@@ -1,3 +1,22 @@
 .ratings {
 	margin-top: 10px;
 }
+
+.review-list-summary-box {
+
+	.review-list-summary {
+		border-right: 1px dotted #a0a0a0;
+
+		&:last-child {
+			border-right: none;
+		}
+
+		&:first-child {
+			height: 240px;
+		}
+	}
+}
+
+.btn-mini {
+	padding: 0px 5px;
+}
