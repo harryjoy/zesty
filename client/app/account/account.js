@@ -61,5 +61,11 @@ angular.module('fullApp')
       templateUrl: 'app/account/savedcard/savedcard.html',
       controller: 'SavedCardCtrl',
       authenticate: true
+    })
+    .state('profile.wallet', {
+      url: '/wallet',
+      templateUrl: 'app/account/wallet/wallet.html',
+      controller: 'WalletCtrl',
+      authenticate: true
     });
 });
