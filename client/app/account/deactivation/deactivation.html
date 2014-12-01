@@ -1,0 +1,77 @@
+<div class="account_box">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <h1 class="account_header">
+        <i class="fa fa-ban"></i> Deactivate Account
+      </h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="box box-danger">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+              <form role="form">
+                <div class="form-group">
+                  <label>Email Id:</label>
+                  <input class="form-control" type="text" readonly value="{{getCurrentUser().email}}" />
+                </div>
+                <div class="form-group">
+                  <label>Password:</label>
+                  <input class="form-control" type="password" value="" />
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-danger btn-flat">Confirm Deactivation</button>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-12">
+              <br/>
+              <div class="alert alert-danger">
+                <i class="fa fa-warning"></i>
+                Please <strong>do not</strong> deactivate your account unless you are facing <strong>severe problems</strong> with it.<br/>
+                Please <a href="#deactivatation-notes" class="alert-link">read below notes</a> before deactivating your account.
+              </div>
+            </div>
+          </div>
+        </div> <!-- end of box-body -->
+      </div> <!-- end of box -->
+    </div> <!-- end of col-12 -->
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="box box-danger" id="deactivatation-notes">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+              <h4 class="">When you deactivate your account</h4>
+              <ul>
+                <li>You are logged out of your <strong>{{siteName}}</strong> Account</li>
+                <li>Your public profile on <strong>{{siteName}}</strong> is no longer visible</li>
+                <li>Your reviews/ratings are still visible, while your profile information is shown as ‘unavailable’ as a result of deactivation.</li>
+                <li>Your wishlist items are no longer accessible through the associated public hyperlink. Wishlist is shown as ‘unavailable’ as a result of deactivation</li>
+                <li>You will be unsubscribed from receiving promotional emails from <strong>{{siteName}}</strong></li>
+                <li>Your account data is retained and is restored in case you choose to reactivate your account</li>
+              </ul>
+            </div>
+
+            <div class="col-md-12">
+              <h4 class="">How do I reactivate my {{siteName}} account?</h4>
+              <ul>
+                <li>
+                  Reactivation is easy:
+                  <ul>
+                    <li>Simply login with the email/social network ID and password combination used prior to deactivation.</li>
+                    <li>Follow the mail confirmation process.</li>
+                    <li>Your account data is fully restored. Default settings are applied and you will be subscribed to receive promotional emails from <strong>{{siteName}}</strong>.</li>
+                    <li><strong>{{siteName}}</strong> retains your account data for you to conveniently start off from where you left, if you decide to reactivate your account.</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div> <!-- end of box-body -->
+      </div> <!-- end of box -->
+    </div> <!-- end of col-12 -->
+  </div> <!-- end of row -->
+</div>

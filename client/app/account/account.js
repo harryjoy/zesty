@@ -73,5 +73,11 @@ angular.module('fullApp')
       templateUrl: 'app/account/subscription/subscription.html',
       controller: 'SubscriptionCtrl',
       authenticate: true
+    })
+    .state('profile.deactivation', {
+      url: '/deactivation',
+      templateUrl: 'app/account/deactivation/deactivation.html',
+      controller: 'DeactivationCtrl',
+      authenticate: true
     });
 });
