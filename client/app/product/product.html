@@ -49,7 +49,7 @@
 	  </div>
 	</div>
 
-	<div class="row">
+	<div class="row" id="comments">
 		<div class="col-md-12">
 			<h2 class="page-header">Reviews</h2>
 
@@ -75,8 +75,8 @@
 						<div class="col-md-4 col-sm-6 review-list-summary">
 							<div class="add-review-rate-box">
 								<h4 class="page-header">Have you used this product?</h4>
-								<span class="text-normal">Rate it now:</span><br/>
-								<rating ng-model="newRating" readonly="false" class="text-medium" /><br/>
+								<span class="text-medium">Rate it now:</span><br/>
+								<rating ng-model="newRating" readonly="false" class="text-big" /><br/>
 								<a href="/write-review/{{itemDetails.id}}" class="btn btn-default btn-flat">Write a review</a>
 							</div>
 						</div>

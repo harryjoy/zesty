@@ -6,21 +6,26 @@ angular.module('fullApp')
       templateUrl: 'app/directives/reviewProgressBars/reviewProgressBars.html',
       restrict: 'E',
       link: function (scope) {
-        scope.maxVal = 10;
-
         scope.oneVal = 4;
-        scope.oneValPercentage = (scope.oneVal * 100) / scope.maxVal;
-
         scope.twoVal = 2;
-        scope.twoValPercentage = (scope.twoVal * 100) / scope.maxVal;
-
         scope.threeVal = 5;
-        scope.threeValPercentage = (scope.threeVal * 100) / scope.maxVal;
-        
         scope.fourVal = 8;
-        scope.fourValPercentage = (scope.fourVal * 100) / scope.maxVal;
-
         scope.fiveVal = 6;
+
+        var maxValue = _.max([scope.oneVal, scope.twoVal, scope.threeVal, scope.fourVal, scope.fiveVal]);
+        var maxCounter = parseInt(maxValue / 10, 10);
+        var maxRemainCounter = maxValue % 10;
+        if (maxRemainCounter > 0) {
+          maxCounter++;
+        } else if (maxRemainCounter === 0) {
+          maxCounter = maxCounter + 0.5;
+        }
+        scope.maxVal = maxCounter * 10;
+
+        scope.oneValPercentage = (scope.oneVal * 100) / scope.maxVal;
+        scope.twoValPercentage = (scope.twoVal * 100) / scope.maxVal;
+        scope.threeValPercentage = (scope.threeVal * 100) / scope.maxVal;
+        scope.fourValPercentage = (scope.fourVal * 100) / scope.maxVal;
         scope.fiveValPercentage = (scope.fiveVal * 100) / scope.maxVal;
       }
     };
