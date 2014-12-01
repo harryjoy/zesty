@@ -1,0 +1,43 @@
+<div class="account_box">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <h1 class="account_header">
+        <i class="fa fa-certificate"></i> My Subscription
+      </h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="box box-solid box-warning">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+              <h3>
+                Status:
+                <span ng-switch="user.subscription">
+                  <span ng-switch-when="1" class="bg-green pad-3">Active</span>
+                  <span ng-switch-when="0" class="bg-red pad-3">Deactive</span>
+                  <span ng-switch-when="-1" class="bg-black pad-3">-</span>
+                </span>
+              </h3>
+              Valid Till: <span class="validity-date">11 Sep. 2014</span>
+            </div>
+            <div class="col-md-12">
+              <hr/>
+              <!-- using _id in place of mobile, update this when integrated with BE -->
+              Registered number for priority support: <strong>{{getCurrentUser()._id}}</strong>
+              <hr/>
+            </div>
+            <div class="col-md-6">
+              To modify or cancel your subscription, please call our customer care.
+            </div>
+            <div class="col-md-6">
+              <strong>Note</strong> - These benefits are available only on purchases from seller <strong>{{siteSeller}}</strong>, as of now. Not all benefits are available in all pincodes.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div> <!-- end of row -->
+</div>

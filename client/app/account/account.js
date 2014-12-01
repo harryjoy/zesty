@@ -67,5 +67,11 @@ angular.module('fullApp')
       templateUrl: 'app/account/wallet/wallet.html',
       controller: 'WalletCtrl',
       authenticate: true
+    })
+    .state('profile.subscription', {
+      url: '/subscription',
+      templateUrl: 'app/account/subscription/subscription.html',
+      controller: 'SubscriptionCtrl',
+      authenticate: true
     });
 });
