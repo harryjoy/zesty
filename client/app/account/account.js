@@ -74,6 +74,12 @@ angular.module('fullApp')
       controller: 'SubscriptionCtrl',
       authenticate: true
     })
+    .state('profile.recommended', {
+      url: '/recommended',
+      templateUrl: 'app/account/recommended/recommended.html',
+      controller: 'RecommendedCtrl',
+      authenticate: true
+    })
     .state('profile.deactivation', {
       url: '/deactivation',
       templateUrl: 'app/account/deactivation/deactivation.html',
