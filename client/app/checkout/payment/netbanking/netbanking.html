@@ -1,0 +1,32 @@
+<div class="account_box box box-solid">
+  <div class="box-body">
+    <h2 class="payment_header">Net Banking<i class="fa fa-keyboard-o pull-right"></i></h2>
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+        <div class="pad-3">
+          Pay using net banking of all popular banks.
+        </div>
+      </div>
+      <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+      	<br/>
+        <form role="form">
+        	<div class="form-group">
+        		<label>Select bank:</label>
+        		<select class="form-control">
+        			<option value="-1">-- Select a bank --</option>
+        			<option ng-repeat="bank in banks" value="{{bank.id}}">{{bank.name}}</option>
+        		</select>
+        	</div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="box-footer">
+  	<div class="payment-foot-note">
+  		<strong>Note:</strong> After clicking on the "Proceed" button, you will be directed to a secure gateway for payment. After completing the payment process, you will be redirected back to view details of your order.
+  	</div>
+  	<div class="payment-foot-note">
+  		By placing the order, you have read and agree to our <a class="text-muted" href="/terms-of-use">Terms Of Use</a> and <a class="text-muted" href="/privacy">Privacy Policy</a>.
+  	</div>
+  </div>
+</div>

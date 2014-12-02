@@ -7,14 +7,22 @@ angular.module('fullApp', [
   'btford.socket-io',
   'ui.router',
   'ui.bootstrap',
-  'datatables'
+  'datatables',
+  'reCAPTCHA'
 ])
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, reCAPTCHAProvider) {
     $urlRouterProvider
       .otherwise('/');
 
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
+
+    // required: please use your own key :)
+    reCAPTCHAProvider.setPublicKey('6Lfkk_4SAAAAACwIPxrbVf9od9nwmPBYSDmA2hra');
+    // optional: gets passed into the Recaptcha.create call
+    reCAPTCHAProvider.setOptions({
+      theme: 'clean'
+    });
   })
 
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
