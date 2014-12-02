@@ -15,9 +15,9 @@
               <h3>
                 Status:
                 <span ng-switch="user.subscription">
-                  <span ng-switch-when="1" class="bg-green pad-3">Active</span>
-                  <span ng-switch-when="0" class="bg-red pad-3">Deactive</span>
-                  <span ng-switch-when="-1" class="bg-black pad-3">-</span>
+                  <span ng-switch-when="1" class="label label-success">Active</span>
+                  <span ng-switch-when="0" class="label label-danger">Deactive</span>
+                  <span ng-switch-when="-1" class="label label-default">Not Available</span>
                 </span>
               </h3>
               Valid Till: <span class="validity-date">11 Sep. 2014</span>
