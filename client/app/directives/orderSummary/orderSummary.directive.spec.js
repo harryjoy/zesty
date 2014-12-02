@@ -3,7 +3,7 @@
 describe('Directive: orderSummary', function () {
 
   // load the directive's module and view
-  beforeEach(module('fullApp'));
+  beforeEach(module('zesty'));
   beforeEach(module('app/directives/orderSummary/orderSummary.html'));
 
   var element, scope;

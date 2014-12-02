@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .controller('AdminCtrl', function ($scope, $http, Auth, User) {
 
     // Use the User $resource to fetch all users

@@ -3,7 +3,7 @@
 /**
  * Removes server error when user updates input
  */
-angular.module('fullApp')
+angular.module('zesty')
   .directive('mongooseError', function () {
     return {
       restrict: 'A',

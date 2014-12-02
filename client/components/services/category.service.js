@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .service('CategoryServ', ['$rootScope', '$http', '$q', function ($rootScope, $http, $q) {
     return {
       categories: function (callback) {

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .directive('clearfix', function () {
     return {
       templateUrl: 'app/directives/clearfix/clearfix.html',

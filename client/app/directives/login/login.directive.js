@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .directive('login', function () {
     return {
       templateUrl: 'app/directives/login/login.html',

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .factory('Modal', function ($rootScope, $modal) {
     /**
      * Opens a modal

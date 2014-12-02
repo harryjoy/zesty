@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .config(function ($stateProvider) {
     $stateProvider
       .state('checkout', {

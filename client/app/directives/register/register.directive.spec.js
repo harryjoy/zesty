@@ -3,7 +3,7 @@
 describe('Directive: register', function () {
 
   // load the directive's module and view
-  beforeEach(module('fullApp'));
+  beforeEach(module('zesty'));
   beforeEach(module('app/directives/register/register.html'));
 
   var element, scope;

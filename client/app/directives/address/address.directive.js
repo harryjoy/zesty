@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .directive('addressForm', function () {
     return {
       templateUrl: 'app/directives/address/address.html',

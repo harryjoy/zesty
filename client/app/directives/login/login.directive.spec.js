@@ -3,7 +3,7 @@
 describe('Directive: login', function () {
 
   // load the directive's module and view
-  beforeEach(module('fullApp'));
+  beforeEach(module('zesty'));
   beforeEach(module('app/directives/login/login.html'));
 
   var element, scope;

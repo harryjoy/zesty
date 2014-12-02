@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .directive('reviewProgressBars', function () {
     return {
       templateUrl: 'app/directives/reviewProgressBars/reviewProgressBars.html',

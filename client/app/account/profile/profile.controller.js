@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .controller('ProfileCtrl', ['$scope', '$modal', 'Modal', function ($scope, $modal, Modal) {
     $scope.user = {
       firstName: 'Harsh',

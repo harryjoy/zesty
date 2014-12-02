@@ -15,7 +15,7 @@
  *          <span class="ladda-label">Submit</span>
  *      </button>
  */
-angular.module('fullApp')
+angular.module('zesty')
   .directive('uiLadda', ['$timeout', function ($timeout) {
     return {
       restrict: 'A',

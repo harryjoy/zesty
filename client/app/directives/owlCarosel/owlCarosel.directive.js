@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .directive('owlCarosel', function () {
     return {
       templateUrl: 'app/directives/owlCarosel/owlCarosel.html',

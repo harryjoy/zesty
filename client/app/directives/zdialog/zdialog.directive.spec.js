@@ -3,7 +3,7 @@
 describe('Directive: zdialog', function () {
 
   // load the directive's module and view
-  beforeEach(module('fullApp'));
+  beforeEach(module('zesty'));
   beforeEach(module('app/directives/zdialog/zdialog.html'));
 
   var element, scope;

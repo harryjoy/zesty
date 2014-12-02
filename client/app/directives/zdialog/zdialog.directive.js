@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .directive('zdialog', function () {
     return {
       templateUrl: 'app/directives/zdialog/zdialog.html',

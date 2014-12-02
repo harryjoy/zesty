@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .controller('DebitcardCtrl', ['$scope',
     function ($scope) {
 

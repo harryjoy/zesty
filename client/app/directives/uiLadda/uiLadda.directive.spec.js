@@ -3,7 +3,7 @@
 describe('Directive: uiLadda', function () {
 
   // load the directive's module
-  beforeEach(module('fullApp'));
+  beforeEach(module('zesty'));
 
   var element,
     scope;

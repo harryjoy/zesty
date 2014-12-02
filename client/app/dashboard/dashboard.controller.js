@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .controller('DashboardCtrl', ['$scope', 'DashboardServ', function ($scope, DashboardServ) {
     $scope.items = [];
     DashboardServ.items().then(function(items) {

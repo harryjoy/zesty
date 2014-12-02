@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .controller('OrderTableCtrl', ['$scope', 'DTOptionsBuilder', 'DTColumnDefBuilder',
       function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
     $scope.dtOptions = DTOptionsBuilder.newOptions().withBootstrap()

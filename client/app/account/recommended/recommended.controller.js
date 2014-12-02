@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .controller('RecommendedCtrl', ['$scope', 'DashboardServ',
     function ($scope, DashboardServ) {
 

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .controller('ProductCtrl', ['$scope', '$stateParams', 'ProductServ',
     function ($scope, $stateParams, ProductServ) {
     var productId = $stateParams.id;

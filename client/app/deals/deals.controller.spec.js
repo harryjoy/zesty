@@ -3,7 +3,7 @@
 describe('Controller: DealsCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('fullApp'));
+  beforeEach(module('zesty'));
 
   var DealsCtrl, scope;
 

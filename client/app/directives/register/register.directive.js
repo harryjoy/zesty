@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .directive('register', function () {
     return {
       templateUrl: 'app/directives/register/register.html',

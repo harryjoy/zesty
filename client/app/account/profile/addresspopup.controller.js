@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp').controller('AddressPopupCtrl', ['$scope', '$modalInstance', 'address', 'title',
+angular.module('zesty').controller('AddressPopupCtrl', ['$scope', '$modalInstance', 'address', 'title',
   function ($scope, $modalInstance, address, title) {
   	$scope.popup = {
   		'title' : title

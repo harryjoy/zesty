@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .controller('WritereviewCtrl', ['$scope', '$stateParams', function ($scope, $stateParams) {
     var productId = $stateParams.id;
     $scope.showFaq = true;

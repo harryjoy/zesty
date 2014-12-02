@@ -3,7 +3,7 @@
 describe('Directive: owlCarosel', function () {
 
   // load the directive's module and view
-  beforeEach(module('fullApp'));
+  beforeEach(module('zesty'));
   beforeEach(module('app/directives/owlCarosel/owlCarosel.html'));
 
   var element, scope;

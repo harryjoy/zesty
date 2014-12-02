@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .directive('orderSummary', function () {
     return {
       templateUrl: 'app/directives/orderSummary/orderSummary.html',

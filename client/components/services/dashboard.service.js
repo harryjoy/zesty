@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .service('DashboardServ', ['$rootScope', '$http', '$q', function ($rootScope, $http, $q) {
     return {
       items: function(callback) {

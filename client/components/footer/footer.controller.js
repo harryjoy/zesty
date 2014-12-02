@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .controller('FooterCtrl', ['$scope', function ($scope) {
     $scope.menu = [{
       'title': 'Home',

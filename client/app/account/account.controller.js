@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .controller('AccountCtrl', ['$scope', '$location', 'Auth', function ($scope, $location, Auth) {
     $scope.getCurrentUser = Auth.getCurrentUser;
     $scope.isActive = function(route) {

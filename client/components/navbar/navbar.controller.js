@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .controller('NavbarCtrl', ['$scope', '$location', 'Auth', 'DashboardServ',
     function ($scope, $location, Auth, DashboardServ) {
     $scope.menu = [{

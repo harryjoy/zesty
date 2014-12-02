@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .controller('NewCtrl', function ($scope) {
     $scope.message = 'Hello';
   });

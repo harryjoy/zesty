@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .service('ProductServ', ['$rootScope', '$http', '$q', function ($rootScope, $http, $q) {
     return {
       details: function (productId, callback) {

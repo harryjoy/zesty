@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .controller('WishlistCtrl', ['$scope', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'Modal',
       function ($scope, DTOptionsBuilder, DTColumnDefBuilder, Modal) {
     $scope.dtOptions = DTOptionsBuilder.newOptions().withBootstrap()

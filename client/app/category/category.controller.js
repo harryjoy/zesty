@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .controller('CategoryCtrl', ['$scope', '$stateParams', 'CategoryServ',
 	  function ($scope, $stateParams, CategoryServ) {
 		var categoryId = $stateParams.id;

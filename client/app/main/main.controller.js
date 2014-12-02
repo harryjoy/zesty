@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fullApp')
+angular.module('zesty')
   .controller('MainCtrl', ['$scope', '$http', 'socket', 'DashboardServ', 'Auth',
     function ($scope, $http, socket, DashboardServ, Auth) {
     $scope.awesomeThings = [];

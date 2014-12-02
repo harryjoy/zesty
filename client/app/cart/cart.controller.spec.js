@@ -3,7 +3,7 @@
 describe('Controller: CartCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('fullApp'));
+  beforeEach(module('zesty'));
 
   var CartCtrl, scope;
 
