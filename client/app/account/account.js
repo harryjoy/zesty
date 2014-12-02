@@ -85,5 +85,11 @@ angular.module('fullApp')
       templateUrl: 'app/account/deactivation/deactivation.html',
       controller: 'DeactivationCtrl',
       authenticate: true
+    })
+    .state('profile.notifications', {
+      url: '/notifications',
+      templateUrl: 'app/account/notification/notification.html',
+      controller: 'NotificationCtrl',
+      authenticate: true
     });
 });
