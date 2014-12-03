@@ -8,7 +8,7 @@
         If you have an account with us, please log in.
       </div>
       <div class="form-group">
-        <div class="alert alert-danger" role="alert" ng-show="(form.email.$error.required || form.password.$error.required) && submitted">
+        <div class="alert alert-danger" role="alert" ng-show="!form.$valid && submitted">
           <i class="fa fa-warning"></i>
           <p class="help-block" ng-show="form.email.$error.required && submitted">
              Please enter your email address.
@@ -22,11 +22,13 @@
           <p class="help-block">{{ errors.other }}</p>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" ng-class="{ 'has-success': form.email.$valid && submitted,
+                                            'has-error': form.email.$invalid && submitted }">
         <label for="login_username">Email address</label>
         <input type="email" class="form-control" name="email" id="login_username" placeholder="Enter email address" ng-model="user.email" required>
       </div>
-      <div class="form-group">
+      <div class="form-group" ng-class="{ 'has-success': form.password.$valid && submitted,
+                                            'has-error': form.password.$invalid && submitted }">
         <label for="login_password">Password</label>
         <input type="password" class="form-control" name="password" id="login_password" placeholder="Password" ng-model="user.password" required>
       </div>
@@ -39,15 +41,14 @@
     <div class="box-footer">
       <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-sign-in"></i> Let me In</button>
       <span class="pull-right">
-        Don't have an account?
         <a class="text-muted" href="/signup">
-          Register Now
+          Register <i class="fa fa-angle-double-right"></i>
         </a>
       </span>
     </div>
     <div class="box-footer text-center">
       - OR -
-      <div>
+      <div class="login-social">
         <a class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
           <i class="fa fa-facebook"></i> Connect with Facebook
         </a>
@@ -64,7 +65,7 @@
 
 <!--
 login dialog usage
-<zdialog visible="showSignupOffer" header="" contentclass="login-modal-content">
+<zdialog visible="showLoginDialog" header="" contentclass="login-modal-content">
   <login></login>
 </zdialog>
 -->

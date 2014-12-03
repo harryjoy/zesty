@@ -21,6 +21,7 @@ angular.module('zesty')
         })
         .catch( function(err) {
           $scope.errors.other = err.message;
+          form.$valid = false;
         });
       }
     };

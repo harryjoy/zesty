@@ -1,63 +1,24 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			<h1> <i class="fa fa-lock"></i> Authentication </h1>
+			<h1 class="page-header">
+        <span class="text-big">
+          <i class="fa fa-lock"></i> Authentication
+        </span>
+      </h1>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-4 col-sm-6 auth_box">
 			<h3 class="auth_header">Registered Customers</h3>
 			<div class="auth_conent_area">
-        <div class="auth_guest_notice">
-          If you have an account with us, please log in.
-        </div>
-				<form role="form">
-          <div class="form-group">
-            <label for="login_username">Email address</label>
-            <input type="email" class="form-control" id="login_username" placeholder="Enter email">
-          </div>
-          <div class="form-group">
-            <label for="login_password">Password</label>
-            <input type="password" class="form-control" id="login_password" placeholder="Password">
-          </div>
-          <div class="form-group">
-          	<p class="pull-right"><a title="Recover your forgotten password" href="/forgotPassword">Forgot your password? </a></p>
-          	<input type="checkbox" name="remember_me" id="login_remember_me">
-            <label for="login_remember_me" class="auth_remember_me"> Remember me </label>
-          </div>
-          <button type="submit" class="btn btn-success"><i class="fa fa-sign-in"></i> Sign In</button>
-        </form>
+        <login></login>
 			</div>
 		</div>
 		<div class="col-md-4 col-sm-6 auth_box">
 			<h3 class="auth_header">Create An Account</h3>
 			<div class="auth_conent_area">
-        <div class="auth_guest_notice">
-          By creating an account with our store, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.
-        </div>
-				<form role="form">
-          <div class="form-group">
-            <label for="reg_name">Name</label>
-            <input type="text" class="form-control" id="reg_name" placeholder="Enter Name">
-          </div>
-          <div class="form-group">
-            <label for="reg_username">Email address</label>
-            <input type="email" class="form-control" id="reg_username" placeholder="Enter email">
-          </div>
-          <div class="form-group">
-            <label for="reg_password">Password</label>
-            <input type="password" class="form-control" id="reg_password" placeholder="Password">
-          </div>
-          <div class="form-group">
-            <label for="reg_confirm_password">Confirm Password</label>
-            <input type="password" class="form-control" id="reg_confirm_password" placeholder="Retype Password">
-          </div>
-          <div class="form-group">
-          	<input type="checkbox" name="reg_tnc" id="reg_tnc">
-            <label for="reg_tnc" class="auth_remember_me"> I accept <a>terms & conditions</a> </label>
-          </div>
-          <button type="submit" class="btn btn-primary"><i class="fa fa-users"></i> Sign Up</button>
-        </form>
+        <register></register>
 			</div>
 		</div>
 		<div class="col-md-4 col-sm-6 auth_box">

@@ -1,1 +1,102 @@
-<div>this is the register directive</div>
+<div class="box box-solid box-warning login-box" ng-controller="SignupCtrl">
+  <div class="box-header">
+    <h3 class="box-title">Register</h3>
+  </div>
+  <form class="form" name="form" ng-submit="register(form)" novalidate>
+    <div class="box-body">
+      <div class="login-notice">
+        By creating an account with our store, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.
+      </div>
+      <div class="form-group">
+        <div class="alert alert-danger" role="alert" ng-show="!form.$valid && submitted">
+          <i class="fa fa-warning"></i>
+          <p class="help-block" ng-show="form.name.$error.required && submitted">
+						Please enter your name.
+          </p>
+          <p class="help-block" ng-show="form.email.$error.required && submitted">
+            Please enter an email address.
+          </p>
+          <p class="help-block" ng-show="form.email.$error.email && submitted">
+            Please enter a valid email address.
+          </p>
+          <p class="help-block" ng-show="form.email.$error.mongoose">
+            {{ errors.email }}
+          </p>
+          <p class="help-block" ng-show="form.password.$error.required && submitted">
+            Please enter a password.
+          </p>
+          <p class="help-block" ng-show="form.password.$error.minlength && submitted">
+            Password must be at least 4 characters.
+          </p>
+          <p class="help-block" ng-show="form.password.$error.mongoose">
+            {{ errors.password }}
+          </p>
+          <p class="help-block" ng-show="form.confirm_password.$error.required && submitted">
+            Please enter confirm password.
+          </p>
+          <p class="help-block" ng-show="form.confirm_password.$error.minlength && submitted">
+            Confirm Password must be at least 4 characters.
+          </p>
+          <p class="help-block" ng-show="form.reg_tnc.$error.required && submitted">
+            Please read and accept our <a href="/terms-and-conditions" class="alert-link">Terms & Conditions</a>.
+          </p>
+          <p class="help-block">{{ errors.other }}</p>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{ 'has-success': form.name.$valid && submitted,
+                                            'has-error': form.name.$invalid && submitted }">
+	      <label for="reg_name">Name</label>
+	      <input type="text" class="form-control" id="reg_name" name="name" placeholder="Enter Name" ng-model="user.name" required />
+	    </div>
+	    <div class="form-group" ng-class="{ 'has-success': form.email.$valid && submitted,
+                                            'has-error': form.email.$invalid && submitted }">
+	      <label for="reg_username">Email address</label>
+	      <input type="email" class="form-control" id="reg_username" name="email" placeholder="Enter email" ng-model="user.email" required mongoose-error />
+	    </div>
+	    <div class="form-group" ng-class="{ 'has-success': form.password.$valid && submitted,
+                                            'has-error': form.password.$invalid && submitted }">
+	      <label for="reg_password">Password</label>
+	      <input type="password" class="form-control" id="reg_password" name="password" placeholder="Password" ng-model="user.password" ng-minlength="4" required mongoose-error />
+	    </div>
+	    <div class="form-group" ng-class="{ 'has-success': form.confirm_password.$valid && submitted,
+                                            'has-error': form.confirm_password.$invalid && submitted }">
+	      <label for="reg_confirm_password">Confirm Password</label>
+	      <input type="password" class="form-control" id="reg_confirm_password" name="confirm_password" placeholder="Retype Password" ng-model="user.confrimPassword" ng-minlength="4" required />
+	    </div>
+	    <div class="form-group" ng-class="{ 'has-success': form.reg_tnc.$valid && submitted,
+                                            'has-error': form.reg_tnc.$invalid && submitted }">
+	    	<input type="checkbox" name="reg_tnc" id="reg_tnc" ng-model="user.tnc" required>
+	      <label for="reg_tnc" class="auth_remember_me"> I accept <a href="/terms-and-conditions">Terms & Conditions</a>.</label>
+	    </div>
+    </div>
+    <div class="box-footer">
+      <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-users"></i> Register</button>
+      <span class="pull-right">
+        <a class="text-muted" href="/login">
+          Login <i class="fa fa-angle-double-right"></i>
+        </a>
+      </span>
+    </div>
+    <div class="box-footer text-center">
+      - OR Join With -
+      <div class="login-social">
+        <a class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
+          <i class="fa fa-facebook"></i> Connect with Facebook
+        </a>
+        <a class="btn btn-google-plus" href="" ng-click="loginOauth('google')">
+          <i class="fa fa-google-plus"></i> Connect with Google+
+        </a>
+        <a class="btn btn-twitter" href="" ng-click="loginOauth('twitter')">
+          <i class="fa fa-twitter"></i> Connect with Twitter
+        </a>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!--
+login dialog usage
+<zdialog visible="showRegisterDialog" header="" contentclass="login-modal-content">
+  <register></register>
+</zdialog>
+-->
