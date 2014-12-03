@@ -8,7 +8,9 @@ angular.module('zesty', [
   'ui.router',
   'ui.bootstrap',
   'datatables',
-  'reCAPTCHA'
+  'reCAPTCHA',
+  'ui.select2',
+  'ImageZoom'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, reCAPTCHAProvider) {
     $urlRouterProvider

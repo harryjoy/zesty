@@ -2,5 +2,5 @@
 
 angular.module('zesty')
   .controller('DealsCtrl', function ($scope) {
-    $scope.message = 'Hello';
+    
   });

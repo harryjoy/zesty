@@ -19,7 +19,12 @@ angular.module('zesty')
         'rating': product.rating ? product.rating : 0,
         'suppliers': product.suppliers
       };
+      $scope.largeImageSrc = $scope.itemDetails.mainImage;
     });
+        
+    $scope.displayLargeImg = function (src) {
+      $scope.largeImageSrc = src;
+    };
 
     $scope.items = [];
     ProductServ.related(productId).then(function(items) {

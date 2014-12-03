@@ -41,11 +41,14 @@
         </div>
         <div class="form-group">
           <label for="bill_addr_country">Country</label>
-          <input type="text" class="form-control" id="bill_addr_country" placeholder="Country" ng-model="address.country">
+          <select id="bill_addr_country" ui-select2 ng-model="address.country" placeholder="Select Country" style="width: 100%" class="flat">
+            <option value=""></option>
+            <option ng-repeat="country in countries" value="{{country}}">{{country.name}}</option>
+          </select>
         </div>
       </div>
       <div class="col-md-6 col-sm-12">
-        <h2>Your Personal Details</h2>
+        <h2>Personal Details</h2>
         <div class="row">
           <div class="col-md-6 col-sm-12">
             <div class="form-group">

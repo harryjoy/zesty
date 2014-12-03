@@ -1,0 +1,49 @@
+<div class="container">
+	<div class="box">
+		<div class="box-body">
+			<div class="row product-info-box">
+		  	<div class="col-md-4 col-sm-6">
+		  		<div class="row product-info-box">
+		  			<div class="col-md-12 col-sm-12">
+		  				<div class="thumbnail img-responsive" image-src="{{largeImageSrc}}" image-zoom data-template-url="app/product/image-zoom.html"></div>
+						</div>
+						<div class="col-md-3 col-sm-4">
+		  				<img src="{{product.mainImage}}" ng-click="displayLargeImg(product.mainImage);" class="thumbnail img-responsive text-cursor-pointer" />
+						</div>
+						<div class="col-md-3 col-sm-4" ng-repeat="img in product.images">
+		  				<img src="{{img}}" ng-click="displayLargeImg(img);" class="thumbnail img-responsive text-cursor-pointer" />
+						</div>
+					</div>
+					
+				</div>
+				<div class="col-md-8 col-sm-6">
+					<h2 class="product-title">{{product.title}}</h2>
+					<div class="product-price text-big">{{product.priceUnit}} {{product.discountedPrice}} <small class="text-normal"><s>{{product.priceUnit}} {{product.price}}</s></small></div>
+					<div class="product-description">{{product.description}}</div>
+					<div class="product-filters">
+						<div class="number form-group">
+		          <label class="control-label" for="number">Quantity:</label>
+		          <input type="number" class="form-control input-sm flat" id="number" value="1" />
+		        </div>
+					</div>
+					<hr/>
+					<div class="product-actions">
+						<button class="btn btn-primary">Add to cart</button>
+						<button class="btn btn-default">Add to wishlist</button>
+					</div>
+					<hr/>
+					<div class="product-sharing">
+						<h3>Share:</h3>
+						<i class="fa fa-facebook share-link"></i>
+						<i class="fa fa-twitter share-link light-blue"></i>
+						<i class="fa fa-google-plus share-link red"></i>
+					</div>
+				</div>
+
+				<div class="col-md-12 col-sm-12 col-lg-12">
+					{{product.summary}}
+				</div>
+		  </div>
+		</div>
+	</div>
+</div>

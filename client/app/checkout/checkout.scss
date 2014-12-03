@@ -4,7 +4,7 @@
 	/*display: inline-block;*/
 	line-height: 15px;
 	box-sizing: border-box;
-	@include border-radius(5px);
+	@include border-radius(2px);
 
 	.cart_step {
 		display: inline-block;
@@ -36,12 +36,12 @@
 
 		&:first-child {
 			padding-left: 15px;
-			@include border-radius-sep(5px, 0px, 5px, 0px);
+			@include border-radius-sep(2px, 0px, 2px, 0px);
 		}
 
 		&:last-child {
 			margin-right: 0px;
-			@include border-radius-sep(0px, 5px, 0px, 5px);
+			@include border-radius-sep(0px, 2px, 0px, 2px);
 
 			&:after {
 				display: none;
@@ -49,7 +49,7 @@
 		}
 
 		&:only-child{
-			@include border-radius(5px);
+			@include border-radius(2px);
 
 			&:after {
 				display: none;

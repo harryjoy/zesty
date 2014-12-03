@@ -4,15 +4,18 @@
 	<div class="thumbnail">
 	  <div class="row">
 	    <div class="col-sm-6">
-				<div class="thumbnail flat">
-					<img class="img-responsive" src="{{itemDetails.mainImage}}" alt="" />
-				</div>
-	      <div class="thumbnails row">
-	        <div class="col-xs-3" ng-repeat="image in itemDetails.images">
-	          <a href="#"><img src="{{image}}" alt="" class="img-thumbnail img-responsive" /></a>
-	        </div>
-	      </div>
-	    </div>
+	    	<div class='row'>
+	    		<div class="col-md-12 col-sm-12">
+	  				<div class="thumbnail img-responsive" image-src="{{largeImageSrc}}" image-zoom data-template-url="app/product/image-zoom.html"></div>
+					</div>
+					<div class="col-md-3 col-sm-4">
+	  				<img src="{{itemDetails.mainImage}}" ng-click="displayLargeImg(itemDetails.mainImage);" class="thumbnail img-responsive text-cursor-pointer" />
+					</div>
+					<div class="col-md-3 col-sm-4" ng-repeat="img in itemDetails.images">
+	  				<img src="{{img}}" ng-click="displayLargeImg(img);" class="thumbnail img-responsive text-cursor-pointer" />
+					</div>
+	    	</div>
+	    </div> <!-- image col end -->
 			<div class="col-sm-6">
 			  <h4 class="pull-right">{{itemDetails.price}}</h4>
 			  <h4><a href="#">{{itemDetails.title}}</a></h4>
