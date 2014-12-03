@@ -3,28 +3,23 @@
 angular.module('zesty')
   .controller('ProductCtrl', ['$scope', '$stateParams', 'ProductServ',
     function ($scope, $stateParams, ProductServ) {
-    var productId = $stateParams.id;
+  var productId = $stateParams.id;
 
-    ProductServ.details(productId).then(function (product) {
-      $scope.itemDetails = {
-        'id': product._id,
-        'link': '/product/' + product._id,
-        'title': product.title,
-        'price': product.currency + ' ' + product.price,
-        'reviewsCount': product.reviews ? product.reviews : 0,
-        'description': product.description,
-        'summary': product.summary,
-        'mainImage': product.mainImage,
-        'images': product.images,
-        'rating': product.rating ? product.rating : 0,
-        'suppliers': product.suppliers
-      };
-      $scope.largeImageSrc = $scope.itemDetails.mainImage;
-    });
-        
-    $scope.displayLargeImg = function (src) {
-      $scope.largeImageSrc = src;
+  ProductServ.details(productId).then(function (product) {
+    $scope.itemDetails = {
+      'id': product._id,
+      'link': '/product/' + product._id,
+      'title': product.title,
+      'price': product.currency + ' ' + product.price,
+      'reviewsCount': product.reviews ? product.reviews : 0,
+      'description': product.description,
+      'summary': product.summary,
+      'mainImage': product.mainImage,
+      'images': product.images,
+      'rating': product.rating ? product.rating : 0,
+      'suppliers': product.suppliers
     };
+    $scope.largeImageSrc = $scope.itemDetails.mainImage;
 
     $scope.items = [];
     ProductServ.related(productId).then(function(items) {
@@ -45,4 +40,12 @@ angular.module('zesty')
     ProductServ.reviews(productId).then(function (reviews) {
       $scope.itemReviews = reviews;
     });
-  }]);
+  }).catch(function (err) {
+    $scope.productGetError = true;
+    $scope.errors = err;
+  });
+
+  $scope.displayLargeImg = function (src) {
+    $scope.largeImageSrc = src;
+  };
+}]);
