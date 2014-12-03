@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('CheckoutCtrl', ['$scope', '$location', function ($scope, $location) {
+  .controller('CheckoutCtrl', ['$scope', '$location', 'Auth', function ($scope, $location, Auth) {
     $scope.isActive = function(route) {
       return route === $location.path();
     };
@@ -16,4 +16,8 @@ angular.module('zesty')
       });
       return match;
     };
+
+    Auth.isLoggedInAsync(function(loggedIn) {
+      $scope.loggedIn = loggedIn;
+    });
   }]);

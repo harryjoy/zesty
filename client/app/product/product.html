@@ -8,10 +8,10 @@
 	    		<div class="col-md-12 col-sm-12">
 	  				<div class="thumbnail img-responsive" image-src="{{largeImageSrc}}" image-zoom data-template-url="app/product/image-zoom.html"></div>
 					</div>
-					<div class="col-md-3 col-sm-4">
+					<div class="col-md-2 col-sm-4">
 	  				<img src="{{itemDetails.mainImage}}" ng-click="displayLargeImg(itemDetails.mainImage);" class="thumbnail img-responsive text-cursor-pointer" />
 					</div>
-					<div class="col-md-3 col-sm-4" ng-repeat="img in itemDetails.images">
+					<div class="col-md-2 col-sm-4" ng-repeat="img in itemDetails.images">
 	  				<img src="{{img}}" ng-click="displayLargeImg(img);" class="thumbnail img-responsive text-cursor-pointer" />
 					</div>
 	    	</div>
