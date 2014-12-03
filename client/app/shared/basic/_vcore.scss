@@ -402,6 +402,14 @@ table.text-center {
 
 .form-control {
     font-family: 'lora';
+
+    /*&.ng-invalid {
+        border-color: $red;
+    }*/
+}
+
+.border-red {
+    border-color: $red;
 }
 
 .text-cursor-pointer {
