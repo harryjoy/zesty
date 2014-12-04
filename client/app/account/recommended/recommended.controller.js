@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('RecommendedCtrl', ['$scope', 'DashboardServ',
-    function ($scope, DashboardServ) {
+  .controller('RecommendedCtrl', ['$scope', 'ProductServ',
+    function ($scope, ProductServ) {
 
   $scope.siteName = 'Zesty';
   $scope.items = [];
-  DashboardServ.items().then(function(items) {
+  ProductServ.query().$promise.then(function(items) {
     $.each(items, function (key, item) {
       $scope.items.push({
         'link': '/product/' + item._id,

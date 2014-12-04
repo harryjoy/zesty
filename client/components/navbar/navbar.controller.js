@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('NavbarCtrl', ['$scope', '$location', 'Auth', 'DashboardServ',
-    function ($scope, $location, Auth, DashboardServ) {
+  .controller('NavbarCtrl', ['$scope', '$location', 'Auth', 'CategoryServ', 'ProductServ',
+    function ($scope, $location, Auth, CategoryServ, ProductServ) {
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
@@ -16,12 +16,12 @@ angular.module('zesty')
     $scope.cartItems = '';
     $scope.appName = 'Zesty';
 
-    DashboardServ.categories().then(function(items) {
-        $scope.categories = items;
+    CategoryServ.query().$promise.then(function(categories) {
+        $scope.categories = categories;
       });
 
     $scope.items = [];
-    DashboardServ.items().then(function(items) {
+    ProductServ.query().$promise.then(function(items) {
         $.each(items, function (key, item) {
           $scope.items.push({
             'link': '/product/' + item._id,

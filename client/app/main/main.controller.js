@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('MainCtrl', ['$scope', '$http', 'socket', 'DashboardServ', 'Auth',
-    function ($scope, $http, socket, DashboardServ, Auth) {
+  .controller('MainCtrl', ['$scope', '$http', 'socket', 'CategoryServ', 'Auth', 'ProductServ',
+    function ($scope, $http, socket, CategoryServ, Auth, ProductServ) {
     $scope.awesomeThings = [];
 
     $scope.addThing = function() {
@@ -23,7 +23,7 @@ angular.module('zesty')
 
     $scope.items = [];
     $scope.slides = [];
-    DashboardServ.items().then(function(items) {
+    ProductServ.query().$promise.then(function (items){
       $.each(items, function (key, item) {
         $scope.items.push({
           'link': '/product/' + item._id,
@@ -42,8 +42,8 @@ angular.module('zesty')
         });
       });
     });
-    DashboardServ.categories().then(function(items) {
-      $scope.categories = items;
+    CategoryServ.query().$promise.then(function(categories) {
+      $scope.categories = categories;
     });
 
     Auth.isLoggedInAsync(function(loggedIn) {

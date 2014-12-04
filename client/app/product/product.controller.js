@@ -5,7 +5,10 @@ angular.module('zesty')
     function ($scope, $stateParams, ProductServ) {
   var productId = $stateParams.id;
 
-  ProductServ.details(productId).then(function (product) {
+  ProductServ.get({id: productId}).$promise.then(function(product) {
+    if (!product) {
+      throw new Error('No product details found for selected item.');
+    }
     $scope.itemDetails = {
       'id': product._id,
       'link': '/product/' + product._id,
@@ -20,29 +23,43 @@ angular.module('zesty')
       'suppliers': product.suppliers
     };
     $scope.largeImageSrc = $scope.itemDetails.mainImage;
-
+  }).then(function() {
     $scope.items = [];
-    ProductServ.related(productId).then(function(items) {
-      $.each(items, function (key, item) {
-        $scope.items.push({
-          'link': '/product/' + item._id,
-          'title': item.title,
-          'price': item.currency + ' ' + item.price,
-          'reviews': item.reviews ? item.reviews : 0,
-          'description': item.description,
-          'categories': item.categories,
-          'mainImage': item.mainImage,
-          'rating': item.rating ? item.rating : 0
+    ProductServ.related({id: productId}).$promise.then(function(items) {
+      if (items && items.length > 0) {
+        $.each(items, function (key, item) {
+          $scope.items.push({
+            'link': '/product/' + item._id,
+            'title': item.title,
+            'price': item.currency + ' ' + item.price,
+            'reviews': item.reviews ? item.reviews : 0,
+            'description': item.description,
+            'categories': item.categories,
+            'mainImage': item.mainImage,
+            'rating': item.rating ? item.rating : 0
+          });
         });
-      });
+      } else {
+        throw new Error('No related products found for this product.');
+      }
+    }).catch(function (err) {
+      $scope.productRelatedGetError = true;
+      $scope.relatedError = err;
     });
-
-    ProductServ.reviews(productId).then(function (reviews) {
-      $scope.itemReviews = reviews;
+  }).then(function () {
+    ProductServ.reviews({id: productId}).$promise.then(function(reviews) {
+      if (reviews && reviews.length > 0) {
+        $scope.itemReviews = reviews;
+      } else {
+        throw new Error('No reviews found for this product.');
+      }
+    }).catch(function (err) {
+      $scope.productReviewGetError = true;
+      $scope.rewviewError = err;
     });
   }).catch(function (err) {
     $scope.productGetError = true;
-    $scope.errors = err;
+    $scope.error = err;
   });
 
   $scope.displayLargeImg = function (src) {
