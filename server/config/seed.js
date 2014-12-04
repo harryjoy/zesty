@@ -282,17 +282,52 @@ Item.find({}).remove(function() {
 User.find({}).remove(function() {
   User.create({
     provider: 'local',
-    name: 'Test User',
+    firstName: 'Test',
+    lastName: 'User',
     email: 'test@test.com',
     password: 'test',
-    mobile: '99xxyyzz00'
+    mobile: '9998989800',
+    gender: 'M',
+    newsletter: true,
+    specialOffers: false,
+    addresses: [{
+      title: 'Home address',
+      firstName: 'Harry',
+      lastName: 'Joy',
+      email: 'harry@joy.com',
+      mobile: '9898989859',
+      addressLine1: 'E-603, Vandemataram Icon',
+      addressLine2: 'Near Vandemataram Cross Road, Gota',
+      city: 'Ahmedabad',
+      state: 'Gujarat',
+      country: 'IN',
+      zipcode: '382461',
+      isDefault: true
+    },{
+      title: 'Company address',
+      firstName: 'Harsh',
+      lastName: 'Raval',
+      email: 'harsh@zymr.com',
+      mobile: '9999877059',
+      addressLine1: 'A/5, 2nd Floor, Safal Profitier',
+      addressLine2: 'Corporate Road, Nr. Prahladnagar Garden',
+      city: 'Ahmedabad',
+      state: 'Gujarat',
+      country: 'IN',
+      zipcode: '380015',
+      isDefault: false
+    }]
   }, {
     provider: 'local',
     role: 'admin',
-    name: 'Admin',
+    firstName: 'Admin',
+    lastName: 'Super',
     email: 'admin@admin.com',
     password: 'admin',
-    mobile: '99xxyyzz00'
+    mobile: '9998989800',
+    gender: 'F',
+    newsletter: true,
+    specialOffers: true
   }, function() {
       console.log('finished populating users');
     }

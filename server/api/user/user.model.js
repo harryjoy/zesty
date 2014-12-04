@@ -6,12 +6,35 @@ var crypto = require('crypto');
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
 
 var UserSchema = new Schema({
-  name: String,
+  firstName: String,
+  lastName: String,
+  mobile: String,
+  landline: String,
+  gender: String,
   email: { type: String, lowercase: true },
+  newsletter: Boolean,
+  specialOffers: Boolean,
   role: {
     type: String,
     default: 'user'
   },
+  addresses: [{
+    title: String,
+    firstName: String,
+    lastName: String,
+    email: String,
+    mobile: String,
+    addressLine1: String,
+    addressLine2: String,
+    city: String,
+    state: String,
+    country: String,
+    zipcode: String,
+    isDefault: {
+      type: Boolean,
+      default: false
+    }
+  }],
   hashedPassword: String,
   provider: String,
   salt: String,
@@ -32,7 +55,18 @@ UserSchema
     this.hashedPassword = this.encryptPassword(password);
   })
   .get(function() {
-    return this._password;
+     return this._password;
+  });
+
+UserSchema
+  .virtual('name')
+  .set(function(name) {
+    var split = name.split(' ');
+    this.firstName = split[0];
+    this.lastName = split[1];
+  })
+  .get(function() {
+    return this.firstName + ' ' + this.lastName;
   });
 
 // Public profile information

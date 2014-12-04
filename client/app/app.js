@@ -10,7 +10,8 @@ angular.module('zesty', [
   'datatables',
   'reCAPTCHA',
   'ui.select2',
-  'ImageZoom'
+  'ImageZoom',
+  'green.inputmask4angular'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, reCAPTCHAProvider) {
     $urlRouterProvider

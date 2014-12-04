@@ -10,7 +10,6 @@ angular.module('zesty')
       $scope.submitted = true;
 
       if(form.$valid) {
-        console.log('in it');
         Auth.login({
           email: $scope.user.email,
           password: $scope.user.password

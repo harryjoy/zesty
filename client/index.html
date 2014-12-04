@@ -21,6 +21,7 @@
       <link rel="stylesheet" href="bower_components/ladda-bootstrap/dist/ladda-themeless.css" />
       <link rel="stylesheet" href="bower_components/select2/select2.css" />
       <link rel="stylesheet" href="bower_components/angular-image-zoom/dist/image-zoom.css" />
+      <link rel="stylesheet" href="bower_components/ngtoast/dist/ngToast.css" />
       <!-- endbower -->
       <link rel="stylesheet" href="bower_components/owl-carousel/owl-carousel/owl.carousel.css" />
       <link rel="stylesheet" href="bower_components/owl-carousel/owl-carousel/owl.theme.css" />
@@ -36,7 +37,6 @@
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
     <div ng-include="'components/navbar/navbar.html'"></div>
     <!-- Add your site or application content here -->
     <div ui-view=""></div>
@@ -65,7 +65,6 @@
       <script src="bower_components/angular-cookies/angular-cookies.js"></script>
       <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
       <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-      <script src="bower_components/lodash/dist/lodash.compat.js"></script>
       <script src="bower_components/angular-socket-io/socket.js"></script>
       <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
       <script src="bower_components/bootstrap-wysihtml5/src/bootstrap-wysihtml5.js"></script>
@@ -92,10 +91,16 @@
       <script src="bower_components/select2/select2.js"></script>
       <script src="bower_components/angular-ui-select2/src/select2.js"></script>
       <script src="bower_components/angular-image-zoom/dist/image-zoom.js"></script>
+      <script src="bower_components/lodash/dist/lodash.compat.js"></script>
+      <script src="bower_components/angular-animate/angular-animate.js"></script>
+      <script src="bower_components/ngtoast/dist/ngToast.js"></script>
       <!-- endbower -->
       <script src="socket.io-client/socket.io.js"></script>
       <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
       <script src="bower_components/owl-carousel/owl-carousel/owl.carousel.min.js"></script>
+      <script src="bower_components/jquery.inputmask/dist/jquery.inputmask.bundle.min.js"></script>
+      <script src="bower_components/angular-inputmask/src/green.inputmask4angular.js"></script>
+
     <!-- endbuild -->
 
         <!-- build:js({.tmp,client}) app/app.js -->
@@ -169,6 +174,7 @@
           <script src="components/navbar/navbar.controller.js"></script>
           <script src="components/services/category.service.js"></script>
           <script src="components/services/file.service.js"></script>
+          <script src="components/services/lodash.service.js"></script>
           <script src="components/services/product.service.js"></script>
           <script src="components/socket/socket.service.js"></script>
           <!-- endinjector -->

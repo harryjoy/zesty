@@ -20,57 +20,114 @@
 	<div class="row">
 	  <div class="col-lg-6 col-md-6 col-sm-12">
       <!-- start profile form -->
-      <form class="form" role="form">
+      <form class="form" role="form" name="profileForm" ng-submit="updateProfile(profileForm)" novalidate>
   	    <div class="box box-success">
   	    	<div class="box-header">
             <h3 class="box-title">User info</h3>
           </div>
           <div class="box-body">
-              <div class="form-group">
-                <label class="control-label">First name:</label>
-                <div class="">
-                  <input class="form-control flat" type="text" ng-model="user.firstName">
-                </div>
+            <div class="form-group">
+              <div class="alert alert-danger" role="alert" ng-show="!profileForm.$valid && profileSubmitted">
+                <i class="fa fa-warning"></i>
+                <p class="help-block" ng-show="profileForm.firstName.$error.required && profileSubmitted">
+                   Please enter your first name.
+                </p>
+                <p class="help-block" ng-show="profileForm.firstName.$error.minlength && profileSubmitted">
+                   Firstname must be at least 3 characters long.
+                </p>
+                <p class="help-block" ng-show="profileForm.lastName.$error.required && profileSubmitted">
+                   Please enter your last name.
+                </p>
+                <p class="help-block" ng-show="profileForm.lastName.$error.minlength && profileSubmitted">
+                   Lastname must be at least 3 characters long.
+                </p>
+                <p class="help-block" ng-show="profileForm.mobile.$error.required && profileSubmitted">
+                   Please enter your mobile number.
+                </p>
+                <p class="help-block" ng-show="profileForm.mobile.$error.minlength && profileSubmitted">
+                   Mobile must be at least 10 characters long.
+                </p>
+                <p class="help-block" ng-show="profileForm.mobile.$error.pattern && profileSubmitted">
+                   Please enter a valid mobile number.
+                </p>
+                <p class="help-block">{{ errors.profile }}</p>
               </div>
-              <div class="form-group">
-                <label class="control-label">Last name:</label>
-                <div class="">
-                  <input class="form-control flat" type="text" ng-model="user.lastName">
-                </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-success': profileForm.firstName.$valid && profileSubmitted, 'has-error': profileForm.firstName.$invalid && profileSubmitted }">
+              <label class="control-label">First name:</label>
+              <div class="">
+                <input class="form-control flat" type="text" ng-model="user.firstName" name="firstName" required ng-minlength="3" ng-disabled="profileLoader" />
               </div>
-              <div class="form-group">
-                <label class="control-label">Company:</label>
-                <div class="">
-                  <input class="form-control flat" type="text" ng-model="user.company">
-                </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-success': profileForm.lastName.$valid && profileSubmitted, 'has-error': profileForm.lastName.$invalid && profileSubmitted }">
+              <label class="control-label">Last name:</label>
+              <div class="">
+                <input class="form-control flat" type="text" ng-model="user.lastName" name="lastName" required ng-minlength="3" ng-disabled="profileLoader" />
               </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-success': profileForm.mobile.$valid && profileSubmitted, 'has-error': profileForm.mobile.$invalid && profileSubmitted }">
+              <label class="control-label">Mobile:</label>
+              <div class="">
+                <input class="form-control flat" type="text" ng-model="user.mobile" name="mobile" required ng-minlength="10" input-mask="'mask'" mask-option="{'mask': '999-999-9999'}" ng-disabled="profileLoader" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Landline:</label>
+              <div class="">
+                <input class="form-control flat" type="text" name="landline" ng-model="user.landline" ng-disabled="profileLoader" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Gender:</label>
+              <div class="">
+                <select id="gender" ui-select2 ng-model="user.gender" placeholder="Select Gender" style="width: 100%" name="gender" ng-disabled="profileLoader">
+                  <option value="-">-- Prefer not to say --</option>
+                  <option value="M">Male</option>
+                  <option value="F">Female</option>
+                </select>
+              </div>
+            </div>
           </div>
           <div class="box-footer">
-            <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-save"></i> Save Changes</button>
+            <button type="submit" ui-ladda="profileLoader" data-style="slide-left" class="ladda-button btn btn-success btn-sm" data-spinner-color="#646678"><span class="ladda-label"> Save Changes</span></button>
           </div>
       	</div> <!-- end of panel -->
       </form><!-- end profile form -->
 	  </div>
 	  <div class="col-lg-6 col-md-6 col-sm-12">
       <!-- start account form -->
-      <form class="form" role="form">
-  	    <div class="box box-success collapsed-box">
+      <form class="form" role="form" name="emailForm" ng-submit="updateEmail(emailForm)" novalidate>
+  	    <div class="box box-success">
   	    	<div class="box-header">
             <h3 class="box-title">Account info</h3>
             <div class="box-tools pull-right">
-              <button class="btn btn-success btn-xs" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Expand/<br/>Collapse" data-html="true" data-placement="left"><i class="fa fa-plus"></i></button>
+              <a class="btn btn-success btn-xs text-white" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Expand/<br/>Collapse" data-html="true" data-placement="left"><i class="fa fa-minus"></i></a>
             </div>
           </div>
-          <div class="box-body" style="display:none">
+          <div class="box-body">
             <div class="form-group">
+              <div class="alert alert-danger" role="alert" ng-show="!emailForm.$valid && emailSubmitted">
+                <i class="fa fa-warning"></i>
+                <p class="help-block" ng-show="emailForm.email.$error.required && emailSubmitted">
+                   Please enter your email id.
+                </p>
+                <p class="help-block" ng-show="emailForm.email.$error.email && emailSubmitted">
+                   Enter a valid email address.
+                </p>
+                <p class="help-block" ng-show="emailForm.email.$error.mongoose">
+                  {{ errors.email }}
+                </p>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-success': emailForm.email.$valid && emailSubmitted, 'has-error': emailForm.email.$invalid && emailSubmitted }">
               <label class="control-label">Email:</label>
               <div class="">
-                <input class="form-control flat" type="email" ng-model="user.email">
+                <input class="form-control flat" type="email" ng-model="user.email" ng-disabled="emailLoader" name="email" required mongoose-error />
               </div>
             </div>
           </div>
-          <div class="box-footer" style="display:none">
-            <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-save"></i> Save Changes</button>
+          <div class="box-footer">
+            <button type="submit" ui-ladda="emailLoader" data-style="slide-left" class="ladda-button btn btn-success btn-sm" data-spinner-color="#646678"><span class="ladda-label"> Save Changes</span></button>
           </div>
       	</div> <!-- end of panel -->
       </form>
@@ -78,32 +135,38 @@
 
 
       <!-- start emails form -->
-      <form class="form" role="form">
-      	<div class="box box-success collapsed-box">
+      <form class="form" role="form" name="notificationForm" ng-submit="updateNotifications(notificationForm)">
+      	<div class="box box-success">
   	    	<div class="box-header">
-            <h3 class="box-title">Emails</h3>
+            <h3 class="box-title">Notifications</h3>
             <div class="box-tools pull-right">
-              <button class="btn btn-success btn-xs" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Expand/<br/>Collapse" data-html="true" data-placement="left"><i class="fa fa-plus"></i></button>
+              <a class="btn btn-success btn-xs text-white" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Expand/<br/>Collapse" data-html="true" data-placement="left"><i class="fa fa-minus"></i></a>
             </div>
           </div>
-          <div class="box-body" style="display:none">
+          <div class="box-body">
+            <div class="alert alert-danger" role="alert" ng-show="!notificationForm.$valid && notificationSubmitted">
+                <i class="fa fa-warning"></i>
+                <p class="help-block">
+                  {{ errors.notifications }}
+                </p>
+              </div>
             <div class="form-group">
               <div class="row">
 				        <div class="col-md-12">
 				          <p>
-				          	<input type="checkbox" class="form-controler flat" id="profile_newsletter" ng-model="user.newsletter" />
+				          	<input type="checkbox" class="form-controler flat" id="profile_newsletter" ng-model="user.newsletter" ng-disabled="notificationLoader" />
 				          	<label for="profile_newsletter">Sign up for our newsletter!</label>
 				          </p>
 				          <p>
-				          	<input type="checkbox" class="form-controler flat" id="profile_special_offer" ng-mode="user.specialOffers" />
+				          	<input type="checkbox" class="form-controler flat" id="profile_special_offer" ng-model="user.specialOffers" ng-disabled="notificationLoader" />
 				          	<label for="profile_special_offer">Receive special offers from our partners!</label>
 				          </p>
 				        </div>
 					    </div>
             </div>
           </div>
-          <div class="box-footer" style="display:none">
-            <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-save"></i> Save Changes</button>
+          <div class="box-footer">
+            <button type="submit" ui-ladda="notificationLoader" data-style="slide-left" class="ladda-button btn btn-success btn-sm" data-spinner-color="#646678"><span class="ladda-label"> Save Changes</span></button>
           </div>
     	  </div> <!-- end of panel -->
       </form>
@@ -122,7 +185,7 @@
 	  </div>
 	</div>
 	<div class="row">
-	  <div class="col-lg-4 col-md-4 col-sm-6" ng-repeat="address in user.addresses">
+	  <div class="col-lg-4 col-md-4 col-sm-6" style="height: 310px;" ng-repeat="address in user.addresses">
 	    <div class="box box-default">
 	    	<div class="box-header">
           <h3 class="box-title">{{address.title}}</h3>
@@ -144,16 +207,23 @@
         			<span class="label label-default default_selection">Default</span>
         		</span>
         		<span ng-switch-when="false">
-        			<button type="button" class="btn btn-default btn-sm">Make Default</button>
+        			<button type="button" class="btn btn-default btn-sm" ng-click="makeAddressDefault(address._id)">Make Default</button>
         		</span>
         	</span>
         	<div class="box-tools pull-right">
             <button class="btn btn-default btn-sm" tooltip="Edit this address" title="Edit this address" ng-click="openEditAddressDialog(address)"><i class="fa fa-pencil"></i></button>
-            <button class="btn btn-default btn-sm" tooltip="Delete this address" title="Delete this address" ng-click="deleteAddress(address.title)"><i class="fa fa-trash"></i></button>
+            <button class="btn btn-default btn-sm" tooltip="Delete this address" title="Delete this address" ng-click="deleteAddress(address.title, address._id)"><i class="fa fa-trash"></i></button>
           </div>
           <div class="clearfix"></div>
         </div>
     	</div> <!-- end of panel -->
 	  </div>
 	</div> <!-- end of row -->
+  <div class="row" ng-show="user.addresses.length === 0">
+    <div class="text-center">
+      <div class="alert alert-warning">
+        You don't have any saved address yet. <a class="alert-link" href="#" ng-click="openAddAddressDialog()">Add new</a> address now to use it in checkout.
+      </div>
+    </div>
+  </div>
 </div>

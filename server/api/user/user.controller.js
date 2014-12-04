@@ -4,6 +4,8 @@ var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
+var _ = require('lodash');
+var mongoose = require('mongoose');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -80,6 +82,23 @@ exports.changePassword = function(req, res, next) {
 };
 
 /**
+ * Update user
+ */
+exports.update = function(req, res, next) {
+  if(req.body._id) { delete req.body._id; }
+  User.findById(req.params.id, function (err, user) {
+    if (err) { return handleError(res, err); }
+    if(!user) { return res.send(404); }
+    var updated = _.merge(user, req.body);
+    console.log(updated);
+    updated.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, user);
+    });
+  });
+};
+
+/**
  * Get my info
  */
 exports.me = function(req, res, next) {
@@ -99,3 +118,84 @@ exports.me = function(req, res, next) {
 exports.authCallback = function(req, res, next) {
   res.redirect('/');
 };
+
+/**
+ * add address for a user
+ */
+exports.addAddress = function(req, res, next) {
+  if(req.body._id) { delete req.body._id; }
+  User.findById(req.params.id, function (err, user) {
+    if (err) { return handleError(res, err); }
+    if(!user) { return res.send(404); }
+    user.addresses.push(req.body)
+    user.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, user);
+    });
+  });
+};
+
+/**
+ * add address for a user
+ */
+exports.editAddress = function(req, res, next) {
+  User.findById(req.params.id, function (err, user) {
+    if (err) { return handleError(res, err); }
+    if(!user) { return res.send(404); }
+    var updated = req.body;
+    _.forEach(user.addresses, function (address) {
+      if (_.isEqual(address._id, mongoose.Types.ObjectId(updated._id))) {
+        address = _.merge(address, updated);
+      }
+    });
+    user.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, user);
+    });
+  });
+};
+
+/**
+ * Make selected address default
+ */
+exports.makeAddressDefault = function(req, res, next) {
+  User.findById(req.params.id, function (err, user) {
+    if (err) { return handleError(res, err); }
+    if(!user) { return res.send(404); }
+    var addressId = mongoose.Types.ObjectId(req.params.adderssId);
+    _.forEach(user.addresses, function (address) {
+      address.isDefault = _.isEqual(address._id, addressId);
+    });
+    user.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, user);
+    });
+  });
+};
+
+/**
+ * Delete sepecified address.
+ */
+exports.deleteAddress = function(req, res, next) {
+  User.findById(req.params.id, function (err, user) {
+    if (err) { return handleError(res, err); }
+    if(!user) { return res.send(404); }
+    var addressId = mongoose.Types.ObjectId(req.params.adderssId);
+    _.forEach(user.addresses, function (address) {
+      console.log('------------>', address);
+      if(_.isEqual(address._id, addressId)) {
+        user.addresses.id(address._id).remove();
+        return false;
+      }
+    });
+    user.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, user);
+    });
+  });
+};
+
+// function to handle errors in controllers
+function handleError(res, err) {
+  return res.send(500, err);
+}
