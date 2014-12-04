@@ -185,7 +185,7 @@
 	  </div>
 	</div>
 	<div class="row">
-	  <div class="col-lg-4 col-md-4 col-sm-6" style="height: 310px;" ng-repeat="address in user.addresses">
+	  <div class="col-lg-4 col-md-4 col-sm-6" ng-repeat="address in user.addresses">
 	    <div class="box box-default">
 	    	<div class="box-header">
           <h3 class="box-title">{{address.title}}</h3>
@@ -219,10 +219,15 @@
     	</div> <!-- end of panel -->
 	  </div>
 	</div> <!-- end of row -->
-  <div class="row" ng-show="user.addresses.length === 0">
-    <div class="text-center">
-      <div class="alert alert-warning">
-        You don't have any saved address yet. <a class="alert-link" href="#" ng-click="openAddAddressDialog()">Add new</a> address now to use it in checkout.
+  <div class="" ng-show="user.addresses.length === 0">
+    <br/>
+    <div class="text-center alert alert-warning">
+      <i class="fa fa-warning"></i>
+      You don't have any saved address yet.
+    </div>
+    <div class="col-md-12 box box-solid">
+      <div class="box-body text-normal">
+        By saving address, you save time in checkout process. You can select delivery address from saved addresses and save time and you don't have to bother evrytime entering same address. <a class="text-muted" href="#" ng-click="openAddAddressDialog()">Add new</a> address now to use it in checkout.
       </div>
     </div>
   </div>
