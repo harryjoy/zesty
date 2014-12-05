@@ -105,6 +105,16 @@ angular.module('zesty')
       },
 
       /**
+       * Sets all available info on authenticated user
+       *
+       * @return {Object} user
+       */
+      setCurrentUser: function(user) {
+        currentUser = user;
+        $rootScope.$broadcast('user.updated');
+      },
+
+      /**
        * Check if a user is logged in
        *
        * @return {Boolean}

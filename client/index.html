@@ -39,7 +39,9 @@
     <![endif]-->
     <div ng-include="'components/navbar/navbar.html'"></div>
     <!-- Add your site or application content here -->
-    <div ui-view=""></div>
+    <div ng-controller="BaseCtrl">
+      <div ui-view=""></div>
+    </div>
     <div ng-include="'components/footer/footer.html'"></div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -168,6 +170,7 @@
           <script src="app/writeReview/writeReview.js"></script>
           <script src="components/auth/auth.service.js"></script>
           <script src="components/auth/user.service.js"></script>
+          <script src="components/base.controller.js"></script>
           <script src="components/footer/footer.controller.js"></script>
           <script src="components/modal/modal.service.js"></script>
           <script src="components/mongoose-error/mongoose-error.directive.js"></script>

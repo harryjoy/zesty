@@ -22,7 +22,7 @@ angular.module('zesty')
       modalInstance.result.then(function (address) {
         address.isDefault = false;
         User.addAddress({id: $scope.user._id}, address).$promise.then(function (user) {
-          $scope.user = user;
+          Auth.setCurrentUser(user);
         }).catch(function (err) {
           console.log(err);
           window.alert('Error while adding address, please try again later.');
@@ -47,7 +47,7 @@ angular.module('zesty')
       });
       modalInstance.result.then(function (address) {
         User.editAddress({id: $scope.user._id}, address).$promise.then(function (user) {
-          $scope.user = user;
+          Auth.setCurrentUser(user);
         }).catch(function (err) {
           console.log(err);
           window.alert('Error while editing address, please try again later.');
@@ -57,15 +57,13 @@ angular.module('zesty')
 
     $scope.makeAddressDefault = function (addressId) {
       User.makeAddressDefault({id: $scope.user._id, childId: addressId}).$promise.then(function (user) {
-        $scope.user = user;
+        Auth.setCurrentUser(user);
       }).catch(function (err) {
         console.log(err);
         window.alert('Error while making address default, please try again later.');
       });
     };
-
-    $scope.getCurrentUser = Auth.getCurrentUser;
-    $scope.user = Auth.getCurrentUser();
+    
     $scope.errors = {};
     $scope.profileLoader = false;
     $scope.emailLoader = false;
@@ -83,7 +81,7 @@ angular.module('zesty')
           landline: $scope.user.landline,
           gender: $scope.user.gender
         }).$promise.then(function (user) {
-          $scope.user = user;
+          Auth.setCurrentUser(user);
           $scope.profileLoader = false;
         }).catch(function (err) {
           console.log(err);
@@ -100,7 +98,7 @@ angular.module('zesty')
         User.update({id: $scope.user._id}, {
           email: $scope.user.email
         }).$promise.then(function (user) {
-          $scope.user = user;
+          Auth.setCurrentUser(user);
           $scope.emailLoader = false;
         }).catch(function (err) {
           console.log(err);
@@ -118,7 +116,7 @@ angular.module('zesty')
           newsletter: $scope.user.newsletter,
           specialOffers: $scope.user.specialOffers
         }).$promise.then(function (user) {
-          $scope.user = user;
+          Auth.setCurrentUser(user);
           $scope.notificationLoader = false;
         }).catch(function (err) {
           console.log(err);
@@ -132,7 +130,7 @@ angular.module('zesty')
     // We use closure to define the callback for the modal's confirm action here in the controller
     $scope.deleteAddress = Modal.confirm.delete(function(addressId) { // callback when modal is confirmed
       User.deleteAddress({id: $scope.user._id, childId: addressId}).$promise.then(function (user){
-        $scope.user = user;
+        Auth.setCurrentUser(user);
       }).catch(function (err) {
         console.log(err);
         window.alert('Error while deleting address, please try again later.');

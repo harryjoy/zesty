@@ -35,6 +35,17 @@ var UserSchema = new Schema({
       default: false
     }
   }],
+  cards: [{
+    cardNumber: String,
+    cardType: Number,
+    name: String,
+    expiryDate: String,
+    label: String,
+    isDefault: {
+      type: Boolean,
+      default: false
+    }
+  }],
   hashedPassword: String,
   provider: String,
   salt: String,

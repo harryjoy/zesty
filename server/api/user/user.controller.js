@@ -90,7 +90,6 @@ exports.update = function(req, res, next) {
     if (err) { return handleError(res, err); }
     if(!user) { return res.send(404); }
     var updated = _.merge(user, req.body);
-    console.log(updated);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.json(200, user);
@@ -182,9 +181,65 @@ exports.deleteAddress = function(req, res, next) {
     if(!user) { return res.send(404); }
     var addressId = mongoose.Types.ObjectId(req.params.adderssId);
     _.forEach(user.addresses, function (address) {
-      console.log('------------>', address);
       if(_.isEqual(address._id, addressId)) {
         user.addresses.id(address._id).remove();
+        return false;
+      }
+    });
+    user.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, user);
+    });
+  });
+};
+
+/**
+ * add card for a user
+ */
+exports.addCard = function(req, res, next) {
+  if(req.body._id) { delete req.body._id; }
+  User.findById(req.params.id, function (err, user) {
+    if (err) { return handleError(res, err); }
+    if(!user) { return res.send(404); }
+    user.cards.push(req.body)
+    user.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, user);
+    });
+  });
+};
+
+/**
+ * add card for a user
+ */
+exports.editCard = function(req, res, next) {
+  User.findById(req.params.id, function (err, user) {
+    if (err) { return handleError(res, err); }
+    if(!user) { return res.send(404); }
+    var updated = req.body;
+    _.forEach(user.cards, function (card) {
+      if (_.isEqual(card._id, mongoose.Types.ObjectId(updated._id))) {
+        card = _.merge(card, updated);
+      }
+    });
+    user.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, user);
+    });
+  });
+};
+
+/**
+ * Delete sepecified card.
+ */
+exports.deleteCard = function(req, res, next) {
+  User.findById(req.params.id, function (err, user) {
+    if (err) { return handleError(res, err); }
+    if(!user) { return res.send(404); }
+    var cardId = mongoose.Types.ObjectId(req.params.cardId);
+    _.forEach(user.cards, function (card) {
+      if(_.isEqual(card._id, cardId)) {
+        user.cards.id(card._id).remove();
         return false;
       }
     });

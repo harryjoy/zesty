@@ -20,4 +20,8 @@ router.put('/:id/addresses', auth.isAuthenticated(), controller.editAddress);
 router.delete('/:id/addresses/:adderssId', auth.isAuthenticated(), controller.deleteAddress);
 router.put('/:id/addresses/:adderssId/default', auth.isAuthenticated(), controller.makeAddressDefault);
 
+router.post('/:id/cards', auth.isAuthenticated(), controller.addCard);
+router.put('/:id/cards', auth.isAuthenticated(), controller.editCard);
+router.delete('/:id/cards/:cardId', auth.isAuthenticated(), controller.deleteCard);
+
 module.exports = router;

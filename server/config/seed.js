@@ -316,6 +316,19 @@ User.find({}).remove(function() {
       country: 'IN',
       zipcode: '380015',
       isDefault: false
+    }],
+    cards: [{
+      name: 'Harsh Raval',
+      cardNumber: '5432167809873456',
+      cardType: 1,
+      expiryDate: '10/19',
+      label: 'Axis Bank CC'
+    }, {
+      name: 'Harsh P Raval',
+      cardNumber: '5432134569873098',
+      cardType: 2,
+      expiryDate: '10/17',
+      label: 'HDFC Bank Debit'
     }]
   }, {
     provider: 'local',

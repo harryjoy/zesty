@@ -4,7 +4,6 @@ angular.module('zesty')
   .controller('RecommendedCtrl', ['$scope', 'ProductServ',
     function ($scope, ProductServ) {
 
-  $scope.siteName = 'Zesty';
   $scope.items = [];
   ProductServ.query().$promise.then(function(items) {
     $.each(items, function (key, item) {

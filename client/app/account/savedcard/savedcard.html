@@ -8,13 +8,13 @@
   </div>
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12">
-      <div class="well" ng-show="cards.length == 0">
+      <div class="well" ng-show="!user.cards || user.cards.length == 0">
         Making payments on <strong>{{siteName}}</strong> just got better!
-        Use saved cards and place your order in a flash.
+        Use your saved cards and place your order in a flash.
         It's extremely convenient and completely secure.
       </div>
       
-      <div class="box box-solid box-warning" ng-show="cards.length == 0">
+      <div class="box box-solid box-warning" ng-show="!user.cards || user.cards.length == 0">
         <div class="box-header">
           <h3 class="box-title">We store only things that are not harmful</h3>
         </div>
@@ -39,17 +39,17 @@
         </div>
       </div>
 
-      <div class="box box-solid" ng-repeat="card in cards">
+      <div class="box box-solid" ng-repeat="card in user.cards">
         <div class="box-body">
-          <i class="fa fa-fw" ng-class="{'fa-cc-visa': (card.type==1), 'fa-cc-mastercard': (card.type==2), 'fa-cc': (card.type==0)}"></i>
-          {{card.number}} - {{card.name}} (<strong>{{card.label}}</strong>)
+          <i class="fa fa-fw" ng-class="{'fa-cc-visa': (card.cardType==1), 'fa-cc-mastercard': (card.cardType==2), 'fa-cc': (card.cardType==0)}"></i>
+          {{card.cardNumber}} - {{card.name}} (<strong>{{card.label}}</strong>)
           <div class="pull-right text-normal">
-            <a href="#" ng-click="openEdit(card)">Edit</a> | <a href="#">Delete</a>
+            <a href="#" ng-click="openEdit(card)">Edit</a> | <a href="#" ng-click="deleteCard(card._id)">Delete</a>
           </div>
         </div>
       </div>
 
-      <div class="box box-solid security-guarantee-box" ng-show="cards.length == 0">
+      <div class="box box-solid security-guarantee-box" ng-show="!user.cards || user.cards.length == 0">
         <div class="row box-body">
           <div class="col-md-9 col-sm-9">
             <h5 class="page-header">100% Security Guaranteed</h5>
@@ -67,35 +67,75 @@
 
       <div class="box box-warning" collapse="!showAddForm">
         <div class="box-body">
-          <form class="form-horizontal" role="form">
-            <div class="form-group">
+          <form class="form-horizontal" name="form" role="form" ng-submit="addNewCard(form)" novalidate>
+            <div class="">
+              <h2 class="page-header">
+                {{formTitle}}
+              </h2>
+            </div>
+            <div class="">
+              <div class="alert alert-danger" role="alert" ng-show="!form.$valid && submitted">
+                <i class="fa fa-warning"></i>
+                <p class="help-block" ng-show="form.cardNumber.$error.required && submitted">
+                   Card number is required.
+                </p>
+                <p class="help-block" ng-show="form.cardNumber.$error.minlength && submitted">
+                   Card number must be at least 16 characters long.
+                </p>
+                <p class="help-block" ng-show="form.cardName.$error.required && submitted">
+                   Name is required.
+                </p>
+                <p class="help-block" ng-show="form.expiryDate.$error.required && submitted">
+                   Expiry date is required.
+                </p>
+                <p class="help-block" ng-show="form.expiryDate.$error.minlength && submitted">
+                   Expiry date must be at least 4 characters long.
+                </p>
+                <p class="help-block" ng-show="form.cardLabel.$error.required && submitted">
+                   Card label is required.
+                </p>
+                <p class="help-block" ng-show="form.cardType.$error.required && submitted">
+                   Card type is required.
+                </p>
+                <p class="help-block">{{ errors.other }}</p>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-success': form.cardNumber.$valid && submitted, 'has-error': form.cardNumber.$invalid && submitted }">
               <label for="number" class="col-sm-2 control-label">Card Number</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="number" placeholder="Card Number" ng-model="newCard.number">
+                <input type="text" class="form-control" name="cardNumber" id="number" placeholder="Card Number" ng-model="newCard.cardNumber" ng-minlength="16" required input-mask="'mask'" mask-option="{'mask': '9999-9999-9999-9999'}" ng-disabled="showLoader" />
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" ng-class="{ 'has-success': form.cardName.$valid && submitted, 'has-error': form.cardName.$invalid && submitted }">
               <label for="name" class="col-sm-2 control-label">Name on card</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="name" placeholder="Name on card" ng-model="newCard.name">
+                <input type="text" class="form-control" name="cardName" id="name" placeholder="Name on card" ng-model="newCard.name" required ng-disabled="showLoader" />
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" ng-class="{ 'has-success': form.expiryDate.$valid && submitted, 'has-error': form.expiryDate.$invalid && submitted }">
               <label for="expiryDate" class="col-sm-2 control-label">Expiry Date</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="expiryDate" placeholder="MM / YY" ng-model="newCard.expiryDate">
+                <input type="text" class="form-control" name="expiryDate" id="expiryDate" placeholder="MM/YY" ng-model="newCard.expiryDate" ng-minlength="4" required input-mask="'mask'" mask-option="{'mask': '99/99'}" ng-disabled="showLoader" />
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" ng-class="{ 'has-success': form.cardLabel.$valid && submitted, 'has-error': form.cardLabel.$invalid && submitted }">
               <label for="label" class="col-sm-2 control-label">Give a Label</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="label" placeholder="Give your card a label" ng-model="newCard.label">
+                <input type="text" class="form-control" name="cardLabel" id="label" placeholder="Give your card a label" ng-model="newCard.label" required ng-disabled="showLoader" />
+              </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-success': form.cardType.$valid && submitted, 'has-error': form.cardType.$invalid && submitted }">
+              <label for="label" class="col-sm-2 control-label">Card Type</label>
+              <div class="col-sm-10">
+                <select ng-model="newCard.cardType" class="form-control" name="cardType" required ng-disabled="showLoader" >
+                  <option ng-repeat="type in cardTypes" value="{{type.val}}">{{type.name}}</option>
+                </select>
               </div>
             </div>
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">Submit</button>
-                <button type="submit" class="btn btn-danger" ng-click="showAddForm=!showAddForm;newCard={};">Cancel</button>
+                <button type="submit" ui-ladda="showLoader" data-style="slide-left" class="ladda-button btn btn-success btn-sm" data-spinner-color="#646678"><span class="ladda-label"> Submit</span></button>
+                <a type="submit" class="btn btn-danger btn-sm" ng-click="closeAddForm()">Cancel</a>
               </div>
             </div>
           </form>

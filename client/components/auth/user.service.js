@@ -48,6 +48,25 @@ angular.module('zesty')
           id: '@id',
           controller: 'addresses'
         }
+      },
+      addCard: {
+        method: 'POST',
+        params: {
+          controller: 'cards'
+        }
+      },
+      editCard: {
+        method: 'PUT',
+        params: {
+          controller: 'cards'
+        }
+      },
+      deleteCard: {
+        method: 'DELETE',
+        params: {
+          id: '@id',
+          controller: 'cards'
+        }
       }
 	  });
   });
