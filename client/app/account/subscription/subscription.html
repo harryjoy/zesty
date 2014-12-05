@@ -14,25 +14,31 @@
             <div class="col-md-12">
               <h3>
                 Status:
-                <span ng-switch="user.subscription">
+                <span ng-switch="getCurrentUser().subscription.status">
                   <span ng-switch-when="1" class="label label-success">Active</span>
-                  <span ng-switch-when="0" class="label label-danger">Deactive</span>
-                  <span ng-switch-when="-1" class="label label-default">Not Available</span>
+                  <span ng-switch-when="0">
+                    <span class="label label-danger">Deactive</span>
+                    <a href="#" class="text-normal pull-right">Subscribe Now!</a>
+                  </span>
+                  <span ng-switch-default class="label label-default">Not Available</span>
                 </span>
               </h3>
-              Valid Till: <span class="validity-date">11 Sep. 2014</span>
+              <strong>Valid Till:</strong>
+              <span ng-switch="getCurrentUser().subscription.expiryDate || 'null'">
+                <span ng-switch-default class="validity-date">{{moment(getCurrentUser().subscription.expiryDate).format('MMMM Do YYYY')}}</span>
+                <span ng-switch-when="null" class="validity-date">-</span>
+              </span>
             </div>
             <div class="col-md-12">
               <hr/>
-              <!-- using _id in place of mobile, update this when integrated with BE -->
-              Registered phone number for priority support: <strong>{{getCurrentUser()._id}}</strong>
+              Registered phone number for priority support: <strong>{{getCurrentUser().mobile}}</strong>
               <hr/>
             </div>
             <div class="col-md-6">
               To modify or cancel your subscription, please call our customer care.
             </div>
             <div class="col-md-6">
-              <strong>Note</strong> - These benefits are available only on purchases from seller <strong>{{siteSeller}}</strong>, as of now. Not all benefits are available in all pincodes.
+              <strong>Note</strong> - Subscription benefits are available only on purchases from seller <strong>{{siteSeller}}</strong>, as of now. Not all benefits are available in all pincodes.
             </div>
           </div>
         </div>

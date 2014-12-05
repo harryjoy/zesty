@@ -8,4 +8,6 @@ angular.module('zesty')
     subscription: 1
   };
 
+  $scope.moment = moment;
+
 }]);

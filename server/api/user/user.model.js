@@ -46,6 +46,16 @@ var UserSchema = new Schema({
       default: false
     }
   }],
+  subscription: {
+    status: {
+      type: Number,
+      default: 0
+    },
+    expiryDate: {
+      type: Date,
+      default: new Date()
+    }
+  },
   hashedPassword: String,
   provider: String,
   salt: String,

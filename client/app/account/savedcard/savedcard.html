@@ -113,7 +113,7 @@
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-success': form.expiryDate.$valid && submitted, 'has-error': form.expiryDate.$invalid && submitted }">
-              <label for="expiryDate" class="col-sm-2 control-label">Expiry Date</label>
+              <label for="expiryDate" class="col-sm-2 control-label">Expiry Date {{newCard.expiryDate}}</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" name="expiryDate" id="expiryDate" placeholder="MM/YY" ng-model="newCard.expiryDate" ng-minlength="4" required input-mask="'mask'" mask-option="{'mask': '99/99'}" ng-disabled="showLoader" />
               </div>

@@ -21,7 +21,7 @@ angular.module('zesty')
       .then( function() {
         // Logged in, redirect to home
         $rootScope.$broadcast('login.success');
-        $location.path('/my/savedcard');
+        $location.path('/');
       })
       .catch( function(err) {
         $scope.errors.other = err.message;
