@@ -32,6 +32,11 @@ var all = {
   // List of user roles
   userRoles: ['guest', 'user', 'admin'],
 
+  // pagination options
+  pagination: {
+    size: 3
+  },
+
   // MongoDB connection options
   mongo: {
     options: {

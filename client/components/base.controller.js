@@ -3,6 +3,8 @@
 angular.module('zesty')
   .controller('BaseCtrl', ['$scope', '$location', 'Auth',
     function ($scope, $location, Auth) {
+
+    $scope.moment = moment;
     
     $scope.appName = 'Zesty';
     $scope.siteName = 'Zesty';

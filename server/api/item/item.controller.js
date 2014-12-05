@@ -3,10 +3,15 @@
 var _ = require('lodash');
 var Item = require('./item.model');
 var Review = require('../review/review.model');
+var config = require('../../config/environment');
 
 // Get list of items
 exports.index = function(req, res) {
-  Item.find(function (err, items) {
+  var pageSize = req.query.pageSize || config.pagination.size;
+  var timeToFilter = req.query.time || new Date();
+  Item.find({
+    createdAt: { $lt : timeToFilter }
+  }).limit(pageSize).sort('-createdAt').exec(function (err, items) {
     if(err) { return handleError(res, err); }
     return res.json(200, items);
   });
@@ -74,6 +79,18 @@ exports.related = function(req, res) {
       if(err) { return handleError(res, err); }
       return res.json(200, items);
     });
+  });
+};
+
+exports.ratings = function(req, res, next) {
+  Review.aggregate().group({
+    _id: '$rating',
+    count: {
+      $sum: 1
+    } 
+  }).exec(function (err, result){
+    if(err) { return handleError(res, err); }
+    return res.json(200, result);
   });
 };
 

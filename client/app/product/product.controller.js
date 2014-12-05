@@ -5,6 +5,8 @@ angular.module('zesty')
     function ($scope, $stateParams, ProductServ) {
   var productId = $stateParams.id;
 
+  $scope.one = $scope.two = $scope.three = $scope.four = $scope.five = 0;
+
   ProductServ.get({id: productId}).$promise.then(function(product) {
     if (!product) {
       throw new Error('No product details found for selected item.');
@@ -53,6 +55,23 @@ angular.module('zesty')
       } else {
         throw new Error('No reviews found for this product.');
       }
+
+      ProductServ.ratings({id: productId}).$promise.then(function(ratings) {
+        $.each(ratings, function (key, result) {
+          if (result._id === 1) {
+            $scope.one = result.count;
+          } else if (result._id === 2) {
+            $scope.two = result.count;
+          } else if (result._id === 3) {
+            $scope.three = result.count;
+          } else if (result._id === 4) {
+            $scope.four = result.count;
+          } else if (result._id === 5) {
+            $scope.five = result.count;
+          }
+        });
+      });
+
     }).catch(function (err) {
       $scope.productReviewGetError = true;
       $scope.rewviewError = err;

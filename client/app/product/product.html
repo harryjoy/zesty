@@ -72,7 +72,7 @@
 
             <div class="col-md-4 col-sm-6 review-list-summary">
               <h4 class="page-header">Reviews</h4>
-              <review-progress-bars></review-progress-bars>
+              <review-progress-bars first="{{one}}" two="{{two}}" three="{{three}}" four="{{four}}" five="{{five}}"></review-progress-bars>
             </div>
 
             <div class="col-md-4 col-sm-6 review-list-summary">
@@ -93,7 +93,7 @@
       <div class="col-md-12" ng-repeat="review in itemReviews">
         <div class="box box-black review-list-box">
           <div class="box-header">
-            <span class="pull-right review-time">{{review.reviewTime}}</span>
+            <span class="pull-right review-time">{{moment(review.reviewTime).format('Do MMMM, YYYY')}}</span>
             <h3 class="box-title">
               {{review.name}} <rating ng-model="review.rating" readonly="true" />
               <p class="review-sub-header">From <em>{{review.place}}</em></p>
@@ -154,7 +154,7 @@
   <div class="product-no-review-box box box-solid" ng-show="productReviewGetError">
     <div class="box-body">
       <p>
-        No reviews found for this product yet.
+        No one has reviewed this product yet.
         Be the first one to write a review about this product.
       </p>
       <span class="text-medium">Rate it now:</span><br/>

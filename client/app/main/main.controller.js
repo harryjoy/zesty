@@ -3,29 +3,36 @@
 angular.module('zesty')
   .controller('MainCtrl', ['$scope', '$http', 'socket', 'CategoryServ', 'Auth', 'ProductServ',
     function ($scope, $http, socket, CategoryServ, Auth, ProductServ) {
-    $scope.awesomeThings = [];
 
-    $scope.addThing = function() {
-      if($scope.newThing === '') {
-        return;
-      }
-      $http.post('/api/things', { name: $scope.newThing });
-      $scope.newThing = '';
-    };
-
-    $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
-    };
-
-    $scope.$on('$destroy', function () {
-      socket.unsyncUpdates('thing');
-    });
-
-    $scope.items = [];
-    $scope.slides = [];
-    ProductServ.query().$promise.then(function (items){
-      $.each(items, function (key, item) {
-        $scope.items.push({
+    var Item = {
+      getItems: function () {
+        $scope.loading = true;
+        var queryParams = {};
+        if ($scope.items && $scope.items.length > 0) {
+          queryParams.time = $scope.items[$scope.items.length - 1].updated;
+        }
+        ProductServ.query(queryParams).$promise.then(function (items) {
+          if (items && items.length > 0) {
+            $.each(items, function (key, item) {
+              $scope.items.push(Item.convertToItem(item));
+              $scope.slides.push({
+                image: 'http://placehold.it/1250x400',
+                title: item.title,
+                text: item.description
+              });
+            });
+          } else {
+            $scope.noMoreItems = true;
+          }
+          $scope.loading = false;
+        }).catch (function (err) {
+          $scope.errors = err;
+          $scope.noMoreItems = true;
+          $scope.loading = false;
+        });
+      },
+      convertToItem: function (item) {
+        return {
           'link': '/product/' + item._id,
           'title': item.title,
           'price': item.currency + ' ' + item.price,
@@ -33,15 +40,23 @@ angular.module('zesty')
           'description': item.description,
           'categories': item.categories,
           'mainImage': item.mainImage,
-          'rating': item.rating ? item.rating : 0
-        });
-        $scope.slides.push({
-          image: 'http://placehold.it/1250x400',
-          title: item.title,
-          text: item.description
-        });
-      });
-    });
+          'rating': item.rating ? item.rating : 0,
+          'updated': item.createdAt
+        };
+      }
+    };
+
+    $scope.loading = false;
+    $scope.noMoreItems = false;
+
+    $scope.loadMore = function () {
+      Item.getItems();
+    };
+
+    $scope.items = [];
+    $scope.slides = [];
+    Item.getItems();
+    
     CategoryServ.query().$promise.then(function(categories) {
       $scope.categories = categories;
     });

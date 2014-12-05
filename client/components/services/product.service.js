@@ -19,6 +19,13 @@ angular.module('zesty')
           controller:'related'
         },
         isArray:true
+      },
+      ratings: {
+        method: 'GET',
+        params: {
+          controller:'ratings'
+        },
+        isArray:true
       }
     });
   }]);

@@ -78,7 +78,16 @@
         <product ng-repeat="item in items"/>
       </div>
       <div class="row">
-        <div class="load-more-block text-center"> <button ui-ladda="loading" data-style="zoom-in" class="btn btn-thin ladda-button" href="#" ng-click="loading=!loading" data-spinner-color="#646678"> <span class="ladda-label"><i class="fa fa-plus-sign">+</i> load more products</span></button> </div>
+        <div class="col-md-12 load-more-block text-center" ng-show="!noMoreItems">
+          <button ui-ladda="loading" data-style="zoom-in" class="btn btn-thin ladda-button" href="#" ng-click="loadMore()" data-spinner-color="#646678"> 
+            <span class="ladda-label">
+              <i class="fa fa-plus-sign">+</i> load more products
+            </span>
+          </button>
+        </div>
+        <div class="col-md-12 text-center no-more-items text-muted" ng-show="noMoreItems">
+          -- no more items to load --
+        </div>
       </div>
     </div> 
   </div>

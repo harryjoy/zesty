@@ -1,7 +1,8 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema, 
+    timestamps = require('mongoose-timestamp');
 
 var ItemSchema = new Schema({
   title: String,
@@ -13,7 +14,6 @@ var ItemSchema = new Schema({
   mainImage: String,
   images: [String],
   tags: [String],
-  updated: { type: Date, default: Date.now },
   rating: Number,
   reviews: Number,
 
@@ -39,5 +39,7 @@ var ItemSchema = new Schema({
     offer: String
   }]
 });
+
+ItemSchema.plugin(timestamps);
 
 module.exports = mongoose.model('Item', ItemSchema);
