@@ -72,7 +72,7 @@
 
             <div class="col-md-4 col-sm-6 review-list-summary">
               <h4 class="page-header">Reviews</h4>
-              <review-progress-bars first="{{one}}" two="{{two}}" three="{{three}}" four="{{four}}" five="{{five}}"></review-progress-bars>
+              <review-progress-bars first="{{first}}" two="{{two}}" three="{{three}}" four="{{four}}" five="{{five}}"></review-progress-bars>
             </div>
 
             <div class="col-md-4 col-sm-6 review-list-summary">
@@ -143,6 +143,9 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="col-md-12 col-sm-12 text-center">
+        <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="3" ng-change="pageChanged()"></pagination>
       </div>
     </div>
     

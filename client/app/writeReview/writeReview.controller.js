@@ -6,11 +6,17 @@ angular.module('zesty')
 
   var productId = $stateParams.id;
   $scope.showFaq = true;
-  $scope.item = {
-    id: productId,
-    title: 'Call Of Fame',
-    image: '../../assets/images/shopping_bag.png'
-  };
+  ProductServ.get({id: productId}).$promise.then(function(product) {
+    if (!product) {
+      throw new Error('No product details found for selected item.');
+    }
+    $scope.item = {
+      'id': product._id,
+      'link': '/product/' + product._id,
+      'title': product.title,
+      'image': product.mainImage,
+    };
+  });
 
   $scope.reviewFaqs = [{
     question: 'Have you used this product?',

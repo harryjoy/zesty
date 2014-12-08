@@ -3,9 +3,41 @@
 angular.module('zesty')
   .controller('ProductCtrl', ['$scope', '$stateParams', 'ProductServ',
     function ($scope, $stateParams, ProductServ) {
-  var productId = $stateParams.id;
 
-  $scope.one = $scope.two = $scope.three = $scope.four = $scope.five = 0;
+  /*
+   * This is used to cache product review and do not make request 
+   * for pages that has already been visited.
+   */
+  var ProductReviewCache = {
+    pageData: {},
+    addNewPage: function () {
+      var self = this;
+      ProductServ.reviews({
+        id: productId,
+        'pageNumber': $scope.currentPage - 1
+      }).$promise.then(function(reviews) {
+        if (reviews && reviews.length > 0) {
+          self.pageData[$scope.currentPage] = reviews;
+          $scope.itemReviews = reviews;
+        }
+      });
+    },
+    getPageData: function () {
+      if (this.pageData[$scope.currentPage] && this.pageData[$scope.currentPage].length > 0) {
+        $scope.itemReviews = this.pageData[$scope.currentPage];
+      } else {
+        this.addNewPage();
+      }
+    },
+    setPageData: function (reviews) {
+      this.pageData[$scope.currentPage] = reviews;
+    }
+  };
+
+  var productId = $stateParams.id;
+  $scope.first = $scope.two = $scope.three = $scope.four = $scope.five = 0;
+  $scope.totalItems = 0;
+  $scope.currentPage = 1;
 
   ProductServ.get({id: productId}).$promise.then(function(product) {
     if (!product) {
@@ -25,6 +57,7 @@ angular.module('zesty')
       'suppliers': product.suppliers
     };
     $scope.largeImageSrc = $scope.itemDetails.mainImage;
+    $scope.totalItems = $scope.itemDetails.reviewsCount;
   }).then(function() {
     $scope.items = [];
     ProductServ.related({id: productId}).$promise.then(function(items) {
@@ -52,6 +85,7 @@ angular.module('zesty')
     ProductServ.reviews({id: productId}).$promise.then(function(reviews) {
       if (reviews && reviews.length > 0) {
         $scope.itemReviews = reviews;
+        ProductReviewCache.setPageData(reviews);
       } else {
         throw new Error('No reviews found for this product.');
       }
@@ -59,7 +93,7 @@ angular.module('zesty')
       ProductServ.ratings({id: productId}).$promise.then(function(ratings) {
         $.each(ratings, function (key, result) {
           if (result._id === 1) {
-            $scope.one = result.count;
+            $scope.first = result.count;
           } else if (result._id === 2) {
             $scope.two = result.count;
           } else if (result._id === 3) {
@@ -84,4 +118,9 @@ angular.module('zesty')
   $scope.displayLargeImg = function (src) {
     $scope.largeImageSrc = src;
   };
+
+  $scope.pageChanged = function() {
+    ProductReviewCache.getPageData();
+  };
+
 }]);

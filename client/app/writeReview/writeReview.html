@@ -53,7 +53,7 @@
 				<div class="box-header">
 					<h2 class="header">
 						Write review and help others!
-						<small class="review-notice pull-right">All fields are mandatory.</small>
+						<small class="review-notice pull-right">Fields marked with * are mandatory.</small>
 					</h2>
 				</div>
 				<form role="form" name="reviewForm" novalidate ng-submit="addReview(reviewForm)">
@@ -98,21 +98,21 @@
               </div>
             </div>
 						<div class="form-group" ng-class="{ 'has-success': reviewForm.title.$valid && submitted, 'has-error': reviewForm.title.$invalid && submitted }">
-							<label class="control-label">Review Title:</label>
+							<label class="control-label">*Review Title:</label>
 							<input class="form-control" type="text" name="title" ng-model="review.title" required ng-minlength="5" ng-maxlength="50" ng-disabled="reviewLoader" />
 							<span class="help-block text-small">
 								Enter at least 5 characters.
 							</span>
 						</div>
 						<div class="form-group" ng-class="{ 'has-success': reviewForm.name.$valid && submitted, 'has-error': reviewForm.name.$invalid && submitted }">
-							<label class="control-label">Name:</label>
+							<label class="control-label">*Name:</label>
 							<input class="form-control" type="text" name="name" ng-model="review.name" required ng-minlength="3" ng-disabled="reviewLoader || loggedInNow" />
 							<span class="help-block text-small">
 								Enter first and last name. Enter at least 3 characters.
 							</span>
 						</div>
 						<div class="form-group" ng-class="{ 'has-success': reviewForm.email.$valid && submitted, 'has-error': reviewForm.email.$invalid && submitted }">
-							<label class="control-label">Email:</label>
+							<label class="control-label">*Email:</label>
 							<input class="form-control" type="email" name="email" ng-model="review.emailId" required ng-disabled="reviewLoader || loggedInNow" />
 						</div>
 						<div class="form-group">
@@ -123,7 +123,7 @@
 							</span>
 						</div>
 						<div class="form-group" ng-class="{ 'has-success': (reviewForm.comments.$valid && reviewForm.ratings.$valid && submitted), 'has-error': ((reviewForm.comments.$invalid || reviewForm.ratings.$invalid) && submitted) }">
-							<label class="control-label">Your Review:</label><br/>
+							<label class="control-label">*Your Review:</label><br/>
 							<rating name="ratings" ng-model="review.rating" class="review-form-rating" required></rating>
 							<small class="pull-right help-block text-small">(Enter at least 50 characters.)</small>
 							<textarea class="form-control text-area-bg" col="30" row="10" name="comments" ng-model="review.review" required ng-minlength="50" ng-disabled="reviewLoader"></textarea>
