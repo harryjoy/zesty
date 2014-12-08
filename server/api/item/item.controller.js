@@ -93,7 +93,7 @@ exports.addReview = function(req, res) {
       Review.create(review, function(err, review) {
         if(err) { return handleError(res, err); }
         item.reviews = item.reviews + 1;
-        Review.aggregate().group({
+        Review.aggregate().match({'productId': mongoose.Types.ObjectId(req.params.id)}).group({
           _id: '$productId',
           average: {
             $avg: '$rating'

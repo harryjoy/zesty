@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('WritereviewCtrl', ['$scope', '$stateParams', 'Auth', 'ProductServ',
-  function ($scope, $stateParams, Auth, ProductServ) {
+  .controller('WritereviewCtrl', ['$scope', '$stateParams', 'Auth', 'ProductServ', '$location',
+  function ($scope, $stateParams, Auth, ProductServ, $location) {
 
   var productId = $stateParams.id;
   $scope.showFaq = true;
@@ -50,6 +50,9 @@ angular.module('zesty')
       $scope.review.emailId = $scope.getCurrentUser().email;
     }
   });
+  if ($location.search() && $location.search().rate) {
+    $scope.review.rating = $location.search().rate;
+  }
 
   $scope.addReview = function (form) {
     $scope.submitted = true;

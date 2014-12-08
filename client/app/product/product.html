@@ -1,56 +1,60 @@
 <!-- Main content -->
 <section class="content" ng-show="!productGetError">
-  <h1>{{itemDetails.title}}</h1>
-  <div class="thumbnail">
-    <div class="row">
-      <div class="col-sm-6">
-        <div class='row'>
-          <div class="col-md-12 col-sm-12">
-            <div class="thumbnail img-responsive" image-src="{{largeImageSrc}}" image-zoom data-template-url="app/product/image-zoom.html"></div>
-          </div>
-          <div class="col-md-2 col-sm-4">
-            <img src="{{itemDetails.mainImage}}" ng-click="displayLargeImg(itemDetails.mainImage);" class="thumbnail img-responsive text-cursor-pointer" />
-          </div>
-          <div class="col-md-2 col-sm-4" ng-repeat="img in itemDetails.images">
-            <img src="{{img}}" ng-click="displayLargeImg(img);" class="thumbnail img-responsive text-cursor-pointer" />
-          </div>
-        </div>
-      </div> <!-- image col end -->
-      <div class="col-sm-6">
-        <h4 class="pull-right">{{itemDetails.price}}</h4>
-        <h4><a href="#">{{itemDetails.title}}</a></h4>
-          <p>{{itemDetails.description}}</p>
-        <form role="form">
-            <div class="number form-group">
-              <label class="control-label" for="number">Quantity:</label>
-              <input type="number" class="form-control input-sm flat" id="number" value="1" />
-            </div>
-            <div class="form-group">
-              <label ng-show="itemDetails.suppliers && itemDetails.suppliers.length > 0">Suppliers:</label>
-              <ul>
-                <li ng-repeat="supplier in itemDetails.suppliers"><u>{{supplier.name}}</u> at {{supplier.price}} (<i class="fa fa-clock-o"></i> {{supplier.shippingTime}})</li>
-              </ul>
-            </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary btn-flat">Add to Cart</button>
-              <button type="submit" class="btn btn-default btn-flat">Add to Wishlist</button>
-              <a href="/write-review/{{itemDetails.id}}" class="btn btn-default btn-flat">Write a Review</a>
-            </div>
-            <div class="form-group">
-              <label>Share:</label>
-              <div class="social-links flat text-medium">
-                <a href="#" class="social-link"><i class="fa fa-twitter"></i></a>
-                <a href="#" class="social-link"><i class="fa fa-google-plus"></i></a>
-                <a href="#" class="social-link"><i class="fa fa-facebook"></i></a>
-              </div>
-            </div>
-          </form>
-        </div>
+  <div class="box box-info">
+    <div class="box-header">
+      <h1 class="box-title">{{itemDetails.title}}</h1>
     </div>
-    <div class="description">
-      {{itemDetails.summary}}
+    <div class="box-body">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class='row'>
+            <div class="col-md-12 col-sm-12">
+              <div class="thumbnail img-responsive" image-src="{{largeImageSrc}}" image-zoom data-template-url="app/product/image-zoom.html"></div>
+            </div>
+            <div class="col-md-2 col-sm-4">
+              <img src="{{itemDetails.mainImage}}" ng-click="displayLargeImg(itemDetails.mainImage);" class="thumbnail img-responsive text-cursor-pointer" />
+            </div>
+            <div class="col-md-2 col-sm-4" ng-repeat="img in itemDetails.images">
+              <img src="{{img}}" ng-click="displayLargeImg(img);" class="thumbnail img-responsive text-cursor-pointer" />
+            </div>
+          </div>
+        </div> <!-- image col end -->
+        <div class="col-sm-8">
+          <h4 class="pull-right">{{itemDetails.price}}</h4>
+          <p>{{itemDetails.description}}</p>
+          <form role="form">
+              <div class="number form-group">
+                <label class="control-label" for="number">Quantity:</label>
+                <input type="number" class="form-control input-sm flat" id="number" value="1" />
+              </div>
+              <div class="form-group">
+                <label ng-show="itemDetails.suppliers && itemDetails.suppliers.length > 0">Suppliers:</label>
+                <ul>
+                  <li ng-repeat="supplier in itemDetails.suppliers"><u>{{supplier.name}}</u> at {{supplier.price}} (<i class="fa fa-clock-o"></i> {{supplier.shippingTime}})</li>
+                </ul>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-flat">Add to Cart</button>
+                <button type="submit" class="btn btn-default btn-flat">Add to Wishlist</button>
+                <a href="/write-review/{{itemDetails.id}}" class="btn btn-default btn-flat">Write a Review</a>
+              </div>
+              <div class="form-group">
+                <label>Share:</label>
+                <div class="social-links flat text-medium">
+                  <a href="#" class="social-link"><i class="fa fa-twitter"></i></a>
+                  <a href="#" class="social-link"><i class="fa fa-google-plus"></i></a>
+                  <a href="#" class="social-link"><i class="fa fa-facebook"></i></a>
+                </div>
+              </div>
+            </form>
+          </div>
+      </div>
+      <div class="description">
+        {{itemDetails.summary}}
+      </div>
     </div>
   </div>
+  
 
   <h2 class="page-header">Reviews</h2>
   <div class="row" id="comments" ng-show="!productReviewGetError">
@@ -80,7 +84,7 @@
                 <h4 class="page-header">Have you used this product?</h4>
                 <span class="text-medium">Rate it now:</span><br/>
                 <rating ng-model="newRating" readonly="false" class="text-big" /><br/>
-                <a href="/write-review/{{itemDetails.id}}" class="btn btn-default btn-flat">Write a review</a>
+                <a href="/write-review/{{itemDetails.id}}?rate={{newRating}}" class="btn btn-default btn-flat">Rate & Write a review <i class="fa fa-angle-double-right"></i></a>
               </div>
             </div>
           </div>
@@ -116,7 +120,7 @@
               <div class="col-md-2 col-sm-12" ng-show="review.first || review.certified">
                 <div class="review-badges">
                   <span ng-show="review.first" class="bg-green pad-5">First to Review</span><br/><br/>
-                  <span ng-show="review.certified" class="bg-primary pad-5">Certified User</span>
+                  <span ng-show="review.certified" class="bg-primary pad-5">Verified User</span>
                 </div>
               </div>
               <div class="col-md-12 col-sm-12">
@@ -174,7 +178,9 @@
       </p>
       <span class="text-medium">Rate it now:</span><br/>
       <rating ng-model="newRating" readonly="false" class="text-big" /><br/>
-      <a href="/write-review/{{itemDetails.id}}" class="btn btn-default btn-flat">Write a review</a>
+      <a href="/write-review/{{itemDetails.id}}?rate={{newRating}}" class="btn btn-default btn-flat">
+        Rate & Write a review <i class="fa fa-angle-double-right"></i>
+      </a>
     </div>
   </div>
 
