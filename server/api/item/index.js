@@ -13,6 +13,7 @@ router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);
 
 router.get('/:id/reviews', controller.reviews);
+router.post('/:id/reviews', controller.addReview);
 router.get('/:id/related', controller.related);
 router.get('/:id/ratings', controller.ratings);
 

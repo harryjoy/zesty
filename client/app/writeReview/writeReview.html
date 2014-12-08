@@ -40,7 +40,7 @@
 		</div>
 
 		<div class="col-lg-9 col-md-9 col-sm-8 col-xs-8">
-			<div class="alert alert-info write-review-note">
+			<div class="alert alert-info write-review-note" ng-show="!reviewSubmitted">
         <i class="fa fa-question"></i>
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
         	<i class="fa fa-close"></i>
@@ -49,43 +49,134 @@
 				Your rating of the product has a direct effect on customer perception for the product. Your rating contributes to the product’s overall rating. So, please be fair with your appraisal.
       </div>
 
-			<div class="review-form box box-solid box-primary">
+			<div class="review-form box box-solid box-primary" ng-show="!reviewSubmitted">
 				<div class="box-header">
 					<h2 class="header">
 						Write review and help others!
 						<small class="review-notice pull-right">All fields are mandatory.</small>
 					</h2>
 				</div>
-				<form role="form" name="review-form" id="review-form">
+				<form role="form" name="reviewForm" novalidate ng-submit="addReview(reviewForm)">
 					<div class="box-body">
 						<div class="form-group">
-							<label>Review Title:</label>
-							<input class="form-control" type="text" name="review-title" id="review-title" ng-modal="review.title" />
+              <div class="alert alert-danger" role="alert" ng-show="!reviewForm.$valid && submitted">
+                <i class="fa fa-warning"></i>
+                <p class="help-block" ng-show="reviewForm.title.$error.required && submitted">
+                   Review title is required.
+                </p>
+                <p class="help-block" ng-show="reviewForm.title.$error.minlength && submitted">
+                   Review title must be at least 5 characters long.
+                </p>
+                <p class="help-block" ng-show="reviewForm.title.$error.maxlength && submitted">
+                   Review title should not be longer than 50 characters.
+                </p>
+                <p class="help-block" ng-show="reviewForm.name.$error.required && submitted">
+                   Your Name is required.
+                </p>
+                <p class="help-block" ng-show="reviewForm.name.$error.minlength && submitted">
+                   Name must be at least 3 characters long.
+                </p>
+                <p class="help-block" ng-show="reviewForm.email.$error.required && submitted">
+                   Your Email Id is required.
+                </p>
+                <p class="help-block" ng-show="reviewForm.email.$error.email && submitted">
+                   Invalid Email Id. Please enter a valid Email Id.
+                </p>
+                <p class="help-block" ng-show="reviewForm.ratings.$error.required && submitted">
+                   Review ratings is required.
+                </p>
+                <p class="help-block" ng-show="reviewForm.comments.$error.required && submitted">
+                   Review comments are required.
+                </p>
+                <p class="help-block" ng-show="reviewForm.comments.$error.minlength && submitted">
+                   Review comments must be at least 50 characters long.
+                </p>
+                <p class="help-block" ng-show="reviewForm.place.$error.maxlength && submitted">
+                   Place should not be longer than 15 characters.
+                </p>
+                <p class="help-block">{{ errors.other }}</p>
+              </div>
+            </div>
+						<div class="form-group" ng-class="{ 'has-success': reviewForm.title.$valid && submitted, 'has-error': reviewForm.title.$invalid && submitted }">
+							<label class="control-label">Review Title:</label>
+							<input class="form-control" type="text" name="title" ng-model="review.title" required ng-minlength="5" ng-maxlength="50" ng-disabled="reviewLoader" />
 							<span class="help-block text-small">
-								Enter at least 20 characters.
+								Enter at least 5 characters.
 							</span>
 						</div>
-						<div class="form-group">
-							<label>Name:</label>
-							<input class="form-control" type="text" name="review-name" id="review-name" ng-modal="review.name" />
+						<div class="form-group" ng-class="{ 'has-success': reviewForm.name.$valid && submitted, 'has-error': reviewForm.name.$invalid && submitted }">
+							<label class="control-label">Name:</label>
+							<input class="form-control" type="text" name="name" ng-model="review.name" required ng-minlength="3" ng-disabled="reviewLoader || loggedInNow" />
 							<span class="help-block text-small">
-								Enter first and last name
+								Enter first and last name. Enter at least 3 characters.
 							</span>
 						</div>
+						<div class="form-group" ng-class="{ 'has-success': reviewForm.email.$valid && submitted, 'has-error': reviewForm.email.$invalid && submitted }">
+							<label class="control-label">Email:</label>
+							<input class="form-control" type="email" name="email" ng-model="review.emailId" required ng-disabled="reviewLoader || loggedInNow" />
+						</div>
 						<div class="form-group">
-							<label>Your Review:</label><br/>
-							<rating ng-model="review.rating" class="review-form-rating"></rating>
+							<label class="control-label">Place:</label>
+							<input class="form-control" type="text" name="place" ng-model="review.place" ng-disabled="reviewLoader" ng-maxlength="15" />
+							<span class="help-block text-small">
+								(Optional)
+							</span>
+						</div>
+						<div class="form-group" ng-class="{ 'has-success': (reviewForm.comments.$valid && reviewForm.ratings.$valid && submitted), 'has-error': ((reviewForm.comments.$invalid || reviewForm.ratings.$invalid) && submitted) }">
+							<label class="control-label">Your Review:</label><br/>
+							<rating name="ratings" ng-model="review.rating" class="review-form-rating" required></rating>
 							<small class="pull-right help-block text-small">(Enter at least 50 characters.)</small>
-							<textarea class="form-control text-area-bg" col="30" row="10" name="review-title" id="review-title" ng-modal="review.comments"></textarea>
+							<textarea class="form-control text-area-bg" col="30" row="10" name="comments" ng-model="review.review" required ng-minlength="50" ng-disabled="reviewLoader"></textarea>
 							<span class="help-block text-small">
 								<strong>Please do not include:</strong> HTML, references to other retailers, pricing, personal information, any profane, inflammatory or copyrighted comments, or any copied content.
 							</span>
 						</div>
 					</div>
 					<div class="box-footer">
-						<button class="btn btn-default">Submit Review</button>
+						<button type="submit" ui-ladda="reviewLoader" data-style="slide-left" class="ladda-button btn btn-default btn-flat" data-spinner-color="#646678"><span class="ladda-label"> Save Changes</span></button>
 					</div>
 				</form>
+			</div>
+
+			<div class="box box-solid" ng-show="reviewSubmitted">
+				<div class="box-header">
+					<h2 class="box-title"><i class="fa fa-check"></i> Your review has been submitted successfully.</h2>
+				</div>
+			</div>
+			<div class="box box-black review-list-box" ng-show="reviewSubmitted">
+        <div class="box-header">
+          <span class="pull-right review-time">{{moment(review.reviewTime).format('Do MMMM, YYYY HH:mm a')}}</span>
+          <h3 class="box-title">
+            {{review.title}}
+            <rating ng-model="review.rating" readonly="true" />
+            <p class="review-sub-header">
+              From: 
+              <span ng-switch="review.customerId || 'null'">
+                <span ng-switch-when="null">{{review.name}}</span>
+                <span ng-switch-default>
+                  <a href="/users/{{review.customerId}}">{{review.name}}</a>
+                </span>
+              </span>
+              <span ng-show="review.place"><em>({{review.place}})</em></span>
+            </p>
+          </h3>
+        </div>
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-10 col-sm-12">
+              <div>{{review.review}}</div>
+            </div>
+            <div class="col-md-2 col-sm-12" ng-show="review.first || review.certified">
+              <div class="review-badges">
+                <span ng-show="review.first" class="bg-green pad-5">First to Review</span><br/><br/>
+                <span ng-show="review.certified" class="bg-primary pad-5">Certified User</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box-footer">
+          <a href="/product/{{item.id}}#comments" class="reviews-other-link text-normal">See your review on product page <i class="fa fa-angle-double-right"></i></a>
+        </div>
 			</div>
 
 			<div class="review-extra review-form box">

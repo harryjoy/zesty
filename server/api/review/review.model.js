@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var ReviewSchema = new Schema({
+	title: String,
   name: String,
   review: String,
   rating: Number,

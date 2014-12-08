@@ -13,6 +13,12 @@ angular.module('zesty')
         },
         isArray:true
       },
+      addReview: {
+        method: 'POST',
+        params: {
+          controller:'reviews'
+        }
+      },
       related: {
         method: 'GET',
         params: {

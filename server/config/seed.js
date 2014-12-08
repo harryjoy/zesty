@@ -194,14 +194,16 @@ Item.find({}).remove(function() {
                 review: 'This is good product',
                 rating: 2,
                 productId: items._id,
-                place: 'United States'
+                place: 'United States',
+                title: 'An Average Product'
               }, {
                 name: 'Admin',
                 emailId: 'admin@admin.com',
                 review: 'This is awesome product',
                 rating: 4,
                 productId: items._id,
-                place: 'India'
+                place: 'India',
+                title: 'Good product'
               });
             });
           });

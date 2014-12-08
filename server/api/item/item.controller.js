@@ -4,6 +4,7 @@ var _ = require('lodash');
 var Item = require('./item.model');
 var Review = require('../review/review.model');
 var config = require('../../config/environment');
+var numeral = require('numeral');
 
 // Get list of items
 exports.index = function(req, res) {
@@ -60,6 +61,7 @@ exports.destroy = function(req, res) {
   });
 };
 
+// get reviews for selected item.
 exports.reviews = function(req, res) {
   Review.find({ productId : req.params.id }, function (err, reviews) {
     if(err) { return handleError(res, err); }
@@ -67,6 +69,32 @@ exports.reviews = function(req, res) {
   });
 };
 
+// add review for selected item.
+exports.addReview = function(req, res) {
+  Item.findById(req.params.id, function (err, item) {
+    if(err) { return handleError(res, err); }
+    if(!item) { return res.send(404); }
+    Review.create(req.body, function(err, review) {
+      if(err) { return handleError(res, err); }
+      item.reviews = item.reviews + 1;
+      Review.aggregate().group({
+        _id: '$productId',
+        average: {
+          $avg: '$rating'
+        } 
+      }).exec(function (err, result){
+        if(err) { return handleError(res, err); }
+        item.rating = numeral(result[0].average).format('0.00');
+        item.save(function (err) {
+          if (err) { return handleError(res, err); }
+          return res.json(201, review);
+        });
+      });
+    });
+  });
+};
+
+// get related items for selected item.
 exports.related = function(req, res) {
   Item.findById(req.params.id, function (err, item) {
     if(err) { return handleError(res, err); }
@@ -82,6 +110,7 @@ exports.related = function(req, res) {
   });
 };
 
+// get ratings for selected item in groups of number of stars.
 exports.ratings = function(req, res, next) {
   Review.aggregate().group({
     _id: '$rating',
