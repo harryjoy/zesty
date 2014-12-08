@@ -94,7 +94,7 @@
     <hr/>
 
     <div class="col-md-9 col-sm-12">
-      <review-box ng-repeat="review in itemReviews"></review-box>
+      <review-box ng-repeat="review in itemReviews" review="review" is-logged-in="{{loggedInNow}}" customer-id="{{customerId}}"></review-box>
       <div class="col-md-12 col-sm-12 text-center">
         <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="3" ng-change="pageChanged()"></pagination>
       </div>

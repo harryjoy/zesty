@@ -41,6 +41,7 @@ angular.module('zesty')
   $scope.submitted = false;
   $scope.reviewLoader = false;
   $scope.reviewSubmitted = false;
+  $scope.customerId = '';
   $scope.review = {};
   $scope.errors = {};
   Auth.isLoggedInAsync(function(loggedIn) {
@@ -48,6 +49,7 @@ angular.module('zesty')
     if (loggedIn) {
       $scope.review.name = $scope.getCurrentUser().firstName + ' ' + $scope.getCurrentUser().lastName;
       $scope.review.emailId = $scope.getCurrentUser().email;
+      $scope.customerId = $scope.getCurrentUser()._id;
     }
   });
   if ($location.search() && $location.search().rate) {

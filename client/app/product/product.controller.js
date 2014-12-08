@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('ProductCtrl', ['$scope', '$stateParams', 'ProductServ',
-    function ($scope, $stateParams, ProductServ) {
+  .controller('ProductCtrl', ['$scope', '$stateParams', 'ProductServ', 'Auth',
+    function ($scope, $stateParams, ProductServ, Auth) {
 
   /*
    * This is used to cache product review and do not make request 
@@ -122,5 +122,13 @@ angular.module('zesty')
   $scope.pageChanged = function() {
     ProductReviewCache.getPageData();
   };
+
+  $scope.customerId = '';
+  Auth.isLoggedInAsync(function(loggedIn) {
+    $scope.loggedInNow = loggedIn;
+    if (loggedIn) {
+      $scope.customerId = $scope.getCurrentUser()._id;
+    }
+  });
 
 }]);
