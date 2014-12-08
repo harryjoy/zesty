@@ -1,0 +1,38 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 col-sm-12">
+			<h2 class="page-header">Reviews:</h2>
+		</div>
+		<div class="col-md-9 col-sm-12" ng-show="!noReviews">
+      <review-box ng-repeat="review in itemReviews" review="review" is-logged-in="{{loggedInNow}}" customer-id="{{customerId}}"></review-box>
+      <div class="col-md-12 col-sm-12 text-center">
+        <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="3" ng-change="pageChanged()"></pagination>
+      </div>
+    </div>
+    <div class="col-md-9 col-sm-12 text-center" ng-show="noReviews">
+    	<h2 class="label label-warning text-medium">
+    		No reviews with this rating(s) found for this product.
+    		Please try some other filters.
+    	</h2>
+    </div>
+		<div class="col-md-3 col-sm-6">
+			<h4 class="text-center">
+				<a class="text-muted" href="/product/{{itemId}}"><i class="fa fa-angle-double-left"></i> Back to product</a>
+			</h4>
+      <div class="box box-solid box-black review-list-box">
+        <div class="box-header">
+          <h3 class="box-title">Filter Reviews:</h3>
+        </div>
+        <div class="box-body">
+          <ul class="list-unstyled">
+            <li><a href="/product-reviews/{{itemId}}/4"><i class="fa fa-angle-double-right"></i> 4 and 5 stars rated certified buyer reviews</a></li>
+            <li>&nbsp;</li>
+            <li><a href="/product-reviews/{{itemId}}/2"><i class="fa fa-angle-double-right"></i> 3 and 2 stars rated certified buyer reviews</a></li>
+            <li>&nbsp;</li>
+            <li><a href="/product-reviews/{{itemId}}/1"><i class="fa fa-angle-double-right"></i> 1 star rated certified buyer reviews</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+	</div>
+</div>

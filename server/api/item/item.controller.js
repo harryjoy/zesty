@@ -66,9 +66,19 @@ exports.destroy = function(req, res) {
 exports.reviews = function(req, res) {
   var pageSize = req.query.pageSize || config.pagination.size;
   var pageNumber = req.query.pageNumber || 0;
-  Review.find({
+  var query = {
     productId : req.params.id
-  })
+  };
+  if (req.query.rate) {
+    if (req.query.rate === '2') {
+      query.rating = {'$in': [2, 3]};
+    } else if (req.query.rate === '4') {
+      query.rating = {'$in': [4, 5]};
+    } else {
+      query.rating = req.query.rate;
+    }
+  }
+  Review.find(query)
   .limit(pageSize)
   .skip(pageNumber * pageSize)
   .sort('-createdAt')
