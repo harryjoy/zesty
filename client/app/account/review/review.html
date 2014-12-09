@@ -18,11 +18,11 @@
           <div class="box box-solid">
             <div class="box-body">
               <div class="row">
-                <div class="col-md-5 col-sm-6">
+                <div class="col-md-5 col-sm-6" ng-hide="noReviews">
                   <h4 class="page-header text-medium">Ratings by {{getCurrentUser().name}} ({{ratingCount}})</h4>
                   <review-progress-bars first="{{first}}" two="{{two}}" three="{{three}}" four="{{four}}" five="{{five}}"></review-progress-bars>
                 </div> <!-- col end -->
-                <div class="col-md-7 col-sm-6">
+                <div class="col-md-7 col-sm-6" ng-hide="noReviews">
                   <h4 class="page-header text-medium">Recently rated</h4>
                   <div class="recently-rated-box" ng-repeat="rating in recentRatings">
                     <img src="{{rating.image}}" />
@@ -33,13 +33,21 @@
                   </div>
                 </div> <!-- col end -->
 
-                <div class="col-md-12 col-sm-12">
+                <div class="col-md-12 col-sm-12" ng-hide="noReviews">
                   <h4 class="page-header text-medium">Reviews by {{getCurrentUser().name}} ({{totalItems}})</h4>
                 </div> <!-- col end -->
-                <review-box ng-repeat="review in reviews" review="review" with-product="true" is-logged-in="{{loggedInNow}}" customer-id="{{customerId}}"></review-box>
+                <span ng-hide="noReviews">
+                  <review-box ng-repeat="review in reviews" review="review" with-product="true" is-logged-in="{{loggedInNow}}" customer-id="{{customerId}}"></review-box>
+                </span>
 
-                <div class="col-md-12 col-sm-12 text-center">
+                <div class="col-md-12 col-sm-12 text-center" ng-hide="noReviews">
                   <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="3" ng-change="pageChanged()"></pagination>
+                </div> <!-- col end -->
+
+                <div class="col-md-12 col-sm-12" ng-show="noReviews">
+                  <h4 class="text-center alert alert-warning">
+                    You have not given any reviews yet.
+                  </h4>
                 </div> <!-- col end -->
 
               </div> <!-- outer row -->

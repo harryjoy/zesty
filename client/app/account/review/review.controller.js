@@ -38,6 +38,7 @@ angular.module('zesty')
   $scope.totalItems = 0;
   $scope.currentPage = 1;
   $scope.ratingCount = 0;
+  $scope.noReviews = false;
   $scope.recentRatings = [];
   $scope.reviews = [];
   $scope.first = $scope.two = $scope.three = $scope.four = $scope.five = 0;
@@ -45,19 +46,26 @@ angular.module('zesty')
     id: $scope.getCurrentUser()._id,
     'pageSize': 3
   }).$promise.then(function(result) {
-    $scope.reviews = result.data;
-    $scope.totalItems = result.count;
-    UserReviewCache.setPageData(result.data);
+    if (result && result.data && result.data.length > 0) {
+      $scope.reviews = result.data;
+      $scope.totalItems = result.count;
+      UserReviewCache.setPageData(result.data);
 
-    $.each(result.data, function (k, review) {
-      $scope.recentRatings.push({
-        id: review.productId,
-        image: review.product.image,
-        title: review.product.title,
-        rate: review.rating,
-        description: review.product.description,
+      $.each(result.data, function (k, review) {
+        $scope.recentRatings.push({
+          id: review.productId,
+          image: review.product.image,
+          title: review.product.title,
+          rate: review.rating,
+          description: review.product.description,
+        });
       });
-    });
+    } else {
+      $scope.noReviews = true;
+    }
+  }).catch(function (err) {
+    $scope.errors = err;
+    $scope.noReviews = true;
   });
   User.ratings({id: $scope.getCurrentUser()._id}).$promise.then(function(ratings) {
     $.each(ratings, function (key, result) {

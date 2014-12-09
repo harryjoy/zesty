@@ -22,15 +22,16 @@
       <div class="review-product-sm box">
         <div class="box-body">
           <div class="product-xs">
-            <img class="thumbnail" title="Zesty" alt="Zesty" src="{{item.image}}">
+            <img class="thumbnail" title="{{item.title}}" alt="{{item.title}}" src="{{item.image}}">
             <h5 class="review-item-title">{{item.title}}</h5><br/>
             <span class="text-small">{{item.decsription}}</span>
           </div>
           <clearfix></clearfix>
         </div>
         <div class="box-footer">
-          <a href="#" class="btn btn-flat btn-success">Buy Now</a>
-          <a href="#" class="btn btn-flat btn-default">Add to Wishlist</a>
+          <a href="#" class="btn btn-default btn-flat btn-sm" title="Add to Cart"><i class="fa fa-plus text-small"></i> <i class="fa fa-shopping-cart"></i></a>
+          <a href="#" class="btn btn-flat btn-default btn-sm" title="Add to Wishlist"><i class="fa fa-star"></i></a>
+          <a href="/write-review/{{itemId}}" class="btn btn-default btn-flat">Write a Review</a>
         </div>
       </div>
       <div class="box box-solid box-black review-list-box">
