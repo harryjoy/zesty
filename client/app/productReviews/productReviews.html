@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="col-md-9 col-sm-12 text-center" ng-show="noReviews">
-    	<h2 class="label label-warning text-medium">
+    	<h2 class="alert alert-warning text-medium">
     		No reviews with this rating(s) found for this product.
     		Please try some other filters.
     	</h2>
@@ -19,17 +19,31 @@
 			<h4 class="text-center">
 				<a class="text-muted" href="/product/{{itemId}}"><i class="fa fa-angle-double-left"></i> Back to product</a>
 			</h4>
+      <div class="review-product-sm box">
+        <div class="box-body">
+          <div class="product-xs">
+            <img class="thumbnail" title="Zesty" alt="Zesty" src="{{item.image}}">
+            <h5 class="review-item-title">{{item.title}}</h5><br/>
+            <span class="text-small">{{item.decsription}}</span>
+          </div>
+          <clearfix></clearfix>
+        </div>
+        <div class="box-footer">
+          <a href="#" class="btn btn-flat btn-success">Buy Now</a>
+          <a href="#" class="btn btn-flat btn-default">Add to Wishlist</a>
+        </div>
+      </div>
       <div class="box box-solid box-black review-list-box">
         <div class="box-header">
           <h3 class="box-title">Filter Reviews:</h3>
         </div>
         <div class="box-body">
           <ul class="list-unstyled">
-            <li><a href="/product-reviews/{{itemId}}/4"><i class="fa fa-angle-double-right"></i> 4 and 5 stars rated certified buyer reviews</a></li>
+            <li><a href="/product-reviews/{{itemId}}/4"><i class="fa fa-angle-double-right"></i> 4 and 5 stars rated reviews</a></li>
             <li>&nbsp;</li>
-            <li><a href="/product-reviews/{{itemId}}/2"><i class="fa fa-angle-double-right"></i> 3 and 2 stars rated certified buyer reviews</a></li>
+            <li><a href="/product-reviews/{{itemId}}/2"><i class="fa fa-angle-double-right"></i> 3 and 2 stars rated reviews</a></li>
             <li>&nbsp;</li>
-            <li><a href="/product-reviews/{{itemId}}/1"><i class="fa fa-angle-double-right"></i> 1 star rated certified buyer reviews</a></li>
+            <li><a href="/product-reviews/{{itemId}}/1"><i class="fa fa-angle-double-right"></i> 1 star rated reviews</a></li>
           </ul>
         </div>
       </div>

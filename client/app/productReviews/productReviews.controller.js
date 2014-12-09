@@ -55,6 +55,21 @@ angular.module('zesty')
     $scope.noReviews = true;
   });
 
+  ProductServ.get({id: productId}).$promise.then(function(product) {
+    if (!product) {
+      throw new Error('No product details found for selected item.');
+    }
+    $scope.item = {
+      'id': product._id,
+      'link': '/product/' + product._id,
+      'title': product.title,
+      'image': product.mainImage,
+      'decsription': product.description
+    };
+  }).catch (function() {
+    $scope.noReviews = true;
+  });
+
   $scope.totalItems = 0;
   ProductServ.ratings({id: productId}).$promise.then(function(ratings) {
     $.each(ratings, function (key, result) {
