@@ -45,10 +45,11 @@
     <div class="box-footer" ng-hide="noFooter">
       <div class="row">
         <div class="col-md-10 col-sm-9 text-normal">
-          <span ng-hide="isMine || voted || review.voted">
+          <span ng-hide="isMine || voted || review.voted || isLoggedIn==='false'">
             <strong>Was this review helpful?</strong>
             <a href="#" class="text-green" ng-click="vote(1);"><i class="fa fa-thumbs-up"></i> Yes</a>
             <a href="#" class="text-red" ng-click="vote(2);"><i class="fa fa-thumbs-down"></i> No</a>
+            &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
           </span>
           <span ng-show="isMine || voted || review.voted">
             <span ng-hide="isMine">
@@ -58,15 +59,28 @@
               </span>) &nbsp; 
             </span>
             <strong>{{review.helpful}}</strong> of <strong>{{review.helpful + review.unhelpful}}</strong> found this review helpful.
+            &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
           </span>
-          &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
           <strong>Share this review:</strong>
           <a href="#" class="btn btn-default btn-sm btn-mini"><i class="fa fa-twitter"></i></a>
           <a href="#" class="btn btn-default btn-sm btn-mini"><i class="fa fa-google-plus"></i></a>
           <a href="#" class="btn btn-default btn-sm btn-mini"><i class="fa fa-facebook"></i></a>
+          <span ng-show="isMine" class="text-normal pull-right">
+            Total abuses ({{review.abuses}})
+          </span>
         </div>
         <div class="col-md-2 col-sm-3">
-          <a href="#" class="text-small pull-right" ng-show="!isMine">Report abuse</a>
+          <span ng-switch="review.abusedByMe" ng-hide="isLoggedIn==='false'">
+            <span ng-switch-default>
+              <a href="#" class="text-small pull-right" ng-show="!isMine" ng-click="vote(3);">Report abuse ({{review.abuses}})</a>
+            </span>
+            <span ng-switch-when="true" class="text-normal pull-right">
+              Total abuses ({{review.abuses}})
+            </span>
+          </span>
+          <span ng-show="isLoggedIn==='false'" class="text-normal pull-right">
+            Total abuses ({{review.abuses}})
+          </span>
           <span ng-show="isMine" class="pull-right">
             <a href="/write-review/{{review.productId}}?review={{review._id}}" class="text-small btn-mini"><i class="fa fa-edit"></i> Edit</a>
             <!-- <a href="#" class="text-small btn-mini" ng-click="deleteReview(review._id)"><i class="fa fa-trash"></i> Delete</a> -->

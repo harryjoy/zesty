@@ -34,6 +34,10 @@ var ReviewSchema = new Schema({
     type: Number,
     default: 0
   },
+  abuses: {
+    type: Number,
+    default: 0
+  },
   reviewTime: { type: Date, default: Date.now }
 });
 ReviewSchema.plugin(timestamps);

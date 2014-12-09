@@ -37,8 +37,12 @@ angular.module('zesty')
         $.each($scope.itemReviews, function (k, review) {
           $.each(votes, function (key, vote) {
             if (review._id === vote.reviewId) {
-              review.voted = true;
-              review.myVote = vote.vote;
+              if (vote.vote === 1 || vote.vote === 2) {
+                review.voted = true;
+                review.myVote = vote.vote;
+              } else {
+                review.abusedByMe = true;
+              }
             }
           });
         });

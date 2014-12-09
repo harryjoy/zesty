@@ -13,6 +13,7 @@ angular.module('zesty')
         scope.withProduct = attrs.withProduct;
         scope.isMine = false;
         scope.customerId = attrs.customerId;
+        scope.isLoggedIn = attrs.isLoggedIn;
         if (attrs.isLoggedIn && scope.review.customerId &&
               scope.review.customerId === attrs.customerId) {
           scope.isMine = true;
@@ -25,10 +26,18 @@ angular.module('zesty')
             reviewId: scope.review._id,
             vote: uservote
           };
+          var oldVoted = scope.review.voted;
+          var oldMyVote = scope.review.myVote;
           ReviewServ.addVote({id: scope.review._id}, reviewVote).$promise.then(function(review) {
-            scope.voted = true;
-            review.voted = true;
-            review.myVote = uservote;
+            if (uservote === 1 || uservote === 2) {
+              scope.voted = true;
+              review.voted = true;
+              review.myVote = uservote;
+            } else {
+              review.voted = oldVoted;
+              review.abusedByMe = true;
+              review.myVote = oldMyVote;
+            }
             scope.review = review;
             $rootScope.$broadcast('review.vote', review);
           });
