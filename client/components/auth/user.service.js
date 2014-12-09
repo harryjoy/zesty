@@ -67,6 +67,19 @@ angular.module('zesty')
           id: '@id',
           controller: 'cards'
         }
+      },
+      reviews: {
+        method: 'GET',
+        params: {
+          controller: 'reviews'
+        }
+      },
+      ratings: {
+        method: 'GET',
+        params: {
+          controller: 'ratings'
+        },
+        isArray: true
       }
 	  });
   });

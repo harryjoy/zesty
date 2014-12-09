@@ -21,6 +21,19 @@ var ReviewSchema = new Schema({
     type: Boolean,
     default: false
   },
+  product: {
+    title: String,
+    description: String,
+    image: String
+  },
+  helpful: {
+    type: Number,
+    default: 0
+  },
+  unhelpful: {
+    type: Number,
+    default: 0
+  },
   reviewTime: { type: Date, default: Date.now }
 });
 ReviewSchema.plugin(timestamps);

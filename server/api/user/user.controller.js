@@ -6,6 +6,7 @@ var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var _ = require('lodash');
 var mongoose = require('mongoose');
+var Review = require('../review/review.model');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -247,6 +248,52 @@ exports.deleteCard = function(req, res, next) {
       if (err) { return handleError(res, err); }
       return res.json(200, user);
     });
+  });
+};
+
+// get reviews made by this user.
+exports.reviews = function(req, res, next) {
+  var pageSize = req.query.pageSize || config.pagination.size;
+  var pageNumber = req.query.pageNumber || 0;
+  var query = {
+    customerId : req.params.id
+  };
+  if (req.query.rate) {
+    if (req.query.rate === '2') {
+      query.rating = {'$in': [2, 3]};
+    } else if (req.query.rate === '4') {
+      query.rating = {'$in': [4, 5]};
+    } else {
+      query.rating = req.query.rate;
+    }
+  }
+  Review.find(query)
+  .limit(pageSize)
+  .skip(pageNumber * pageSize)
+  .sort('-createdAt')
+  .exec(function (err, reviews) {
+    if(err) { return handleError(res, err); }
+    var result = {
+      data: reviews
+    };
+    Review.count(query).exec(function (err, count) {
+      if(err) { return handleError(res, err); }
+      result.count = count;
+      return res.json(200, result);
+    })
+  });
+};
+
+// get ratings made by this user.
+exports.ratings = function(req, res, next) {
+  Review.aggregate().match({'customerId': mongoose.Types.ObjectId(req.params.id)}).group({
+    _id: '$rating',
+    count: {
+      $sum: 1
+    } 
+  }).exec(function (err, result){
+    if(err) { return handleError(res, err); }
+    return res.json(200, result);
   });
 };
 

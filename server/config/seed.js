@@ -195,7 +195,12 @@ Item.find({}).remove(function() {
                 rating: 2,
                 productId: items._id,
                 place: 'United States',
-                title: 'An Average Product'
+                title: 'An Average Product',
+                product: {
+                  title: items.title,
+                  description: items.description,
+                  image: items.mainImage
+                }
               }, {
                 name: 'Admin',
                 emailId: 'admin@admin.com',
@@ -203,7 +208,12 @@ Item.find({}).remove(function() {
                 rating: 4,
                 productId: items._id,
                 place: 'India',
-                title: 'Good product'
+                title: 'Good product',
+                product: {
+                  title: items.title,
+                  description: items.description,
+                  image: items.mainImage
+                }
               });
             });
           });

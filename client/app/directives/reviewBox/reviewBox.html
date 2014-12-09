@@ -1,5 +1,15 @@
-<div class="col-md-12" ng-class="{'margin-adust-on-top': noFooter}">
+<div class="col-md-12" ng-class="{'margin-adust-on-top': noFooter, 'user-review-box': withProduct}">
   <div class="box box-black review-list-box">
+    <div class="box-header" ng-show="withProduct">
+      <div class="user-review-header">
+        <img src="{{review.product.image}}" height="50" width="50" />
+        <div class="user-review-header-descr">
+          <h5 class="page-header"><a href="/product/{{review.productId}}">{{review.product.title}}</a></h5>
+          <div class="user-review-header-product-description">{{review.product.description}}</div>
+        </div>
+        <clearfix></clearfix>
+      </div>
+    </div>
     <div class="box-header">
       <span class="pull-right review-time">{{moment(review.reviewTime).format('Do MMMM, YYYY HH:mm a')}}</span>
       <h3 class="box-title">
@@ -35,9 +45,14 @@
     <div class="box-footer" ng-hide="noFooter">
       <div class="row">
         <div class="col-md-10 col-sm-9 text-normal">
-          <strong>Was this review helpful?</strong>
-          <a href="#" class="text-green"><i class="fa fa-thumbs-up"></i> Yes</a>
-          <a href="#" class="text-red"><i class="fa fa-thumbs-down"></i> No</a>
+          <span ng-show="!isMine">
+            <strong>Was this review helpful?</strong>
+            <a href="#" class="text-green"><i class="fa fa-thumbs-up"></i> Yes</a>
+            <a href="#" class="text-red"><i class="fa fa-thumbs-down"></i> No</a>
+          </span>
+          <span ng-show="isMine">
+            <strong>{{review.helpful}}</strong> of <strong>{{review.helpful + review.unhelpful}}</strong> found this review helpful.
+          </span>
           &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
           <strong>Share this review:</strong>
           <a href="#" class="btn btn-default btn-sm btn-mini"><i class="fa fa-twitter"></i></a>
@@ -45,11 +60,11 @@
           <a href="#" class="btn btn-default btn-sm btn-mini"><i class="fa fa-facebook"></i></a>
         </div>
         <div class="col-md-2 col-sm-3">
-          <a href="#" class="text-small pull-right">Report abuse</a>
-          <!-- <span ng-show="isMine" class="pull-right">
-            <a href="#" class="text-small btn-mini"><i class="fa fa-edit"></i> Edit</a>
-            <a href="#" class="text-small btn-mini" ng-click="deleteReview(review._id)"><i class="fa fa-trash"></i> Delete</a>
-          </span> -->
+          <a href="#" class="text-small pull-right" ng-show="!isMine">Report abuse</a>
+          <span ng-show="isMine" class="pull-right">
+            <a href="/write-review/{{review.productId}}?review={{review._id}}" class="text-small btn-mini"><i class="fa fa-edit"></i> Edit</a>
+            <!-- <a href="#" class="text-small btn-mini" ng-click="deleteReview(review._id)"><i class="fa fa-trash"></i> Delete</a> -->
+          </span>
           <clearfix></clearfix>
         </div>
       </div>

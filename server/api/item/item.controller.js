@@ -100,6 +100,11 @@ exports.addReview = function(req, res) {
       if (review.customerId) {
         review.certified = true;
       }
+      review.product = {
+        title: item.title,
+        description: item.description,
+        image: item.mainImage
+      };
       Review.create(review, function(err, review) {
         if(err) { return handleError(res, err); }
         item.reviews = item.reviews + 1;

@@ -98,8 +98,8 @@ angular.module('zesty')
        * @return {Object} user
        */
       getCurrentUser: function() {
-        if(currentUser && currentUser.firstName) {
-          currentUser.name = currentUser.firstName;
+        if(currentUser) {
+          currentUser.name = currentUser.firstName + ' ' + currentUser.lastName;
         }
         return currentUser;
       },

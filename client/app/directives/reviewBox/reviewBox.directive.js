@@ -10,6 +10,7 @@ angular.module('zesty')
       },
       link: function (scope, element, attrs) {
         scope.noFooter = attrs.noFooter;
+        scope.withProduct = attrs.withProduct;
         scope.isMine = false;
         if (attrs.isLoggedIn && scope.review.customerId &&
               scope.review.customerId === attrs.customerId) {

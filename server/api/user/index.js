@@ -24,4 +24,7 @@ router.post('/:id/cards', auth.isAuthenticated(), controller.addCard);
 router.put('/:id/cards', auth.isAuthenticated(), controller.editCard);
 router.delete('/:id/cards/:cardId', auth.isAuthenticated(), controller.deleteCard);
 
+router.get('/:id/reviews', auth.isAuthenticated(), controller.reviews);
+router.get('/:id/ratings', auth.isAuthenticated(), controller.ratings);
+
 module.exports = router;

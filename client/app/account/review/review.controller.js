@@ -1,79 +1,92 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('ReviewCtrl', ['$scope',
-    function ($scope) {
+  .controller('ReviewCtrl', ['$scope', 'User', 'Auth',
+    function ($scope, User, Auth) {
 
-  $scope.ratingCount = 10;
-  $scope.reviewCount = 8;
-  $scope.recentRatings = [{
-    id: 'E123',
-    image: 'http://placehold.it/400x400',
-    title: 'Call Of Fame',
-    rate: '2',
-    description: 'this is product description. this is product description.'
-  },{
-    id: 'E135',
-    image: 'http://placehold.it/400x400',
-    title: 'Getting it Done.',
-    rate: '4',
-    description: 'this is product description. this is product description.'
-  },{
-    id: 'E12345',
-    image: 'http://placehold.it/400x400',
-    title: 'Now you can see me!',
-    rate: '3',
-    description: 'this is product description. this is product description.'
-  }];
+  /*
+   * This is used to cache user review and do not make request 
+   * for pages that has already been visited.
+   */
+  var UserReviewCache = {
+    pageData: {},
+    addNewPage: function () {
+      var self = this;
+      User.reviews({
+        id: $scope.getCurrentUser()._id,
+        'pageNumber': $scope.currentPage - 1,
+        'pageSize': 3
+      }).$promise.then(function(result) {
+        if (result.data && result.data.length > 0) {
+          self.pageData[$scope.currentPage] = result.data;
+          $scope.reviews = result.data;
+        }
+      });
+    },
+    getPageData: function () {
+      if (this.pageData[$scope.currentPage] && this.pageData[$scope.currentPage].length > 0) {
+        $scope.reviews = this.pageData[$scope.currentPage];
+      } else {
+        this.addNewPage();
+      }
+    },
+    setPageData: function (reviews) {
+      this.pageData[$scope.currentPage] = reviews;
+    }
+  };
 
-  $scope.reviews = [{
-    product: {
-      id: 'E123',
-      image: 'http://placehold.it/400x400',
-      title: 'Call Of Fame',
-      description: 'this is product description. this is product description.'
-    },
-    title: 'Good product to use',
-    rate: 3,
-    comments: 'This is really good product at this price. Worth it. Full value of money invested in it.' +
-        'Playing this is also awesome.',
-    helpful: 3,
-    unhelpful: 1,
-    id: '123',
-    date: new Date()
-  }, {
-    product: {
-      id: 'E123',
-      image: 'http://placehold.it/400x400',
-      title: 'Now you can see me!',
-      description: 'this is product description. this is product description.'
-    },
-    title: 'Good product to use',
-    rate: 4,
-    comments: 'This is really good product at this price. Worth it. Full value of money invested in it.' +
-        ' This is really good product at this price. Worth it. Full value of money invested in it.' +
-        ' This is really good product at this price. Worth it. Full value of money invested in it.' +
-        ' Playing this is also awesome.',
-    helpful: 0,
-    unhelpful: 0,
-    id: '1223',
-    date: new Date()
-  }, {
-    product: {
-      id: 'E122313',
-      image: 'http://placehold.it/400x400',
-      title: 'Get with it.',
-      description: 'this is product description. this is product description.'
-    },
-    title: 'Good product to use',
-    rate: 2,
-    comments: 'This is really good product at this price. Worth it. Full value of money invested in it.' +
-        'Playing this is also awesome.',
-    helpful: 1,
-    unhelpful: 3,
-    id: '1233',
-    date: new Date()
-  }];
+  $scope.totalItems = 0;
+  $scope.currentPage = 1;
+  $scope.ratingCount = 0;
+  $scope.recentRatings = [];
+  $scope.reviews = [];
+  $scope.first = $scope.two = $scope.three = $scope.four = $scope.five = 0;
+  User.reviews({
+    id: $scope.getCurrentUser()._id,
+    'pageSize': 3
+  }).$promise.then(function(result) {
+    $scope.reviews = result.data;
+    $scope.totalItems = result.count;
+    UserReviewCache.setPageData(result.data);
+
+    $.each(result.data, function (k, review) {
+      $scope.recentRatings.push({
+        id: review.productId,
+        image: review.product.image,
+        title: review.product.title,
+        rate: review.rating,
+        description: review.product.description,
+      });
+    });
+  });
+  User.ratings({id: $scope.getCurrentUser()._id}).$promise.then(function(ratings) {
+    $.each(ratings, function (key, result) {
+      if (result._id === 1) {
+        $scope.first = result.count;
+      } else if (result._id === 2) {
+        $scope.two = result.count;
+      } else if (result._id === 3) {
+        $scope.three = result.count;
+      } else if (result._id === 4) {
+        $scope.four = result.count;
+      } else if (result._id === 5) {
+        $scope.five = result.count;
+      }
+      $scope.ratingCount += result.count;
+    });
+  });
+
+  $scope.pageChanged = function() {
+    UserReviewCache.getPageData();
+  };
+
+  $scope.customerId = '';
+  Auth.isLoggedInAsync(function(loggedIn) {
+    $scope.loggedInNow = loggedIn;
+    if (loggedIn) {
+      $scope.customerId = $scope.getCurrentUser()._id;
+    }
+  });
 
   $scope.sellerReviewExists = true;
   $scope.sellerReviewCount = 3;

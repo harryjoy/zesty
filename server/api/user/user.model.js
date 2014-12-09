@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
+var timestamps = require('mongoose-timestamp');
 
 var UserSchema = new Schema({
   firstName: String,
@@ -64,6 +65,8 @@ var UserSchema = new Schema({
   google: {},
   github: {}
 });
+
+UserSchema.plugin(timestamps);
 
 /**
  * Virtuals
