@@ -126,6 +126,33 @@ exports.addReview = function(req, res) {
   });
 };
 
+// edit item review
+exports.editReview = function(req, res) {
+  Item.findById(req.params.id, function (err, item) {
+    if(err) { return handleError(res, err); }
+    if(!item) { return res.send(404); }
+    Review.findById(req.body._id, function(err, review) {
+      var updated = _.merge(review, req.body);
+      updated.save(function (err) {
+        if (err) { return handleError(res, err); }
+        Review.aggregate().match({'productId': mongoose.Types.ObjectId(req.params.id)}).group({
+          _id: '$productId',
+          average: {
+            $avg: '$rating'
+          } 
+        }).exec(function (err, result){
+          if(err) { return handleError(res, err); }
+          item.rating = numeral(result[0].average).format('0.00');
+          item.save(function (err) {
+            if (err) { return handleError(res, err); }
+            return res.json(201, review);
+          });
+        });
+      });
+    });
+  });
+};
+
 // get related items for selected item.
 exports.related = function(req, res) {
   Item.findById(req.params.id, function (err, item) {

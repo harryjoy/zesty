@@ -32,6 +32,12 @@ angular.module('zesty')
           controller:'ratings'
         },
         isArray:true
+      },
+      editReview: {
+        method: 'PUT',
+        params: {
+          controller:'reviews'
+        }
       }
     });
   }]);

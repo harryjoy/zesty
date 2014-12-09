@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('WritereviewCtrl', ['$scope', '$stateParams', 'Auth', 'ProductServ', '$location',
-  function ($scope, $stateParams, Auth, ProductServ, $location) {
+  .controller('WritereviewCtrl', ['$scope', '$stateParams', 'Auth', 'ProductServ', '$location', 'ReviewServ',
+  function ($scope, $stateParams, Auth, ProductServ, $location, ReviewServ) {
 
   var productId = $stateParams.id;
   $scope.showFaq = true;
@@ -41,6 +41,7 @@ angular.module('zesty')
   $scope.submitted = false;
   $scope.reviewLoader = false;
   $scope.reviewSubmitted = false;
+  $scope.isEdit = false;
   $scope.customerId = '';
   $scope.review = {};
   $scope.errors = {};
@@ -52,26 +53,45 @@ angular.module('zesty')
       $scope.customerId = $scope.getCurrentUser()._id;
     }
   });
-  if ($location.search() && $location.search().rate) {
-    $scope.review.rating = $location.search().rate;
+  if ($location.search()) {
+    if ($location.search().review) {
+      ReviewServ.get({id: $location.search().review}).$promise.then(function(review) {
+        $scope.review = review;
+        $scope.isEdit = true;
+      });
+    }
+    if ($location.search().rate) {
+      $scope.review.rating = $location.search().rate;
+    }
   }
 
   $scope.addReview = function (form) {
     $scope.submitted = true;
     if (form.$valid) {
       $scope.reviewLoader = true;
-      $scope.review.productId = productId;
-      if ($scope.loggedInNow) {
-        $scope.review.customerId = $scope.getCurrentUser()._id;
+      if ($scope.isEdit) {
+        ProductServ.editReview({id: productId}, $scope.review).$promise.then(function(review) {
+          $scope.reviewLoader = false;
+          $scope.reviewSubmitted = true;
+          $scope.review = review;
+        }).catch(function (err) {
+          $scope.errors.other = err;
+          $scope.reviewLoader = false;
+        });
+      } else {
+        $scope.review.productId = productId;
+        if ($scope.loggedInNow) {
+          $scope.review.customerId = $scope.getCurrentUser()._id;
+        }
+        ProductServ.addReview({id: productId}, $scope.review).$promise.then(function(review) {
+          $scope.reviewLoader = false;
+          $scope.reviewSubmitted = true;
+          $scope.review = review;
+        }).catch(function (err) {
+          $scope.errors.other = err;
+          $scope.reviewLoader = false;
+        });
       }
-      ProductServ.addReview({id: productId}, $scope.review).$promise.then(function(review) {
-        $scope.reviewLoader = false;
-        $scope.reviewSubmitted = true;
-        $scope.review = review;
-      }).catch(function (err) {
-        $scope.errors.other = err;
-        $scope.reviewLoader = false;
-      });
     }
   };
 

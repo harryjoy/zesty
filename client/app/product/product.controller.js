@@ -67,11 +67,12 @@ angular.module('zesty')
             'link': '/product/' + item._id,
             'title': item.title,
             'price': item.currency + ' ' + item.price,
-            'reviews': item.reviews ? item.reviews : 0,
+            'reviewCount': item.reviews ? item.reviews : 0,
             'description': item.description,
             'categories': item.categories,
             'mainImage': item.mainImage,
-            'rating': item.rating ? item.rating : 0
+            'rating': item.rating ? item.rating : 0,
+            'updated': item.createdAt
           });
         });
       } else {
