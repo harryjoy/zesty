@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Review = require('./review.model');
+var ReviewVote = require('../reviewVote/reviewVote.model');
 
 // Get list of reviews
 exports.index = function(req, res) {
@@ -52,6 +53,31 @@ exports.destroy = function(req, res) {
       return res.send(204);
     });
   });
+};
+
+// vote for a review. (either helpful or not helpful)
+exports.addReviewVote = function(req, res) {
+  var vote = new ReviewVote(req.body);
+  if (vote.customerId && vote.reviewId) {
+    Review.findById(req.params.id, function (err, review) {
+      if(err) { return handleError(res, err); }
+      if(!review) { return res.send(404); }
+      ReviewVote.create(vote, function(err, reviewVote) {
+        if(err) { return handleError(res, err); }
+        if (vote.vote === 1) {
+          review.helpful = review.helpful + 1;
+        } else {
+          review.unhelpful = review.unhelpful + 1;
+        }
+        review.save(function (err) {
+          if (err) { return handleError(res, err); }
+          return res.json(200, review);
+        });
+      });
+    });
+  } else {
+    return res.send(404);
+  }
 };
 
 function handleError(res, err) {

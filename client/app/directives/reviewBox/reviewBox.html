@@ -45,12 +45,18 @@
     <div class="box-footer" ng-hide="noFooter">
       <div class="row">
         <div class="col-md-10 col-sm-9 text-normal">
-          <span ng-show="!isMine">
+          <span ng-hide="isMine || voted || review.voted">
             <strong>Was this review helpful?</strong>
-            <a href="#" class="text-green"><i class="fa fa-thumbs-up"></i> Yes</a>
-            <a href="#" class="text-red"><i class="fa fa-thumbs-down"></i> No</a>
+            <a href="#" class="text-green" ng-click="vote(1);"><i class="fa fa-thumbs-up"></i> Yes</a>
+            <a href="#" class="text-red" ng-click="vote(2);"><i class="fa fa-thumbs-down"></i> No</a>
           </span>
-          <span ng-show="isMine">
+          <span ng-show="isMine || voted || review.voted">
+            <span ng-hide="isMine">
+              (Voted <span ng-switch="review.myVote">
+                <span ng-switch-when="1" title="my vote"><i class="fa fa-thumbs-up text-green"></i></span>
+                <span ng-switch-when="2" title="my vote"><i class="fa fa-thumbs-down text-red"></i></span>
+              </span>) &nbsp; 
+            </span>
             <strong>{{review.helpful}}</strong> of <strong>{{review.helpful + review.unhelpful}}</strong> found this review helpful.
           </span>
           &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;

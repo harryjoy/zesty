@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('ProductCtrl', ['$scope', '$stateParams', 'ProductServ', 'Auth',
-    function ($scope, $stateParams, ProductServ, Auth) {
+  .controller('ProductCtrl', ['$scope', '$stateParams', 'ProductServ', 'Auth', 'ReviewVoteServ',
+    function ($scope, $stateParams, ProductServ, Auth, ReviewVoteServ) {
 
   /*
    * This is used to cache product review and do not make request 
@@ -19,12 +19,35 @@ angular.module('zesty')
         if (reviews && reviews.length > 0) {
           self.pageData[$scope.currentPage] = reviews;
           $scope.itemReviews = reviews;
+          self.getReviewVotes();
         }
+      });
+    },
+    getReviewVotes: function () {
+      var self = this;
+      var reviewIdsToMatch = [];
+      $.each($scope.itemReviews, function (k, review) {
+        reviewIdsToMatch.push(review._id);
+      });
+      ReviewVoteServ.query({
+        customerId: $scope.getCurrentUser()._id,
+        reviewIds: reviewIdsToMatch
+      }).$promise.then(function (votes) {
+        $.each($scope.itemReviews, function (k, review) {
+          $.each(votes, function (key, vote) {
+            if (review._id === vote.reviewId) {
+              review.voted = true;
+              review.myVote = vote.vote;
+            }
+          });
+        });
+        self.pageData[$scope.currentPage] = $scope.itemReviews;
       });
     },
     getPageData: function () {
       if (this.pageData[$scope.currentPage] && this.pageData[$scope.currentPage].length > 0) {
         $scope.itemReviews = this.pageData[$scope.currentPage];
+        this.getReviewVotes();
       } else {
         this.addNewPage();
       }
@@ -107,6 +130,7 @@ angular.module('zesty')
         });
       });
 
+      ProductReviewCache.getReviewVotes();
     }).catch(function (err) {
       $scope.productReviewGetError = true;
       $scope.rewviewError = err;
@@ -130,6 +154,15 @@ angular.module('zesty')
     if (loggedIn) {
       $scope.customerId = $scope.getCurrentUser()._id;
     }
+  });
+
+  $scope.$on('review.vote', function(e, updated) {
+    $.each($scope.itemReviews, function (k, review) {
+      if(review._id === updated._id) {
+        review = _.merge(review, updated);
+      }
+    });
+    ProductReviewCache.setPageData($scope.itemReviews);
   });
 
 }]);
