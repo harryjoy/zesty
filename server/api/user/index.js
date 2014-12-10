@@ -27,4 +27,6 @@ router.delete('/:id/cards/:cardId', auth.isAuthenticated(), controller.deleteCar
 router.get('/:id/reviews', auth.isAuthenticated(), controller.reviews);
 router.get('/:id/ratings', auth.isAuthenticated(), controller.ratings);
 
+router.get('/:id/favorites', auth.isAuthenticated(), controller.favorites);
+
 module.exports = router;

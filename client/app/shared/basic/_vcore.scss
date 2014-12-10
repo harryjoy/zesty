@@ -5,41 +5,41 @@
 */
 
 @font-face {
-    font-family: 'lora';
-    src: url(shared/fonts/Lora-Regular.ttf);
+  font-family: 'lora';
+  src: url(shared/fonts/Lora-Regular.ttf);
 }
 @font-face {
-    font-family: 'lora';
-    src: url(shared/fonts/Lora-Italic.ttf);
-    font-style: italic, oblique;
+  font-family: 'lora';
+  src: url(shared/fonts/Lora-Italic.ttf);
+  font-style: italic, oblique;
 }
 @font-face {
-    font-family: 'raleway-light';
-    src: url(shared/fonts/Raleway-Light.ttf);
+  font-family: 'raleway-light';
+  src: url(shared/fonts/Raleway-Light.ttf);
 }
 @font-face {
-    font-family: 'raleway';
-    src: url(shared/fonts/Raleway-Regular.ttf);
+  font-family: 'raleway';
+  src: url(shared/fonts/Raleway-Regular.ttf);
 }
 
 
 
 html, body {
-    /*overflow-x: hidden!important;*/
-    font-family: 'raleway', 'Open Sans', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    min-height: 100%;
-    background: $body-bg;
+  /*overflow-x: hidden!important;*/
+  font-family: 'raleway', 'Open Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100%;
+  background: $body-bg;
 }
 
 a {
-    color: $link-color;
+  color: $link-color;
 }
 
 a:hover, a:active, a:focus {
-    outline: none;
-    text-decoration: none;
-    color: $link-hover-color;
+  outline: none;
+  text-decoration: none;
+  color: $link-hover-color;
 }
 
 .shadows {
@@ -74,260 +74,263 @@ a:hover, a:active, a:focus {
 .bg-purple,
 .bg-maroon,
 .bg-black {
-    color: #f9f9f9 !important;
+  color: #f9f9f9 !important;
 }
 .bg-gray {
-    background-color: $gray !important;
+  background-color: $gray !important;
 }
 .bg-black {
-    background-color: $black !important;
+  background-color: $black !important;
 }
 .bg-red {
-    background-color: $red !important;
+  background-color: $red !important;
 }
 .bg-yellow {
-    background-color: $yellow !important;
+  background-color: $yellow !important;
 }
 .bg-aqua {
-    background-color: $aqua !important;
+  background-color: $aqua !important;
 }
 .bg-blue {
-    background-color: $blue !important;
+  background-color: $blue !important;
 }
 .bg-light-blue {
-    background-color: $light-blue !important;
+  background-color: $light-blue !important;
 }
 .bg-green {
-    background-color: $green !important;
+  background-color: $green !important;
 }
 .bg-navy {
-    background-color: $navy !important;
+  background-color: $navy !important;
 }
 .bg-teal {
-    background-color: $teal !important;
+  background-color: $teal !important;
 }
 .bg-olive {
-    background-color: $olive !important;
+  background-color: $olive !important;
 }
 .bg-lime {
-    background-color: $lime !important;
+  background-color: $lime !important;
 }
 .bg-orange {
-    background-color: $orange !important;
+  background-color: $orange !important;
 }
 .bg-fuchsia {
-    background-color: $fuchsia !important;
+  background-color: $fuchsia !important;
 }
 .bg-purple {
-    background-color: $purple !important;
+  background-color: $purple !important;
 }
 .bg-maroon {
-    background-color: $maroon !important;
+  background-color: $maroon !important;
 }
 .bg-white {
-    background-color: $white !important;
-    color: #272727 !important;
+  background-color: $white !important;
+  color: #272727 !important;
 }
 
 /* Text sizes */
 .text-big {
-	font-size: 25px;
+  font-size: 25px;
 }
 .text-normal {
-	font-size: 12px;
+  font-size: 12px;
 }
 .text-medium {
-	font-size: 18px;
+  font-size: 18px;
 }
 .text-small {
-	font-size: 10px;
+  font-size: 10px;
 }
 
 /* Text colors */
 .text-red {
-    color: $red !important;
+  color: $red !important;
 }
 .text-yellow {
-    color: $yellow !important;
+  color: $yellow !important;
 }
 .text-aqua {
-    color: $aqua !important;
+  color: $aqua !important;
 }
 .text-blue {
-    color: $blue !important;
+  color: $blue !important;
 }
 .text-light-blue {
-    color: $light-blue !important;
+  color: $light-blue !important;
 }
 .text-green {
-    color: $green !important;
+  color: $green !important;
 }
 .text-navy {
-    color: $navy !important;
+  color: $navy !important;
 }
 .text-teal {
-    color: $teal !important;
+  color: $teal !important;
 }
 .text-olive {
-    color: $olive !important;
+  color: $olive !important;
 }
 .text-lime {
-    color: $lime !important;
+  color: $lime !important;
 }
 .text-orange {
-    color: $orange !important;
+  color: $orange !important;
 }
 .text-fuchsia {
-    color: $fuchsia !important;
+  color: $fuchsia !important;
 }
 .text-purple {
-    color: $purple !important;
+  color: $purple !important;
 }
 .text-maroon {
-    color: $maroon !important;
+  color: $maroon !important;
 }
 .text-white {
-    color: $white !important;
+  color: $white !important;
+}
+.text-gold {
+  color: $gold !important;
 }
 
 .text-left {
-    text-align: left;
+  text-align: left;
 }
 .text-right {
-    text-align: right;
+  text-align: right;
 }
 .text-center {
-    text-align: center;
+  text-align: center;
 }
 
 /*Hide elements by display none only*/
 .hide {
-    display: none !important;
+  display: none !important;
 }
 
 /* Remove borders */
 .no-border {
-    border: 0px !important;
+  border: 0px !important;
 }
 /* Remove padding */
 .no-padding {
-    padding: 0px !important;
+  padding: 0px !important;
 }
 /* Remove margins */
 .no-margin {
-    margin: 0px !important;
+  margin: 0px !important;
 }
 
 /* Remove box shadow */
 .no-shadow {
-    box-shadow: none!important;
+  box-shadow: none !important;
 }
 /* Add clear fix */
 .clearfix {
-	@include clearfix();
+  @include clearfix();
 }
 
 .padding-base {
-	padding-top: $padding-base-horizontal;
+  padding-top: $padding-base-horizontal;
 }
 
 /* 10px padding and margins */
 .pad {
-    padding: 10px;
+  padding: 10px;
 }
 .margin {
-    margin: 10px;
+  margin: 10px;
 }
 
 /* Display inline */
 .inline {
-    display: inline;
-    width: auto;
+  display: inline;
+  width: auto;
 }
 
 /* Layouts */
 .wrapper {
-    min-height: 100%;
-    @include clearfix();    
+  min-height: 100%;
+  @include clearfix();    
 }
 
 /* Header */
 body > .header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1030;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
 }
 
 /* Define 2 column template */
 .right-side, .left-side {
-    min-height: 100%;
-    display: block;
+  min-height: 100%;
+  display: block;
 }
 /*right side - contins main content*/
 .right-side {
-    background-color: $body-bg;
-    margin-left: $left-side-width;
+  background-color: $body-bg;
+  margin-left: $left-side-width;
 }
 /*left side - contains sidebar*/
 .left-side {
-    position: absolute;
-    width: $left-side-width;
-    top: 0;
+  position: absolute;
+  width: $left-side-width;
+  top: 0;
 }
 
 @media screen and (min-width: $screen-md) {
-    .left-side {
-        top: 50px;
+  .left-side {
+    top: 50px;
+  }
+  /*Right side strech mode*/
+  .right-side.strech {
+    margin-left: 0;
+    > .content-header {
+      margin-top: 0px;
     }
-    /*Right side strech mode*/
-    .right-side.strech {
-        margin-left: 0;
-        > .content-header {
-            margin-top: 0px;
-        }
-    }
-    /* Left side collapse */
-    .left-side.collapse-left {
-        left: -$left-side-width;
-    }
+  }
+  /* Left side collapse */
+  .left-side.collapse-left {
+    left: -$left-side-width;
+  }
 }
 
 /*Give content full width on xs screens*/
 @media screen and (max-width: $screen-md) {
-    .right-side {
-        margin-left: 0;
-    }
+  .right-side {
+    margin-left: 0;
+  }
 }
 
 /*
-    By default the layout is not fixed but if you add the class .fixed to the body element
-    the sidebar and the navbar will automatically become poisitioned fixed
+  By default the layout is not fixed but if you add the class .fixed to the body element
+  the sidebar and the navbar will automatically become poisitioned fixed
 */
 body.fixed {
-    > .header, .left-side, .navbar {
-        position: fixed;
-    }
-    > .header {
-        top: 0;
-        right: 0;
-        left: 0;
-    }
-    .navbar {
-        left: 0;
-        right: 0;
-    }
-    .wrapper {
-        margin-top: 50px;
-    }
+  > .header, .left-side, .navbar {
+    position: fixed;
+  }
+  > .header {
+    top: 0;
+    right: 0;
+    left: 0;
+  }
+  .navbar {
+    left: 0;
+    right: 0;
+  }
+  .wrapper {
+    margin-top: 50px;
+  }
 }
 
 /* Content */
 .content {
-    padding: 20px 15px;
-    background: $body-bg;
-    overflow: auto;
+  padding: 20px 15px;
+  background: $body-bg;
+  overflow: auto;
 }
 
 /* Utility */
@@ -345,80 +348,80 @@ h6,
 .h4,
 .h5,
 .h6 {
-    font-family: 'lora', 'Open Sans', sans-serif;
+  font-family: 'lora', 'Open Sans', sans-serif;
 }
 
 /* Page Header */
 .page-header {
-    margin: 10px 0 20px 0;
-    font-size: 22px;
-    > small {
-        color: #666;
-        display: block;
-        margin-top: 5px;
-    }
+  margin: 10px 0 20px 0;
+  font-size: 22px;
+  > small {
+    color: #666;
+    display: block;
+    margin-top: 5px;
+  }
 }
 
 /* All images should be responsive */
 img {
-    max-width: 100%important;
+  max-width: 100%important;
 }
 
 .sort-highlight {
-    background: #f4f4f4;
-    border: 1px dashed #ddd;
-    margin-bottom: 10px;
+  background: #f4f4f4;
+  border: 1px dashed #ddd;
+  margin-bottom: 10px;
 }
 
 /* Don't display when printing */
 @media print {
-    //Add to elements that you do not want to show when printing
-    .no-print {
-        display: none;
-    }  
-    
-    //Elements that we want to hide when printing
-    .left-side, .header, .content-header {
-        display: none;
-    }
-    //This is the only element that should appear, so let's remove the margins
-    .right-side {
-        margin: 0;
-    }
+  //Add to elements that you do not want to show when printing
+  .no-print {
+    display: none;
+  }  
+  
+  //Elements that we want to hide when printing
+  .left-side, .header, .content-header {
+    display: none;
+  }
+  //This is the only element that should appear, so let's remove the margins
+  .right-side {
+    margin: 0;
+  }
 }
 
 /* Remove border radius */
 .flat {
-    @include border-radius(0);
+  @include border-radius(0);
 }
 
 /* Change the color of the striped tables */
 .table-striped > tbody > tr:nth-child(odd) {
-    > td,
-    > th {
-        background-color: $table-striped-color;
-    }
+  > td,
+  > th {
+    background-color: $table-striped-color;
+  }
 }
 
 /* .text-center in tables */
 table.text-center {
-    td, th {
-        text-align: center;
-    }
+  td, th {
+    text-align: center;
+  }
 }
 
 .form-control {
-    font-family: 'lora';
+  font-family: 'lora';
 
-    /*&.ng-invalid {
-        border-color: $red;
-    }*/
+  /*&.ng-invalid {
+    border-color: $red;
+  }*/
 }
 
 .border-red {
-    border-color: $red;
+  border-color: $red;
 }
 
 .text-cursor-pointer {
-    cursor: pointer !important;
+  cursor: pointer !important;
 }

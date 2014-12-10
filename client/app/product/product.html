@@ -20,34 +20,40 @@
           </div>
         </div> <!-- image col end -->
         <div class="col-sm-8">
-          <h4 class="pull-right">{{itemDetails.price}}</h4>
+          <span ng-switch="isMyFav" class="pull-right">
+            <button tooltip="Add to Wishlist" ng-switch-when="false" class="btn btn-default btn-circle add-to-fav" ng-click="addToFavorite()"><i class="fa fa-star-o"></i></button>
+            <button tooltip="Remove from Wishlist" ng-switch-when="true" class="btn btn-warning btn-circle" ng-click="removeFavorite()"><i class="fa fa-star"></i></button>
+          </span>
+          <h2>
+            {{itemDetails.price}}
+          </h2>
           <p>{{itemDetails.description}}</p>
           <form role="form">
-              <div class="number form-group">
-                <label class="control-label" for="number">Quantity:</label>
-                <input type="number" class="form-control input-sm flat" id="number" value="1" />
+            <hr/>
+            <div class="number form-group">
+              <label class="control-label" for="number">Quantity:</label>
+              <input type="number" class="form-control input-sm flat" id="number" value="1" />
+            </div>
+            <div class="form-group">
+              <button tooltip="Add to Cart" class="btn btn-default btn-flat"><i class="fa fa-plus text-small"></i> <i class="fa fa-shopping-cart"></i></button>
+              <a href="/write-review/{{itemDetails.id}}" class="btn btn-default btn-flat">Write a Review</a>
+            </div>
+            <div class="form-group">
+              <label ng-show="itemDetails.suppliers && itemDetails.suppliers.length > 0">Suppliers:</label>
+              <ul>
+                <li ng-repeat="supplier in itemDetails.suppliers"><u>{{supplier.name}}</u> at {{supplier.price}} (<i class="fa fa-clock-o"></i> {{supplier.shippingTime}})</li>
+              </ul>
+            </div>
+            <div class="form-group">
+              <label>Share:</label>
+              <div class="social-links flat text-medium">
+                <a href="#" tooltip="Tweet this product" class="btn btn-info btn-circle"><i class="fa fa-twitter"></i></a>
+                <a href="#" tooltip="Share this product on Google+" class="btn btn-danger btn-circle"><i class="fa fa-google-plus"></i></a>
+                <a href="#" tooltip="Post this product on Facebook" class="btn btn-primary btn-circle"><i class="fa fa-facebook"></i></a>
               </div>
-              <div class="form-group">
-                <label ng-show="itemDetails.suppliers && itemDetails.suppliers.length > 0">Suppliers:</label>
-                <ul>
-                  <li ng-repeat="supplier in itemDetails.suppliers"><u>{{supplier.name}}</u> at {{supplier.price}} (<i class="fa fa-clock-o"></i> {{supplier.shippingTime}})</li>
-                </ul>
-              </div>
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-flat">Add to Cart</button>
-                <button type="submit" class="btn btn-default btn-flat">Add to Wishlist</button>
-                <a href="/write-review/{{itemDetails.id}}" class="btn btn-default btn-flat">Write a Review</a>
-              </div>
-              <div class="form-group">
-                <label>Share:</label>
-                <div class="social-links flat text-medium">
-                  <a href="#" class="social-link"><i class="fa fa-twitter"></i></a>
-                  <a href="#" class="social-link"><i class="fa fa-google-plus"></i></a>
-                  <a href="#" class="social-link"><i class="fa fa-facebook"></i></a>
-                </div>
-              </div>
-            </form>
-          </div>
+            </div>
+          </form>
+        </div>
       </div>
       <div class="description">
         {{itemDetails.summary}}

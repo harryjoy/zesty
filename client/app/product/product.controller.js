@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('ProductCtrl', ['$scope', '$stateParams', 'ProductServ', 'Auth', 'ReviewVoteServ',
-    function ($scope, $stateParams, ProductServ, Auth, ReviewVoteServ) {
+  .controller('ProductCtrl', ['$scope', '$stateParams', 'ProductServ', 'Auth',
+    'ReviewVoteServ', 'AlertServ', 'FavoriteServ',
+    function ($scope, $stateParams, ProductServ, Auth, ReviewVoteServ, AlertServ, FavoriteServ) {
 
   /*
    * This is used to cache product review and do not make request 
@@ -65,6 +66,7 @@ angular.module('zesty')
   $scope.first = $scope.two = $scope.three = $scope.four = $scope.five = 0;
   $scope.totalItems = 0;
   $scope.currentPage = 1;
+  $scope.isMyFav = false;
 
   ProductServ.get({id: productId}).$promise.then(function(product) {
     if (!product) {
@@ -157,6 +159,15 @@ angular.module('zesty')
     $scope.loggedInNow = loggedIn;
     if (loggedIn) {
       $scope.customerId = $scope.getCurrentUser()._id;
+      FavoriteServ.check({
+        productId: productId
+      }).$promise.then(function(fav) {
+        if (fav) {
+          $scope.isMyFav = true;
+        }
+      }).catch(function(err) {
+        console.log(err);
+      });
     }
   });
 
@@ -168,5 +179,41 @@ angular.module('zesty')
     });
     ProductReviewCache.setPageData($scope.itemReviews);
   });
+
+  $scope.addToFavorite = function() {
+    if ($scope.loggedInNow) {
+      var fav = {
+        productId: productId,
+        customerId: $scope.getCurrentUser()._id
+      };
+      ProductServ.addToFavorite({
+        id: productId
+      }, fav, function(favorite) {
+        if (favorite) {
+          $scope.isMyFav = true;
+        }
+      }, function(err) {
+        console.log(err);
+        AlertServ.alert('Error while adding to wishlist, please try again later.');
+      });
+    } else {
+      AlertServ.alert('Please login to system for adding an product to wishlist.');
+    }
+  };
+
+  $scope.removeFavorite = function() {
+    if ($scope.loggedInNow) {
+      ProductServ.removeFavorite({
+        id: productId
+      }, function() {
+        $scope.isMyFav = false;
+      }, function(err) {
+        console.log(err);
+        AlertServ.alert('Error while removing wishlist, please try again later.');
+      });
+    } else {
+      AlertServ.alert('Please login to system for adding an product to wishlist.');
+    }
+  };
 
 }]);

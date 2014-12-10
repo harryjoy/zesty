@@ -9,7 +9,7 @@
     <div class="add-to-cart">
       <a href="{{item.link}}" class="glyphicon glyphicon-plus-sign" tooltip="Add to cart" tooltip-placement="top"></a>
     </div>
-    <a class="add-fav tooltipHere" tooltip="Add to Wishlist" tooltip-placement="left">
+    <a class="add-fav" tooltip="Add to Wishlist">
       <i class="glyphicon glyphicon-star"></i>
     </a>
     <div class="caption">
@@ -21,7 +21,7 @@
         <p class="pull-right"><a href="{{item.link}}#comments">{{item.reviewCount}} reviews</a></p>
         <rating ng-model="item.rating" readonly="true" />
         <p class="text-normal">
-          <span class="glyphicon glyphicon-tags"></span>
+          <span class="glyphicon glyphicon-tags"></span>&nbsp;
           <span ng-repeat="category in item.categories"><a href="/category/{{category._id}}">{{category.name}}</a></span>
         </p>
       </div>

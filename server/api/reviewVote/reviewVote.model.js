@@ -7,8 +7,7 @@ var mongoose = require('mongoose'),
 var ReviewvoteSchema = new Schema({
   vote: Number, // 1 - for helpful, 2 - for not helpful, 3 - for abuse
   customerId: Schema.Types.ObjectId,
-  reviewId: Schema.Types.ObjectId,
-  active: Boolean
+  reviewId: Schema.Types.ObjectId
 });
 
 ReviewvoteSchema.plugin(timestamps);

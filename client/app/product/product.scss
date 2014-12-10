@@ -21,3 +21,12 @@
 	padding: 0px 5px;
 	min-width: 25px;
 }
+
+.add-to-fav {
+
+	&:hover {
+		color: #fff;
+		background-color: #f0ad4e;
+		border-color: #eea236;
+	}
+}

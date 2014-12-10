@@ -2,6 +2,7 @@
 
 var express = require('express');
 var controller = require('./item.controller');
+var auth = require('../../auth/auth.service');
 
 var router = express.Router();
 
@@ -18,5 +19,8 @@ router.put('/:id/reviews', controller.editReview);
 
 router.get('/:id/related', controller.related);
 router.get('/:id/ratings', controller.ratings);
+
+router.post('/:id/favorite', auth.isAuthenticated(), controller.addToFavorite);
+router.delete('/:id/favorite', auth.isAuthenticated(), controller.removeFavorite);
 
 module.exports = router;

@@ -80,6 +80,12 @@ angular.module('zesty')
           controller: 'ratings'
         },
         isArray: true
+      },
+      favorites: {
+        method: 'GET',
+        params: {
+          controller: 'favorites'
+        }
       }
 	  });
   });

@@ -38,6 +38,18 @@ angular.module('zesty')
         params: {
           controller:'reviews'
         }
+      },
+      addToFavorite: {
+        method: 'POST',
+        params: {
+          controller:'favorite'
+        }
+      },
+      removeFavorite: {
+        method: 'DELETE',
+        params: {
+          controller:'favorite'
+        }
       }
     });
   }]);

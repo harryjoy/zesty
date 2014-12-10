@@ -7,6 +7,8 @@ var jwt = require('jsonwebtoken');
 var _ = require('lodash');
 var mongoose = require('mongoose');
 var Review = require('../review/review.model');
+var Favorite = require('../favorite/favorite.model');
+var Item = require('../item/item.model');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -286,7 +288,9 @@ exports.reviews = function(req, res, next) {
 
 // get ratings made by this user.
 exports.ratings = function(req, res, next) {
-  Review.aggregate().match({'customerId': mongoose.Types.ObjectId(req.params.id)}).group({
+  Review.aggregate().match({
+    'customerId': mongoose.Types.ObjectId(req.params.id)
+  }).group({
     _id: '$rating',
     count: {
       $sum: 1
@@ -295,6 +299,42 @@ exports.ratings = function(req, res, next) {
     if(err) { return handleError(res, err); }
     return res.json(200, result);
   });
+};
+
+// get users favorites/wishlist items
+exports.favorites = function(req, res, next) {
+  var pageSize = req.query.pageSize || config.pagination.size;
+  var pageNumber = req.query.pageNumber || 0;
+  Favorite.find({
+    customerId: mongoose.Types.ObjectId(req.params.id)
+  }).limit(pageSize).skip(pageNumber * pageSize).sort('-createdAt')
+  .exec(function (err, favorites) {
+    if(err) { return handleError(res, err); }
+    if(!favorites) { return res.send(404); }
+    var productIds = [];
+    _.forEach(favorites, function (fav) {
+      productIds.push(fav.productId);
+    });
+    if(!productIds || productIds.length === 0) { return res.send(404); }
+    Item.find({
+      _id: {
+        '$in': productIds
+      }
+    }).exec(function (err, items) {
+      if(err) { return handleError(res, err); }
+      if(!items) { return res.send(404); }
+      var result = {
+        data: items
+      };
+      Favorite.count({
+        customerId: mongoose.Types.ObjectId(req.params.id)
+      }).exec(function(err, count) {
+        if(err) { return handleError(res, err); }
+        result.count = count;
+        return res.json(200, result);
+      });
+    });
+  })
 };
 
 // function to handle errors in controllers

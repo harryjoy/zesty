@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var Item = require('./item.model');
 var Review = require('../review/review.model');
+var Favorite = require('../favorite/favorite.model');
 var config = require('../../config/environment');
 var numeral = require('numeral');
 var mongoose = require('mongoose');
@@ -179,6 +180,34 @@ exports.ratings = function(req, res, next) {
   }).exec(function (err, result){
     if(err) { return handleError(res, err); }
     return res.json(200, result);
+  });
+};
+
+// add selected item to favorite
+exports.addToFavorite = function(req, res, next) {
+  Item.findById(req.params.id, function (err, item) {
+    if(err) { return handleError(res, err); }
+    if(!item) { return res.send(404); }
+    Favorite.create(req.body, function(err, fav) {
+      if(err) { return handleError(res, err); }
+      return res.json(201, fav);
+    });
+  });
+};
+
+// remove selected item from favorite
+exports.removeFavorite = function(req, res, next) {
+  var customerId = req.user._id;
+  Favorite.findOne({
+    'productId': req.params.id, 
+    'customerId': customerId
+  }).exec(function(err, fav) {
+    if(err) { return handleError(res, err); }
+    if(!fav) { return res.send(404); }
+    fav.remove(function(err) {
+      if(err) { return handleError(res, err); }
+      return res.json(204);
+    });
   });
 };
 

@@ -1,12 +1,14 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema, 
+    timestamps = require('mongoose-timestamp');
 
 var FavoriteSchema = new Schema({
-  name: String,
-  info: String,
-  active: Boolean
+  customerId: Schema.Types.ObjectId,
+  productId: Schema.Types.ObjectId
 });
+
+FavoriteSchema.plugin(timestamps);
 
 module.exports = mongoose.model('Favorite', FavoriteSchema);

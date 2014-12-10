@@ -1,31 +1,24 @@
 'use strict';
 
 /*
- * This is used to cache product review and do not make request 
+ * This is used to cache pagination results and do not make request 
  * for pages that has already been visited.
  */
 angular.module('zesty')
-  .service('PaginationServ', ['$scope', function ($scope) {
+  .service('PaginationServ', [function () {
   return {
     pageData: {},
-    addNewPage: function (service, dataHolder) {
-      var self = this;
-      service.$promise.then(function(resultData) {
-        if (resultData && resultData.length > 0) {
-          self.pageData[$scope.currentPage] = resultData;
-          dataHolder = resultData;
-        }
-      });
-    },
-    getPageData: function (dataHolder) {
-      if (this.pageData[$scope.currentPage] && this.pageData[$scope.currentPage].length > 0) {
-        dataHolder = this.pageData[$scope.currentPage];
-      } else {
-        this.addNewPage();
+    getPageData: function (index) {
+      if (this.pageData[index] && this.pageData[index].length > 0) {
+        return this.pageData[index];
       }
+      return null;
     },
-    setPageData: function (resultData) {
-      this.pageData[$scope.currentPage] = resultData;
+    setPageData: function (index, resultData) {
+      this.pageData[index] = resultData;
+    },
+    refreshData: function () {
+      this.pageData = {};
     }
   };
 }]);
