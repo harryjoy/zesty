@@ -63,7 +63,7 @@
     border: 1px solid;
     border-radius: 50%;
     height: 30px;
-    line-height: 31px;
+    line-height: 27px;
     position: absolute;
     right: 30px;
     text-align: center;
@@ -81,20 +81,31 @@
     -ms-filter: "alpha(Opacity=0)";
    
     &:hover {
-      background-color: $light-blue;
-      color: $white;
+      background-color: $white;
+      color: $yellow;
     }
 
-    &:active {
+    &:active, &.active {
       i {
-        @include transform(scale(0.85) rotate(0deg));
+        @include transform-scale(0.85);
+        @include transform-rotate(0deg);
       }
     }
 
     i {
-      @include transform(scale(1) rotate(0deg));
+      @include transform-scale(1);
+      @include transform-rotate(0deg);
       @include transition(all .3s ease);
     }
+  }
+
+  .added-to-fav {
+    @extend .add-fav;
+    @include opacity(1);
+    @include transform-scale(0.85);
+    line-height: 25px;
+    background-color: $yellow;
+    color: $white;
   }
 }
 
@@ -134,7 +145,7 @@
 }
 
 .item-new {
-    font-size: inherit;
+  font-size: inherit;
 }
 
 .load-more-block {

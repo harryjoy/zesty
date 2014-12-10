@@ -10,7 +10,7 @@ angular.module('zesty')
     $scope.siteName = 'Zesty';
     $scope.siteSeller = 'General Store';
 
-    $scope.isLoggedIn = Auth.isLoggedIn;
+    $scope.isLoggedInFunc = Auth.isLoggedIn;
     $scope.user = Auth.getCurrentUser();
     $scope.isAdmin = Auth.isAdmin;
     $scope.getCurrentUser = Auth.getCurrentUser;

@@ -68,6 +68,12 @@ angular.module('zesty')
   $scope.currentPage = 1;
   $scope.isMyFav = false;
 
+  $scope.customerId = '';
+  $scope.loggedIn = Auth.isLoggedIn();
+  if ($scope.loggedIn) {
+    $scope.customerId = $scope.getCurrentUser()._id;
+  }
+
   ProductServ.get({id: productId}).$promise.then(function(product) {
     if (!product) {
       throw new Error('No product details found for selected item.');
@@ -87,12 +93,25 @@ angular.module('zesty')
     };
     $scope.largeImageSrc = $scope.itemDetails.mainImage;
     $scope.totalItems = $scope.itemDetails.reviewsCount;
+
+    if ($scope.loggedIn) {
+      FavoriteServ.check({
+        productId: productId
+      }).$promise.then(function(fav) {
+        if (fav) {
+          $scope.isMyFav = true;
+        }
+      }).catch(function(err) {
+        console.log(err);
+      });
+    }
   }).then(function() {
     $scope.items = [];
     ProductServ.related({id: productId}).$promise.then(function(items) {
       if (items && items.length > 0) {
         $.each(items, function (key, item) {
           $scope.items.push({
+            '_id': item._id,
             'link': '/product/' + item._id,
             'title': item.title,
             'price': item.currency + ' ' + item.price,
@@ -104,6 +123,9 @@ angular.module('zesty')
             'updated': item.createdAt
           });
         });
+        if ($scope.loggedIn) {
+          $scope.checkForProductFav();
+        }
       } else {
         throw new Error('No related products found for this product.');
       }
@@ -154,23 +176,6 @@ angular.module('zesty')
     ProductReviewCache.getPageData();
   };
 
-  $scope.customerId = '';
-  Auth.isLoggedInAsync(function(loggedIn) {
-    $scope.loggedInNow = loggedIn;
-    if (loggedIn) {
-      $scope.customerId = $scope.getCurrentUser()._id;
-      FavoriteServ.check({
-        productId: productId
-      }).$promise.then(function(fav) {
-        if (fav) {
-          $scope.isMyFav = true;
-        }
-      }).catch(function(err) {
-        console.log(err);
-      });
-    }
-  });
-
   $scope.$on('review.vote', function(e, updated) {
     $.each($scope.itemReviews, function (k, review) {
       if(review._id === updated._id) {
@@ -181,7 +186,7 @@ angular.module('zesty')
   });
 
   $scope.addToFavorite = function() {
-    if ($scope.loggedInNow) {
+    if ($scope.loggedIn) {
       var fav = {
         productId: productId,
         customerId: $scope.getCurrentUser()._id
@@ -202,7 +207,7 @@ angular.module('zesty')
   };
 
   $scope.removeFavorite = function() {
-    if ($scope.loggedInNow) {
+    if ($scope.loggedIn) {
       ProductServ.removeFavorite({
         id: productId
       }, function() {
@@ -213,6 +218,32 @@ angular.module('zesty')
       });
     } else {
       AlertServ.alert('Please login to system for adding an product to wishlist.');
+    }
+  };
+
+  $scope.checkForProductFav = function() {
+    if ($scope.items && $scope.items.length > 0) {
+      var productIds = [];
+      $.each($scope.items, function(k, item) {
+        productIds.push(item._id);
+      });
+      FavoriteServ.checkForProducts({
+        productId: productIds
+      }, function (favs) {
+        if (favs && favs.length > 0) {
+          $.each($scope.items, function(k, item) {
+            var myFav = false;
+            $.each(favs, function(k, fav) {
+              if (fav.productId === item._id) {
+                myFav = true;
+              }
+            });
+            item.myFav = myFav;
+          });
+        }
+      }, function (err) {
+        console.log(err);
+      });
     }
   };
 

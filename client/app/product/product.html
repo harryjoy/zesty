@@ -21,7 +21,7 @@
         </div> <!-- image col end -->
         <div class="col-sm-8">
           <span ng-switch="isMyFav" class="pull-right">
-            <button tooltip="Add to Wishlist" ng-switch-when="false" class="btn btn-default btn-circle add-to-fav" ng-click="addToFavorite()"><i class="fa fa-star-o"></i></button>
+            <button tooltip="Add to Wishlist" ng-switch-when="false" class="btn btn-default btn-circle add-to-fav" ng-click="addToFavorite()"><i class="fa fa-star"></i></button>
             <button tooltip="Remove from Wishlist" ng-switch-when="true" class="btn btn-warning btn-circle" ng-click="removeFavorite()"><i class="fa fa-star"></i></button>
           </span>
           <h2>
@@ -100,7 +100,7 @@
     <hr/>
 
     <div class="col-md-9 col-sm-12">
-      <review-box ng-repeat="review in itemReviews" review="review" is-logged-in="{{loggedInNow}}" customer-id="{{customerId}}"></review-box>
+      <review-box ng-repeat="review in itemReviews" review="review" is-logged-in="{{loggedIn}}" customer-id="{{customerId}}"></review-box>
       <div class="col-md-12 col-sm-12 text-center">
         <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="3" ng-change="pageChanged()"></pagination>
       </div>

@@ -2,110 +2,117 @@
 //-----------------------
 
 input {
-	/*width : 250px; */
+  /*width : 250px; */
 }
 .control-label {
-	text-align:left !important;
+  text-align:left !important;
 }
 .login-page {
-	.login-form-section {
-		width: 100%;
-		margin: 0 auto;
-	}
-	
-	.login-content {
-		background-color: $white;
-		@include box-shadow(0 0 3px rgba(0, 0, 0, 0.3));
-	}
-	
-	.section-title {
-		padding: 10px 20px;
-		background-color: $white;
-	}
-	
-	.section-title h3 {
-		/*color: $green;*/
-	}
-	
-	.textbox-wrap {
-		padding: 20px 20px 20px 15px;
-		border-left: 2px solid transparent;
-		@include transitions(border-left-color 0.5s, box-shadow 0.5s, background-color 0.5s);
-		&.focused {
-			border-left-color: $green;
-			background-color: $light-white;
-			@include box-shadow(inset 0 0 3px rgba(0,0,0,.1));
-		}
-		.input-group {
-			border: 1px solid #e0e0e0;
-			background-color: $white;
-			.input-group-addon {
-				background-color: transparent;
-				border: none;
-			}
-			.input-group-addon:first-child {
-				border-right: 0;
-			}
-			input, .form-control, 
-			input:focus, .form-control:focus {
-				box-shadow: none;
-				outline: none;
-				background-color: transparent;
-				border: none;
-			}
-		}
-	}
-	
-	.login-form-action {
-		padding: 15px 20px 30px 20px;
-		.green-btn, .green-btn:hover {
-			background-color: $green;
-			border: none;
-		}
-	}
-	
-	.login-form-links {
-		padding: 10px 20px;
-		@include box-shadow(0 0 4px rgba(0, 0, 0, 0.4));
-		background-color: $white;
-		font-size: 12px;
-		h4.text-blue, h4.text-green {
-			font-size: 15px;
-		}
-	}
+  .login-form-section {
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .login-content {
+    background-color: $white;
+    @include box-shadow(0 0 3px rgba(0, 0, 0, 0.3));
+  }
+  
+  .section-title {
+    padding: 10px 20px;
+    background-color: $white;
+  }
+  
+  .section-title h3 {
+    /*color: $green;*/
+  }
+  
+  .textbox-wrap {
+    padding: 20px 20px 20px 15px;
+    border-left: 2px solid transparent;
+    @include transitions(border-left-color 0.5s, box-shadow 0.5s, background-color 0.5s);
+    &.focused {
+      border-left-color: $green;
+      background-color: $light-white;
+      @include box-shadow(inset 0 0 3px rgba(0,0,0,.1));
+    }
+    .input-group {
+      border: 1px solid #e0e0e0;
+      background-color: $white;
+      .input-group-addon {
+        background-color: transparent;
+        border: none;
+      }
+      .input-group-addon:first-child {
+        border-right: 0;
+      }
+      input, .form-control, 
+      input:focus, .form-control:focus {
+        box-shadow: none;
+        outline: none;
+        background-color: transparent;
+        border: none;
+      }
+    }
+  }
+  
+  .login-form-action {
+    padding: 15px 20px 30px 20px;
+    .green-btn, .green-btn:hover {
+      background-color: $green;
+      border: none;
+    }
+  }
+  
+  .login-form-links {
+    padding: 10px 20px;
+    @include box-shadow(0 0 4px rgba(0, 0, 0, 0.4));
+    background-color: $white;
+    font-size: 12px;
+    h4.text-blue, h4.text-green {
+      font-size: 15px;
+    }
+  }
 }
 
 .form-box {    
-    width: 360px;
-    margin: 90px auto 0 auto;
-    .header {
-        @include border-radius-sep(4px, 4px, 0, 0);
-        background: $gray;
-        @include box-shadow(inset 0px -3px 0px rgba(0,0,0,0.2));
-        padding: 20px 10px;
-        text-align: center;
-        font-size: 26px;
-        font-weight: 300;
-        color: #fff;
+  width: 360px;
+  margin: 90px auto 0 auto;
+  
+  .header {
+    @include border-radius-sep(4px, 4px, 0, 0);
+    background: $gray;
+    @include box-shadow(inset 0px -3px 0px rgba(0,0,0,0.2));
+    padding: 20px 10px;
+    text-align: center;
+    font-size: 26px;
+    font-weight: 300;
+    color: #fff;
+  }
+
+  .body, .footer {
+    padding: 10px 20px;
+    background: #fff;
+    color: #444;
+
+    > .form-group {
+      margin-top: 20px;
+
+      > input {
+        border: #fff;
+      }
     }
-    .body, .footer {
-        padding: 10px 20px;
-        background: #fff;
-        color: #444;
-        > .form-group {
-            margin-top: 20px;
-            > input {
-                border: #fff;
-            }
-        }
-        > .btn {
-            margin-bottom: 10px;
-        }
+
+    > .btn {
+      margin-bottom: 10px;
     }
-    .footer {
-       @include border-radius-sep(0, 0, 4px, 4px);
-    }
-    @media (max-width: $screen-sm) {
-    	width: 90%;
-	}
+  }
+
+  .footer {
+     @include border-radius-sep(0, 0, 4px, 4px);
+  }
+
+  @media (max-width: $screen-sm) {
+    width: 90%;
+  }
 }

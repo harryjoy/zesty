@@ -8,8 +8,15 @@ angular.module('zesty')
       check: {
         method: 'GET',
         params: {
-          id: 'checkForFav'
+          id: 'check-for-fav'
         }
+      },
+      checkForProducts: {
+        method: 'GET',
+        params: {
+          id: 'check-for-product-fav'
+        },
+        isArray: true
       }
     });
   }]);

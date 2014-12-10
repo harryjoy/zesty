@@ -20,6 +20,13 @@ angular.module('zesty')
         }
         scope.moment = window.moment;
 
+        scope.$watch('customerId', function(newVal) {
+          scope.customerId = newVal;
+        });
+        scope.$watch('isLoggedIn', function(newVal) {
+          scope.isLoggedIn = newVal;
+        });
+
         scope.vote = function(uservote) {
           var reviewVote = {
             customerId: scope.customerId,
