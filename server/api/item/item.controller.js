@@ -106,6 +106,9 @@ exports.addReview = function(req, res) {
         description: item.description,
         image: item.mainImage
       };
+      if (review.rating > 5) {
+        review.rating = 5;
+      }
       Review.create(review, function(err, review) {
         if(err) { return handleError(res, err); }
         item.reviews = item.reviews + 1;
@@ -185,14 +188,21 @@ exports.ratings = function(req, res, next) {
 
 // add selected item to favorite
 exports.addToFavorite = function(req, res, next) {
-  Item.findById(req.params.id, function (err, item) {
+  Favorite.findOne({
+    'productId': req.params.id, 
+    'customerId': req.user._id
+  }, function(err, favorite) {
     if(err) { return handleError(res, err); }
-    if(!item) { return res.send(404); }
-    Favorite.create(req.body, function(err, fav) {
+    if(favorite) { return res.send(200, favorite); }
+    Item.findById(req.params.id, function (err, item) {
       if(err) { return handleError(res, err); }
-      return res.json(201, fav);
+      if(!item) { return res.send(404); }
+      Favorite.create(req.body, function(err, fav) {
+        if(err) { return handleError(res, err); }
+        return res.json(201, fav);
+      });
     });
-  });
+  })
 };
 
 // remove selected item from favorite

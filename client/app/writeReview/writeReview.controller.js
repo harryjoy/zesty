@@ -61,7 +61,11 @@ angular.module('zesty')
       });
     }
     if ($location.search().rate) {
-      $scope.review.rating = $location.search().rate;
+      var rate = $location.search().rate;
+      if (rate > 5) {
+        rate = 5;
+      }
+      $scope.review.rating = rate;
     }
   }
 
