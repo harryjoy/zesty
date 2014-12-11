@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('WritereviewCtrl', ['$scope', '$stateParams', 'Auth', 'ProductServ', '$location', 'ReviewServ',
-  function ($scope, $stateParams, Auth, ProductServ, $location, ReviewServ) {
+  .controller('WritereviewCtrl', ['$scope', '$stateParams', 'Auth', 'ProductServ',
+    '$location', 'ReviewServ', '$window',
+  function ($scope, $stateParams, Auth, ProductServ, $location, ReviewServ, $window) {
 
   var productId = $stateParams.id;
   $scope.showFaq = true;
@@ -71,6 +72,7 @@ angular.module('zesty')
 
   $scope.addReview = function (form) {
     $scope.submitted = true;
+    $window.scrollTo(0,0);
     if (form.$valid) {
       $scope.reviewLoader = true;
       if ($scope.isEdit) {

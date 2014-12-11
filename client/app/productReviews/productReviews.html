@@ -4,7 +4,7 @@
 			<h2 class="page-header">Reviews:</h2>
 		</div>
 		<div class="col-md-9 col-sm-12" ng-show="!noReviews">
-      <review-box ng-repeat="review in itemReviews" review="review" is-logged-in="{{loggedInNow}}" customer-id="{{customerId}}"></review-box>
+      <review-box ng-repeat="review in itemReviews" review="review" is-logged-in="{{loggedIn}}" customer-id="{{customerId}}"></review-box>
       <div class="col-md-12 col-sm-12 text-center">
         <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="3" ng-change="pageChanged()"></pagination>
       </div>
@@ -29,9 +29,12 @@
           <clearfix></clearfix>
         </div>
         <div class="card-footer">
-          <a href="#" class="btn btn-default btn-flat btn-sm" title="Add to Cart"><i class="fa fa-plus text-small"></i> <i class="fa fa-shopping-cart"></i></a>
-          <a href="#" class="btn btn-flat btn-default btn-sm" title="Add to Wishlist"><i class="fa fa-star"></i></a>
-          <a href="/write-review/{{itemId}}" class="btn btn-default btn-flat">Write a Review</a>
+          <a tooltip="Add to Cart" href="#" class="btn btn-default btn-flat btn-sm" title="Add to Cart"><i class="fa fa-plus text-small"></i> <i class="fa fa-shopping-cart"></i></a>
+          <span ng-switch="isMyFav" class="pull-right">
+            <button tooltip="Add to Wishlist" ng-switch-when="false" class="btn btn-default btn-circle add-to-fav" ng-click="addToFavorite()"><i class="fa fa-star"></i></button>
+            <button tooltip="Remove from Wishlist" ng-switch-when="true" class="btn btn-warning btn-circle" ng-click="removeFavorite()"><i class="fa fa-star"></i></button>
+          </span>
+          <a href="/write-review/{{itemId}}" class="btn btn-default btn-flat btn-sm">Write a Review</a>
         </div>
       </div>
       <div class="card card-solid card-black review-list-box">
