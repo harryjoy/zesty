@@ -2,6 +2,104 @@
  * Navigation dropdown for Cart
  */
 
+.nav-tabs-holder {
+  margin-bottom: 20px;
+  background: transparent;
+
+  .nav-tabs {
+    margin: 0px;
+    border-bottom-color: $dim-gray;
+
+    &.right {
+      float: none !important;
+
+      li {
+        float: right;
+
+        &:first-child {
+          margin-right: 0px;
+
+          &.active > a {
+            border-left-width: 1px;
+            border-right-width: 1px;
+          }
+        }
+      }
+    }
+
+    li {
+      border-top: 2px solid transparent;
+      margin-bottom: -2px;
+      margin-right: 5px;
+
+      &:first-child {
+        margin-left: 0px;
+
+        &.active > a {
+          border-left-width: 0;
+        }
+      }
+
+      &.active {
+        border-top-color: $dim-gray;
+        @include border-radius-sep(5px, 5px, 0px, 0px);
+
+        > a, &:hover > a {
+          background-color: $white;
+          border-top: $zero;
+          border-left-color: $dim-gray;
+          border-right-color: $dim-gray;
+          @include border-radius-sep(5px, 5px, 0px, 0px);
+        }
+      }
+
+      &.header {
+        line-height: 35px;
+        padding-right: 10px;
+        font: {
+          weight: 400;
+          size: 2em;
+          family: 'lora', 'Open Sans', sans-serif;
+        }
+        color: $black;
+        cursor: default;
+
+        > .fa {
+          margin-right: 5px;
+        }
+      }
+
+      > a {
+        @include border-radius(0);
+        background: transparent;
+        margin: 0;
+
+        &:hover {
+          background: transparent;
+          margin: 0;
+          border: 1px solid transparent;
+        }
+      }
+    }
+  }
+
+  .tab-contents {
+    background: $white;
+    padding: 10px;
+    border: 1px solid $dim-gray;
+    border-top: 0px solid transparent;
+    @include border-radius-sep(0px, 0px, 5px, 5px);
+
+    .tab {
+      display: none;
+
+      &.active {
+        display: block;
+      }
+    }
+  }
+}
+
 .cart-dropdown {
   width: 400px;
   padding: 0;

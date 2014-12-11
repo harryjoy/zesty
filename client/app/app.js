@@ -54,7 +54,7 @@ angular.module('zesty', [
     };
   })
 
-  .run(function ($rootScope, $location, Auth) {
+  .run(['$rootScope', '$location', '$window', 'Auth', function ($rootScope, $location, $window, Auth) {
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$stateChangeStart', function (event, next) {
       Auth.isLoggedInAsync(function(loggedIn) {
@@ -62,5 +62,6 @@ angular.module('zesty', [
           $location.path('/login');
         }
       });
+      $window.scrollTo(0,0);
     });
-  });
+  }]);

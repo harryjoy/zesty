@@ -3,6 +3,7 @@
 	.account_header {
 		padding-bottom: 5px;
 		border-bottom: 1px solid #e0e0e0;
+		margin-top: 5px;
 	}
 
 	.card-footer {
@@ -155,5 +156,32 @@
 
 	&:first-child {
 		padding-top: 5px;
+	}
+}
+
+.user-info-box {
+	border: 1px solid #f6f6f6;
+	padding: 5px;
+
+	.user-image-box, .user-name-box {
+		display: table-cell;
+		height: 100%;
+		vertical-align: middle;
+	}
+
+	.user-image-box {
+		border-right: 1px solid #ddd;
+		color: #fff;
+		background-color: #428bca;
+		border-color: #428bca;
+		text-align: center;
+	}
+
+	.user-name-box {
+		padding-left: 5px;
+
+		p {
+			margin: 0 0 2px 2px;
+		}
 	}
 }

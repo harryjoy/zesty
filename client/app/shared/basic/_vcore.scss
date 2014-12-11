@@ -1,7 +1,5 @@
-/*
-* CORE
-* General style
-* -------------------------
+/**
+* General style for the application
 */
 
 @font-face {
@@ -22,8 +20,6 @@
   src: url(shared/fonts/Raleway-Regular.ttf);
 }
 
-
-
 html, body {
   /*overflow-x: hidden!important;*/
   font-family: 'raleway', 'Open Sans', sans-serif;
@@ -34,31 +30,18 @@ html, body {
 
 a {
   color: $link-color;
-}
-
-a:hover, a:active, a:focus {
-  outline: none;
+  font-weight: bold;
   text-decoration: none;
-  color: $link-hover-color;
-}
 
-.shadows {
-  @include box-shadow(0px 4px 5px #666, 2px 6px 10px #999);
-}
-
-//PADDINGS
-@for $i from 1 through 10 {
-  .pad-#{$i} { padding: 1px * $i; }
-}
-
-//USER-ICONS
-@each $user in male, male-cap, female, female-cap {
-  .#{$user}-icon {
-    background-image: url('../images/#{$user}.png');
+  &:hover, &:active, &:focus { 
+    text-decoration: underline;
+    outline: none;
+    text-decoration: none;
+    color: $link-hover-color;
   }
 }
 
-/* Background colors */
+// Background colors
 .bg-red,
 .bg-yellow,
 .bg-aqua,
@@ -129,7 +112,7 @@ a:hover, a:active, a:focus {
   color: #272727 !important;
 }
 
-/* Text sizes */
+// Text sizes
 .text-big {
   font-size: 25px;
 }
@@ -143,7 +126,7 @@ a:hover, a:active, a:focus {
   font-size: 10px;
 }
 
-/* Text colors */
+// Text colors
 .text-red {
   color: $red !important;
 }
@@ -202,30 +185,37 @@ a:hover, a:active, a:focus {
 .text-center {
   text-align: center;
 }
+.text-cursor-pointer {
+  cursor: pointer !important;
+}
 
-/*Hide elements by display none only*/
+.fantasy-fonts {
+  font: {
+    family: fantasy;
+    size: 30em;
+    weight: bold;
+  }
+}
+
+// utility
 .hide {
   display: none !important;
 }
-
-/* Remove borders */
 .no-border {
   border: 0px !important;
 }
-/* Remove padding */
 .no-padding {
   padding: 0px !important;
 }
-/* Remove margins */
 .no-margin {
   margin: 0px !important;
 }
-
-/* Remove box shadow */
 .no-shadow {
   box-shadow: none !important;
 }
-/* Add clear fix */
+.shadows {
+  @include box-shadow(0px 4px 5px #666, 2px 6px 10px #999);
+}
 .clearfix {
   @include clearfix();
 }
@@ -233,8 +223,11 @@ a:hover, a:active, a:focus {
 .padding-base {
   padding-top: $padding-base-horizontal;
 }
+@for $i from 1 through 10 {
+  .pad-#{$i} { padding: 1px * $i; }
+}
 
-/* 10px padding and margins */
+// 10px padding and margins
 .pad {
   padding: 10px;
 }
@@ -242,19 +235,14 @@ a:hover, a:active, a:focus {
   margin: 10px;
 }
 
-/* Display inline */
 .inline {
   display: inline;
   width: auto;
 }
-
-/* Layouts */
 .wrapper {
   min-height: 100%;
   @include clearfix();    
 }
-
-/* Header */
 body > .header {
   position: absolute;
   top: 0;
@@ -263,98 +251,28 @@ body > .header {
   z-index: 1030;
 }
 
-/* Define 2 column template */
-.right-side, .left-side {
-  min-height: 100%;
-  display: block;
-}
-/*right side - contins main content*/
-.right-side {
-  background-color: $body-bg;
-  margin-left: $left-side-width;
-}
-/*left side - contains sidebar*/
-.left-side {
-  position: absolute;
-  width: $left-side-width;
-  top: 0;
-}
-
-@media screen and (min-width: $screen-md) {
-  .left-side {
-    top: 50px;
-  }
-  /*Right side strech mode*/
-  .right-side.strech {
-    margin-left: 0;
-    > .content-header {
-      margin-top: 0px;
-    }
-  }
-  /* Left side collapse */
-  .left-side.collapse-left {
-    left: -$left-side-width;
-  }
-}
-
-/*Give content full width on xs screens*/
-@media screen and (max-width: $screen-md) {
-  .right-side {
-    margin-left: 0;
-  }
-}
-
-/*
-  By default the layout is not fixed but if you add the class .fixed to the body element
-  the sidebar and the navbar will automatically become poisitioned fixed
-*/
-body.fixed {
-  > .header, .left-side, .navbar {
-    position: fixed;
-  }
-  > .header {
-    top: 0;
-    right: 0;
-    left: 0;
-  }
-  .navbar {
-    left: 0;
-    right: 0;
-  }
-  .wrapper {
-    margin-top: 50px;
-  }
-}
-
-/* Content */
 .content {
   padding: 20px 15px;
   background: $body-bg;
   overflow: auto;
 }
 
-/* Utility */
-
-/* H1 - H6 font */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.h1,
-.h2,
-.h3,
-.h4,
-.h5,
-.h6 {
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
   font-family: 'lora', 'Open Sans', sans-serif;
 }
 
-/* Page Header */
+// Header font sizes
+@each $header, $size in (h1: 2em, h2: 1.5em, h3: 1.2em) {
+  #{$header} {
+    font-size: $size;
+  }
+}
+
 .page-header {
   margin: 10px 0 20px 0;
   font-size: 22px;
+
   > small {
     color: #666;
     display: block;
@@ -362,31 +280,14 @@ h6,
   }
 }
 
-/* All images should be responsive */
 img {
-  max-width: 100%important;
-}
-
-.sort-highlight {
-  background: #f4f4f4;
-  border: 1px dashed #ddd;
-  margin-bottom: 10px;
+  max-width: 100% !important;
 }
 
 /* Don't display when printing */
 @media print {
-  //Add to elements that you do not want to show when printing
   .no-print {
     display: none;
-  }  
-  
-  //Elements that we want to hide when printing
-  .left-side, .header, .content-header {
-    display: none;
-  }
-  //This is the only element that should appear, so let's remove the margins
-  .right-side {
-    margin: 0;
   }
 }
 
@@ -412,44 +313,12 @@ table.text-center {
 
 .form-control {
   font-family: 'lora';
-
-  /*&.ng-invalid {
-    border-color: $red;
-  }*/
 }
 
 .border-red {
   border-color: $red;
 }
 
-.text-cursor-pointer {
-  cursor: pointer !important;
-}
-
 a {
-  font-weight: bold;
-  text-decoration: none;
-  &:hover { text-decoration: underline; }
-  body.firefox & { font-weight: normal; }
+  
 }
-
-#main {
-  color: black;
-  &-sidebar { border: 1px solid; }
-}
-
-.funky {
-  font: {
-    family: fantasy;
-    size: 30em;
-    weight: bold;
-  }
-}
-
-//HEADS
-@each $header, $size in (h1: 2em, h2: 1.5em, h3: 1.2em) {
-  #{$header} {
-    font-size: $size;
-  }
-}
-

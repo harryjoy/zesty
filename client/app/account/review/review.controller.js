@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('ReviewCtrl', ['$scope', 'User', 'Auth',
-    function ($scope, User, Auth) {
+  .controller('ReviewCtrl', ['$scope', 'User', 'Auth', '$window',
+    function ($scope, User, Auth, $window) {
 
   /*
    * This is used to cache user review and do not make request 
@@ -127,5 +127,9 @@ angular.module('zesty')
     id: '1233',
     date: new Date()
   }];
+
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
+    $window.scrollTo(0,0);
+  });
 
 }]);

@@ -1,109 +1,93 @@
 <div class="account_box">
-  <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-      <h1 class="account_header">
+  <div class="nav-tabs-holder">
+    <ul class="nav nav-tabs right">
+      <li class=""><a href="#seller_reviews" data-toggle="tab">Seller Reviews</a></li>
+      <li class="active"><a href="#product_reviews" data-toggle="tab">Product Reviews</a></li>
+      <li class="pull-left header">
         <i class="fa fa-comments"></i> My Ratings & Reviews
-      </h1>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-      <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-        <li role="presentation" class="active"><a href="#product_reviews" data-toggle="tab">Product Reviews</a></li>
-        <li role="presentation"><a href="#seller_reviews" data-toggle="tab">Seller Reviews</a></li>
-      </ul>
+      </li>
+    </ul>
+    <div class="tab-contents">
+      <div class="tab fade in active" id="product_reviews">
+        <div class="row">
+          <div class="col-md-5 col-sm-6" ng-hide="noReviews">
+            <h4 class="page-header text-medium">Ratings by {{getCurrentUser().name}} ({{ratingCount}})</h4>
+            <review-progress-bars first="{{first}}" two="{{two}}" three="{{three}}" four="{{four}}" five="{{five}}"></review-progress-bars>
+          </div> <!-- col end -->
+          <div class="col-md-7 col-sm-6" ng-hide="noReviews">
+            <h4 class="page-header text-medium">Recently rated</h4>
+            <div class="recently-rated-box" ng-repeat="rating in recentRatings">
+              <img src="{{rating.image}}" />
+              <div class="recently-rated-box-descr">
+                <h5><a href="/product/{{rating.id}}">{{rating.title}}</a></h5>
+                <rating ng-model="rating.rate" readonly="true" />
+              </div>
+            </div>
+          </div> <!-- col end -->
 
-      <div id="my-tab-content" class="tab-content">
-        <div class="tab-pane active" id="product_reviews">
-          <div class="card card-solid">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-md-5 col-sm-6" ng-hide="noReviews">
-                  <h4 class="page-header text-medium">Ratings by {{getCurrentUser().name}} ({{ratingCount}})</h4>
-                  <review-progress-bars first="{{first}}" two="{{two}}" three="{{three}}" four="{{four}}" five="{{five}}"></review-progress-bars>
-                </div> <!-- col end -->
-                <div class="col-md-7 col-sm-6" ng-hide="noReviews">
-                  <h4 class="page-header text-medium">Recently rated</h4>
-                  <div class="recently-rated-box" ng-repeat="rating in recentRatings">
-                    <img src="{{rating.image}}" />
-                    <div class="recently-rated-box-descr">
-                      <h5><a href="/product/{{rating.id}}">{{rating.title}}</a></h5>
-                      <rating ng-model="rating.rate" readonly="true" />
+          <div class="col-md-12 col-sm-12" ng-hide="noReviews">
+            <h4 class="page-header text-medium">Reviews by {{getCurrentUser().name}} ({{totalItems}})</h4>
+          </div> <!-- col end -->
+          <span ng-hide="noReviews">
+            <review-box ng-repeat="review in reviews" review="review" with-product="true" is-logged-in="{{loggedInNow}}" customer-id="{{customerId}}"></review-box>
+          </span>
+
+          <div class="col-md-12 col-sm-12 text-center" ng-hide="noReviews">
+            <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="3" ng-change="pageChanged()"></pagination>
+          </div> <!-- col end -->
+
+          <div class="col-md-12 col-sm-12" ng-show="noReviews">
+            <h4 class="text-center alert alert-warning">
+              You have not given any reviews yet.
+            </h4>
+          </div> <!-- col end -->
+
+        </div> <!-- outer row -->
+      </div><!-- /.tab-pane -->
+      <div class="tab fade" id="seller_reviews">
+        <div class="row">
+          <div ng-switch="sellerReviewExists">
+            <div class="col-md-12 col-sm-12" ng-switch-when="false">
+              <h2>You have not written any seller reviews. Write one today!</h2>
+              <br/>
+              <div class="alert alert-info write-review-note">
+                <i class="fa fa-info"></i>
+                <h4 class="header">Why should I review a seller?</h4>
+                Your rating of the seller has a direct effect on customer perception for the seller. Your rating contributes to the seller's overall rating. So, please be fair with your appraisal.
+              </div>
+            </div> <!-- col end -->
+            <div class="col-md-12 col-sm-12" ng-switch-when="true">
+              <h4 class="page-header text-medium">Seller Reviews by {{getCurrentUser().name}} ({{sellerReviewCount}})</h4>
+              <div class="card user-review-box" ng-repeat="review in sellerReviews">
+                <div class="card-body">
+                  <span class="pull-right">on {{review.date}}</span> 
+                  <h5 class="page-header user-review-title"><a href="/seller/{{review.seller.id}}">{{review.seller.name}}</a></h5>
+                  <rating ng-model="review.rate" readonly="true" />
+                  <br/>
+                  <div class="user-review-comments">
+                    {{review.comments}}
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="row">
+                    <div class="col-md-10 col-sm-9 text-normal">
+                      <strong>Share this review:</strong>
+                      <a href="#" class="btn btn-default btn-sm btn-mini"><i class="fa fa-twitter"></i></a>
+                      <a href="#" class="btn btn-default btn-sm btn-mini"><i class="fa fa-google-plus"></i></a>
+                      <a href="#" class="btn btn-default btn-sm btn-mini"><i class="fa fa-facebook"></i></a>
+                    </div>
+                    <div class="col-md-2 col-sm-3 text-right">
+                      <a href="/write-review/{{review.product.id}}?review={{review.id}}" class="text-small">Edit</a> |
+                      <a href="#" class="text-small">Delete</a>
+                      <clearfix></clearfix>
                     </div>
                   </div>
-                </div> <!-- col end -->
-
-                <div class="col-md-12 col-sm-12" ng-hide="noReviews">
-                  <h4 class="page-header text-medium">Reviews by {{getCurrentUser().name}} ({{totalItems}})</h4>
-                </div> <!-- col end -->
-                <span ng-hide="noReviews">
-                  <review-box ng-repeat="review in reviews" review="review" with-product="true" is-logged-in="{{loggedInNow}}" customer-id="{{customerId}}"></review-box>
-                </span>
-
-                <div class="col-md-12 col-sm-12 text-center" ng-hide="noReviews">
-                  <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="3" ng-change="pageChanged()"></pagination>
-                </div> <!-- col end -->
-
-                <div class="col-md-12 col-sm-12" ng-show="noReviews">
-                  <h4 class="text-center alert alert-warning">
-                    You have not given any reviews yet.
-                  </h4>
-                </div> <!-- col end -->
-
-              </div> <!-- outer row -->
-            </div> <!-- outer card body -->
-          </div> <!-- outer card -->
-        </div> <!-- product review tab end -->
-
-        <div class="tab-pane" id="seller_reviews">
-          <div class="card card-solid">
-            <div class="card-body">
-              <div class="row">
-                <div ng-switch="sellerReviewExists">
-                  <div class="col-md-12 col-sm-12" ng-switch-when="false">
-                    <h2>You have not written any seller reviews. Write one today!</h2>
-                    <br/>
-                    <div class="alert alert-info write-review-note">
-                      <i class="fa fa-info"></i>
-                      <h4 class="header">Why should I review a seller?</h4>
-                      Your rating of the seller has a direct effect on customer perception for the seller. Your rating contributes to the seller's overall rating. So, please be fair with your appraisal.
-                    </div>
-                  </div> <!-- col end -->
-                  <div class="col-md-12 col-sm-12" ng-switch-when="true">
-                    <h4 class="page-header text-medium">Seller Reviews by {{getCurrentUser().name}} ({{sellerReviewCount}})</h4>
-                    <div class="card user-review-box" ng-repeat="review in sellerReviews">
-                      <div class="card-body">
-                        <span class="pull-right">on {{review.date}}</span> 
-                        <h5 class="page-header user-review-title"><a href="/seller/{{review.seller.id}}">{{review.seller.name}}</a></h5>
-                        <rating ng-model="review.rate" readonly="true" />
-                        <br/>
-                        <div class="user-review-comments">
-                          {{review.comments}}
-                        </div>
-                      </div>
-                      <div class="card-footer">
-                        <div class="row">
-                          <div class="col-md-10 col-sm-9 text-normal">
-                            <strong>Share this review:</strong>
-                            <a href="#" class="btn btn-default btn-sm btn-mini"><i class="fa fa-twitter"></i></a>
-                            <a href="#" class="btn btn-default btn-sm btn-mini"><i class="fa fa-google-plus"></i></a>
-                            <a href="#" class="btn btn-default btn-sm btn-mini"><i class="fa fa-facebook"></i></a>
-                          </div>
-                          <div class="col-md-2 col-sm-3 text-right">
-                            <a href="/write-review/{{review.product.id}}?review={{review.id}}" class="text-small">Edit</a> |
-                            <a href="#" class="text-small">Delete</a>
-                            <clearfix></clearfix>
-                          </div>
-                        </div>
-                      </div> <!-- card body end -->
-                    </div>
-                  </div> <!-- col end -->
-                </div>
-              </div> <!-- outer row -->
-            </div> <!-- outer card body -->
-          </div> <!-- outer card -->
-        </div> <!-- seller review tab end -->
-      </div>
-    </div>
-  </div> <!-- end of row -->
+                </div> <!-- card body end -->
+              </div>
+            </div> <!-- col end -->
+          </div>
+        </div> <!-- outer row -->
+      </div><!-- /.tab-pane -->
+    </div><!-- /.tab-content -->
+  </div>
 </div>

@@ -1,25 +1,24 @@
-//Contains All variables
-//-----------------------
+/**
+ * All variables for the application
+ */
 
-//Layout
-//Side bar and logo width
 $left-side-width: 220px;
 $hundred-percent: 100%;
 $zero: 0;
 $none: none;
 
-//Colors
-$light-blue: #3c8dbc; //Primary
-$red: #F56954;        //Danger
-$green: #00A65A;      //Success
-$aqua: #00C0EF;       //Info
-$yellow: #F39C12;     //Warning
+// Colors
+$light-blue: #3c8dbc; // Primary
+$red: #F56954;        // Danger
+$green: #00A65A;      // Success
+$aqua: #00C0EF;       // Info
+$yellow: #F39C12;     // Warning
 
-$primary: $light-blue; //Primary
-$danger: $red;        //Danger
-$success: $green;      //Success
-$info: $aqua;       //Info
-$warning: $yellow;     //Warning
+$info: $aqua;
+$primary: $light-blue;
+$success: $green;
+$warning: $yellow;
+$danger: $red;
 
 $blue: #0073b7;
 $navy:  #001F3F;
@@ -42,38 +41,20 @@ $gold: #ffd700;
 $link-color: $light-blue;
 $link-hover-color: lighten($link-color, 15%);
 
-//Body background (Affects main content background only)
 $body-bg: #f9f9f9;
-
-//Table striped color
 $table-striped-color: #f3f4f5;
-
-//Sidebar skins
-//skin blue (light) sidebar vars
-$sidebar-light-bg: #f4f4f4;
-$sidebar-light-hover-bg: #f9f9f9;
-$sidebar-light-font: #555;
-$sidebar-light-border: #dbdbdb;
+$input-radius: 0px;
+$btn-border-radius: $border-radius-small;
 
 //Screen widths - Same as bootstrap default settings
 $screen-xs: 480px;
 $screen-sm: 767px;
 $screen-md: 992px;
 $screen-lg: 1200px;
-//When the logo should go to the top of the screen
-$screen-header-collapse: 560px; 
+$screen-header-collapse: 560px; //When the logo should go to the top of the screen
 
-//FORMS
-$input-radius: 0px;
 
-//BUTTONS
-//Border radius for non flat buttons
-$btn-border-radius: $border-radius-small;
-
-//CHAT widget
-$attachment-border-radius: $border-radius-small;
-
-//PROGRESS-BARS
+// Progress bars
 $progress-bar-xs-height: 7px;
 $progress-bar-xs-width: 10px;
 $progress-bar-sm-height: 10px;
@@ -82,11 +63,8 @@ $progress-bar-sm-width: 20px;
 $progress-bar-vertical-height: 200px;
 $progress-bar-vertical-width: 30px;
 
-//** Background color of the whole progress component
 $progress-bg:                 $light-white !default;
-//** Progress bar text color
 $progress-bar-color:          $white !default;
-//** Default progress bar color
 $progress-bar-bg:             $light-blue !default;
 $progress-bar-success-bg:     $green !default;
 $progress-bar-warning-bg:     $yellow !default;
@@ -105,9 +83,9 @@ $card-heading-padding:      10px 15px !default;
 $card-footer-padding:       $card-heading-padding !default;
 $card-border-radius:        $border-radius-small !default;
 
-$card-header-border-bottom: 	0px solid $card-border-color;
-$card-header-color: 					#444;
-$card-header-padding-bottom: 	10px;
+$card-header-border-bottom: 	1px solid $card-border-color;
+$card-header-color: 					#454545;
+$card-header-padding-bottom: 	0px;
 
 $card-title-font-size: 		20px;
 $card-title-font-weight: 	400;

@@ -1,0 +1,22 @@
+/** 
+ * Side notes for calling out things
+ */
+ 
+.callout {
+  @include callout-variant(#727272, #fff);
+}
+.callout-primary {
+  @include callout-variant($primary, #fff);
+}
+.callout-danger {
+  @include callout-variant($danger, #fff);
+}
+.callout-warning {
+  @include callout-variant($warning, #fff);
+}
+.callout-info {
+  @include callout-variant($info, #fff);
+}
+.callout-success {
+  @include callout-variant($success, #fff);
+}

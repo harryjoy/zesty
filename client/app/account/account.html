@@ -1,10 +1,19 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-3 col-md-3 col-sm-5">
-      <h3 class="page-header"> 
-        <i class="fa fa-fw" ng-class="{'fa-male':getCurrentUser().gender === 'M', 'fa-female': getCurrentUser().gender === 'F', 'fa-meh-o': getCurrentUser().gender === '-'}"></i> 
-        {{ getCurrentUser().firstName }} {{ getCurrentUser().lastName }} <small>{{ getCurrentUser().email }}</small>
-      </h3>
+      <div class="card card-solid user-info-box">
+        <div class="user-image-box">
+          <span class="user-icon text-big">
+            <i class="fa fa-fw" ng-class="{'fa-male':getCurrentUser().gender === 'M', 'fa-female': getCurrentUser().gender === 'F', 'fa-meh-o': getCurrentUser().gender === '-'}"></i> 
+          </span>
+        </div>
+        <div class="user-name-box">
+          <span class="user-name text-medium">
+            {{ getCurrentUser().firstName }} {{ getCurrentUser().lastName }}
+            <p class="text-small">{{ getCurrentUser().email }}</p>
+          </span>
+        </div>
+      </div>
       <div class="list-group">
         <a href="/my" class="list-group-item" ng-class="{active: isActive('/my')}"><i class="fa fa-user fa-fw"></i> My Account</a>
         <a href="/my/settings" class="list-group-item" ng-class="{active: isActive('/my/settings')}"><i class="fa fa-lock fa-fw"></i> Change Password</a>
