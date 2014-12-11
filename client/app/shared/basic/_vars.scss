@@ -15,11 +15,11 @@ $green: #00A65A;      //Success
 $aqua: #00C0EF;       //Info
 $yellow: #F39C12;     //Warning
 
-$brand-primary: $light-blue; //Primary
-$brand-danger: $red;        //Danger
-$brand-success: $green;      //Success
-$brand-info: $aqua;       //Info
-$brand-warning: $yellow;     //Warning
+$primary: $light-blue; //Primary
+$danger: $red;        //Danger
+$success: $green;      //Success
+$info: $aqua;       //Info
+$warning: $yellow;     //Warning
 
 $blue: #0073b7;
 $navy:  #001F3F;
@@ -93,34 +93,35 @@ $progress-bar-warning-bg:     $yellow !default;
 $progress-bar-danger-bg:      $red !default;
 $progress-bar-info-bg:        $aqua !default;
 
-//BOXES
-$box-bg:                    $white !default;
-$box-width:                 $hundred-percent !default;
-$box-body-bottom-margin:    20px !default;
-$box-body-padding:          15px !default;
-$box-border-color: 			#f4f4f4;
-$box-shadow: 				0px 1px 3px rgba(0, 0, 0, 0.1);
-$box-border-top:          	2px solid darken($box-border-color, 20%);
-$box-heading-padding:       10px 15px !default;
-$box-footer-padding:        $box-heading-padding !default;
-$box-border-radius:         $border-radius-small !default;
+// Cards
+$card-bg:                   $white !default;
+$card-width:                $hundred-percent !default;
+$card-body-bottom-margin:   20px !default;
+$card-body-padding:         15px !default;
+$card-border-color: 				#f4f4f4;
+$card-shadow: 							0px 1px 3px rgba(0, 0, 0, 0.1);
+$card-border-top:          	2px solid darken($card-border-color, 20%);
+$card-heading-padding:      10px 15px !default;
+$card-footer-padding:       $card-heading-padding !default;
+$card-border-radius:        $border-radius-small !default;
 
-$box-header-border-bottom: 	0px solid $box-border-color;
-$box-header-color: 			#444;
-$box-header-padding-bottom: 10px;
+$card-header-border-bottom: 	0px solid $card-border-color;
+$card-header-color: 					#444;
+$card-header-padding-bottom: 	10px;
 
-$box-title-font-size: 		20px;
-$box-title-font-weight: 	400;
+$card-title-font-size: 		20px;
+$card-title-font-weight: 	400;
 
-$box-inner-border:          #ddd !default;
-$box-footer-bg:             #f5f5f5 !default;
-$box-default-border:        #ddd !default;
-$box-primary-border:        $light-blue !default;
-$box-success-border:        $green !default;
-$box-info-border:           $aqua !default;
-$box-warning-border:        $yellow !default;
-$box-danger-border:         $red !default;
-$box-grey-border:         	#a0a0a0 !default;
+$card-inner-border:         #ddd !default;
+$card-footer-bg:            #f5f5f5 !default;
+$card-default-border:       #ddd !default;
+$card-primary-border:       $light-blue !default;
+$card-success-border:       $green !default;
+$card-info-border:          $aqua !default;
+$card-warning-border:       $yellow !default;
+$card-danger-border:        $red !default;
+$card-grey-border:         	#a0a0a0 !default;
 
+// CART
 $cart-price-color: #444;
 $cart-description-color: #888;

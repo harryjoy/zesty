@@ -1,9 +1,9 @@
-<div class="box box-solid box-info login-box" ng-controller="LoginCtrl">
-  <div class="box-header">
-    <h3 class="box-title">Login</h3>
+<div class="card card-solid card-info login-box" ng-controller="LoginCtrl">
+  <div class="card-header">
+    <h3 class="card-title">Login</h3>
   </div>
   <form class="form" name="form" ng-submit="login(form)" novalidate>
-    <div class="box-body">
+    <div class="card-body">
       <div class="login-notice">
         If you have an account with us, please log in.
       </div>
@@ -38,7 +38,7 @@
         <label for="login_remember_me" class=""> Remember me </label>
       </div>
     </div>
-    <div class="box-footer">
+    <div class="card-footer">
       <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-sign-in"></i> Let me In</button>
       <span class="pull-right">
         <a class="text-muted" href="/signup">
@@ -46,7 +46,7 @@
         </a>
       </span>
     </div>
-    <div class="box-footer text-center">
+    <div class="card-footer text-center">
       - OR -
       <div class="login-social">
         <a class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">

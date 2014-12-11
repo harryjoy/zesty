@@ -15,8 +15,8 @@
 
       <div id="my-tab-content" class="tab-content">
         <div class="tab-pane active" id="product_reviews">
-          <div class="box box-solid">
-            <div class="box-body">
+          <div class="card card-solid">
+            <div class="card-body">
               <div class="row">
                 <div class="col-md-5 col-sm-6" ng-hide="noReviews">
                   <h4 class="page-header text-medium">Ratings by {{getCurrentUser().name}} ({{ratingCount}})</h4>
@@ -51,13 +51,13 @@
                 </div> <!-- col end -->
 
               </div> <!-- outer row -->
-            </div> <!-- outer box body -->
-          </div> <!-- outer box -->
+            </div> <!-- outer card body -->
+          </div> <!-- outer card -->
         </div> <!-- product review tab end -->
 
         <div class="tab-pane" id="seller_reviews">
-          <div class="box box-solid">
-            <div class="box-body">
+          <div class="card card-solid">
+            <div class="card-body">
               <div class="row">
                 <div ng-switch="sellerReviewExists">
                   <div class="col-md-12 col-sm-12" ng-switch-when="false">
@@ -71,8 +71,8 @@
                   </div> <!-- col end -->
                   <div class="col-md-12 col-sm-12" ng-switch-when="true">
                     <h4 class="page-header text-medium">Seller Reviews by {{getCurrentUser().name}} ({{sellerReviewCount}})</h4>
-                    <div class="box user-review-box" ng-repeat="review in sellerReviews">
-                      <div class="box-body">
+                    <div class="card user-review-box" ng-repeat="review in sellerReviews">
+                      <div class="card-body">
                         <span class="pull-right">on {{review.date}}</span> 
                         <h5 class="page-header user-review-title"><a href="/seller/{{review.seller.id}}">{{review.seller.name}}</a></h5>
                         <rating ng-model="review.rate" readonly="true" />
@@ -81,7 +81,7 @@
                           {{review.comments}}
                         </div>
                       </div>
-                      <div class="box-footer">
+                      <div class="card-footer">
                         <div class="row">
                           <div class="col-md-10 col-sm-9 text-normal">
                             <strong>Share this review:</strong>
@@ -95,13 +95,13 @@
                             <clearfix></clearfix>
                           </div>
                         </div>
-                      </div> <!-- box body end -->
+                      </div> <!-- card body end -->
                     </div>
                   </div> <!-- col end -->
                 </div>
               </div> <!-- outer row -->
-            </div> <!-- outer box body -->
-          </div> <!-- outer box -->
+            </div> <!-- outer card body -->
+          </div> <!-- outer card -->
         </div> <!-- seller review tab end -->
       </div>
     </div>

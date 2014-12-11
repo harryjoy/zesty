@@ -5,11 +5,11 @@
 
       <div class="row" collapse="showNewAddressForm">
         <div class="col-lg-4 col-md-4 col-sm-6" ng-repeat="address in addresses">
-          <div class="box box-default">
-            <div class="box-header">
-              <h3 class="box-title">{{address.title}}</h3>
+          <div class="card card-default">
+            <div class="card-header">
+              <h3 class="card-title">{{address.title}}</h3>
             </div>
-            <div class="box-body">
+            <div class="card-body">
               <address>
                 <strong>{{address.firstName}} {{address.lastName}}</strong><br>
                 {{address.addressLine1}},<br>
@@ -20,7 +20,7 @@
                 <abbr title="Phone">P:</abbr> {{address.mobile}}
               </address>
             </div>
-            <div class="box-footer">
+            <div class="card-footer">
               <span ng-switch="address.isDefault">
                 <span ng-switch-when="true">
                   <span class="label label-default default_selection">Selected</span>

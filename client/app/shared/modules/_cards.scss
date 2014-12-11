@@ -1,0 +1,184 @@
+.card {
+  position: relative;
+  background: $card-bg;
+  border-top: $card-border-top;
+  margin-bottom: $card-body-bottom-margin;
+  width: $card-width;
+  @include box-shadow($card-shadow);
+
+  // card color variations
+  &.card-primary {
+    border-top-color: $card-primary-border;
+  }
+  &.card-info {
+    border-top-color: $card-info-border;
+  }
+  &.card-danger {
+    border-top-color: $card-danger-border;
+  }
+  &.card-warning {
+    border-top-color: $card-warning-border;
+  }
+  &.card-success {
+    border-top-color: $card-success-border;
+  }
+
+  // max height to 300px
+  &.height-control {
+    .card-body {
+      max-height: 300px;
+      overflow: auto;
+    }
+  }
+
+  // fixed height to 300px
+  &.fix-height {
+    .card-body {
+      min-height: 300px;
+      height: 300px;
+      max-height: 300px;
+      overflow: hidden;
+    }
+  }
+
+  // fixed height to 150px
+  &.fix-height-sm {
+    .card-body {
+      min-height: 150px;
+      height: 150px;
+      max-height: 150px;
+      overflow: hidden;
+    }
+  }
+
+  &.card-round {
+    @include border-radius($card-border-radius);
+
+    .card-header {
+      //Add top left and top right border radius
+      @include border-radius-sep($card-border-radius, $card-border-radius, 0, 0);
+    }
+
+    .card-body {
+      @include border-radius-sep(0, 0, $card-border-radius, $card-border-radius);
+    }
+
+    .card-footer {
+      @include border-radius-sep(0, 0, $card-border-radius, $card-border-radius);
+    }
+
+    &.card-solid {
+
+      &.collapsed-card {
+
+        .card-header {
+          @include border-radius($card-border-radius);
+        }
+      }
+    }
+  }
+
+  // card header
+  .card-header {
+    position: relative;
+    @include clearfix();
+    
+    border-bottom: $card-header-border-bottom;
+    color: $card-header-color;
+    padding-bottom: $card-header-padding-bottom;
+    
+    // Icons and card title
+    > .fa, > .glyphicon, > .ion,
+    .card-title {
+      display: inline-block;
+      padding: 10px 0px 10px 10px;
+      margin: 0;
+      font-size: $card-title-font-size;
+      font-weight: $card-title-font-weight;
+      float: left;
+      cursor: default;
+    }
+    
+    a {
+      color: $card-header-color;
+    }
+    
+    // card Tools
+    > .card-tools {
+      padding: 5px 10px 5px 5px;
+    }
+  }
+
+  // card body
+  .card-body {
+    padding: 10px;
+    
+    // Tables within the card body
+    > table, > .table {
+      margin-bottom: 0;
+    }
+    .table {
+      margin-bottom: 0;
+    }
+    .full-width-chart {
+      margin: -19px;
+    }
+    &.no-padding .full-width-chart {
+      margin: -9px;
+    }
+  }
+
+  // card footer
+  .card-footer {
+    border-top: 1px solid $card-border-color;
+    padding: 10px;
+    background-color: $card-footer-bg;
+  }
+
+  //
+  // SOLID card:
+  //------------------
+  //use this class to get a colored header and borders
+  //
+  &.card-solid {
+    border-top: 0px;
+    > .card-header {
+      padding-bottom: 0px!important;
+      .btn.btn-default {
+        background: transparent;
+      }
+    }
+
+    // card color variations
+    &.card-primary {
+      @include card-solid-variant($card-primary-border);
+    }
+    &.card-info {
+      @include card-solid-variant($card-info-border);
+    }
+    &.card-danger {
+      @include card-solid-variant($card-danger-border);
+    }
+    &.card-warning {
+      @include card-solid-variant($card-warning-border);
+    }
+    &.card-success {
+      @include card-solid-variant($card-success-border);
+    }
+    &.card-black {
+      @include card-solid-variant($card-grey-border);
+    }
+
+    > .card-header > .card-tools > .btn {
+      border: 0;
+      card-shadow: none;
+    }
+
+    // Fix font color for tiles
+    &[class*='bg'] {
+      > .card-header {
+        color: $white;
+      }
+    }
+  }
+}

@@ -19,8 +19,8 @@
 			<h4 class="text-center">
 				<a class="text-muted" href="/product/{{itemId}}"><i class="fa fa-angle-double-left"></i> Back to product</a>
 			</h4>
-      <div class="review-product-sm box">
-        <div class="box-body">
+      <div class="review-product-sm card">
+        <div class="card-body">
           <div class="product-xs">
             <img class="thumbnail" title="{{item.title}}" alt="{{item.title}}" src="{{item.image}}">
             <h5 class="review-item-title">{{item.title}}</h5><br/>
@@ -28,17 +28,17 @@
           </div>
           <clearfix></clearfix>
         </div>
-        <div class="box-footer">
+        <div class="card-footer">
           <a href="#" class="btn btn-default btn-flat btn-sm" title="Add to Cart"><i class="fa fa-plus text-small"></i> <i class="fa fa-shopping-cart"></i></a>
           <a href="#" class="btn btn-flat btn-default btn-sm" title="Add to Wishlist"><i class="fa fa-star"></i></a>
           <a href="/write-review/{{itemId}}" class="btn btn-default btn-flat">Write a Review</a>
         </div>
       </div>
-      <div class="box box-solid box-black review-list-box">
-        <div class="box-header">
-          <h3 class="box-title">Filter Reviews:</h3>
+      <div class="card card-solid card-black review-list-box">
+        <div class="card-header">
+          <h3 class="card-title">Filter Reviews:</h3>
         </div>
-        <div class="box-body">
+        <div class="card-body">
           <ul class="list-unstyled">
             <li><a href="/product-reviews/{{itemId}}/4"><i class="fa fa-angle-double-right"></i> 4 and 5 stars rated reviews</a></li>
             <li>&nbsp;</li>

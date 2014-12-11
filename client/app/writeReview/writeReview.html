@@ -1,25 +1,25 @@
 <div class="container">
 	<div class="row">
 		<div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
-			<div class="review-product-sm box">
-				<div class="box-header">
+			<div class="review-product-sm card">
+				<div class="card-header">
           <h4 class="header">You have selected to review</h4>
         </div>
-				<div class="box-body">
+				<div class="card-body">
           <div class="product-xs">
 						<img class="thumbnail" title="{{item.title}}" alt="{{item.title}}" src="{{item.image}}">
 						<h5 class="review-item-title">{{item.title}}</h5>
 					</div>
 					<clearfix></clearfix>
         </div>
-        <div class="box-footer">
+        <div class="card-footer">
 					<a href="/product/{{item.id}}" class="reviews-other-link pull-right">See other reviews <i class="fa fa-angle-double-right"></i></a>
 					<clearfix></clearfix>
 				</div>
 			</div>
 
-			<div class="review-guideline-sm box box-solid box-primary">
-				<div class="box-header" ng-click="showFaq = !showFaq">
+			<div class="review-guideline-sm card card-solid card-primary">
+				<div class="card-header" ng-click="showFaq = !showFaq">
           <h4 class="header">
 						What makes a good review
 						<small class="pull-right">
@@ -30,7 +30,7 @@
 						</small>
 					</h4>
         </div>
-        <div class="review-faq-container box-body" collapse="!showFaq">
+        <div class="review-faq-container card-body" collapse="!showFaq">
 					<div class="review-faq" ng-repeat="faq in reviewFaqs">
 						<h5 class="review-faq-question">{{faq.question}}</h5>
 						<span class="review-faq-answer">{{faq.answer}}</span>
@@ -49,15 +49,15 @@
 				Your rating of the product has a direct effect on customer perception for the product. Your rating contributes to the product’s overall rating. So, please be fair with your appraisal.
       </div>
 
-			<div class="review-form box box-solid box-primary" ng-show="!reviewSubmitted">
-				<div class="box-header">
+			<div class="review-form card card-solid card-primary" ng-show="!reviewSubmitted">
+				<div class="card-header">
 					<h2 class="header">
 						Write review and help others!
 						<small class="review-notice pull-right">Fields marked with * are mandatory.</small>
 					</h2>
 				</div>
 				<form role="form" name="reviewForm" novalidate ng-submit="addReview(reviewForm)">
-					<div class="box-body">
+					<div class="card-body">
 						<div class="form-group">
               <div class="alert alert-danger" role="alert" ng-show="!reviewForm.$valid && submitted">
                 <i class="fa fa-warning"></i>
@@ -132,24 +132,24 @@
 							</span>
 						</div>
 					</div>
-					<div class="box-footer">
+					<div class="card-footer">
 						<button type="submit" ui-ladda="reviewLoader" data-style="slide-left" class="ladda-button btn btn-default btn-flat" data-spinner-color="#646678"><span class="ladda-label"> Save Changes</span></button>
 					</div>
 				</form>
 			</div>
 
-			<div class="box box-solid" ng-show="reviewSubmitted">
-				<div class="box-header">
-					<h2 class="box-title"><i class="fa fa-check"></i> Your review has been submitted successfully.</h2>
+			<div class="card card-solid" ng-show="reviewSubmitted">
+				<div class="card-header">
+					<h2 class="card-title"><i class="fa fa-check"></i> Your review has been submitted successfully.</h2>
 				</div>
 				<review-box no-footer="true" review="review" is-logged-in="{{loggedInNow}}" customer-id="{{customerId}}"></review-box>
-        <div class="box-footer">
+        <div class="card-footer">
           <a href="/product/{{item.id}}#comments" class="reviews-other-link text-normal">See your review on product page <i class="fa fa-angle-double-right"></i></a>
         </div>
 			</div>
 
-			<div class="review-extra review-form box">
-				<div class="box-body">
+			<div class="review-extra review-form card">
+				<div class="card-body">
 					<div class="row">
 						<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 review-extra-col">
 							<h3 class="header-review-extra">Have questions regarding this product?</h3>

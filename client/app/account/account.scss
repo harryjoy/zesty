@@ -5,7 +5,7 @@
 		border-bottom: 1px solid #e0e0e0;
 	}
 
-	.box-footer {
+	.card-footer {
 		padding: 5px !important;
 		background-color: #fafafa !important;
 	}
@@ -70,13 +70,13 @@
 
 .user-review-box {
 
-	&.box {
+	&.card {
 
-		.box-header {
+		.card-header {
 			padding-bottom: 0px;
 		}
 
-		.box-body {
+		.card-body {
 			padding-top: 0px;
 		}
 	}

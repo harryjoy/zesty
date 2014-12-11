@@ -1,10 +1,10 @@
 <!-- Main content -->
 <section class="content" ng-show="!productGetError">
-  <div class="box box-info">
-    <div class="box-header">
-      <h1 class="box-title">{{itemDetails.title}}</h1>
+  <div class="card card-info">
+    <div class="card-header">
+      <h1 class="card-title">{{itemDetails.title}}</h1>
     </div>
-    <div class="box-body">
+    <div class="card-body">
       <div class="row">
         <div class="col-sm-4">
           <div class='row'>
@@ -66,8 +66,8 @@
   <div class="row" id="comments" ng-show="!productReviewGetError">
     <div class="col-md-12">
 
-      <div class="box box-solid">
-        <div class="box-body">
+      <div class="card card-solid">
+        <div class="card-body">
           <div class="row review-list-summary-box">
             <div class="col-md-4 col-sm-6 review-list-summary">
               <div class="ratings">
@@ -107,11 +107,11 @@
     </div>
     
     <div class="col-md-3 col-sm-6">
-      <div class="box box-solid box-black review-list-box">
-        <div class="box-header">
-          <h3 class="box-title">Filter Reviews:</h3>
+      <div class="card card-solid card-black review-list-box">
+        <div class="card-header">
+          <h3 class="card-title">Filter Reviews:</h3>
         </div>
-        <div class="box-body">
+        <div class="card-body">
           <ul class="list-unstyled">
             <li><a href="/product-reviews/{{itemDetails.id}}/4"><i class="fa fa-angle-double-right"></i> 4 and 5 stars rated reviews</a></li>
             <li>&nbsp;</li>
@@ -123,8 +123,8 @@
       </div>
     </div>
   </div>
-  <div class="product-no-review-box box box-solid" ng-show="productReviewGetError">
-    <div class="box-body">
+  <div class="product-no-review-box card card-solid" ng-show="productReviewGetError">
+    <div class="card-body">
       <p>
         No one has reviewed this product yet.
         Be the first one to write a review about this product.

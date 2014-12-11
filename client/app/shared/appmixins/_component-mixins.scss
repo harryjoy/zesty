@@ -1,9 +1,9 @@
-// MIXINS for specific components
-// ==============
+/**
+ * MIXINS for specific components
+ */
 
-// Solid box header variant
-@mixin box-solid-variant($color) {
-  > .box-header {
+@mixin card-solid-variant($color) {
+  > .card-header {
     color: #fff;
     background: $color;        
     background-color: $color;   

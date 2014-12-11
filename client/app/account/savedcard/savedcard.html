@@ -14,11 +14,11 @@
         It's extremely convenient and completely secure.
       </div>
       
-      <div class="box box-solid box-warning" ng-show="!user.cards || user.cards.length == 0">
-        <div class="box-header">
-          <h3 class="box-title">We store only things that are not harmful</h3>
+      <div class="card card-solid card-warning" ng-show="!user.cards || user.cards.length == 0">
+        <div class="card-header">
+          <h3 class="card-title">We store only things that are not harmful</h3>
         </div>
-        <div class="box-body">
+        <div class="card-body">
           <div class="row">
             <div class="col-md-6">
               <h5>DO Store:</h5>
@@ -39,8 +39,8 @@
         </div>
       </div>
 
-      <div class="box box-solid" ng-repeat="card in user.cards">
-        <div class="box-body">
+      <div class="card card-solid" ng-repeat="card in user.cards">
+        <div class="card-body">
           <i class="fa fa-fw" ng-class="{'fa-cc-visa': (card.cardType==1), 'fa-cc-mastercard': (card.cardType==2), 'fa-cc': (card.cardType==0)}"></i>
           {{card.cardNumber}} - {{card.name}} (<strong>{{card.label}}</strong>)
           <div class="pull-right text-normal">
@@ -49,8 +49,8 @@
         </div>
       </div>
 
-      <div class="box box-solid security-guarantee-box" ng-show="!user.cards || user.cards.length == 0">
-        <div class="row box-body">
+      <div class="card card-solid security-guarantee-box" ng-show="!user.cards || user.cards.length == 0">
+        <div class="row card-body">
           <div class="col-md-9 col-sm-9">
             <h5 class="page-header">100% Security Guaranteed</h5>
             Your card details will be stored using world-class encryption technology
@@ -65,8 +65,8 @@
 
       <button class="btn btn-default btn-flat" ng-click="showAddForm=!showAddForm" collapse="showAddForm">Add new card</button>
 
-      <div class="box box-warning" collapse="!showAddForm">
-        <div class="box-body">
+      <div class="card card-warning" collapse="!showAddForm">
+        <div class="card-body">
           <form class="form-horizontal" name="form" role="form" ng-submit="addNewCard(form)" novalidate>
             <div class="">
               <h2 class="page-header">

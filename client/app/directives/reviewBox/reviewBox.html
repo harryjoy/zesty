@@ -1,6 +1,6 @@
 <div class="col-md-12" ng-class="{'margin-adust-on-top': noFooter, 'user-review-box': withProduct}">
-  <div class="box box-black review-list-box">
-    <div class="box-header" ng-show="withProduct">
+  <div class="card card-black review-list-box">
+    <div class="card-header" ng-show="withProduct">
       <div class="user-review-header">
         <img src="{{review.product.image}}" height="50" width="50" />
         <div class="user-review-header-descr">
@@ -10,9 +10,9 @@
         <clearfix></clearfix>
       </div>
     </div>
-    <div class="box-header">
+    <div class="card-header">
       <span class="pull-right review-time">{{moment(review.reviewTime).format('Do MMMM, YYYY HH:mm a')}}</span>
-      <h3 class="box-title">
+      <h3 class="card-title">
         {{review.title}} <rating ng-model="review.rating" readonly="true" />
         <p class="review-sub-header">
           From: 
@@ -26,7 +26,7 @@
         </p>
       </h3>
     </div>
-    <div class="box-body">
+    <div class="card-body">
       <div class="row">
         <div class="col-md-10 col-sm-12">
           <div>{{review.review}}</div>
@@ -42,7 +42,7 @@
         </div>
       </div>
     </div>
-    <div class="box-footer" ng-hide="noFooter">
+    <div class="card-footer" ng-hide="noFooter">
       <div class="row">
         <div class="col-md-10 col-sm-9 text-normal">
           <span ng-hide="isMine || voted || review.voted || isLoggedIn==='false'">

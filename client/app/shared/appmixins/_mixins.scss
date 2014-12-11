@@ -111,15 +111,15 @@
 }
 @mixin flex($values) {
   -webkit-box-flex: $values;
-  -moz-box-flex:  $values;
-  -webkit-flex:  $values;
-  -ms-flex:  $values;
-  flex:  $values;
+    -moz-box-flex:  $values;
+     -webkit-flex:  $values;
+         -ms-flex:  $values;
+             flex:  $values;
 }
 
+// Opacity for an element
 @mixin opacity($opt) {
   opacity: $opt;
   filter: alpha(opacity=$opt);
   -ms-filter: "alpha(Opacity="+$opt+")";
 }
-

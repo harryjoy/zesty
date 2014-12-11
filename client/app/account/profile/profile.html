@@ -21,11 +21,11 @@
 	  <div class="col-lg-6 col-md-6 col-sm-12">
       <!-- start profile form -->
       <form class="form" role="form" name="profileForm" ng-submit="updateProfile(profileForm)" novalidate>
-  	    <div class="box box-success">
-  	    	<div class="box-header">
-            <h3 class="box-title">User info</h3>
+  	    <div class="card card-success">
+  	    	<div class="card-header">
+            <h3 class="card-title">User info</h3>
           </div>
-          <div class="box-body">
+          <div class="card-body">
             <div class="form-group">
               <div class="alert alert-danger" role="alert" ng-show="!profileForm.$valid && profileSubmitted">
                 <i class="fa fa-warning"></i>
@@ -88,7 +88,7 @@
               </div>
             </div>
           </div>
-          <div class="box-footer">
+          <div class="card-footer">
             <button type="submit" ui-ladda="profileLoader" data-style="slide-left" class="ladda-button btn btn-success btn-sm" data-spinner-color="#646678"><span class="ladda-label"> Save Changes</span></button>
           </div>
       	</div> <!-- end of panel -->
@@ -97,14 +97,14 @@
 	  <div class="col-lg-6 col-md-6 col-sm-12">
       <!-- start account form -->
       <form class="form" role="form" name="emailForm" ng-submit="updateEmail(emailForm)" novalidate>
-  	    <div class="box box-success">
-  	    	<div class="box-header">
-            <h3 class="box-title">Account info</h3>
-            <div class="box-tools pull-right">
+  	    <div class="card card-success">
+  	    	<div class="card-header">
+            <h3 class="card-title">Account info</h3>
+            <div class="card-tools pull-right">
               <a class="btn btn-success btn-xs text-white" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Expand/<br/>Collapse" data-html="true" data-placement="left"><i class="fa fa-minus"></i></a>
             </div>
           </div>
-          <div class="box-body">
+          <div class="card-body">
             <div class="form-group">
               <div class="alert alert-danger" role="alert" ng-show="!emailForm.$valid && emailSubmitted">
                 <i class="fa fa-warning"></i>
@@ -126,7 +126,7 @@
               </div>
             </div>
           </div>
-          <div class="box-footer">
+          <div class="card-footer">
             <button type="submit" ui-ladda="emailLoader" data-style="slide-left" class="ladda-button btn btn-success btn-sm" data-spinner-color="#646678"><span class="ladda-label"> Save Changes</span></button>
           </div>
       	</div> <!-- end of panel -->
@@ -136,14 +136,14 @@
 
       <!-- start emails form -->
       <form class="form" role="form" name="notificationForm" ng-submit="updateNotifications(notificationForm)">
-      	<div class="box box-success">
-  	    	<div class="box-header">
-            <h3 class="box-title">Notifications</h3>
-            <div class="box-tools pull-right">
+      	<div class="card card-success">
+  	    	<div class="card-header">
+            <h3 class="card-title">Notifications</h3>
+            <div class="card-tools pull-right">
               <a class="btn btn-success btn-xs text-white" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Expand/<br/>Collapse" data-html="true" data-placement="left"><i class="fa fa-minus"></i></a>
             </div>
           </div>
-          <div class="box-body">
+          <div class="card-body">
             <div class="alert alert-danger" role="alert" ng-show="!notificationForm.$valid && notificationSubmitted">
                 <i class="fa fa-warning"></i>
                 <p class="help-block">
@@ -165,7 +165,7 @@
 					    </div>
             </div>
           </div>
-          <div class="box-footer">
+          <div class="card-footer">
             <button type="submit" ui-ladda="notificationLoader" data-style="slide-left" class="ladda-button btn btn-success btn-sm" data-spinner-color="#646678"><span class="ladda-label"> Save Changes</span></button>
           </div>
     	  </div> <!-- end of panel -->
@@ -186,11 +186,11 @@
 	</div>
 	<div class="row">
 	  <div class="col-lg-4 col-md-4 col-sm-6" ng-repeat="address in user.addresses">
-	    <div class="box box-default">
-	    	<div class="box-header">
-          <h3 class="box-title">{{address.title}}</h3>
+	    <div class="card card-default">
+	    	<div class="card-header">
+          <h3 class="card-title">{{address.title}}</h3>
         </div>
-        <div class="box-body">
+        <div class="card-body">
         	<address>
 					  <strong>{{address.firstName}} {{address.lastName}}</strong><br>
 					  {{address.addressLine1}},<br>
@@ -201,7 +201,7 @@
 					  <abbr title="Phone">P:</abbr> {{address.mobile}}
 					</address>
         </div>
-        <div class="box-footer">
+        <div class="card-footer">
         	<span ng-switch="address.isDefault">
         		<span ng-switch-when="true">
         			<span class="label label-default default_selection">Default</span>
@@ -210,7 +210,7 @@
         			<button type="button" class="btn btn-default btn-sm" ng-click="makeAddressDefault(address._id)">Make Default</button>
         		</span>
         	</span>
-        	<div class="box-tools pull-right">
+        	<div class="card-tools pull-right">
             <button class="btn btn-default btn-sm" tooltip="Edit" title="Edit this address" ng-click="openEditAddressDialog(address)"><i class="fa fa-pencil"></i></button>
             <button class="btn btn-default btn-sm" tooltip="Delete" title="Delete this address" ng-click="deleteAddress(address.title, address._id)"><i class="fa fa-trash"></i></button>
           </div>
@@ -225,8 +225,8 @@
       <i class="fa fa-warning"></i>
       You don't have any saved address yet.
     </div>
-    <div class="col-md-12 box box-solid">
-      <div class="box-body text-normal">
+    <div class="col-md-12 card card-solid">
+      <div class="card-body text-normal">
         By saving address, you save time in checkout process. You can select delivery address from saved addresses and save time and you don't have to bother evrytime entering same address. <a class="text-muted" href="#" ng-click="openAddAddressDialog()">Add new</a> address now to use it in checkout.
       </div>
     </div>

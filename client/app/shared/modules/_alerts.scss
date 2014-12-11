@@ -1,14 +1,10 @@
-// Alerts
-//==============
-
 .alert {
-  //Add padding to allow the icon to appear
   padding-left: 30px;
   margin-left: 15px;
   position: relative;
   margin-top: 10px;
 
-  //Make icons float to the left corner
+  // Floating icon on left corner
   > .fa, > .glyphicon {
     position: absolute;
     left: -15px;
@@ -20,5 +16,47 @@
     text-align: center;
     background: inherit;
     border: inherit;
+  }
+
+  &.shout {
+    margin: 0 0 20px 0;
+    padding: 15px 30px 15px 15px;
+    border-left: 5px solid #eee;
+
+    .shout-title {
+      margin-top: 0;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    // Themes for different contexts 
+    &.shout-danger {
+      background-color: #fcf2f2;
+      border-color: #dFb5b4;
+
+      .shout-title {
+        color: #B94A48;
+      }
+    }
+
+    &.shout-warning {
+      background-color: #fefbed;
+      border-color: #f1e7bc;
+
+      .shout-title {
+        color: #C09853;
+      }
+    }
+
+    &.shout-info {
+      background-color: #f0f7fd;
+      border-color: #d0e3f0;
+
+      .shout-title {
+        color: #3A87AD;
+      }
+    }
   }
 }

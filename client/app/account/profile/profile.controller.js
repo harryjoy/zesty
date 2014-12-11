@@ -141,18 +141,18 @@ angular.module('zesty')
     $('[data-toggle="tooltip"]').tooltip();
 
     /*     
-     * Add collapse and remove events to boxes
+     * Add collapse and remove events to cards
      */
     $('[data-widget="collapse"]').click(function() {
-      //Find the box parent        
-      var box = $(this).parents('.box').first();
+      //Find the card parent        
+      var card = $(this).parents('.card').first();
       //Find the body and the footer
-      var bf = box.find('.box-body, .box-footer');
-      if (!box.hasClass('collapsed-box')) {
-        box.addClass('collapsed-box');
+      var bf = card.find('.card-body, .card-footer');
+      if (!card.hasClass('collapsed-card')) {
+        card.addClass('collapsed-card');
         bf.slideUp();
       } else {
-        box.removeClass('collapsed-box');
+        card.removeClass('collapsed-card');
         bf.slideDown();
       }
     });
