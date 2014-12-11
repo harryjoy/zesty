@@ -79,6 +79,7 @@
     opacity: 0;
     filter: alpha(opacity=0);
     -ms-filter: "alpha(Opacity=0)";
+    background: $white;
    
     &:hover {
       background-color: $white;

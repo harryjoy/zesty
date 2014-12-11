@@ -181,4 +181,62 @@
       }
     }
   }
+
+  &.card-small {
+    position: relative;
+    display: block;
+    @include border-radius(2px);
+    margin-bottom: 10px;
+    border-top: none; 
+
+    > .card-content {
+      padding: 10px;
+    }
+
+    > .card-footer {
+      border-top: none;
+      position: relative;
+      text-align: center;
+      padding: 3px 0;
+      color: rgba(255, 255, 255, 0.8);
+      display: block;
+      z-index: 10;
+      background: rgba(0,0,0,0.1);
+      text-decoration: none;
+
+      &:hover {
+        color: $white;
+        background: rgba(0,0,0,0.15);
+      }
+    }
+
+    h3 {
+      font: {
+        size: 35px;
+        weight: bold;
+      }
+      margin: 0 0 5px 0;
+      white-space: nowrap;
+      padding: $zero;
+    }
+
+    p {
+      font-size: 12px;
+    }
+
+    &:hover {
+      text-decoration: none;
+      color: #f9f9f9;
+    }
+  }
+}
+
+@media screen and (max-width: $screen-xs) {
+  .card-small {
+    text-align: center;
+
+    p {
+      font-size: 11px;
+    }
+  }
 }
