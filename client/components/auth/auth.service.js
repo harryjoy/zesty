@@ -158,10 +158,20 @@ angular.module('zesty')
      * @return {Object} cart
      */
     addItemToCart: function(item) {
+      var found = false;
       if (angular.isUndefined(cart.products)) {
         cart.products = [];
+      } else if (cart.products.length > 0) {
+        _.forEach(cart.products, function(currentProduct) {
+          if (currentProduct._id === item._id) {
+            found = true;
+            currentProduct.qty++;
+          }
+        });
       }
-      cart.products.push(CartServ.convertItem(item));
+      if (!found){
+        cart.products.push(CartServ.convertItem(item));
+      }
       globalCalculateCartValues();
       $rootScope.$broadcast('cart.updated');
     },

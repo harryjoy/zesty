@@ -1,5 +1,5 @@
 <div class="container">
-	<div class="row">
+	<div class="row" ng-show="cart.products && cart.products.length > 0">
 		<div class="col-lg-9 col-md-9 col-sm-7">
       <div class="row">
 		    <div class="col-lg-12 col-md-12 col-sm-12">
@@ -14,16 +14,6 @@
 		        		<i class="fa fa-check cart_check"></i>
 		        	</div>
 		        </div>
-		        <!--<div class="cart_step col-md-4 col-sm-6" ng-class="{active: isActive('/checkout/billing')}">
-		        	<i class="fa fa-car cart_step_icon"></i>
-		        	<div class="cart_step_content">
-		        		<h4 class="cart_step_heading">Billing</h4>
-		          	<span class="cart_step_description">Enter billing information</span>
-		        	</div>
-		        	<div class="cart_step_done" ng-show="isActive('/checkout/payment')">
-		        		<i class="fa fa-check cart_check"></i>
-		        	</div>
-		        </div>-->
 		        <div class="cart_step col-md-6 col-sm-6" ng-class="{active: isActiveMultiple(['/checkout/payment'])}">
 		        	<i class="fa fa-money cart_step_icon"></i>
 		        	<div class="cart_step_content">
@@ -50,4 +40,12 @@
       <order-summary></order-summary>
     </div>
 	</div>
+	<div class=="row" ng-hide="cart.products && cart.products.length > 0">
+    <div class="col-md-12 col-sm-12">
+    	<h1 class="page-header">Checkout</h1>
+      <h4 class="alert alert-warning">
+        There are no products in your cart. Go to <a href="/" class="alert-link">home</a> page and add your favorite products in cart to buy.
+      </h4>
+    </div>
+  </div>
 </div>
