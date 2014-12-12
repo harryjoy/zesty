@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('zesty')
-  .directive('product', ['ProductServ', 'AlertServ', function (ProductServ, AlertServ) {
+  .directive('product', ['ProductServ', 'AlertServ', 'Auth', function (ProductServ, AlertServ, Auth) {
   return {
     templateUrl: 'app/directives/product/product.html',
     restrict: 'E',
@@ -46,6 +46,8 @@ angular.module('zesty')
           });
         }
       };
+
+      scope.addToCart = Auth.addItemToCart;
     }
   };
 }]);

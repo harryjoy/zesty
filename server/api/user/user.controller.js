@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 var Review = require('../review/review.model');
 var Favorite = require('../favorite/favorite.model');
 var Item = require('../item/item.model');
+var Cart = require('../cart/cart.model');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -335,6 +336,30 @@ exports.favorites = function(req, res, next) {
       });
     });
   })
+};
+
+// get user's cart
+exports.myCart = function(req, res, next) {
+  Cart.findOne({
+    customerId: req.user._id
+  }).exec(function(err, cart) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, cart);
+  });
+};
+
+// update user's cart
+exports.updateCart = function(req, res, next) {
+  if(req.body._id) { delete req.body._id; }
+  Cart.findById(req.params.id, function (err, cart) {
+    if (err) { return handleError(res, err); }
+    if(!cart) { return res.send(404); }
+    var updated = _.merge(cart, req.body);
+    updated.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, cart);
+    });
+  });
 };
 
 // function to handle errors in controllers

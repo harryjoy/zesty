@@ -1,26 +1,3 @@
-<!--div class="container">
-	<div class="process">
-	    <div class="process-row">
-	        <div class="process-step">
-	            <button type="button" class="btn btn-success btn-circle" disabled="disabled"><i class="fa fa-user fa-3x"></i></button>
-	            <p>Confirm Order</p>
-	        </div>
-	        <div class="process-step">
-	            <button type="button" class="btn btn-default btn-circle" disabled="disabled"><i class="fa fa-comments-o fa-3x"></i></button>
-	            <p>Personal Data</p>
-	        </div>
-	        <div class="process-step">
-	            <button type="button" class="btn btn-default btn-circle" disabled="disabled"><i class="fa fa-thumbs-up fa-3x"></i></button>
-	            <p>Verification</p>
-	        </div> 
-	         <div class="process-step">
-	            <button type="button" class="btn btn-default btn-circle" disabled="disabled"><i class="fa fa-money fa-3x"></i></button>
-	            <p>You Pay</p>
-	        </div> 
-	    </div>
-	</div>
-</div-->
-
 <div class="container">
   <div class="row">
     <div class="col-lg-9 col-md-9 col-sm-7">
@@ -30,7 +7,7 @@
       <h3 class="continueShopping"><a href="/"><i class="fa fa-angle-double-left"></i> &nbsp; Countinue Shopping</a></h3>
     </div>
   </div>
-  <div class="row">
+  <div class="row" ng-show="cart.products && cart.products.length > 0">
     <div class="col-lg-9 col-md-9 col-sm-7">
       <div class="row">
         <div class="col-xs-12 col-sm-12">
@@ -46,70 +23,25 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="item">
+              <tr class="item" ng-repeat="item in cart.products">
                 <td class="producThumb">
-                  <a href="#"><img alt="img" src="http://placehold.it/400x400" /></a>
+                  <a href="/product/{{item._id}}"><img alt="{{item.title}}" src="{{item.img}}" /></a>
                 </td>
                 <td class="description">
-                  <h4><a href="#">Item 1</a></h4>
-                  <span class="intro">This is description This is description This is description 
-                  This is description This is description This is description </span>
+                  <h4><a href="/product/{{item._id}}">{{item.title}}</a></h4>
+                  <span class="intro">{{item.description}}</span>
                 </td>
                 <td class="qty">
-                  <input placeholder="1" />
+                  <input placeholder="1" ng-model="item.qty" />
                 </td>
                 <td class="price">
-                  <span>Rs 649</span>
+                  <span>{{item.currency}} {{item.price}}</span>
                 </td>
                 <td class="total">
-                  <span>Rs 649</span>
+                  <span>{{item.currency}} {{item.price * item.qty}}</span>
                 </td>
                 <td class="delete">
-                  <i class="fa fa-trash"></i>
-                </td>
-              </tr>
-              <tr class="item">
-                <td class="producThumb">
-                  <a href="#"><img alt="img" src="http://placehold.it/400x400" /></a>
-                </td>
-                <td class="description">
-                  <h4><a href="#">Item 1</a></h4>
-                  <span class="intro">This is description This is description This is description 
-                  This is description This is description This is description </span>
-                </td>
-                <td class="qty">
-                  <input placeholder="1" />
-                </td>
-                <td class="price">
-                  <span>Rs 649</span>
-                </td>
-                <td class="total">
-                  <span>Rs 649</span>
-                </td>
-                <td class="delete">
-                  <i class="fa fa-trash"></i>
-                </td>
-              </tr>
-              <tr class="item">
-                <td class="producThumb">
-                  <a href="#"><img alt="img" src="http://placehold.it/400x400" /></a>
-                </td>
-                <td class="description">
-                  <h4><a href="#">Item 1</a></h4>
-                  <span class="intro">This is description This is description This is description 
-                  This is description This is description This is description </span>
-                </td>
-                <td class="qty">
-                  <input placeholder="1" />
-                </td>
-                <td class="price">
-                  <span>Rs 649</span>
-                </td>
-                <td class="total">
-                  <span>Rs 649</span>
-                </td>
-                <td class="delete">
-                  <i class="fa fa-trash"></i>
+                  <i class="fa fa-trash" ng-click="deleteItem(item._id)"></i>
                 </td>
               </tr>
             </tbody>
@@ -132,6 +64,13 @@
           <a class="btn btn-success btn-lg btn-block" title="checkout" href="/auth"> Proceed to checkout &nbsp; <i class="fa fa-chevron-circle-right"></i> </a>
         </div>
       </div>
+    </div>
+  </div>
+  <div class=="row" ng-hide="cart.products && cart.products.length > 0">
+    <div class="col-md-12 col-sm-12">
+      <h4 class="alert alert-warning">
+        There are no products in your cart. Go to <a href="/" class="alert-link">home</a> page and add your favorite products in cart to buy.
+      </h4>
     </div>
   </div>
 <div>

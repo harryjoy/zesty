@@ -86,6 +86,12 @@ angular.module('zesty')
         params: {
           controller: 'favorites'
         }
+      },
+      myCart: {
+        method: 'GET',
+        params: {
+          controller: 'cart'
+        }
       }
 	  });
   });

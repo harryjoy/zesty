@@ -1,5 +1,5 @@
 <div class="{{sizeClass}}">
-  <div class="thumbnail product">
+  <div class="thumbnail product card">
     <img src="{{item.mainImage}}" alt="{{item.title}}" class="image">
     <!--div class="promotion">
       <span class="new-product lbl text-normal"> NEW</span>
@@ -7,16 +7,17 @@
       <span class="exlusive lbl text-normal">Exclusive</span>
     </div-->
     <div class="add-to-cart">
-      <a href="{{item.link}}" class="glyphicon glyphicon-plus-sign" tooltip="Add to cart" tooltip-placement="top"></a>
+      <a class="fa fa-eye bg-teal" href="#" tooltip="Quick View" tooltip-placement="top">
+      </a>
     </div>
-    <button class="added-to-fav" tooltip="Remove from Wishlist" ng-show="item.myFav" ng-click="toogleFav()">
+    <button class="added-to-fav" tooltip="Remove from Wishlist" tooltip-placement="right" ng-show="item.myFav" ng-click="toogleFav()">
       <i class="fa fa-star"></i>
     </button>
-    <button class="add-fav active" tooltip="Add to Wishlist" ng-hide="item.myFav" ng-click="toogleFav()">
+    <button class="add-fav active" tooltip="Add to Wishlist" tooltip-placement="right" ng-hide="item.myFav" ng-click="toogleFav()">
       <i class="glyphicon glyphicon-star"></i>
     </button>
     <div class="caption">
-      <h4 class="pull-right">{{item.price}}</h4>
+      <h4 class="pull-right">{{item.currency}} {{item.price}}</h4>
       <h4><a href="{{item.link}}">{{item.title}}</a>
       </h4>
       <p>{{item.description}}</p>
@@ -28,6 +29,15 @@
           <span ng-repeat="category in item.categories"><a href="/category/{{category._id}}">{{category.name}}</a></span>
         </p>
       </div>
+    </div>
+
+    <div class="card-footer foot-actions">
+      <button class="btn btn-success btn-flat btn-mini">
+        <span class="text-normal">Buy Now</span>
+      </button>
+      <button class="btn btn-primary btn-flat btn-mini pull-right" ng-click="addToCart(item);">
+        <span class="text-normal">Add to Cart</span>
+      </button>
     </div>
   </div>
 </div>

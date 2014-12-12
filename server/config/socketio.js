@@ -25,9 +25,7 @@ function onConnect(socket) {
   require('../api/shipper/shipper.socket').register(socket);
   require('../api/suppiler/suppiler.socket').register(socket);
   require('../api/category/category.socket').register(socket);
-  require('../api/profile/profile.socket').register(socket);
   require('../api/favorite/favorite.socket').register(socket);
-  require('../api/customer/customer.socket').register(socket);
   require('../api/order/order.socket').register(socket);
   require('../api/cart/cart.socket').register(socket);
   require('../api/item/item.socket').register(socket);

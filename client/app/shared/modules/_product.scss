@@ -17,6 +17,16 @@
     .image {
       @include transform(scale(1.10) rotate(-1.5deg));
     }
+
+    .foot-actions {
+      opacity: 1;
+      height: 42px;
+
+      .btn {
+        height: 21px;
+        opacity: 1;
+      }
+    }
   }
 
   .image {
@@ -65,7 +75,7 @@
     height: 30px;
     line-height: 27px;
     position: absolute;
-    right: 30px;
+    left: 10px;
     text-align: center;
     top: 15px;
     width: 30px;
@@ -108,6 +118,30 @@
     background-color: $yellow;
     color: $white;
   }
+
+  .foot-actions {
+    height: 0px;
+    opacity: 0;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    margin-left: -4px;
+    -webkit-transition: all .5s ease-in;
+    -moz-transition: all .5s ease-in;
+    -o-transition: all .5s ease-in;
+    -ms-transition: all .5s ease-in;
+    transition: all .5s ease-in;
+
+    .btn {
+      height: 0px;
+      opacity: 0;
+      -webkit-transition: all .5s ease-in;
+      -moz-transition: all .5s ease-in;
+      -o-transition: all .5s ease-in;
+      -ms-transition: all .5s ease-in;
+      transition: all .5s ease-in;
+    }
+  }
 }
 
 .add-to-cart {
@@ -121,7 +155,12 @@
   a {
     background: $white;
     top: -18px;
-    border-radius: 16px;
+    border-radius: 50%;
+    border: 5px solid #fff;
+    position: relative;
+    color: #fff;
+    padding: 5px;
+    font-size: 25px;
 
     &:hover {
       text-decoration: none;

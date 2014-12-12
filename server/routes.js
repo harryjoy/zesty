@@ -16,9 +16,7 @@ module.exports = function(app) {
   app.use('/api/shippers', require('./api/shipper'));
   app.use('/api/suppilers', require('./api/suppiler'));
   app.use('/api/categories', require('./api/category'));
-  app.use('/api/profiles', require('./api/profile'));
   app.use('/api/favorites', require('./api/favorite'));
-  app.use('/api/customers', require('./api/customer'));
   app.use('/api/orders', require('./api/order'));
   app.use('/api/carts', require('./api/cart'));
   app.use('/api/items', require('./api/item'));

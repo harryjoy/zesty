@@ -1,17 +1,16 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    timestamps = require('mongoose-timestamp');
 
 var CartSchema = new Schema({
-  name: String,
-  info: String,
-  active: Boolean,
+  customerId: Schema.Types.ObjectId,
   products: [{
-    id: String,
+    _id: Schema.Types.ObjectId,
     qty: Number,
     price: Number,
-    name: String,
+    title: String,
     img: String,
     approxDeliveryDate: Date,
 	  deliveryDate: Date,
@@ -22,13 +21,22 @@ var CartSchema = new Schema({
 	    email: String
 	  },
 	  supplier: {
-      id: Schema.Types.ObjectId,
+      _id: Schema.Types.ObjectId,
       name: String
 	  }
   }],
-  grandTotal: Number,
+  subTotal: {
+    type: Number,
+    default: 0
+  },
+  grandTotal: {
+    type: Number,
+    default: 0
+  },
   promoCode: String,
   promoCodeValue: Number
 });
+
+CartSchema.plugin(timestamps);
 
 module.exports = mongoose.model('Cart', CartSchema);

@@ -1,0 +1,33 @@
+'use strict';
+
+angular.module('zesty')
+  .factory('CartServ', ['$resource', function ($resource) {
+  
+  return {
+    convertItem: function (item) {
+      return {
+        _id: item._id,
+        title: item.title,
+        description: item.description,
+        qty: 1,
+        price: item.price,
+        currency: item.currency,
+        img: item.mainImage
+      };
+    },
+    resource: function () {
+      return $resource('/api/categories/:id/:controller', {
+        id: '@_id'
+      },
+      {
+        items: {
+          method: 'GET',
+          params: {
+            controller:'items'
+          },
+          isArray:true
+        }
+      });
+    }
+  };
+}]);

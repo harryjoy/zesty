@@ -31,46 +31,16 @@
           </ul>
         </li>
         <li ng-class="{active: isActive('/cart')}">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-shopping-cart"></i><span class="badge" style="background-color: transparent;">{{cartItems}}</span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-shopping-cart"></i><span class="badge text-muted" style="background-color: transparent;" ng-show="cart.products.length > 0">{{cart.products.length}}</span></a>
             <div class="dropdown-menu cart-dropdown">
               <div class="body">
-                <table>
-                  <tbody>
-                    <tr class="productRow" ng-repeat="item in items">
-                      <td style="width:20%" class="productThumb">
-                        <div> 
-                          <a href="{{item.link}}">
-                            <img src="{{item.mainImage}}" alt="img">
-                          </a>
-                        </div>
-                      </td>
-                      <td style="width:40%">
-                        <div class="description">
-                          <h4>
-                            <a href="{{item.link}}"> {{item.title}} </a>
-                          </h4>
-                          <span class="size"> {{item.description}} </span>
-                          <div class="price">
-                            <span> {{item.price}} </span>
-                          </div>
-                        </div>
-                      </td>
-                      <td  style="width:10%" class="quantity">
-                        <a > X 1 </a>
-                      </td>
-                      <td  style="width:15%" class="subtotal">
-                        <span> {{item.price}} </span>
-                      </td>
-                      <td  style="width:5%" class="delete">
-                        <a > <i class="fa fa-trash"></i> </a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <cart-popup-item ng-repeat="item in cart.products"></cart-popup-item>
+              </div> <!--/.body-->
+              <div class="cart-footer" ng-hide="cart.products.length > 0">
+                <h4>There are no items in your cart.</h4>
               </div>
-              <!--/.body-->
-              <div class="cartFooter text-right">
-                <h3 class="text-right subtotal"> Subtotal: $210 </h3>
+              <div class="cart-footer text-right" ng-show="cart.products.length > 0">
+                <h3 class="text-right subtotal"> Subtotal: {{cart.currency}} {{cart.subTotal}} </h3>
                 <a href="/cart" class="btn btn-sm btn-danger">
                   <i class="fa fa-shopping-cart"> </i> VIEW CART
                 </a>

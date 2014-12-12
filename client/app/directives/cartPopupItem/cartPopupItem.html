@@ -1,0 +1,27 @@
+<div class="product-row">
+  <div class="product-thumb">
+    <a href="/product/{{item._id}}">
+      <img src="{{item.img}}" alt="{{item.title}}">
+    </a>
+  </div>
+  <div class="product-description">
+    <h4>
+      <a href="/product/{{item._id}}">{{item.title}}</a>
+    </h4>
+    <span class="product-size">{{item.description}}</span>
+    <div class="product-price">
+      <span>{{item.currency}} {{item.price}}</span>
+    </div>
+  </div>
+  <div class="product-qty">
+    <span class="text-blue">X {{item.qty}}</span>
+  </div>
+  <div class="product-total">
+    <span>{{item.currency}} {{item.price * item.qty}}</span>
+  </div>
+  <div class="product-delete">
+    <span tooltip="Remove from Cart" class="text-cursor-pointer" ng-click="deleteItem(item._id)">
+      <i class="fa fa-trash"></i>
+    </span>
+  </div>
+</div> <!--/.product-row-->

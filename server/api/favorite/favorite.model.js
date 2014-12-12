@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema, 
+    Schema = mongoose.Schema,
     timestamps = require('mongoose-timestamp');
 
 var FavoriteSchema = new Schema({

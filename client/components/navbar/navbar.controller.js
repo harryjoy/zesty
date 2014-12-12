@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('NavbarCtrl', ['$scope', '$location', 'Auth', 'CategoryServ', 'ProductServ',
-    function ($scope, $location, Auth, CategoryServ, ProductServ) {
+  .controller('NavbarCtrl', ['$scope', '$location', 'Auth', 'CategoryServ',
+    function ($scope, $location, Auth, CategoryServ) {
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
@@ -18,22 +18,6 @@ angular.module('zesty')
 
     CategoryServ.query().$promise.then(function(categories) {
         $scope.categories = categories;
-      });
-
-    $scope.items = [];
-    ProductServ.query().$promise.then(function(items) {
-        $.each(items, function (key, item) {
-          $scope.items.push({
-            'link': '/product/' + item._id,
-            'title': item.title,
-            'price': item.currency + ' ' + item.price,
-            'reviewCount': item.reviews ? item.reviews : 0,
-            'description': item.description,
-            'categories': item.categories,
-            'mainImage': item.mainImage,
-            'rating': item.rating ? item.rating : 0
-          });
-        });
       });
 
     $scope.isCollapsed = true;

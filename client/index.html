@@ -33,15 +33,16 @@
       <!-- endinjector -->
     <!-- endbuild -->
   </head>
-  <body ng-app="zesty">
+  <body ng-app="zesty" ng-controller="BaseCtrl">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
+
     <div ng-include="'components/navbar/navbar.html'"></div>
+
     <!-- Add your site or application content here -->
-    <div ng-controller="BaseCtrl">
-      <div ui-view=""></div>
-    </div>
+    <div ui-view=""></div>
+
     <div ng-include="'components/footer/footer.html'"></div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -149,6 +150,7 @@
           <script src="app/deals/deals.controller.js"></script>
           <script src="app/deals/deals.js"></script>
           <script src="app/directives/address/address.directive.js"></script>
+          <script src="app/directives/cartPopupItem/cartPopupItem.directive.js"></script>
           <script src="app/directives/clearfix/clearfix.directive.js"></script>
           <script src="app/directives/login/login.directive.js"></script>
           <script src="app/directives/orderInvoice/orderInvoice.directive.js"></script>
@@ -179,6 +181,7 @@
           <script src="components/mongoose-error/mongoose-error.directive.js"></script>
           <script src="components/navbar/navbar.controller.js"></script>
           <script src="components/services/alert.service.js"></script>
+          <script src="components/services/cart.service.js"></script>
           <script src="components/services/category.service.js"></script>
           <script src="components/services/favorite.service.js"></script>
           <script src="components/services/file.service.js"></script>

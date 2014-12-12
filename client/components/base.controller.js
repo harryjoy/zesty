@@ -12,6 +12,7 @@ angular.module('zesty')
 
     $scope.isLoggedInFunc = Auth.isLoggedIn;
     $scope.user = Auth.getCurrentUser();
+    $scope.cart = Auth.getCurrentCart();
     $scope.isAdmin = Auth.isAdmin;
     $scope.getCurrentUser = Auth.getCurrentUser;
 
@@ -20,7 +21,16 @@ angular.module('zesty')
     });
     $scope.$on('login.success', function() {
       $scope.user = Auth.getCurrentUser();
+      $scope.cart = Auth.getCurrentCart();
     });
+    $scope.$on('logout.success', function() {
+      $scope.user = {};
+      $scope.cart = {};
+    });
+    $scope.$on('cart.updated', function() {
+      $scope.cart = Auth.getCurrentCart();
+    });
+
 
     $scope.isActive = function(route) {
       return route === $location.path();
