@@ -9,24 +9,11 @@ angular.module('zesty')
     currentUser = User.get({}, function (currentUser) {
       cart = User.myCart({
         id: currentUser._id
-      }).$promise.then(function() {
+      }).$promise.then(function(updatedCart) {
+        cart = updatedCart;
         $rootScope.$broadcast('cart.updated');
       });
     });
-  }
-
-  function globalCalculateCartValues() {
-    cart.subTotal = 0;
-    cart.grandTotal = 0;
-    cart.currency = '';
-    _.forEach(cart.products, function(product) {
-      cart.subTotal = cart.subTotal + (product.qty * product.price);
-      cart.grandTotal = cart.grandTotal + (product.qty * product.price);
-      cart.currency = product.currency;
-    });
-    if (angular.isDefined(cart.promoCodeValue)) {
-      cart.grandTotal = cart.grandTotal - cart.promoCodeValue;
-    }
   }
 
   return {
@@ -51,7 +38,8 @@ angular.module('zesty')
         currentUser = User.get({}, function (currentUser) {
           cart = User.myCart({
             id: currentUser._id
-          }).$promise.then(function() {
+          }).$promise.then(function(updatedCart) {
+            cart = updatedCart;
             $rootScope.$broadcast('cart.updated');
           });
         });
@@ -158,22 +146,15 @@ angular.module('zesty')
      * @return {Object} cart
      */
     addItemToCart: function(item) {
-      var found = false;
-      if (angular.isUndefined(cart.products)) {
-        cart.products = [];
-      } else if (cart.products.length > 0) {
-        _.forEach(cart.products, function(currentProduct) {
-          if (currentProduct._id === item._id) {
-            found = true;
-            currentProduct.qty++;
-          }
-        });
-      }
-      if (!found){
-        cart.products.push(CartServ.convertItem(item));
-      }
-      globalCalculateCartValues();
-      $rootScope.$broadcast('cart.updated');
+      item.qty = 1;
+      CartServ.resource().addToCart({
+        id: cart._id
+      }, CartServ.convertItem(item), function(updatedCart) {
+        cart = updatedCart;
+        $rootScope.$broadcast('cart.updated');
+      }, function(err) {
+        console.log(err);
+      });
     },
 
     /**
@@ -184,11 +165,15 @@ angular.module('zesty')
       if (angular.isUndefined(cart.products) && cart.products.length === 0) {
         return;
       }
-      _.remove(cart.products, function(currentProduct) {
-        return currentProduct._id === itemId;
+      CartServ.resource().removeFromCart({
+        id: cart._id,
+        itemId: itemId
+      }, function(updatedCart) {
+        cart = updatedCart;
+        $rootScope.$broadcast('cart.updated');
+      }, function(err) {
+        console.log(err);
       });
-      globalCalculateCartValues();
-      $rootScope.$broadcast('cart.updated');
     },
 
     /**

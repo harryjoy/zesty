@@ -22,14 +22,19 @@
       <div class="review-product-sm card">
         <div class="card-body">
           <div class="product-xs">
-            <img class="thumbnail" title="{{item.title}}" alt="{{item.title}}" src="{{item.image}}">
+            <img class="thumbnail" title="{{item.title}}" alt="{{item.title}}" src="{{item.mainImage}}">
             <h5 class="review-item-title">{{item.title}}</h5><br/>
-            <span class="text-small">{{item.decsription}}</span>
+            <span class="text-small">{{item.description}}</span>
           </div>
           <clearfix></clearfix>
         </div>
         <div class="card-footer">
-          <a tooltip="Add to Cart" href="#" class="btn btn-default btn-flat btn-sm" title="Add to Cart"><i class="fa fa-plus text-small"></i> <i class="fa fa-shopping-cart"></i></a>
+          <button tooltip="Add to Cart" class="btn btn-default btn-flat btn-sm" ng-click="addToCart(item);" ng-hide="addedToCart">
+            <i class="fa fa-plus text-small"></i> <i class="fa fa-shopping-cart"></i>
+          </button>
+          <a href="/cart" tooltip="Go to Cart" class="btn btn-primary btn-flat btn-sm" ng-show="addedToCart">
+            <span class="text-normal"><i class="fa fa-shopping-cart"></i></span>
+          </a>
           <span ng-switch="isMyFav" class="pull-right">
             <button tooltip="Add to Wishlist" ng-switch-when="false" class="btn btn-default btn-circle add-to-fav" ng-click="addToFavorite()"><i class="fa fa-star"></i></button>
             <button tooltip="Remove from Wishlist" ng-switch-when="true" class="btn btn-warning btn-circle" ng-click="removeFavorite()"><i class="fa fa-star"></i></button>

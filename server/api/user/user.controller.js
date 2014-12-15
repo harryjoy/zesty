@@ -344,7 +344,16 @@ exports.myCart = function(req, res, next) {
     customerId: req.user._id
   }).exec(function(err, cart) {
     if(err) { return handleError(res, err); }
-    return res.json(200, cart);
+    if(!cart) {
+      cart = new Cart();
+      cart.customerId = req.user._id;
+      cart.save(function (err) {
+        if (err) { return handleError(res, err); }
+        return res.json(200, cart);
+      });
+    } else {
+      return res.json(200, cart);
+    }
   });
 };
 

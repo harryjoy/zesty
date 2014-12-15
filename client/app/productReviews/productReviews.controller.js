@@ -2,8 +2,8 @@
 
 angular.module('zesty')
   .controller('ProductreviewsCtrl', ['$scope', '$stateParams', 'ProductServ', 'Auth',
-    'ReviewVoteServ', 'FavoriteServ', 'AlertServ',
-    function ($scope, $stateParams, ProductServ, Auth, ReviewVoteServ, FavoriteServ, AlertServ) {
+    'ReviewVoteServ', 'FavoriteServ', 'AlertServ', 'ProductUtil',
+    function ($scope, $stateParams, ProductServ, Auth, ReviewVoteServ, FavoriteServ, AlertServ, ProductUtil) {
 
   /*
    * This is used to cache product review and do not make request 
@@ -69,10 +69,22 @@ angular.module('zesty')
   $scope.noReviews = false;
   $scope.customerId = '';
   $scope.isMyFav = false;
+  $scope.addedToCart = false;
   $scope.loggedIn = Auth.isLoggedIn();
   if ($scope.loggedIn) {
     $scope.customerId = $scope.getCurrentUser()._id;
   }
+  $scope.addToCart = Auth.addItemToCart;
+  $scope.$on('cart.updated', function() {
+    $scope.addedToCart = false;
+    if ($scope.cart.products && $scope.cart.products.length > 0 && $scope.item) {
+      _.forEach($scope.cart.products, function(currentProduct) {
+        if (currentProduct._id === $scope.item._id) {
+          $scope.addedToCart = true;
+        }
+      });
+    }
+  });
 
   ProductServ.reviews({
     id: productId,
@@ -94,13 +106,7 @@ angular.module('zesty')
     if (!product) {
       throw new Error('No product details found for selected item.');
     }
-    $scope.item = {
-      'id': product._id,
-      'link': '/product/' + product._id,
-      'title': product.title,
-      'image': product.mainImage,
-      'decsription': product.description
-    };
+    $scope.item = ProductUtil.convertItem(product);
     if ($scope.loggedIn) {
       FavoriteServ.check({
         productId: product._id
@@ -110,6 +116,13 @@ angular.module('zesty')
         }
       }).catch(function(err) {
         console.log(err);
+      });
+    }
+    if ($scope.cart.products && $scope.cart.products.length > 0 && $scope.item) {
+      _.forEach($scope.cart.products, function(currentProduct) {
+        if (currentProduct._id === $scope.item._id) {
+          $scope.addedToCart = true;
+        }
       });
     }
   }).catch (function() {

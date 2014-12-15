@@ -12,6 +12,8 @@ var CartSchema = new Schema({
     price: Number,
     title: String,
     img: String,
+    description: String,
+    currency: String,
     approxDeliveryDate: Date,
 	  deliveryDate: Date,
 	  shipper:{

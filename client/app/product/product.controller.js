@@ -2,8 +2,8 @@
 
 angular.module('zesty')
   .controller('ProductCtrl', ['$scope', '$stateParams', 'ProductServ', 'Auth',
-    'ReviewVoteServ', 'AlertServ', 'FavoriteServ',
-    function ($scope, $stateParams, ProductServ, Auth, ReviewVoteServ, AlertServ, FavoriteServ) {
+    'ReviewVoteServ', 'AlertServ', 'FavoriteServ', 'ProductUtil',
+    function ($scope, $stateParams, ProductServ, Auth, ReviewVoteServ, AlertServ, FavoriteServ, ProductUtil) {
 
   /*
    * This is used to cache product review and do not make request 
@@ -67,30 +67,31 @@ angular.module('zesty')
   $scope.totalItems = 0;
   $scope.currentPage = 1;
   $scope.isMyFav = false;
+  $scope.addedToCart = false;
 
   $scope.customerId = '';
   $scope.loggedIn = Auth.isLoggedIn();
   if ($scope.loggedIn) {
     $scope.customerId = $scope.getCurrentUser()._id;
   }
+  $scope.addToCart = Auth.addItemToCart;
+
+  $scope.$on('cart.updated', function() {
+    $scope.addedToCart = false;
+    if ($scope.cart.products && $scope.cart.products.length > 0 && $scope.itemDetails) {
+      _.forEach($scope.cart.products, function(currentProduct) {
+        if (currentProduct._id === $scope.itemDetails._id) {
+          $scope.addedToCart = true;
+        }
+      });
+    }
+  });
 
   ProductServ.get({id: productId}).$promise.then(function(product) {
     if (!product) {
       throw new Error('No product details found for selected item.');
     }
-    $scope.itemDetails = {
-      'id': product._id,
-      'link': '/product/' + product._id,
-      'title': product.title,
-      'price': product.currency + ' ' + product.price,
-      'reviewsCount': product.reviews ? product.reviews : 0,
-      'description': product.description,
-      'summary': product.summary,
-      'mainImage': product.mainImage,
-      'images': product.images,
-      'rating': product.rating ? product.rating : 0,
-      'suppliers': product.suppliers
-    };
+    $scope.itemDetails = ProductUtil.convertItem(product);
     $scope.largeImageSrc = $scope.itemDetails.mainImage;
     $scope.totalItems = $scope.itemDetails.reviewsCount;
 
@@ -105,24 +106,20 @@ angular.module('zesty')
         console.log(err);
       });
     }
+
+    if ($scope.cart.products && $scope.cart.products.length > 0) {
+      _.forEach($scope.cart.products, function(currentProduct) {
+        if (currentProduct._id === $scope.itemDetails._id) {
+          $scope.addedToCart = true;
+        }
+      });
+    }
   }).then(function() {
     $scope.items = [];
     ProductServ.related({id: productId}).$promise.then(function(items) {
       if (items && items.length > 0) {
         $.each(items, function (key, item) {
-          $scope.items.push({
-            '_id': item._id,
-            'link': '/product/' + item._id,
-            'title': item.title,
-            'currency': item.currency,
-            'price': item.price,
-            'reviewCount': item.reviews ? item.reviews : 0,
-            'description': item.description,
-            'categories': item.categories,
-            'mainImage': item.mainImage,
-            'rating': item.rating ? item.rating : 0,
-            'updated': item.createdAt
-          });
+          $scope.items.push(ProductUtil.convertItem(item));
         });
         if ($scope.loggedIn) {
           $scope.checkForProductFav();

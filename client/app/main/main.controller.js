@@ -2,8 +2,8 @@
 
 angular.module('zesty')
   .controller('MainCtrl', ['$scope', '$http', 'socket',
-    'CategoryServ', 'Auth', 'ProductServ', 'FavoriteServ',
-    function ($scope, $http, socket, CategoryServ, Auth, ProductServ, FavoriteServ) {
+    'CategoryServ', 'Auth', 'ProductServ', 'FavoriteServ', 'ProductUtil',
+    function ($scope, $http, socket, CategoryServ, Auth, ProductServ, FavoriteServ, ProductUtil) {
 
   var Item = {
     getItems: function () {
@@ -42,19 +42,7 @@ angular.module('zesty')
       });
     },
     convertToItem: function (item) {
-      return {
-        '_id': item._id,
-        'link': '/product/' + item._id,
-        'title': item.title,
-        'currency': item.currency,
-        'price': item.price,
-        'reviewCount': item.reviews ? item.reviews : 0,
-        'description': item.description,
-        'categories': item.categories,
-        'mainImage': item.mainImage,
-        'rating': item.rating ? item.rating : 0,
-        'updated': item.createdAt
-      };
+      return ProductUtil.convertItem(item);
     }
   };
 

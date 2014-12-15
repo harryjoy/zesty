@@ -16,7 +16,7 @@ angular.module('zesty')
       };
     },
     resource: function () {
-      return $resource('/api/categories/:id/:controller', {
+      return $resource('/api/carts/:id/:controller', {
         id: '@_id'
       },
       {
@@ -26,6 +26,18 @@ angular.module('zesty')
             controller:'items'
           },
           isArray:true
+        },
+        addToCart: {
+          method: 'POST',
+          params: {
+            controller:'items'
+          }
+        },
+        removeFromCart: {
+          method: 'DELETE',
+          params: {
+            controller:'items'
+          }
         }
       });
     }

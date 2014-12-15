@@ -25,7 +25,7 @@
             <button tooltip="Remove from Wishlist" ng-switch-when="true" class="btn btn-warning btn-circle" ng-click="removeFavorite()"><i class="fa fa-star"></i></button>
           </span>
           <h2>
-            {{itemDetails.price}}
+            {{itemDetails.currency}} {{itemDetails.price}}
           </h2>
           <p>{{itemDetails.description}}</p>
           <form role="form">
@@ -35,8 +35,13 @@
               <input type="number" class="form-control input-sm flat" id="number" value="1" />
             </div>
             <div class="form-group">
-              <button tooltip="Add to Cart" class="btn btn-default btn-flat"><i class="fa fa-plus text-small"></i> <i class="fa fa-shopping-cart"></i></button>
-              <a href="/write-review/{{itemDetails.id}}" class="btn btn-default btn-flat">Write a Review</a>
+              <button class="btn btn-default btn-flat" ng-click="addToCart(itemDetails);" ng-hide="addedToCart">
+                Add to Cart
+              </button>
+              <a href="/cart" class="btn btn-primary btn-flat" ng-show="addedToCart">
+                <span class="text-normal"><i class="fa fa-shopping-cart"></i> Go to Cart</span>
+              </a>
+              <a href="/write-review/{{itemDetails._id}}" class="btn btn-default btn-flat">Write a Review</a>
             </div>
             <div class="form-group">
               <label ng-show="itemDetails.suppliers && itemDetails.suppliers.length > 0">Suppliers:</label>
@@ -90,7 +95,7 @@
                 <h4 class="page-header">Have you used this product?</h4>
                 <span class="text-medium">Rate it now:</span><br/>
                 <rating ng-model="newRating" readonly="false" class="text-big" /><br/>
-                <a href="/write-review/{{itemDetails.id}}?rate={{newRating}}" class="btn btn-default btn-flat">Rate & Write a review <i class="fa fa-angle-double-right"></i></a>
+                <a href="/write-review/{{itemDetails._id}}?rate={{newRating}}" class="btn btn-default btn-flat">Rate & Write a review <i class="fa fa-angle-double-right"></i></a>
               </div>
             </div>
           </div>
@@ -113,11 +118,11 @@
         </div>
         <div class="card-body">
           <ul class="list-unstyled">
-            <li><a href="/product-reviews/{{itemDetails.id}}/4"><i class="fa fa-angle-double-right"></i> 4 and 5 stars rated reviews</a></li>
+            <li><a href="/product-reviews/{{itemDetails._id}}/4"><i class="fa fa-angle-double-right"></i> 4 and 5 stars rated reviews</a></li>
             <li>&nbsp;</li>
-            <li><a href="/product-reviews/{{itemDetails.id}}/2"><i class="fa fa-angle-double-right"></i> 3 and 2 stars rated reviews</a></li>
+            <li><a href="/product-reviews/{{itemDetails._id}}/2"><i class="fa fa-angle-double-right"></i> 3 and 2 stars rated reviews</a></li>
             <li>&nbsp;</li>
-            <li><a href="/product-reviews/{{itemDetails.id}}/1"><i class="fa fa-angle-double-right"></i> 1 star rated reviews</a></li>
+            <li><a href="/product-reviews/{{itemDetails._id}}/1"><i class="fa fa-angle-double-right"></i> 1 star rated reviews</a></li>
           </ul>
         </div>
       </div>
@@ -131,7 +136,7 @@
       </p>
       <span class="text-medium">Rate it now:</span><br/>
       <rating ng-model="newRating" readonly="false" class="text-big" /><br/>
-      <a href="/write-review/{{itemDetails.id}}?rate={{newRating}}" class="btn btn-default btn-flat">
+      <a href="/write-review/{{itemDetails._id}}?rate={{newRating}}" class="btn btn-default btn-flat">
         Rate & Write a review <i class="fa fa-angle-double-right"></i>
       </a>
     </div>

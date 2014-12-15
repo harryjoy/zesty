@@ -47,7 +47,28 @@ angular.module('zesty')
         }
       };
 
+      // check if product is alerdy in cart.
+      scope.addedToCart = false;
+      if (scope.cart.products && scope.cart.products.length > 0) {
+        _.forEach(scope.cart.products, function(currentProduct) {
+          if (currentProduct._id === scope.item._id) {
+            scope.addedToCart = true;
+          }
+        });
+      }
+
       scope.addToCart = Auth.addItemToCart;
+
+      scope.$on('cart.updated', function() {
+        scope.addedToCart = false;
+        if (scope.cart.products && scope.cart.products.length > 0) {
+          _.forEach(scope.cart.products, function(currentProduct) {
+            if (currentProduct._id === scope.item._id) {
+              scope.addedToCart = true;
+            }
+          });
+        }
+      });
     }
   };
 }]);

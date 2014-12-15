@@ -35,9 +35,12 @@
       <button class="btn btn-success btn-flat btn-mini">
         <span class="text-normal">Buy Now</span>
       </button>
-      <button class="btn btn-primary btn-flat btn-mini pull-right" ng-click="addToCart(item);">
+      <button class="btn btn-default btn-flat btn-mini pull-right" ng-click="addToCart(item);" ng-hide="addedToCart">
         <span class="text-normal">Add to Cart</span>
       </button>
+      <a href="/cart" class="btn btn-primary btn-flat btn-mini pull-right" ng-show="addedToCart">
+        <span class="text-normal"><i class="fa fa-shopping-cart"></i> Go to Cart</span>
+      </a>
     </div>
   </div>
 </div>
