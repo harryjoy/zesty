@@ -177,11 +177,18 @@ angular.module('zesty')
     },
 
     /**
-     * Calculate total, grandTotal for cart.
-     * @return {[type]} [description]
+     * Update user's cart with latest values.
+     * @return {Object} cart
      */
-    calculateCartValues: function () {
-      globalCalculateCartValues();
+    updateCart: function() {
+      CartServ.resource().update({
+        id: cart._id
+      }, cart, function(updatedCart) {
+        cart = updatedCart;
+        $rootScope.$broadcast('cart.updated');
+      }, function(err) {
+        console.log(err);
+      });
     },
 
     /**

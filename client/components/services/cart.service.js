@@ -38,6 +38,12 @@ angular.module('zesty')
           params: {
             controller:'items'
           }
+        },
+        update: {
+          method: 'PUT',
+          params: {
+            id: '@id'
+          }
         }
       });
     }

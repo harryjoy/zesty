@@ -187,3 +187,14 @@
     font-weight: 400;
   }
 }
+
+.categories-dd-menu {
+
+  li {
+    border-bottom: 1px solid #f6f6f6;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}

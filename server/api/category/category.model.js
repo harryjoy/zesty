@@ -6,6 +6,11 @@ var mongoose = require('mongoose'),
 var CategorySchema = new Schema({
   name: String,
   info: String,
+  image: String,
+  isIcon: {
+    type: Boolean,
+    default: true
+  },
   active: Boolean
 });
 

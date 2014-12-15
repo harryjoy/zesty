@@ -16,43 +16,53 @@ Category.find({}).remove(function() {
   Category.create({
     name: 'Apparel & Accessories',
     info: 'Category for Apparel & Accessories items.',
-    active: true
+    active: true,
+    image: 'fa-headphones'
   }, {
     name: 'Baby Products',
     info: 'Category for Baby Products items.',
-    active: true
+    active: true,
+    image: 'fa-child'
   }, {
     name: 'Beauty & Health',
     info: 'Category for Beauty & Health items.',
-    active: true
+    active: true,
+    image: 'fa-female'
   }, {
     name: 'Electronics',
     info: 'Category for Electronics items.',
-    active: true
+    active: true,
+    image: 'fa-laptop'
   }, {
     name: 'Furniture',
     info: 'Category for Furniture items.',
-    active: true
+    active: true,
+    image: 'fa-briefcase'
   }, {
     name: 'Home & Garden',
     info: 'Category for Home & Garden items.',
-    active: true
+    active: true,
+    image: 'fa-home'
   }, {
     name: 'Luggage & Bags',
     info: 'Category for Luggage & Bags items.',
-    active: true
-  }, {
-    name: 'Shoes',
-    info: 'Category for Shoes items.',
-    active: true
+    active: true,
+    image: 'fa-suitcase'
   }, {
     name: 'Sports & Entertainment',
     info: 'Category for Sports & Entertainment items.',
-    active: true
+    active: true,
+    image: 'fa-futbol-o'
   }, {
     name: 'Watches',
     info: 'Category for Watches items.',
-    active: true
+    active: true,
+    image: 'fa-clock-o'
+  }, {
+    name: 'Games',
+    info: 'Category for games items.',
+    active: true,
+    image: 'fa-gamepad'
   });
 });
 

@@ -109,6 +109,12 @@
     }
   }
 
+  .list-group {
+    .list-group-item:first-child, .list-group-item:last-child {
+      @include border-radius(0px);
+    }
+  }
+
   // card body
   .card-body {
     padding: 10px;

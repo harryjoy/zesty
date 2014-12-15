@@ -357,20 +357,6 @@ exports.myCart = function(req, res, next) {
   });
 };
 
-// update user's cart
-exports.updateCart = function(req, res, next) {
-  if(req.body._id) { delete req.body._id; }
-  Cart.findById(req.params.id, function (err, cart) {
-    if (err) { return handleError(res, err); }
-    if(!cart) { return res.send(404); }
-    var updated = _.merge(cart, req.body);
-    updated.save(function (err) {
-      if (err) { return handleError(res, err); }
-      return res.json(200, cart);
-    });
-  });
-};
-
 // function to handle errors in controllers
 function handleError(res, err) {
   return res.send(500, err);

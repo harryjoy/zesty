@@ -26,8 +26,16 @@
         </form>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categories <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li ng-repeat="category in categories"><a href="/category/{{category._id}}">{{category.name}}</a></li>
+          <ul class="dropdown-menu categories-dd-menu">
+            <li ng-repeat="category in categories">
+              <a href="/category/{{category._id}}">
+                <span ng-switch="category.isIcon">
+                  <i class="fa {{category.image}} fa-fw" ng-switch-when="true"></i> 
+                  <img src="{{category.image}}" width="24" height="24" ng-switch-default /> 
+                </span>
+                {{category.name}}
+              </a>
+            </li>
           </ul>
         </li>
         <li ng-class="{active: isActive('/cart')}">

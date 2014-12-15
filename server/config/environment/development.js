@@ -8,5 +8,5 @@ module.exports = {
     uri: 'mongodb://localhost/zesty-dev'
   },
 
-  seedDB: true
+  //seedDB: true
 };
