@@ -8,7 +8,8 @@ angular.module('zesty')
   $scope.totalItems = 0;
   $scope.init = function () {
     User.orders({
-      id: $scope.getCurrentUser()._id
+      id: $scope.getCurrentUser()._id,
+      pageSize: 10
     }).$promise.then(function (result) {
       PaginationServ.refreshData();
       if (result && result.data && result.data.length > 0) {
@@ -34,7 +35,8 @@ angular.module('zesty')
     if (!orders || orders === null) {
       User.orders({
         id: $scope.getCurrentUser()._id,
-        pageNumber: $scope.currentPage - 1
+        pageNumber: $scope.currentPage - 1,
+        pageSize: 10
       }).$promise.then(function (result) {
         $scope.orders = result.data;
         $scope.totalItems = result.count;

@@ -14,17 +14,19 @@
         <span class="pull-left">Shipping</span>
         <span class="pull-right price success_ship">Free</span>
       </li>
-      <!-- <li class="clearfix">
-        <span class="pull-left">Tax</span>
-        <span class="pull-right">{{cart.currency}} 0</span>
-      </li> -->
+      <li class="clearfix">
+        <span class="pull-left">Tax (0%)</span>
+        <span class="pull-right">
+          -
+        </span>
+      </li>
       <li class="clearfix" ng-show="cart.promoCode && cart.promoCode !== ''">
         <div class="coupon_form">
           <span class="pull-left small">Promo Code:</span><br/>
           <span class="small">
             <span class="">
               {{cart.promoCode}} 
-              <i class="fa fa-times" ng-click="removeCode();" tooltip="Remove code"></i>
+              <i class="fa fa-times text-cursor-pointer" ng-click="removeCode();" tooltip="Remove code"></i>
             </span>
             <span class="pull-right">- {{cart.currency}} {{cart.promoCodeValue}}</span>
           </span>
@@ -38,6 +40,12 @@
         <div class="coupon_form">
           <input class="col-lg-8" id="appendedInputButton" type="text" placeholder="Promo code" ng-model="promoCode">
           <button class="col-lg-4 btn btn-success" ng-click="applyPromoCode();">Apply</button>
+        </div>
+        <div class="col-lg-12" ng-show="invalidCodeError">
+          <p class="bg-red pad">
+            <i class="fa fa-times pull-right" ng-click="invalidCodeError=false;"></i>
+            Entered promo code is not valid.
+          </p>
         </div>
       </li>
     </ul>

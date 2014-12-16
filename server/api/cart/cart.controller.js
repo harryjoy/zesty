@@ -37,6 +37,7 @@ exports.applyPromoCode = function(req, res, next) {
     if(!cart) { return res.send(404); }
     cart.promoCode = req.promocode.code;
     cart.promoCodeInfo = req.promocode.info;
+    cart.promoCodeExpiry = req.promocode.expiry;
     if (req.promocode.isPercent) {
       cart.promoCodeValue = (cart.grandTotal * req.promocode.value) / 100;
     } else {
@@ -58,6 +59,7 @@ exports.removePromoCode = function(req, res, next) {
     cart.promoCode = undefined;
     cart.promoCodeValue = undefined;
     cart.promoCodeInfo = undefined;
+    cart.promoCodeExpiry = undefined;
     cart = calculateCartValues(cart);
     cart.save(function (err) {
       if (err) { return handleError(res, err); }
@@ -122,6 +124,7 @@ exports.removeFromCart = function(req, res, next) {
       cart.promoCode = undefined;
       cart.promoCodeValue = undefined;
       cart.promoCodeInfo = undefined;
+      cart.promoCodeExpiry = undefined;
     }
     cart = calculateCartValues(cart);
     cart.save(function (err) {
@@ -166,7 +169,11 @@ function calculateCartValues(cart) {
     });
     cart.currency = cart.products[0].currency;
     if (cart.promoCodeValue) {
-      cart.grandTotal = cart.grandTotal - cart.promoCodeValue;
+      if (cart.grandTotal > cart.promoCodeValue) {
+        cart.grandTotal = cart.grandTotal - cart.promoCodeValue;
+      } else{
+        cart.grandTotal = 0;
+      }
     }
   }
   return cart;

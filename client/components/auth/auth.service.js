@@ -4,6 +4,7 @@ angular.module('zesty')
   .factory('Auth', ['$location', '$rootScope', '$http', 'User', '$cookieStore',
     '$q', 'CartServ', 'PromoCodeServ', 'AlertServ',
     function Auth($location, $rootScope, $http, User, $cookieStore, $q, CartServ, PromoCodeServ, AlertServ) {
+  
   var currentUser = {};
   var cart = {};
   if($cookieStore.get('token')) {
@@ -205,6 +206,10 @@ angular.module('zesty')
       });
     },
 
+    /**
+     * Validate and apply promo code to cart.
+     * @param  {String} promoCode The promocode to be applied.
+     */
     applyPromoCode: function(promoCode) {
       if (promoCode && promoCode !== '') {
         CartServ.resource().promocode({
@@ -215,13 +220,16 @@ angular.module('zesty')
           $rootScope.$broadcast('cart.updated');
         }, function(err) {
           console.log(err);
-          AlertServ.alert('Enter valid promo code.');
+          $rootScope.$broadcast('cart.invalid.code');
         });
       } else {
-        AlertServ.alert('Enter valid promo code.');
+        $rootScope.$broadcast('cart.invalid.code');
       }
     },
 
+    /**
+     * Remove applied promo code into cart.
+     */
     removeCartCode: function() {
       if (cart.promoCode && cart.promoCode !== '') {
         CartServ.resource().removecode({

@@ -8,6 +8,10 @@ var PromocodeSchema = new Schema({
   code: String,
   info: String,
   value: Number,
+  expiry: {
+    type: Date,
+    default: new Date()
+  },
   isPercent: {
     type: Boolean,
     default: false

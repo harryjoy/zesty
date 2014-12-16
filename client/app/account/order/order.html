@@ -35,7 +35,7 @@
             </span>
             <span class="order-items pull-right" ng-hide="showProductInfo">
               Total:
-              <strong>{{order.products[0].currency}} {{order.grandTotal}}</strong>
+              <strong>{{order.currency}} {{order.grandTotal}}</strong>
             </span>
             <span class="order-date pull-right">{{moment(order.orderDate).format(dateFormate)}}</span>
           </div>
@@ -105,7 +105,7 @@
       </div>
     </div>
     <div class="col-md-12 col-sm-12 text-center" ng-show="totalItems > 0">
-      <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="3" ng-change="pageChanged()"></pagination>
+      <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="10" ng-change="pageChanged()"></pagination>
     </div>
 
     <div class="col-md-12 col-sm-12" ng-show="totalItems === 0">

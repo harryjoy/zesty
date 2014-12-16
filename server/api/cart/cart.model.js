@@ -38,6 +38,8 @@ var CartSchema = new Schema({
   promoCode: String,
   promoCodeValue: Number,
   promoCodeInfo: String,
+  promoCodeCategory: String,
+  promoCodeExpiry: Date,
   currency: String
 });
 

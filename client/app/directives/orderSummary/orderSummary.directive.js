@@ -11,10 +11,21 @@ angular.module('zesty')
          * @return {[type]} [description]
          */
         scope.applyPromoCode = function() {
+          scope.invalidCodeError = false;
           Auth.applyPromoCode(scope.promoCode);
+          scope.promoCode = '';
         };
 
         scope.removeCode = Auth.removeCartCode;
+        scope.invalidCodeError = false;
+
+        /**
+         * Listen to invalid code error and display message accordingly.
+         */
+        scope.$on('cart.invalid.code', function() {
+          scope.invalidCodeError = true;
+          scope.promoCode = '';
+        });
       }
     };
   }]);

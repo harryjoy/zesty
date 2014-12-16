@@ -58,7 +58,10 @@ exports.destroy = function(req, res) {
 exports.check = function(req, res, next) {
   Promocode.findOne({
     code: req.query.promoCode,
-    active: true
+    active: true,
+    expiry: {
+      '$gt': new Date()
+    }
   }, function (err, promocode) {
     if(err) { return handleError(res, err); }
     if(!promocode) { return res.send(404); }
