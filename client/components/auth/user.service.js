@@ -92,6 +92,12 @@ angular.module('zesty')
         params: {
           controller: 'cart'
         }
+      },
+      orders: {
+        method: 'GET',
+        params: {
+          controller: 'orders'
+        }
       }
 	  });
   });

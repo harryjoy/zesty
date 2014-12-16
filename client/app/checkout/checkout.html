@@ -7,7 +7,9 @@
 		        <div class="cart_step col-md-6 col-sm-6" ng-class="{active: isActive('/checkout')}">
 		        	<i class="fa fa-truck cart_step_icon"></i>
 		        	<div class="cart_step_content">
-		        		<h4 class="cart_step_heading">1. Delivery Address</h4>
+		        		<h4 class="cart_step_heading">
+		        			<a href="/checkout">1. Delivery Address</a>
+		        		</h4>
 		          	<span class="cart_step_description">Choose your shipping options</span>
 		        	</div>
 		        	<div class="cart_step_done" ng-show="isActive('/checkout/billing') || isActiveMultiple(['/checkout/payment'])">

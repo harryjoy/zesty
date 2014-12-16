@@ -1,41 +1,63 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('OrderCtrl', ['$scope', 'DTOptionsBuilder', 'DTColumnDefBuilder',
-      function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
-    $scope.dtOptions = DTOptionsBuilder.newOptions().withBootstrap()
-      .withOption('info', false).withOption('order', [1, 'desc']);
-    $scope.dtColumnDefs = [
-        DTColumnDefBuilder.newColumnDef(0),
-        DTColumnDefBuilder.newColumnDef(1),
-        DTColumnDefBuilder.newColumnDef(2),
-        DTColumnDefBuilder.newColumnDef(3),
-        DTColumnDefBuilder.newColumnDef(4).notSortable()
-      ];
-    $scope.orders = [{
-      id: 'E123',
-      date: '2 Nov 2014',
-      price: 'Rs 1298',
-      status: '1'
-    },{
-      id: 'E347',
-      date: '1 Nov 2014',
-      price: 'Rs 213',
-      status: '1'
-    },{
-      id: 'E000',
-      date: '13 Oct 2014',
-      price: 'Rs 456',
-      status: '2'
-    },{
-      id: 'E789',
-      date: '20 Jan 2014',
-      price: 'Rs 1233',
-      status: '3'
-    },{
-      id: 'E456',
-      date: '21 Feb 2014',
-      price: 'Rs 665',
-      status: '2'
-    }];
-  }]);
+  .controller('OrderCtrl', ['$scope', 'User', 'AlertServ', 'PaginationServ',
+      function ($scope, User, AlertServ, PaginationServ) {
+  
+  $scope.orders = [];
+  $scope.totalItems = 0;
+  $scope.init = function () {
+    User.orders({
+      id: $scope.getCurrentUser()._id,
+      pageSize: 5
+    }).$promise.then(function (result) {
+      PaginationServ.refreshData();
+      if (result && result.data && result.data.length > 0) {
+        $scope.orders = result.data;
+        $scope.totalItems = result.count;
+        PaginationServ.setPageData(1, result.data);
+      } else {
+        $scope.orders = [];
+        $scope.totalItems = 0;
+      }
+    }).catch(function (err) {
+      $scope.errors = err;
+    });
+  };
+
+  $scope.init(); // init the list for the first time.
+
+  /**
+   * Called when page is changed.
+   */
+  $scope.pageChanged = function() {
+    var orders = PaginationServ.getPageData($scope.currentPage);
+    if (!orders || orders === null) {
+      User.orders({
+        id: $scope.getCurrentUser()._id,
+        pageNumber: $scope.currentPage - 1,
+        pageSize: 5
+      }).$promise.then(function (result) {
+        $scope.orders = result.data;
+        $scope.totalItems = result.count;
+        PaginationServ.setPageData($scope.currentPage, result.data);
+      }).catch(function (err) {
+        $scope.errors = err;
+      });
+    } else {
+      $scope.orders = orders;
+    }
+  };
+
+  /**
+   * Get order numbe to be displayed on UI.
+   * @param  {String} orderNumber Actual order number that is saved in db.
+   * @return {String}             Order number to be displayed on UI.
+   */
+  $scope.getOrderDisplayNumber = function(orderNumber) {
+    if (!orderNumber || orderNumber.indexOf('-') === -1) {
+      return orderNumber;
+    }
+    return $scope.orderPrefix + '' + orderNumber.substring(orderNumber.lastIndexOf('-') + 1);
+  };
+}]);

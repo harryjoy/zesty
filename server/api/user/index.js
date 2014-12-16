@@ -31,4 +31,6 @@ router.get('/:id/favorites', auth.isAuthenticated(), controller.favorites);
 
 router.get('/:id/cart', auth.isAuthenticated(), controller.myCart);
 
+router.get('/:id/orders', auth.isAuthenticated(), controller.orders);
+
 module.exports = router;

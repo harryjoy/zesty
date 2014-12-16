@@ -126,20 +126,12 @@
     bottom: 0px;
     width: 100%;
     margin-left: -4px;
-    -webkit-transition: all .5s ease-in;
-    -moz-transition: all .5s ease-in;
-    -o-transition: all .5s ease-in;
-    -ms-transition: all .5s ease-in;
-    transition: all .5s ease-in;
+    @include transitions(all .5s ease-in);
 
     .btn {
       height: 0px;
       opacity: 0;
-      -webkit-transition: all .5s ease-in;
-      -moz-transition: all .5s ease-in;
-      -o-transition: all .5s ease-in;
-      -ms-transition: all .5s ease-in;
-      transition: all .5s ease-in;
+      @include transitions(all .5s ease-in);
     }
   }
 }

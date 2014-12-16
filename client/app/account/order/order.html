@@ -1,51 +1,93 @@
 <div class="account_box">
-	<div class="row">
-	  <div class="col-lg-12 col-md-12 col-sm-12">
-	    <h1 class="account_header">
-	    	<i class="fa fa-list-alt"></i> My Orders
-	    </h1>
-	  </div>
-	</div>
-	<div class="row">
-	  <div class="col-lg-12 col-md-12 col-sm-12">
-	  	<table id="order_data_table" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover order_history table-condensed">
-        <thead>
-	        <tr class="bg-teal">
-            <th>ID</th>
-            <th>Date</th>
-            <th>Price</th>
-            <th>Status</th>
-            <th>&nbsp;</th>
-	        </tr>
-        </thead>
-        <tbody>
-	        <tr ng-repeat="order in orders">
-            <td>{{ order.id }}</td>
-            <td>{{ order.date }}</td>
-            <td>{{ order.price }}</td>
-            <td>
-            	<span ng-switch="order.status">
-	            	<span ng-switch-when="1">
-		        			<span class="label label-success">Delivered</span>
-		        		</span>
-		        		<span ng-switch-when="2">
-		        			<span class="label label-info">Processing</span>
-		        		</span>
-		        		<span ng-switch-when="3">
-		        			<span class="label label-default">Pending</span>
-		        		</span>
-		        		<span ng-switch-when="4">
-		        			<span class="label label-danger">Cancelled</span>
-		        		</span>
-		        	</span>
-            </td>
-            <td>
-            	<a href="/my/invoice/{{order.id}}" class="btn btn-default btn-sm">View</a>
-            	<a href="#" class="btn btn-default btn-sm">Track</a>
-            </td>
-	        </tr>
-        </tbody>
-    	</table>
-	  </div>
-	</div> <!-- end of row -->
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <h1 class="account_header">
+        <i class="fa fa-list-alt"></i> My Orders
+      </h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12" ng-hide="totalItems === 0">
+      <div class="card card-primary user-order-box" ng-repeat="order in orders">
+        <div class="card-body">
+          <div class="order-details">
+            <span class="order-status">
+            <span class="label" ng-class="{'label-alert': order.transcationStatus === 1,
+              'label-success': order.transcationStatus === 0}">&nbsp;</span>
+            </span>
+            <span class="order-number"><strong>Order:</strong> {{getOrderDisplayNumber(order.orderNumber)}}</span>
+            <span class="order-date pull-right">{{moment(order.orderDate).format('MMMM Do YYYY')}}</span>
+          </div>
+          <div class="order-products" collapse="!showProductInfo">
+            <div class="order-product" ng-repeat="product in order.products">
+              <small class="order-product-price pull-right">
+                ({{product.currency}} {{product.price}} 
+                <i class="fa fa-times text-small text-muted"></i> 
+                {{product.qty}}) 
+                = 
+                <strong>{{product.currency}} {{product.price * product.qty}}</strong>
+              </small>
+              <div class="order-product-details">
+                <img src="{{product.img}}" alt="{{product.title}}" class="order-product-image" />
+                <span class="order-product-name">
+                  <strong>
+                    <a class="text-medium" href="/product/{{product._id}}">{{product.title}}</a>
+                  </strong>
+                  <br/>
+                  <span class="order-product-description">{{product.description}}</span>
+                  <br/>
+                  <a tooltip="Write a Review for {{product.title}}" class="btn btn-sm btn-default order-product-review-button" href="/write-review/{{product._id}}"> 
+                    <i class="fa fa-pencil fa-fw"></i> 
+                    <span class="text">Write a Review</span>
+                  </a>
+                </span>
+              </div>
+              <clearfix></clearfix>
+            </div>
+          </div>
+
+          <div ng-show="showProductInfo && order.extraNotes" class="well well-sm">
+            <h4>Extra Notes:</h4>
+            <em>{{order.extraNotes}}</em>
+          </div>
+          <div ng-show="showProductInfo" class="order-grand-total text-right" ng-class="{'order-grand-total-border': showProductInfo}">
+            <span class="pull-left">Sub Total: </span>
+            <strong>{{order.products[0].currency}} {{order.subTotal}}</strong>
+          </div>
+          <div ng-show="showProductInfo" class="order-grand-total text-right" ng-class="{'order-grand-total-border': showProductInfo}">
+            <span class="pull-left">Shipping: </span>
+            <strong><em>Free</em></strong>
+          </div>
+          <div class="order-grand-total text-right" ng-class="{'order-grand-total-border': showProductInfo}">
+            <span ng-class="{'pull-left': showProductInfo}">Grand Total: </span>
+            <strong>{{order.products[0].currency}} {{order.grandTotal}}</strong>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button ng-click="showProductInfo=!showProductInfo" class="btn btn-sm" tooltip="View/Hide Order Details" ng-class="{'btn-default': !showProductInfo, 'btn-primary active': showProductInfo}">
+            <i class="fa fa-fw" ng-class="{'fa-eye': !showProductInfo, 'fa-eye-slash': showProductInfo}"></i>
+          </button>
+          <button class="btn btn-default btn-sm" tooltip="Track Order">
+            <i class="fa fa-map-marker fa-fw"></i>
+          </button>
+          <span ng-show="showProductInfo">&nbsp; | &nbsp;</span>
+          <button class="btn btn-default btn-sm" tooltip="Mail Invoice" ng-show="showProductInfo">
+            <i class="fa fa-paper-plane fa-fw"></i>
+          </button>
+          <a role="button" href="/my/invoice/{{order._id}}" class="btn btn-default btn-sm" tooltip="View Invoice" ng-show="showProductInfo">
+            <i class="fa fa-bars fa-fw"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 col-sm-12 text-center" ng-show="totalItems > 0">
+      <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="5" ng-change="pageChanged()"></pagination>
+    </div>
+
+    <div class="col-md-12 col-sm-12" ng-show="totalItems === 0">
+      <h4 class="alert alert-warning text-center">
+        You have not placed any orders on the site. Go to <a href="/" class="alert-link">home</a> page and start buying.
+      </h4>
+    </div>
+  </div> <!-- end of row -->
 </div>

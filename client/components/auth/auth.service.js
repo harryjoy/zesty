@@ -192,6 +192,19 @@ angular.module('zesty')
     },
 
     /**
+     * Refresh user's cart with latest values.
+     * @return {Object} cart
+     */
+    refreshCart: function() {
+      cart = User.myCart({
+        id: currentUser._id
+      }).$promise.then(function(updatedCart) {
+        cart = updatedCart;
+        $rootScope.$broadcast('cart.updated');
+      });
+    },
+
+    /**
      * Check if a user is logged in
      *
      * @return {Boolean}

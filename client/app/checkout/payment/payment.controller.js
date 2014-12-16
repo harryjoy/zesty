@@ -1,31 +1,58 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('PaymentCtrl', ['$scope',
-    function ($scope) {
+  .controller('PaymentCtrl', ['$scope', '$location', 'OrderServ', 'Auth',
+    function ($scope, $location, OrderServ, Auth) {
   $scope.paymentMethods = [{
     name: 'Credit Card',
     icon: 'fa-credit-card',
-    url: ''
+    url: '',
+    method: 'CC'
   }, {
     name: 'Debit Card',
     icon: 'fa-credit-card',
-    url: '/debitcard'
+    url: '/debitcard',
+    method: 'DC'
   }, {
     name: 'Net Banking',
     icon: 'fa-keyboard-o',
-    url: '/netbanking'
+    url: '/netbanking',
+    method: 'NB'
   }, {
     name: 'COD',
     icon: 'fa-money',
-    url: '/cod'
+    url: '/cod',
+    method: 'COD'
   }/*, {
     name: 'Paypal',
     icon: 'fa-paypal',
-    url: '/paypal'
+    url: '/paypal',
+    method: 'PP'
   }, {
     name: 'Google Wallet',
     icon: 'fa-google-wallet',
-    url: '/googlewallet'
+    url: '/googlewallet',
+    method: 'GW'
   }*/];
+
+  $scope.proceed = function() {
+    var path = $location.path().replace('/checkout/payment', '');
+    var selectedMethod = '';
+    _.forEach($scope.paymentMethods, function(method) {
+      if (method.url === path) {
+        selectedMethod = method.method;
+        return false;
+      }
+    });
+    if (selectedMethod && selectedMethod !== '') {
+      $scope.order.paymentMethod = selectedMethod;
+      OrderServ.payment({
+        id: $scope.order._id
+      }).$promise.then(function(order) {
+        $scope.order = order;
+        Auth.refreshCart();
+        $location.path('/my/orders');
+      });
+    }
+  };
 }]);

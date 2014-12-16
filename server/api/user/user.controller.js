@@ -10,6 +10,7 @@ var Review = require('../review/review.model');
 var Favorite = require('../favorite/favorite.model');
 var Item = require('../item/item.model');
 var Cart = require('../cart/cart.model');
+var Order = require('../order/order.model');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -335,7 +336,7 @@ exports.favorites = function(req, res, next) {
         return res.json(200, result);
       });
     });
-  })
+  });
 };
 
 // get user's cart
@@ -354,6 +355,30 @@ exports.myCart = function(req, res, next) {
     } else {
       return res.json(200, cart);
     }
+  });
+};
+
+// get user's orders
+exports.orders = function(req, res, next) {
+  var pageSize = req.query.pageSize || config.pagination.size;
+  var pageNumber = req.query.pageNumber || 0;
+  Order.count({
+    customerId: mongoose.Types.ObjectId(req.params.id)
+  }, function(err, count) {
+    if(err) { return handleError(res, err); }
+    if (count === 0) { return res.send(404); }
+    var result = {
+      count: count
+    };
+    Order.find({
+      customerId: mongoose.Types.ObjectId(req.params.id)
+    }).limit(pageSize).skip(pageNumber * pageSize).sort('-createdAt')
+    .exec(function (err, orders) {
+      if(err) { return handleError(res, err); }
+      if(!orders) { return res.send(404); }
+      result.data = orders;
+      return res.json(200, result);
+    });
   });
 };
 

@@ -9,6 +9,7 @@ angular.module('zesty')
     $scope.appName = 'Zesty';
     $scope.siteName = 'Zesty';
     $scope.siteSeller = 'General Store';
+    $scope.orderPrefix = 'ZST';
 
     $scope.isLoggedInFunc = Auth.isLoggedIn;
     $scope.user = Auth.getCurrentUser();

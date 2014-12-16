@@ -89,6 +89,27 @@ exports.removeFromCart = function(req, res, next) {
   });
 };
 
+exports.emptyCart = function(req, res, next) {
+  var order = req.order;
+  Cart.findOne({
+    customerId: order.customerId
+  }, function (err, cart) {
+    if (!err && cart) {
+      cart.products = [];
+      cart.promoCode = undefined;
+      cart.promoCodeValue = undefined;
+      cart = calculateCartValues(cart);
+      cart.save(function (err) {
+        if (err) { console.log('error while empty cart'); }
+        return res.json(200, order);
+      });
+    } else {
+      console.log('error while empty cart');
+      return res.json(200, order);
+    }
+  });
+};
+
 // calculate cart values before updating cart.
 function calculateCartValues(cart) {
   cart.subTotal = 0;

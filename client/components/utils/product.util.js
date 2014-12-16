@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('zesty.utils', [])
+angular.module('zesty.utils')
   .factory('ProductUtil', [function () {
   return {
     convertItem: function (product) {

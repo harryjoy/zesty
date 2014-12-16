@@ -1,36 +1,54 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('ShippingCtrl', ['$scope',
-    function ($scope) {
+  .controller('ShippingCtrl', ['$scope', '$location', 'OrderServ', '$rootScope',
+    function ($scope, $location, OrderServ, $rootScope) {
 
-  $scope.addresses = [{
-    title: 'Home address',
-    firstName: 'Harry',
-    lastName: 'Joy',
-    email: 'harry@joy.com',
-    mobile: '(+91) 999-xx-xxx-59',
-    addressLine1: 'E-603, Vandemataram Icon',
-    addressLine2: 'Near Vandemataram Cross Road, Gota',
-    city: 'Ahmedabad',
-    state: 'Gujarat',
-    country: 'India',
-    zipcode: '382461',
-    isDefault: true
-  },{
-    title: 'Company address',
-    firstName: 'Harsh',
-    lastName: 'Raval',
-    email: 'harsh@zymr.com',
-    mobile: '(+91) 999-xx-xxx-59',
-    addressLine1: 'A/5, 2nd Floor, Safal Profitier',
-    addressLine2: 'Corporate Road, Nr. Prahladnagar Garden',
-    city: 'Ahmedabad',
-    state: 'Gujarat',
-    country: 'India',
-    zipcode: '380015',
-    isDefault: false
-  }];
-
+  $scope.addresses = $scope.user.addresses;
+  if ($scope.user.addresses && $scope.user.addresses.length > 0) {
+    _.forEach($scope.user.addresses, function(address) {
+      address.isSelected = address.isDefault;
+    });
+  }
   $scope.showNewAddressForm = false;
+
+  $scope.$on('got.order.from.db', function() {
+    if ($scope.addresses && $scope.addresses.length > 0) {
+      _.forEach($scope.addresses, function(address) {
+        address.isSelected = (address._id === $scope.order.address._id);
+      });
+    }
+  });
+
+  $scope.goToPayment = function() {
+    if ($scope.showNewAddressForm) {
+      $scope.order.address = $scope.address;
+    } else {
+      _.forEach($scope.user.addresses, function(address) {
+        if (address.isSelected) {
+          $scope.order.address = address;
+          return false;
+        }
+      });
+    }
+    if ($scope.order._id) {
+      OrderServ.update({
+        id: $scope.order._id
+      }, $scope.order, function(order) {
+        $rootScope.$broadcast('order.updated', order);
+        $location.path('/checkout/payment');
+      });
+    } else {
+      OrderServ.save($scope.order, function(order) {
+        $rootScope.$broadcast('order.updated', order);
+        $location.path('/checkout/payment');
+      });
+    }
+  };
+
+  $scope.selecteThis = function (addressId) {
+    _.forEach($scope.user.addresses, function(address) {
+      address.isSelected = (address._id === addressId);
+    });
+  };
 }]);

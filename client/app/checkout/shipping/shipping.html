@@ -2,7 +2,6 @@
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 cart_step_body auth_box">
       <h2 class="auth_header">Delivery Address <small>Enter/Choose your shipping address</small></h2>
-
       <div class="row" collapse="showNewAddressForm">
         <div class="col-lg-4 col-md-4 col-sm-6" ng-repeat="address in addresses">
           <div class="card card-default">
@@ -21,12 +20,12 @@
               </address>
             </div>
             <div class="card-footer">
-              <span ng-switch="address.isDefault">
+              <span ng-switch="address.isSelected">
                 <span ng-switch-when="true">
                   <span class="label label-default default_selection">Selected</span>
                 </span>
                 <span ng-switch-when="false">
-                  <button type="button" class="btn btn-default btn-sm">Deliver Here</button>
+                  <button type="button" class="btn btn-default btn-sm" ng-click="selecteThis(address._id)">Deliver Here</button>
                 </span>
               </span>
               <div class="clearfix"></div>
@@ -44,7 +43,6 @@
       <div class="row" collapse="!showNewAddressForm">
         <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
           <button class="btn btn-default btn-sm" ng-click="showNewAddressForm=!showNewAddressForm">Select from saved addresses</button>
-
           <address-form></address-form>
         </div>
       </div>
@@ -55,12 +53,12 @@
           <h2>Extra Notes</h2>
           <div class="form-group">
             <label for="bill_addr_cust_note">Anything you would like to remember for this order.</label>
-            <textarea rows="5" cols="26" name="bill_addr_cust_note" class="form-control flat" id="bill_addr_cust_note"></textarea>
+            <textarea rows="5" cols="26" name="bill_addr_cust_note" class="form-control flat" id="bill_addr_cust_note" ng-model="order.extraNotes"></textarea>
           </div>
         </div>
         <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
           <a href="/cart" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back To Cart</a>
-          <a href="/checkout/payment" class="btn btn-success pull-right">Go to Payment <i class="fa fa-angle-double-right"></i></a>
+          <a ng-click="goToPayment();" href="#" class="btn btn-success pull-right">Go to Payment <i class="fa fa-angle-double-right"></i></a>
         </div>
       </div>
 
