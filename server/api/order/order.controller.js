@@ -12,6 +12,15 @@ exports.create = function(req, res) {
   });
 };
 
+// Get a single order
+exports.show = function(req, res) {
+  Order.findById(req.params.id, function (err, order) {
+    if(err) { return handleError(res, err); }
+    if(!order) { return res.send(404); }
+    return res.json(order);
+  });
+};
+
 // Updates an existing order in the DB.
 exports.update = function(req, res) {
   if(req.body._id) { delete req.body._id; }
@@ -60,6 +69,7 @@ exports.updatePaymentInfo = function(req, res, next) {
   Order.findById(req.params.id, function (err, order) {
     if(err) { return handleError(res, err); }
     if(!order) { return res.send(404); }
+    order.paymentMethod = req.body.paymentMethod;
     order.paymentDate = new Date();
     order.processed = true;
     // TODO: update payment info and check for transaction status there.

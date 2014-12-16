@@ -3,8 +3,8 @@
   <div class="row">
     <div class="col-xs-12">
       <h2 class="page-header">
-	      <i class="fa fa-shopping-cart"></i> Zesty
-	      <small class="pull-right">Date: {{order.date}}</small>
+	      <i class="fa fa-shopping-cart"></i> {{order.siteName}}
+	      <small class="pull-right">Order Date: {{order.date}}</small>
       </h2>
     </div><!-- /.col -->
   </div>
@@ -15,29 +15,28 @@
       <address>
         <strong>{{order.from.name}}</strong><br>
         {{order.from.addressLine1}}, {{order.from.addressLine2}},<br>
-        {{order.from.city}}, {{order.state}},</br>
+        {{order.from.city}}, {{order.from.state}},</br>
         {{order.from.country}} - {{order.from.zipcode}}<br>
-        Phone: {{order.from.phone}}<br>
-        Email: {{order.from.email}}
+        <strong class="text-normal">M:</strong> {{order.from.phone}}<br>
+        <strong class="text-normal">E:</strong> {{order.from.email}}
       </address>
     </div><!-- /.col -->
     <div class="col-sm-4 invoice-col">
       To:
       <address>
-        <strong>{{order.to.name}}</strong><br>
+        <strong>{{order.to.title}}</strong><br>
         {{order.to.addressLine1}}, {{order.to.addressLine2}},<br>
-        {{order.to.city}}, {{order.state}},</br>
+        {{order.to.city}}, {{order.to.state}},</br>
         {{order.to.country}} - {{order.to.zipcode}}<br>
-        Phone: {{order.to.phone}}<br>
-        Email: {{order.to.email}}
+        <strong class="text-normal">M:</strong> {{order.to.mobile}}<br>
+        <strong class="text-normal">E:</strong> {{order.to.email}}
       </address>
     </div><!-- /.col -->
     <div class="col-sm-4 invoice-col">
       <strong>Invoice #{{order.invoiceNumber}}</strong><br>
       <br>
-      <b>Order ID:</b> {{order.id}}<br>
-      <b>Payment Date:</b> {{order.paymentDate}}<br/>
-      <b>Payment Method:</b> {{order.paymentMethod}}
+      <strong>Payment Date:</strong> {{order.paymentDate}}<br/>
+      <strong>Payment Method:</strong> {{order.paymentMethod}}
     </div><!-- /.col -->
   </div><!-- /.row -->
 
@@ -49,16 +48,16 @@
           <tr>
             <th>Product</th>
             <th>Description</th>
-            <th>Qty</th>
-            <th>Subtotal</th>
+            <th class="text-right">Qty</th>
+            <th class="text-right">Subtotal</th>
           </tr>
         </thead>
         <tbody>
           <tr ng-repeat="item in order.items">
-            <td>{{item.name}}</td>
-            <td>{{item.description}}</td>
-            <td>{{item.qty}}</td>
-            <td>{{item.priceUnit}} {{item.price}}</td>
+            <td>{{item.title}}</td>
+            <td class="text-overflow">{{item.description}}</td>
+            <td class="text-right">{{item.qty}}</td>
+            <td class="text-right">{{item.currency}} {{item.qty * item.price}}</td>
           </tr>
         </tbody>
       </table>
@@ -67,35 +66,38 @@
 
   <div class="row">
     <!-- accepted payments column -->
-    <div class="col-xs-6">
-    	<div class="offers" ng-show="order.offers.length > 0 || order.coupons.length > 0">
-	    	<p class="text-medium">Offers/Gift Vouchers:</p>
-	      <div class="offers_n_coupons">
-      		<p class="sort-highlight pad" ng-repeat="offer in order.offers"><strong>{{offer.name}}</strong> - <small>{{offer.description}}</small></p>
-      		<p class="sort-highlight pad" ng-repeat="coupon in order.coupons"><strong>{{coupon.code}}</strong> - <small>{{coupon.description}}</small></p>
-	      </div>
-    	</div>
+    <div class="col-sm-6">
+      <div class="offers" ng-show="order.promoCode">
+        <p class="text-medium">Offers/Promo codes:</p>
+        <div class="offers_n_coupons">
+          <p class="offer-highlight pad"><strong>{{order.promoCode}}</strong> - <small>{{order.promoCodeValue}}</small></p>
+        </div>
+      </div>
     </div><!-- /.col -->
-    <div class="col-xs-6">
+    <div class="col-sm-6">
       <p class="lead">Order Summary</p>
       <div class="table-responsive">
         <table class="table">
            <tbody>
            	<tr>
-              <th style="width:50%">Subtotal:</th>
-              <td>{{order.priceUnit}} {{order.subtotal}}</td>
+              <th style="width:50%">Sub Total:</th>
+              <td class="text-right">{{order.items[0].currency}} {{order.subTotal}}</td>
             </tr>
             <tr>
-              <th>Tax ({{order.tax}}%)</th>
-              <td>{{order.priceUnit}} {{order.subtotal * order.tax / 100}}</td>
+              <th>Tax ({{order.tax}}%):</th>
+              <td class="text-right">
+                {{order.tax > 0 ? order.items[0].currency + ' ' + (order.subTotal * order.tax / 100) : '-'}}
+              </td>
             </tr>
             <tr>
               <th>Shipping:</th>
-              <td>{{order.priceUnit}} {{order.shipping}}</td>
+              <td class="text-right">
+                {{order.shipping > 0 ? order.items[0].currency + ' ' + order.shipping : 'Free'}}
+              </td>
             </tr>
             <tr>
-              <th>Total:</th>
-              <td>{{order.priceUnit}} {{order.subtotal + ((order.subtotal * order.tax) / 100)}}</td>
+              <th>Grand Total:</th>
+              <td class="text-right">{{order.items[0].currency}} {{order.grandTotal}}</td>
             </tr>
         	</tbody>
       	</table>

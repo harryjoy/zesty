@@ -29,6 +29,25 @@ angular.module('zesty.utils')
       order.promoCodeValue = cart.promoCodeValue;
       order.currency = cart.currency;
       return order;
+    },
+    convertOrderForInvoice: function (order, siteName, fromAddress, invoiceNumber, orderNumber, orderDate, paymentDate) {
+      return {
+        from: fromAddress,
+        to: order.address,
+        invoiceNumber: invoiceNumber,
+        id: orderNumber,
+        date: orderDate,
+        paymentDate: paymentDate,
+        paymentMethod: order.paymentMethod ? order.paymentMethod : '-',
+        items: order.products,
+        promoCode: order.promoCode,
+        promoCodeValue: order.promoCodeValue,
+        subTotal: order.subTotal,
+        tax: order.tax ? order.tax : 0,
+        shipping: order.shippingCharge ? order.shippingCharge : 0,
+        grandTotal: order.grandTotal,
+        siteName: siteName
+      };
     }
   };
 }]);

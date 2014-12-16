@@ -29,10 +29,13 @@
   }
 
   .wishlist_history {
-    
+
+    .card-body {
+      padding: 5px;
+    }
+
     .product_image {
-      width: 100px;
-      height: 100px;
+      @include square(75px);
       display: table-cell;
       float: left;
       margin-right: 10px;
@@ -40,6 +43,10 @@
 
     .product_description {
       display: table-cell;
+    }
+
+    .product_price, .product_name {
+      margin: 0px;
     }
   }
 
@@ -191,6 +198,10 @@
   .order-details {
     padding-bottom: 5px;
     border-bottom: 1px solid #eee;
+
+    .order-items {
+      margin-left: 25px;
+    }
   }
 
   .order-grand-total {

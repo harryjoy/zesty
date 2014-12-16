@@ -45,13 +45,13 @@ angular.module('zesty')
       }
     });
     if (selectedMethod && selectedMethod !== '') {
-      $scope.order.paymentMethod = selectedMethod;
       OrderServ.payment({
-        id: $scope.order._id
+        id: $scope.order._id,
+        paymentMethod: selectedMethod
       }).$promise.then(function(order) {
         $scope.order = order;
         Auth.refreshCart();
-        $location.path('/my/orders');
+        $location.path('/my/invoice/' + $scope.order._id);
       });
     }
   };

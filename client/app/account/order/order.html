@@ -15,8 +15,13 @@
             <span class="label" ng-class="{'label-alert': order.transcationStatus === 1,
               'label-success': order.transcationStatus === 0}">&nbsp;</span>
             </span>
-            <span class="order-number"><strong>Order:</strong> {{getOrderDisplayNumber(order.orderNumber)}}</span>
-            <span class="order-date pull-right">{{moment(order.orderDate).format('MMMM Do YYYY')}}</span>
+            <span class="order-number">
+              <strong>Order:</strong> {{getOrderDisplayNumber(order.orderNumber)}}
+            </span>
+            <span class="order-items" ng-hide="showProductInfo">
+              <strong>Items:</strong> {{order.products.length}}
+            </span>
+            <span class="order-date pull-right">{{moment(order.orderDate).format(dateFormate)}}</span>
           </div>
           <div class="order-products" collapse="!showProductInfo">
             <div class="order-product" ng-repeat="product in order.products">

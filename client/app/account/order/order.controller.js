@@ -49,15 +49,4 @@ angular.module('zesty')
     }
   };
 
-  /**
-   * Get order numbe to be displayed on UI.
-   * @param  {String} orderNumber Actual order number that is saved in db.
-   * @return {String}             Order number to be displayed on UI.
-   */
-  $scope.getOrderDisplayNumber = function(orderNumber) {
-    if (!orderNumber || orderNumber.indexOf('-') === -1) {
-      return orderNumber;
-    }
-    return $scope.orderPrefix + '' + orderNumber.substring(orderNumber.lastIndexOf('-') + 1);
-  };
 }]);
