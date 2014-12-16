@@ -1,15 +1,14 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('OrderCtrl', ['$scope', 'User', 'AlertServ', 'PaginationServ', '$window',
-      function ($scope, User, AlertServ, PaginationServ, $window) {
+  .controller('OrderCtrl', ['$scope', 'User', 'AlertServ', 'PaginationServ',
+      function ($scope, User, AlertServ, PaginationServ) {
   
   $scope.orders = [];
   $scope.totalItems = 0;
   $scope.init = function () {
     User.orders({
-      id: $scope.getCurrentUser()._id,
-      pageSize: 5
+      id: $scope.getCurrentUser()._id
     }).$promise.then(function (result) {
       PaginationServ.refreshData();
       if (result && result.data && result.data.length > 0) {
@@ -35,8 +34,7 @@ angular.module('zesty')
     if (!orders || orders === null) {
       User.orders({
         id: $scope.getCurrentUser()._id,
-        pageNumber: $scope.currentPage - 1,
-        pageSize: 5
+        pageNumber: $scope.currentPage - 1
       }).$promise.then(function (result) {
         $scope.orders = result.data;
         $scope.totalItems = result.count;

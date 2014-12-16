@@ -3,23 +3,39 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
       <h1 class="account_header">
         <i class="fa fa-list-alt"></i> My Orders
+        <small class="pull-right">
+          <i class="fa fa-info-circle text-cursor-pointer" ng-class="{'text-primary': isOrderNoteCollapsed}" title="Show info/help" ng-click="isOrderNoteCollapsed = !isOrderNoteCollapsed"></i>
+        </small>
       </h1>
     </div>
   </div>
+  <div class="alert alert-info" collapse="!isOrderNoteCollapsed" ng-click="isOrderNoteCollapsed = !isOrderNoteCollapsed">
+    <i class="fa fa-info"></i>
+    <p>
+      <span class="label label-success">&nbsp;</span> - Your order processed successfully.
+    </p>
+    <p>
+      <span class="label label-warning">&nbsp;</span> - Your order is in progress.
+    </p>
+    <p>
+      <span class="label label-danger">&nbsp;</span> - We are not able to process your order. View order details for more information.
+    </p>
+  </div>
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12" ng-hide="totalItems === 0">
-      <div class="card card-default user-order-box" ng-repeat="order in orders">
+      <div class="card card-default user-order-box" ng-class="{'card-solid':!showProductInfo}" ng-repeat="order in orders">
         <div class="card-body">
-          <div class="order-details">
+          <div class="order-details text-cursor-pointer" ng-click="showProductInfo=!showProductInfo">
             <span class="order-status">
-            <span class="label" ng-class="{'label-alert': order.transcationStatus === 1,
+            <span class="label" ng-class="{'label-danger': order.transcationStatus === 1,
               'label-success': order.transcationStatus === 0}">&nbsp;</span>
             </span>
             <span class="order-number">
               <strong>Order:</strong> {{getOrderDisplayNumber(order.orderNumber)}}
             </span>
-            <span class="order-items" ng-hide="showProductInfo">
-              <strong>Products:</strong> {{order.products.length}}
+            <span class="order-items pull-right" ng-hide="showProductInfo">
+              Total:
+              <strong>{{order.products[0].currency}} {{order.grandTotal}}</strong>
             </span>
             <span class="order-date pull-right">{{moment(order.orderDate).format(dateFormate)}}</span>
           </div>
@@ -50,7 +66,6 @@
               <clearfix></clearfix>
             </div>
           </div>
-
           <div ng-show="showProductInfo && order.extraNotes" class="well well-sm">
             <h4>Extra Notes:</h4>
             <em>{{order.extraNotes}}</em>
@@ -67,19 +82,12 @@
             <span class="pull-left">Grand Total: </span>
             <strong>{{order.products[0].currency}} {{order.grandTotal}}</strong>
           </div>
-        </div>
-        <div class="card-footer">
-          <div ng-hide="showProductInfo" class="pull-right">
-            Total:
-            <strong>{{order.products[0].currency}} {{order.grandTotal}}</strong>
-          </div>
-          <button ng-click="showProductInfo=!showProductInfo" class="btn btn-sm" tooltip="View/Hide Order Details" ng-class="{'btn-default': !showProductInfo, 'btn-primary active': showProductInfo}">
-            <i class="fa fa-fw" ng-class="{'fa-eye': !showProductInfo, 'fa-eye-slash': showProductInfo}"></i>
-          </button>
+        </div> <!-- /.card-body -->
+
+        <div class="card-footer" ng-show="showProductInfo">
           <button class="btn btn-default btn-sm" tooltip="Track Order">
             <i class="fa fa-map-marker fa-fw"></i>
           </button>
-          <span ng-show="showProductInfo">&nbsp; | &nbsp;</span>
           <button class="btn btn-default btn-sm" tooltip="Mail Invoice" ng-show="showProductInfo">
             <i class="fa fa-paper-plane fa-fw"></i>
           </button>
@@ -90,7 +98,7 @@
       </div>
     </div>
     <div class="col-md-12 col-sm-12 text-center" ng-show="totalItems > 0">
-      <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="5" ng-change="pageChanged()"></pagination>
+      <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="3" ng-change="pageChanged()"></pagination>
     </div>
 
     <div class="col-md-12 col-sm-12" ng-show="totalItems === 0">

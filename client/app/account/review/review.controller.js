@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('ReviewCtrl', ['$scope', 'User', 'Auth', '$window',
-    function ($scope, User, Auth, $window) {
+  .controller('ReviewCtrl', ['$scope', 'User', 'Auth',
+    function ($scope, User, Auth) {
 
   /*
    * This is used to cache user review and do not make request 
@@ -14,8 +14,8 @@ angular.module('zesty')
       var self = this;
       User.reviews({
         id: $scope.getCurrentUser()._id,
-        'pageNumber': $scope.currentPage - 1,
-        'pageSize': 3
+        pageNumber: $scope.currentPage - 1,
+        pageSize: 3
       }).$promise.then(function(result) {
         if (result.data && result.data.length > 0) {
           self.pageData[$scope.currentPage] = result.data;
@@ -44,7 +44,7 @@ angular.module('zesty')
   $scope.first = $scope.two = $scope.three = $scope.four = $scope.five = 0;
   User.reviews({
     id: $scope.getCurrentUser()._id,
-    'pageSize': 3
+    pageSize: 3
   }).$promise.then(function(result) {
     if (result && result.data && result.data.length > 0) {
       $scope.reviews = result.data;
