@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('OrderCtrl', ['$scope', 'User', 'AlertServ', 'PaginationServ',
-      function ($scope, User, AlertServ, PaginationServ) {
+  .controller('OrderCtrl', ['$scope', 'User', 'AlertServ', 'PaginationServ', '$window',
+      function ($scope, User, AlertServ, PaginationServ, $window) {
   
   $scope.orders = [];
   $scope.totalItems = 0;
@@ -47,6 +47,7 @@ angular.module('zesty')
     } else {
       $scope.orders = orders;
     }
+    $window.scrollTo(0,0);
   };
 
 }]);

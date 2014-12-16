@@ -197,7 +197,6 @@
 
   .order-details {
     padding-bottom: 5px;
-    border-bottom: 1px solid #eee;
 
     .order-items {
       margin-left: 25px;
@@ -207,15 +206,13 @@
   .order-grand-total {
     margin-top: 5px;
     padding-top: 5px;
-  }
-
-  .order-grand-total-border {
     border-top: 1px solid #eee;
   }
 
   .order-products {
     padding: 3px 0px;
     margin: 10px 0px;
+    border-top: 1px solid #eee;
 
     .order-product {
       padding: 5px 0px;

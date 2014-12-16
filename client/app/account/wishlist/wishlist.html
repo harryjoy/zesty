@@ -24,8 +24,11 @@
         </div>
         <div class="card-footer">
           <span class="pull-left">
-            <a tooltip="Add to Cart" class="btn btn-default btn-sm">
+            <button tooltip="Add to Cart" class="btn btn-default btn-sm" ng-click="addToCart(item);" ng-hide="item.addedToCart">
               <i class="fa fa-plus text-small"></i>
+              <i class="fa fa-shopping-cart"></i>
+            </button>
+            <a tooltip="Go to Cart" href="/cart" class="btn btn-primary btn-sm" ng-show="item.addedToCart">
               <i class="fa fa-shopping-cart"></i>
             </a>
             <a tooltip="Quick View" class="btn btn-default btn-sm">

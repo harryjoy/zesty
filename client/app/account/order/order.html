@@ -19,7 +19,7 @@
               <strong>Order:</strong> {{getOrderDisplayNumber(order.orderNumber)}}
             </span>
             <span class="order-items" ng-hide="showProductInfo">
-              <strong>Items:</strong> {{order.products.length}}
+              <strong>Products:</strong> {{order.products.length}}
             </span>
             <span class="order-date pull-right">{{moment(order.orderDate).format(dateFormate)}}</span>
           </div>
@@ -55,20 +55,24 @@
             <h4>Extra Notes:</h4>
             <em>{{order.extraNotes}}</em>
           </div>
-          <div ng-show="showProductInfo" class="order-grand-total text-right" ng-class="{'order-grand-total-border': showProductInfo}">
+          <div ng-show="showProductInfo" class="order-grand-total text-right">
             <span class="pull-left">Sub Total: </span>
             <strong>{{order.products[0].currency}} {{order.subTotal}}</strong>
           </div>
-          <div ng-show="showProductInfo" class="order-grand-total text-right" ng-class="{'order-grand-total-border': showProductInfo}">
+          <div ng-show="showProductInfo" class="order-grand-total text-right">
             <span class="pull-left">Shipping: </span>
             <strong><em>Free</em></strong>
           </div>
-          <div class="order-grand-total text-right" ng-class="{'order-grand-total-border': showProductInfo}">
-            <span ng-class="{'pull-left': showProductInfo}">Grand Total: </span>
+          <div ng-show="showProductInfo" class="order-grand-total text-right">
+            <span class="pull-left">Grand Total: </span>
             <strong>{{order.products[0].currency}} {{order.grandTotal}}</strong>
           </div>
         </div>
         <div class="card-footer">
+          <div ng-hide="showProductInfo" class="pull-right">
+            Total:
+            <strong>{{order.products[0].currency}} {{order.grandTotal}}</strong>
+          </div>
           <button ng-click="showProductInfo=!showProductInfo" class="btn btn-sm" tooltip="View/Hide Order Details" ng-class="{'btn-default': !showProductInfo, 'btn-primary active': showProductInfo}">
             <i class="fa fa-fw" ng-class="{'fa-eye': !showProductInfo, 'fa-eye-slash': showProductInfo}"></i>
           </button>
@@ -80,7 +84,7 @@
             <i class="fa fa-paper-plane fa-fw"></i>
           </button>
           <a role="button" href="/my/invoice/{{order._id}}" class="btn btn-default btn-sm" tooltip="View Invoice" ng-show="showProductInfo">
-            <i class="fa fa-bars fa-fw"></i>
+            <i class="fa fa-list fa-fw"></i>
           </a>
         </div>
       </div>
