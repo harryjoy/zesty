@@ -29,6 +29,43 @@ exports.update = function(req, res) {
   });
 };
 
+// apply promocode to cart.
+exports.applyPromoCode = function(req, res, next) {
+  if (!req.promocode) { return res.send(404); }
+  Cart.findById(req.params.id, function (err, cart) {
+    if (err) { return handleError(res, err); }
+    if(!cart) { return res.send(404); }
+    cart.promoCode = req.promocode.code;
+    cart.promoCodeInfo = req.promocode.info;
+    if (req.promocode.isPercent) {
+      cart.promoCodeValue = (cart.grandTotal * req.promocode.value) / 100;
+    } else {
+      cart.promoCodeValue = req.promocode.value;
+    }
+    cart = calculateCartValues(cart);
+    cart.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, cart);
+    });
+  });
+};
+
+// remove applied promocode to cart.
+exports.removePromoCode = function(req, res, next) {
+  Cart.findById(req.params.id, function (err, cart) {
+    if (err) { return handleError(res, err); }
+    if(!cart) { return res.send(404); }
+    cart.promoCode = undefined;
+    cart.promoCodeValue = undefined;
+    cart.promoCodeInfo = undefined;
+    cart = calculateCartValues(cart);
+    cart.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, cart);
+    });
+  });
+};
+
 // get items in cart
 exports.getCartItems = function(req, res, next) {
   Cart.findById(req.params.id, function (err, cart) {
@@ -81,6 +118,11 @@ exports.removeFromCart = function(req, res, next) {
         return false;
       }
     });
+    if (!cart.products || cart.products.length === 0) {
+      cart.promoCode = undefined;
+      cart.promoCodeValue = undefined;
+      cart.promoCodeInfo = undefined;
+    }
     cart = calculateCartValues(cart);
     cart.save(function (err) {
       if (err) { return handleError(res, err); }
@@ -98,6 +140,7 @@ exports.emptyCart = function(req, res, next) {
       cart.products = [];
       cart.promoCode = undefined;
       cart.promoCodeValue = undefined;
+      cart.promoCodeInfo = undefined;
       cart = calculateCartValues(cart);
       cart.save(function (err) {
         if (err) { console.log('error while empty cart'); }
@@ -115,13 +158,16 @@ function calculateCartValues(cart) {
   cart.subTotal = 0;
   cart.grandTotal = 0;
   cart.currency = '';
-  _.forEach(cart.products, function(product) {
-    cart.subTotal = cart.subTotal + (product.qty * product.price);
-    cart.grandTotal = cart.grandTotal + (product.qty * product.price);
-    cart.currency = product.currency;
-  });
-  if (cart.promoCodeValue) {
-    cart.grandTotal = cart.grandTotal - cart.promoCodeValue;
+  if (cart.products && cart.products.length > 0) {
+    _.forEach(cart.products, function(product) {
+      cart.subTotal = cart.subTotal + (product.qty * product.price);
+      cart.grandTotal = cart.grandTotal + (product.qty * product.price);
+      cart.currency = product.currency;
+    });
+    cart.currency = cart.products[0].currency;
+    if (cart.promoCodeValue) {
+      cart.grandTotal = cart.grandTotal - cart.promoCodeValue;
+    }
   }
   return cart;
 }

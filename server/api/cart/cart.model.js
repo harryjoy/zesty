@@ -36,7 +36,9 @@ var CartSchema = new Schema({
     default: 0
   },
   promoCode: String,
-  promoCodeValue: Number
+  promoCodeValue: Number,
+  promoCodeInfo: String,
+  currency: String
 });
 
 CartSchema.plugin(timestamps);

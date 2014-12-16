@@ -10,7 +10,27 @@ var Item = require('../api/item/item.model');
 var Review = require('../api/review/review.model');
 var User = require('../api/user/user.model');
 var Suppiler = require('../api/suppiler/suppiler.model');
+var Promocode = require('../api/promocode/promocode.model');
 var moment = require('moment')
+
+Promocode.find({}).remove(function() {
+  Promocode.create({
+    code: 'ZST-100-SIGNUP',
+    info: 'Get 100 off for signing up.',
+    value: 100
+  }, {
+    code: 'ZST-10-PRCT-ELECTRONICS',
+    info: 'Get 10% off on electronics.',
+    value: 10,
+    isPercent: true,
+    category: 'Electronics'
+  }, {
+    code: 'ZST-20-PRCT-ALL',
+    info: 'Get 20% off on all goods.',
+    value: 20,
+    isPercent: true,
+  });
+});
 
 Category.find({}).remove(function() {
   Category.create({

@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('zesty')
-  .factory('Auth', ['$location', '$rootScope', '$http', 'User', '$cookieStore', '$q', 'CartServ',
-    function Auth($location, $rootScope, $http, User, $cookieStore, $q, CartServ) {
+  .factory('Auth', ['$location', '$rootScope', '$http', 'User', '$cookieStore',
+    '$q', 'CartServ', 'PromoCodeServ', 'AlertServ',
+    function Auth($location, $rootScope, $http, User, $cookieStore, $q, CartServ, PromoCodeServ, AlertServ) {
   var currentUser = {};
   var cart = {};
   if($cookieStore.get('token')) {
@@ -202,6 +203,38 @@ angular.module('zesty')
         cart = updatedCart;
         $rootScope.$broadcast('cart.updated');
       });
+    },
+
+    applyPromoCode: function(promoCode) {
+      if (promoCode && promoCode !== '') {
+        CartServ.resource().promocode({
+          id: cart._id,
+          promoCode: promoCode
+        }, cart, function(updatedCart) {
+          cart = updatedCart;
+          $rootScope.$broadcast('cart.updated');
+        }, function(err) {
+          console.log(err);
+          AlertServ.alert('Enter valid promo code.');
+        });
+      } else {
+        AlertServ.alert('Enter valid promo code.');
+      }
+    },
+
+    removeCartCode: function() {
+      if (cart.promoCode && cart.promoCode !== '') {
+        CartServ.resource().removecode({
+          id: cart._id
+        }, function(updatedCart) {
+          cart = updatedCart;
+          $rootScope.$broadcast('cart.updated');
+        }, function(err) {
+          console.log(err);
+          AlertServ.alert('Error while removing promo code. Please try again later.');
+        });
+      }
+
     },
 
     /**

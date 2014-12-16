@@ -68,9 +68,12 @@
     <!-- accepted payments column -->
     <div class="col-sm-6">
       <div class="offers" ng-show="order.promoCode">
-        <p class="text-medium">Offers/Promo codes:</p>
+        <p class="text-medium">Promo codes</p>
         <div class="offers_n_coupons">
-          <p class="offer-highlight pad"><strong>{{order.promoCode}}</strong> - <small>{{order.promoCodeValue}}</small></p>
+          <p class="offer-highlight pad">
+            <strong>{{order.promoCode}}</strong> - <small>{{order.promoCodeInfo}}</small>
+            <br/><small><strong>Value:</strong> {{order.currency}} {{order.promoCodeValue}}</small>
+          </p>
         </div>
       </div>
     </div><!-- /.col -->
@@ -81,23 +84,23 @@
            <tbody>
            	<tr>
               <th style="width:50%">Sub Total:</th>
-              <td class="text-right">{{order.items[0].currency}} {{order.subTotal}}</td>
+              <td class="text-right">{{order.currency}} {{order.subTotal}}</td>
             </tr>
             <tr>
               <th>Tax ({{order.tax}}%):</th>
               <td class="text-right">
-                {{order.tax > 0 ? order.items[0].currency + ' ' + (order.subTotal * order.tax / 100) : '-'}}
+                {{order.tax > 0 ? order.currency + ' ' + (order.subTotal * order.tax / 100) : '-'}}
               </td>
             </tr>
             <tr>
               <th>Shipping:</th>
               <td class="text-right">
-                {{order.shipping > 0 ? order.items[0].currency + ' ' + order.shipping : 'Free'}}
+                {{order.shipping > 0 ? order.currency + ' ' + order.shipping : 'Free'}}
               </td>
             </tr>
             <tr>
               <th>Grand Total:</th>
-              <td class="text-right">{{order.items[0].currency}} {{order.grandTotal}}</td>
+              <td class="text-right">{{order.currency}} {{order.grandTotal}}</td>
             </tr>
         	</tbody>
       	</table>

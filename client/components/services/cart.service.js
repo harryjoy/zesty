@@ -44,6 +44,20 @@ angular.module('zesty')
           params: {
             id: '@id'
           }
+        },
+        promocode: {
+          method: 'POST',
+          params: {
+            id: '@id',
+            controller: 'promocode'
+          }
+        },
+        removecode: {
+          method: 'DELETE',
+          params: {
+            id: '@id',
+            controller: 'promocode'
+          }
         }
       });
     }

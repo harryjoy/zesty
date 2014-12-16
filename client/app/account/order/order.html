@@ -72,15 +72,22 @@
           </div>
           <div ng-show="showProductInfo" class="order-grand-total text-right">
             <span class="pull-left">Sub Total: </span>
-            <strong>{{order.products[0].currency}} {{order.subTotal}}</strong>
+            <strong>{{order.currency}} {{order.subTotal}}</strong>
           </div>
           <div ng-show="showProductInfo" class="order-grand-total text-right">
             <span class="pull-left">Shipping: </span>
             <strong><em>Free</em></strong>
           </div>
+          <div ng-show="showProductInfo && order.promoCode" class="order-grand-total text-right">
+            <span class="pull-left">
+              Promo Code: 
+              (<em tooltip="{{order.promoCodeInfo}}" class="text-small"><strong>{{order.promoCode}}</strong></em>)
+            </span>
+            <strong>- {{order.currency}} {{order.promoCodeValue}}</strong>
+          </div>
           <div ng-show="showProductInfo" class="order-grand-total text-right">
             <span class="pull-left">Grand Total: </span>
-            <strong>{{order.products[0].currency}} {{order.grandTotal}}</strong>
+            <strong>{{order.currency}} {{order.grandTotal}}</strong>
           </div>
         </div> <!-- /.card-body -->
 

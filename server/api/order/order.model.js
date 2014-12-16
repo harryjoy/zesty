@@ -41,6 +41,8 @@ var OrderSchema = new Schema({
   },
   promoCode: String,
   promoCodeValue: Number,
+  promoCodeInfo: String,
+  currency: String,
 
   paymentId: Schema.Types.ObjectId,
   paymentMethod: String, // CC - credit cart, DC - debit card, COD - cashh on delivery, NB - net banking

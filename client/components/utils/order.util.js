@@ -14,6 +14,7 @@ angular.module('zesty.utils')
         shippingCharge: cart.shipping,
         promoCode: cart.promoCode,
         promoCodeValue: cart.promoCodeValue,
+        promoCodeInfo: cart.promoCodeInfo,
         currency: cart.currency
       };
     },
@@ -27,6 +28,7 @@ angular.module('zesty.utils')
       order.shippingCharge = cart.shipping;
       order.promoCode = cart.promoCode;
       order.promoCodeValue = cart.promoCodeValue;
+      order.promoCodeInfo = cart.promoCodeInfo;
       order.currency = cart.currency;
       return order;
     },
@@ -42,11 +44,13 @@ angular.module('zesty.utils')
         items: order.products,
         promoCode: order.promoCode,
         promoCodeValue: order.promoCodeValue,
+        promoCodeInfo: order.promoCodeInfo,
         subTotal: order.subTotal,
         tax: order.tax ? order.tax : 0,
         shipping: order.shippingCharge ? order.shippingCharge : 0,
         grandTotal: order.grandTotal,
-        siteName: siteName
+        siteName: siteName,
+        currency: order.currency
       };
     }
   };

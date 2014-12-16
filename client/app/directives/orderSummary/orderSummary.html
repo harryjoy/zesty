@@ -18,20 +18,26 @@
         <span class="pull-left">Tax</span>
         <span class="pull-right">{{cart.currency}} 0</span>
       </li> -->
-      <li class="clearfix">
+      <li class="clearfix" ng-show="cart.promoCode && cart.promoCode !== ''">
+        <div class="coupon_form">
+          <span class="pull-left small">Promo Code:</span><br/>
+          <span class="small">
+            <span class="">
+              {{cart.promoCode}} 
+              <i class="fa fa-times" ng-click="removeCode();" tooltip="Remove code"></i>
+            </span>
+            <span class="pull-right">- {{cart.currency}} {{cart.promoCodeValue}}</span>
+          </span>
+        </div>
+      </li>
+      <li class="clearfix" ng-class="{'last': cart.promoCode && cart.promoCode !== ''}">
         <span class="pull-left">Grand Total</span>
         <span class="pull-right grand">{{cart.currency}} {{cart.grandTotal}}</span>
       </li>
-      <li class="clearfix last" ng-show="angular.isDefined(cart.promoCode)">
+      <li class="clearfix last" ng-hide="cart.promoCode && cart.promoCode !== ''">
         <div class="coupon_form">
-          <span class="pull-left small">Promo Code Applied</span>
-        	<span class="pull-right small">{{cart.promoCode}} ({{cart.promoCodeValue}})</span>
-        </div>
-      </li>
-      <li class="clearfix last" ng-hide="angular.isDefined(cart.promoCode)">
-        <div class="coupon_form">
-          <input class="col-lg-8" id="appendedInputButton" type="text" placeholder="Promo code">
-          <button class="col-lg-4 btn btn-success" type="button">Apply</button>
+          <input class="col-lg-8" id="appendedInputButton" type="text" placeholder="Promo code" ng-model="promoCode">
+          <button class="col-lg-4 btn btn-success" ng-click="applyPromoCode();">Apply</button>
         </div>
       </li>
     </ul>
