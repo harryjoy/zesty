@@ -129,7 +129,7 @@ angular.module('zesty')
   }];
 
   $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
-    $window.scrollTo(0,0);
+    $scope.scrollToTop();
   });
 
 }]);

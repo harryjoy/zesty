@@ -87,6 +87,7 @@ angular.module('zesty')
     } else {
       $scope.items = items;
     }
+    $scope.scrollToTop();
   };
 
   /**

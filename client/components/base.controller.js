@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('BaseCtrl', ['$scope', '$location', 'Auth',
-    function ($scope, $location, Auth) {
+  .controller('BaseCtrl', ['$scope', '$location', 'Auth', '$window',
+    function ($scope, $location, Auth, $window) {
 
   $scope.moment = moment;
   $scope.dateFormate = 'MMMM Do YYYY';
@@ -94,4 +94,12 @@ angular.module('zesty')
     }
     return orderNumber.substring(orderNumber.lastIndexOf('-') + 1);
   };
+
+  /**
+   * Scroll page to top.
+   */
+  $scope.scrollToTop = function() {
+    $window.scrollTo(0,0);
+  };
+
 }]);

@@ -47,7 +47,7 @@ angular.module('zesty')
     } else {
       $scope.orders = orders;
     }
-    $window.scrollTo(0,0);
+    $scope.scrollToTop();
   };
 
 }]);
