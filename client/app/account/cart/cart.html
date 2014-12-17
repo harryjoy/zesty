@@ -1,0 +1,169 @@
+<div class="account_box">
+	<div class="row">
+	  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	    <h1 class="account_header">
+	    	<i class="fa fa-shopping-cart"></i> Budget Settings
+	    </h1>
+	  </div>
+	</div>
+	<div class="row">
+	  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="card card-solid">
+        <div tooltip="Click to know more" class="card-header text-cursor-pointer" ng-click="showSaveBudgetInfo=!showSaveBudgetInfo">
+          <h1 class="card-title">
+            <i class="fa fa-bank fa-fw"></i> Now save your budget plans!
+          </h1>
+        </div>
+        <div class="card-body" collapse="!showSaveBudgetInfo">
+          <p class="lead">
+            Does your online purchases disturbs your budget plans?
+            <span class="text-normal">OR</span>
+            Your child/spouse/partner/family is spending more than desired for a month/year?
+          </p>
+          <p>
+            Now one can limit his/her cart so he/she can not exceed his/her budget.
+          </p>
+          <p class="lead">Wondering how?</p>
+          <p>
+            Create a single account for all and simply set limits to your cart or monthly & yearly purchases and get your budget under control.
+          </p>
+        </div>
+      </div>
+
+      <form class="form" role="form" name="cartSettingsForm" novalidate ng-submit="updateLimits(cartSettingsForm)">
+
+        <div class="card card-success">
+          <div class="card-header">
+            <h3 class="card-title">Set Your Purchase Limits</h3>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <div class="alert alert-danger" role="alert" ng-show="!cartSettingsForm.$valid && submitted">
+                <i class="fa fa-warning"></i>
+                <p class="help-block" ng-show="cartSettingsForm.price.$error.required && submitted">
+                   Price limit for cart is required.
+                </p>
+                <p class="help-block" ng-show="cartSettingsForm.items.$error.required && submitted">
+                   Items limit for cart is required.
+                </p>
+                <p class="help-block" ng-show="cartSettingsForm.priceMonthly.$error.required && submitted">
+                   Monthly price limit is required.
+                </p>
+                <p class="help-block" ng-show="cartSettingsForm.itemsMonthly.$error.required && submitted">
+                   Monthly items limit is required.
+                </p>
+                <p class="help-block" ng-show="cartSettingsForm.priceYearly.$error.required && submitted">
+                   Yearly price limit is required.
+                </p>
+                <p class="help-block" ng-show="cartSettingsForm.itemsYearly.$error.required && submitted">
+                   Yearly items limit is required.
+                </p>
+                <p class="help-block">{{ errors.other }}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group" ng-class="{ 'has-success': cartSettingsForm.price.$valid && cartSettingsForm.priceMonthly.$valid && cartSettingsForm.priceYearly.$valid && submitted, 'has-error': (cartSettingsForm.price.$invalid || cartSettingsForm.priceMonthly.$invalid || cartSettingsForm.priceYearly.$invalid) && submitted }">
+                  <i class="fa fa-money fa-fw fa-2x pull-right"></i>
+                  <label class="control-label">
+                    <strong>Price limit</strong>
+                  </label>
+                </div>
+              </div>
+            </div> <!-- price header row -->
+            <div class="row">
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="form-group" ng-class="{ 'has-success': cartSettingsForm.price.$valid && submitted, 'has-error': cartSettingsForm.price.$invalid && submitted }">
+                  <label class="control-label" for="price">
+                    <small>In a Cart</small>
+                  </label>
+                  <input only-digits min-num="-1" allow-negative="true" id="price" type="text" name="price" class="form-control" ng-model="user.cartLimits.price" required />
+                  <span class="help-block text-small">
+                    This will limit your total cart price. Minus or zero values indicates infinite.
+                  </span>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="form-group" ng-class="{ 'has-success': cartSettingsForm.priceMonthly.$valid && submitted, 'has-error': cartSettingsForm.priceMonthly.$invalid && submitted }">
+                  <label class="control-label" for="price_monthly">
+                    <small>Monthly</small>
+                  </label>
+                  <input only-digits min-num="-1" allow-negative="true" id="price_monthly" type="text" name="priceMonthly" class="form-control" ng-model="user.cartLimits.priceMonthly" required />
+                  <span class="help-block text-small">
+                    This will limit your total orders price in a month. Minus or zero values indicates infinite.
+                  </span>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="form-group" ng-class="{ 'has-success': cartSettingsForm.priceYearly.$valid && submitted, 'has-error': cartSettingsForm.priceYearly.$invalid && submitted }">
+                  <label class="control-label" for="price_yearly">
+                    <small>Yearly</small>
+                  </label>
+                  <input only-digits min-num="-1" allow-negative="true" id="price_yearly" type="text" name="priceYearly" class="form-control" ng-model="user.cartLimits.priceYearly" required />
+                  <span class="help-block text-small">
+                    This will limit your total orders price in a year. Minus or zero values indicates infinite.
+                  </span>
+                </div>
+              </div>
+            </div> <!-- price textbox row -->
+
+            <hr/>
+
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group" ng-class="{ 'has-success': cartSettingsForm.items.$valid && cartSettingsForm.itemsMonthly.$valid && cartSettingsForm.itemsYearly.$valid && submitted, 'has-error': (cartSettingsForm.items.$invalid || cartSettingsForm.itemsMonthly.$invalid || cartSettingsForm.itemsYearly.$invalid) && submitted }">
+                  <i class="fa fa-cubes fa-fw fa-2x pull-right"></i>
+                  <label class="control-label" for="number">
+                    <strong>Items limit</strong>
+                  </label>
+                </div>
+              </div>
+            </div> <!-- items header row -->
+            <div class="row">
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="form-group" ng-class="{ 'has-success': cartSettingsForm.items.$valid && submitted, 'has-error': cartSettingsForm.items.$invalid && submitted }">
+                  <label class="control-label" for="number">
+                    <small>In a Cart</small>
+                  </label>
+                  <input only-digits min-num="-1" allow-negative="true" id="number" type="text" name="items" class="form-control" ng-model="user.cartLimits.items" required />
+                  <span class="help-block text-small">
+                    This will limit number of items in your cart. Minus or zero values indicates infinite.
+                  </span>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="form-group" ng-class="{ 'has-success': cartSettingsForm.itemsMonthly.$valid && submitted, 'has-error': cartSettingsForm.itemsMonthly.$invalid && submitted }">
+                  <label class="control-label" for="number_monthly">
+                    <small>Monthly</small>
+                  </label>
+                  <input only-digits min-num="-1" allow-negative="true" id="number_monthly" type="text" name="itemsMonthly" class="form-control" ng-model="user.cartLimits.itemsMonthly" required />
+                  <span class="help-block text-small">
+                    This will limit number of items you can purchase in a month. Minus or zero values indicates infinite.
+                  </span>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="form-group" ng-class="{ 'has-success': cartSettingsForm.itemsYearly.$valid && submitted, 'has-error': cartSettingsForm.itemsYearly.$invalid && submitted }">
+                  <label class="control-label" for="number_yearly">
+                    <small>Yearly</small>
+                  </label>
+                  <input only-digits min-num="-1" allow-negative="true" id="number_yearly" type="text" name="itemsYearly" class="form-control" ng-model="user.cartLimits.itemsYearly" required />
+                  <span class="help-block text-small">
+                    This will limit number of items you can purchase in a year. Minus or zero values indicates infinite.
+                  </span>
+                </div>
+              </div>
+            </div> <!-- items textbox row -->
+          </div>
+
+          <div class="card-footer">
+            <button type="submit" ui-ladda="updateLimitsLoader" data-style="slide-left" class="ladda-button btn btn-success btn-sm" data-spinner-color="#646678"><span class="ladda-label"> Save Changes</span></button>
+          </div>
+        </div> <!-- end of card -->
+
+      </form>
+
+	  </div>  <!-- end of col -->
+	</div> <!-- end of row -->
+</div>

@@ -57,6 +57,32 @@ var UserSchema = new Schema({
       default: new Date()
     }
   },
+  cartLimits: {
+    items: {
+      type: Number,
+      default: -1
+    },
+    price: {
+      type: Number,
+      default: -1
+    },
+    itemsMonthly: {
+      type: Number,
+      default: -1
+    },
+    priceMonthly: {
+      type: Number,
+      default: -1
+    },
+    itemsYearly: {
+      type: Number,
+      default: -1
+    },
+    priceYearly: {
+      type: Number,
+      default: -1
+    }
+  },
   hashedPassword: String,
   provider: String,
   salt: String,

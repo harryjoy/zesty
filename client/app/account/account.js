@@ -50,6 +50,12 @@ angular.module('zesty')
       controller: 'SettingsCtrl',
       authenticate: true
     })
+    .state('profile.cart', {
+      url: '/cart',
+      templateUrl: 'app/account/cart/cart.html',
+      controller: 'CartSettingsCtrl',
+      authenticate: true
+    })
     .state('profile.review', {
       url: '/reviews',
       templateUrl: 'app/account/review/review.html',
