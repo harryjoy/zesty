@@ -15,9 +15,10 @@ angular.module('zesty')
    * @return {[Product]} Wish list of user.
    */
   $scope.init = function () {
+    $scope.items = [];
     User.favorites({
       id: $scope.getCurrentUser()._id,
-      pageSize: 5
+      pageSize: 9
     }).$promise.then(function (result) {
       PaginationServ.refreshData();
       if (result && result.data && result.data.length > 0) {
@@ -70,9 +71,10 @@ angular.module('zesty')
       User.favorites({
         id: $scope.getCurrentUser()._id,
         pageNumber: $scope.currentPage - 1,
-        pageSize: 5
+        pageSize: 9
       }).$promise.then(function (result) {
         if (result && result.data && result.data.length > 0) {
+          $scope.items = [];
           _.forEach(result.data, function(product){
             $scope.items.push(ProductUtil.convertItem(product));
           });

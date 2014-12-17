@@ -35,10 +35,10 @@
     }
 
     .product_image {
-      @include square(75px);
+      @include square(60px);
       display: table-cell;
       float: left;
-      margin-right: 10px;
+      margin-right: 5px;
     }
 
     .product_description {

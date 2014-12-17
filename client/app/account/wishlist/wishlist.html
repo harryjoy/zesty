@@ -1,45 +1,38 @@
 <div class="account_box">
 	<div class="row">
-	  <div class="col-lg-12 col-md-12 col-sm-12">
+	  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	    <h1 class="account_header">
 	    	<i class="fa fa-star"></i> My Wishlist
 	    </h1>
 	  </div>
 	</div>
 	<div class="row">
-	  <div class="col-lg-12 col-md-12 col-sm-12 wishlist_history" ng-show="!noData">
-      <div class="card card-default" ng-repeat="item in items">
+	  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 wishlist_history" ng-show="!noData" ng-repeat="item in items">
+      <div class="card card-default">
         <div class="card-body">
           <img src="{{item.mainImage}}" alt="{{item.title}}" class="product_image" />
           <div class="">
-            <h4 class="product_price pull-right">
+            <h4 class="product_price pull-right text-normal">
               {{item.currency}} {{item.price}}
             </h4>
             <h4 class="product_name">
-              <a href="/product/{{item._id}}">{{item.title}}</a>
+              <a href="/product/{{item._id}}" class="text-medium">{{item.title}}</a>
             </h4>
-            <span class="text-normal">{{item.description}}</span>
+            <span class="text-small">{{item.description}}</span>
           </div>
           <clearfix></clearfix>
         </div>
         <div class="card-footer">
-          <span class="pull-left">
-            <button tooltip="Add to Cart" class="btn btn-default btn-sm" ng-click="addToCart(item);" ng-hide="item.addedToCart">
-              <i class="fa fa-plus text-small"></i>
-              <i class="fa fa-shopping-cart"></i>
-            </button>
-            <a tooltip="Go to Cart" href="/cart" class="btn btn-primary btn-sm" ng-show="item.addedToCart">
-              <i class="fa fa-shopping-cart"></i>
-            </a>
-            <a tooltip="Quick View" class="btn btn-default btn-sm">
-              <i class="fa fa-eye"></i>
-            </a>
-            <a tooltip="Remove from Wishlist" class="btn btn-default btn-sm" ng-click="delete(item._id);">
-              <i class="fa fa-minus text-small"></i>
-              <i class="fa fa-star"></i>
-            </a>
-          </span>
-          <span class="pull-right">
+          <button tooltip="Add to Cart" class="btn btn-default btn-mini" ng-click="addToCart(item);" ng-hide="item.addedToCart">
+            <i class="fa fa-shopping-cart"></i>
+          </button>
+          <a tooltip="Go to Cart" href="/cart" class="btn btn-primary btn-mini" ng-show="item.addedToCart">
+            <i class="fa fa-shopping-cart"></i>
+          </a>
+          <a tooltip="Remove from Wishlist" class="btn btn-warning btn-mini" ng-click="delete(item._id);">
+            <i class="fa fa-star"></i>
+          </a>
+          <!-- <span class="pull-right">
             <a tooltip="Share on Twitter" class="btn btn-info btn-circle">
               <i class="fa fa-twitter"></i>
             </a>
@@ -49,17 +42,16 @@
             <a tooltip="Share on Facecbook" class="btn btn-primary btn-circle">
               <i class="fa fa-facebook"></i>
             </a>
-          </span>
-          <clearfix></clearfix>
+          </span> -->
         </div>
       </div>
 	  </div>
 
-    <div class="col-md-12 col-sm-12 text-center" ng-show="totalItems > 0 && !noData">
-      <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="5" ng-change="pageChanged()"></pagination>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center" ng-show="totalItems > 0 && !noData">
+      <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="9" ng-change="pageChanged()"></pagination>
     </div>
 
-    <div class="col-md-12 col-sm-12" ng-show="noData">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="noData">
       <h4 class="alert alert-warning text-center">
         You don't have any products in your wishlist. Go to <a href="/" class="alert-link">home</a> page and add some.
       </h4>
