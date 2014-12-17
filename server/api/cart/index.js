@@ -13,6 +13,7 @@ router.get('/:id/items', controller.getCartItems);
 router.post('/:id/items', controller.addToCart);
 router.delete('/:id/items', controller.removeFromCart);
 
+router.get('/:id/promocode', controller.checkPromoCode);
 router.post('/:id/promocode', promocodeController.check, controller.applyPromoCode);
 router.delete('/:id/promocode', controller.removePromoCode);
 

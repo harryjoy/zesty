@@ -14,6 +14,10 @@ var OrderSchema = new Schema({
     img: String,
     description: String,
     currency: String,
+    categories: [{
+      id: Schema.Types.ObjectId,
+      name: String
+    }],
     approxDeliveryDate: Date,
     deliveryDate: Date,
     shipper: {

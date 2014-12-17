@@ -46,9 +46,13 @@ exports.update = function(req, res) {
   });
 };
 
-// get order for a customer
-// only get orders that belong to this customer and that are created in last hour
-// and are remaining to process.
+/**
+ * Get order for a customer
+ * -------------------------
+ * Only get orders that belong to this customer 
+ * and that are created in last hour
+ * and are remaining to process.
+ */
 exports.getOrderByCustomer = function(req, res, next) {
   var time = moment().subtract(1, 'hours');
   Order.findOne({

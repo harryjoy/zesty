@@ -24,7 +24,8 @@ Promocode.find({}).remove(function() {
     info: 'Get 10% off on electronics.',
     value: 10,
     isPercent: true,
-    category: 'Electronics',
+    isSpecific: true,
+    categories: ['Electronics'],
     expiry: moment().add(6, 'months')
   }, {
     code: 'ZST-20-PRCT-ALL',

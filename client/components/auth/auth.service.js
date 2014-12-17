@@ -144,6 +144,15 @@ angular.module('zesty')
     },
 
     /**
+     * Sets currenct cart to updated cart.
+     * @param {Object} updatedCart The updated cart.
+     */
+    setCart: function(updatedCart) {
+      cart = updatedCart;
+      $rootScope.$broadcast('cart.updated');
+    },
+
+    /**
      * Add item to cart items.
      * @return {Object} cart
      */
@@ -220,7 +229,7 @@ angular.module('zesty')
           $rootScope.$broadcast('cart.updated');
         }, function(err) {
           console.log(err);
-          $rootScope.$broadcast('cart.invalid.code');
+          $rootScope.$broadcast('cart.invalid.code', err);
         });
       } else {
         $rootScope.$broadcast('cart.invalid.code');

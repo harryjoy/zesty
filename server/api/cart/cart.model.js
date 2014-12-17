@@ -14,6 +14,10 @@ var CartSchema = new Schema({
     img: String,
     description: String,
     currency: String,
+    categories: [{
+      id: Schema.Types.ObjectId,
+      name: String
+    }],
     approxDeliveryDate: Date,
 	  deliveryDate: Date,
 	  shipper:{
@@ -40,6 +44,8 @@ var CartSchema = new Schema({
   promoCodeInfo: String,
   promoCodeCategory: String,
   promoCodeExpiry: Date,
+  isPromoCodeSpecific: Boolean,
+  promoCodeCategories: [String],
   currency: String
 });
 

@@ -30,9 +30,13 @@
                 <td class="description">
                   <h4><a href="/product/{{item._id}}">{{item.title}}</a></h4>
                   <span class="intro">{{item.description}}</span>
+                  <p class="text-small text-muted">
+                    <span class="glyphicon glyphicon-tags"></span>&nbsp;
+                    <span ng-repeat="category in item.categories"><a class="text-muted" href="/category/{{category._id}}">{{category.name}}</a></span>
+                  </p>
                 </td>
                 <td class="qty">
-                  <input placeholder="1" ng-model="item.qty" />
+                  <input type="number" min="1" class="form-control" placeholder="1" ng-model="item.qty" />
                 </td>
                 <td class="price">
                   <span>{{item.currency}} {{item.price}}</span>

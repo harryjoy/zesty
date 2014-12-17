@@ -296,6 +296,11 @@ img {
   @include border-radius(0);
 }
 
+/* add border radius */
+@for $i from 1 through 10 {
+  .round-#{$i} { @include border-radius(1px * $i); }
+}
+
 /* Change the color of the striped tables */
 .table-striped > tbody > tr:nth-child(odd) {
   > td,

@@ -12,6 +12,10 @@ var PromocodeSchema = new Schema({
     type: Date,
     default: new Date()
   },
+  isSpecific: {
+    type: Boolean,
+    default: false
+  },
   isPercent: {
     type: Boolean,
     default: false
@@ -20,10 +24,7 @@ var PromocodeSchema = new Schema({
     type: Boolean,
     default: true
   },
-  category: {
-    type: String,
-    default: 'ALL'
-  }
+  categories: [String]
 });
 
 PromocodeSchema.plugin(timestamps);

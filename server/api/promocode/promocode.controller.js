@@ -64,8 +64,10 @@ exports.check = function(req, res, next) {
     }
   }, function (err, promocode) {
     if(err) { return handleError(res, err); }
-    if(!promocode) { return res.send(404); }
-    console.log('promocode', promocode);
+    if(!promocode) { return res.send(404, {
+      isError: true,
+      message: 'Entered promo code not found.'
+    }); }
     req.promocode = promocode;
     next();
   });

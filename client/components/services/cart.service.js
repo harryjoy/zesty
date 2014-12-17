@@ -12,7 +12,8 @@ angular.module('zesty')
         qty: 1,
         price: item.price,
         currency: item.currency,
-        img: item.mainImage
+        img: item.mainImage,
+        categories: item.categories
       };
     },
     resource: function () {
@@ -54,6 +55,13 @@ angular.module('zesty')
         },
         removecode: {
           method: 'DELETE',
+          params: {
+            id: '@id',
+            controller: 'promocode'
+          }
+        },
+        checkPromoCode: {
+          method: 'GET',
           params: {
             id: '@id',
             controller: 'promocode'
