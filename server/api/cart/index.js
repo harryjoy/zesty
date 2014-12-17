@@ -3,6 +3,7 @@
 var express = require('express');
 var controller = require('./cart.controller');
 var promocodeController = require('../promocode/promocode.controller');
+var auth = require('../../auth/auth.service');
 
 var router = express.Router();
 
@@ -16,5 +17,7 @@ router.delete('/:id/items', controller.removeFromCart);
 router.get('/:id/promocode', controller.checkPromoCode);
 router.post('/:id/promocode', promocodeController.check, controller.applyPromoCode);
 router.delete('/:id/promocode', controller.removePromoCode);
+
+router.get('/:id/checklimits', auth.isAuthenticated(), controller.checkCartLimits);
 
 module.exports = router;

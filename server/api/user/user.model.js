@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
 var timestamps = require('mongoose-timestamp');
+var AddressSchema = require('../../components/shared/address.schema');
 
 var UserSchema = new Schema({
   firstName: String,
@@ -19,23 +20,7 @@ var UserSchema = new Schema({
     type: String,
     default: 'user'
   },
-  addresses: [{
-    title: String,
-    firstName: String,
-    lastName: String,
-    email: String,
-    mobile: String,
-    addressLine1: String,
-    addressLine2: String,
-    city: String,
-    state: String,
-    country: String,
-    zipcode: String,
-    isDefault: {
-      type: Boolean,
-      default: false
-    }
-  }],
+  addresses: [AddressSchema],
   cards: [{
     cardNumber: String,
     cardType: Number,

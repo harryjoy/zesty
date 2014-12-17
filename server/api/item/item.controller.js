@@ -166,7 +166,10 @@ exports.related = function(req, res) {
     _.forEach(item.categories, function (category) {
       categories.push(category.name);
     });
-    Item.find({ 'categories.name' : { '$in' : categories }, '_id' : { '$ne' : item._id } }, function (err, items) {
+    Item.find({
+      'categories.name' : { '$in' : categories },
+      '_id' : { '$ne' : item._id }
+    }, function (err, items) {
       if(err) { return handleError(res, err); }
       return res.json(200, items);
     });

@@ -2,35 +2,12 @@
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
-    timestamps = require('mongoose-timestamp');
+    timestamps = require('mongoose-timestamp'),
+    CartItemSchema = require('../../components/shared/cartItem.schema');
 
 var OrderSchema = new Schema({
   orderNumber: String,
-  products: [{
-    _id: Schema.Types.ObjectId,
-    qty: Number,
-    price: Number,
-    title: String,
-    img: String,
-    description: String,
-    currency: String,
-    categories: [{
-      id: Schema.Types.ObjectId,
-      name: String
-    }],
-    approxDeliveryDate: Date,
-    deliveryDate: Date,
-    shipper: {
-      shipperId: Schema.Types.ObjectId,
-      companyName: String,
-      phone: String,
-      email: String
-    },
-    supplier: {
-      _id: Schema.Types.ObjectId,
-      name: String
-    }
-  }],
+  products: [CartItemSchema],
   orderDate: {
     type: Date,
     default: new Date()

@@ -40,5 +40,26 @@ var ReviewSchema = new Schema({
   },
   reviewTime: { type: Date, default: Date.now }
 });
+
 ReviewSchema.plugin(timestamps);
+
+/**
+ * Methods
+ */
+ReviewSchema.methods = {
+  /**
+   * Increament respective count of flag based on review vote.
+   * @param {[type]} vote [description]
+   */
+  addReviewVote: function(vote) {
+    if (vote === 1) {
+      this.helpful = this.helpful + 1;
+    } else if (vote === 2) {
+      this.unhelpful = this.unhelpful + 1;
+    } else if (vote === 3) {
+      this.abuses = this.abuses + 1;
+    }
+  }
+};
+
 module.exports = mongoose.model('Review', ReviewSchema);

@@ -66,6 +66,13 @@ angular.module('zesty')
             id: '@id',
             controller: 'promocode'
           }
+        },
+        checkLimits: {
+          method: 'GET',
+          params: {
+            id: '@id',
+            controller: 'checklimits'
+          }
         }
       });
     }

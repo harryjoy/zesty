@@ -64,13 +64,7 @@ exports.addReviewVote = function(req, res) {
       if(!review) { return res.send(404); }
       ReviewVote.create(vote, function(err, reviewVote) {
         if(err) { return handleError(res, err); }
-        if (vote.vote === 1) {
-          review.helpful = review.helpful + 1;
-        } else if (vote.vote === 2) {
-          review.unhelpful = review.unhelpful + 1;
-        } else if (vote.vote === 3) {
-          review.abuses = review.abuses + 1;
-        }
+        review.addReviewVote(vote.vote);
         review.save(function (err) {
           if (err) { return handleError(res, err); }
           return res.json(200, review);

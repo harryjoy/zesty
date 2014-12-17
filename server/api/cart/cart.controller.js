@@ -21,7 +21,10 @@ exports.update = function(req, res) {
     _.forEach(updated.products, function (currentProduct) {
       cart.products.push(currentProduct);
     });
-    cart = calculateCartValues(cart);
+    if (cart.promoCodeValue && cart.isPromoCodePercentage) {
+      cart.promoCodeValue = (cart.calculateCartTotal() * cart.promoCodeActualValue) / 100;
+    }
+    cart.calculateCartValues();
     cart.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.json(200, cart);
@@ -57,11 +60,8 @@ exports.removePromoCode = function(req, res, next) {
   Cart.findById(req.params.id, function (err, cart) {
     if (err) { return handleError(res, err); }
     if(!cart) { return res.send(404); }
-    cart.promoCode = undefined;
-    cart.promoCodeValue = undefined;
-    cart.promoCodeInfo = undefined;
-    cart.promoCodeExpiry = undefined;
-    cart = calculateCartValues(cart);
+    cart.invalidatePromoCode();
+    cart.calculateCartValues();
     cart.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.json(200, cart);
@@ -98,7 +98,10 @@ exports.addToCart = function(req, res, next) {
     if (!found){
       cart.products.push(item);
     }
-    cart = calculateCartValues(cart);
+    if (cart.promoCodeValue && cart.isPromoCodePercentage) {
+      cart.promoCodeValue = (cart.calculateCartTotal() * cart.promoCodeActualValue) / 100;
+    }
+    cart.calculateCartValues();
     cart.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.json(200, cart);
@@ -123,14 +126,17 @@ exports.removeFromCart = function(req, res, next) {
     });
     if (cart.promoCode) {
       if (!cart.products || cart.products.length === 0) {
-        cart = invalidateCartPromoCode(cart);
+        cart.invalidatePromoCode();
       } else if (cart.isPromoCodeSpecific && cart.products) {
         if (!checkForSepecificPromoCode(cart.promoCodeCategories, cart.products)) {
-          cart = invalidateCartPromoCode(cart);
+          cart.invalidatePromoCode();
         }
       }
+      if (cart.isPromoCodePercentage) {
+        cart.promoCodeValue = (cart.calculateCartTotal() * cart.promoCodeActualValue) / 100;
+      }
     }
-    cart = calculateCartValues(cart);
+    cart.calculateCartValues();
     cart.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.json(200, cart);
@@ -146,7 +152,8 @@ exports.emptyCart = function(req, res, next) {
   }, function (err, cart) {
     if (!err && cart) {
       cart.products = [];
-      cart = calculateCartValues(invalidateCartPromoCode(cart));
+      cart.invalidatePromoCode();
+      cart.calculateCartValues();
       cart.save(function (err) {
         if (err) { console.log('error while empty cart'); }
         return res.json(200, order);
@@ -169,7 +176,8 @@ exports.checkPromoCode = function(req, res, next) {
             !checkForSepecificPromoCode(cart.promoCodeCategories, cart.products))
           )
         ) {
-      cart = calculateCartValues(invalidateCartPromoCode(cart));
+      cart.invalidatePromoCode();
+      cart.calculateCartValues();
       cart.save(function (err) {
         if (err) { console.log('error while empty cart'); }
         return res.json(200, cart);
@@ -180,38 +188,38 @@ exports.checkPromoCode = function(req, res, next) {
   });
 };
 
+// check if user is logged in and cart does not exceed his budget limits
+exports.checkCartLimits = function(req, res, next) {
+  if (!req.user) { return res.send(404); }
+  var limits = req.user.cartLimits;
+  Cart.findById(req.params.id, function (err, cart) {
+    if (err) { return handleError(res, err); }
+    if(!cart) { return res.send(404); }
+    if (limits.price > 0 && cart.grandTotal > limits.price) {
+      return res.send(400, {
+        isError: true,
+        message: 'Cart total exceeds your in a cart limit.'
+      });
+    }
+    var cartItems = 0;
+    _.forEach(cart.products, function(product) {
+      cartItems += product.qty;
+    });
+    if (limits.items > 0 && cartItems > limits.items) {
+      return res.send(400, {
+        isError: true,
+        message: 'Items in cart exceeds your in a cart items limit.'
+      });
+    }
+    return res.send(200, cart);
+  });
+};
+
 /**
  * ===================================
  *         HELPER FUNCTIONS
  * ===================================
  */
-
-/**
- * calculate cart values before updating cart.
- * @param  {Cart} cart The cart to update.
- * @return {Cart}      Cart with updated values.
- */
-function calculateCartValues(cart) {
-  cart.subTotal = 0;
-  cart.grandTotal = 0;
-  cart.currency = '';
-  if (cart.products && cart.products.length > 0) {
-    _.forEach(cart.products, function(product) {
-      cart.subTotal = cart.subTotal + (product.qty * product.price);
-      cart.grandTotal = cart.grandTotal + (product.qty * product.price);
-      cart.currency = product.currency;
-    });
-    cart.currency = cart.products[0].currency;
-    if (cart.promoCodeValue) {
-      if (cart.grandTotal > cart.promoCodeValue) {
-        cart.grandTotal = cart.grandTotal - cart.promoCodeValue;
-      } else{
-        cart.grandTotal = 0;
-      }
-    }
-  }
-  return cart;
-}
 
 /**
  * Update promo code in the cart.
@@ -220,36 +228,12 @@ function calculateCartValues(cart) {
  * @param  {Response} res  The HTTP response.
  */
 function updateCartPromoCode(cart, pc, res) {
-  cart.promoCode = pc.code;
-  cart.promoCodeInfo = pc.info;
-  cart.promoCodeExpiry = pc.expiry;
-  cart.isPromoCodeSpecific = pc.isSpecific;
-  cart.promoCodeCategories = pc.categories;
-  if (pc.isPercent) {
-    cart.promoCodeValue = (cart.grandTotal * pc.value) / 100;
-  } else {
-    cart.promoCodeValue = pc.value;
-  }
-  cart = calculateCartValues(cart);
+  cart.applyPromoCode();
+  cart.calculateCartValues();
   cart.save(function (err) {
     if (err) { return handleError(res, err); }
     return res.json(200, cart);
   });
-}
-
-/**
- * Remove promo code and related entries from cart.
- * @param  {Cart} cart The cart from which promo code will be deleted.
- * @return {Cart}      Updated cart.
- */
-function invalidateCartPromoCode(cart) {
-  cart.promoCode = undefined;
-  cart.promoCodeValue = undefined;
-  cart.promoCodeInfo = undefined;
-  cart.promoCodeExpiry = undefined;
-  cart.isPromoCodeSpecific = undefined;
-  cart.promoCodeCategories = undefined;
-  return cart;
 }
 
 /**
