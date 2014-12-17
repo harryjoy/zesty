@@ -96,19 +96,9 @@ exports.addReview = function(req, res) {
     if(!item) { return res.send(404); }
     Review.count({'productId': req.params.id}, function(err, count) {
       if(err) { return handleError(res, err); }
-      var review = req.body;
+      var review = new Review(req.body);
       review.first = (count === 0);
-      if (review.customerId) {
-        review.certified = true;
-      }
-      review.product = {
-        title: item.title,
-        description: item.description,
-        image: item.mainImage
-      };
-      if (review.rating > 5) {
-        review.rating = 5;
-      }
+      review.setProduct(item);
       Review.create(review, function(err, review) {
         if(err) { return handleError(res, err); }
         item.reviews = item.reviews + 1;

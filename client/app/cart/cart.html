@@ -65,7 +65,10 @@
       <order-summary></order-summary>
       <div class="row" ng-show="cartProcessError">
         <div class="col-md-12 col-sm-12">
-          <p class="bg-red pad round-3">{{errorMessage}}</p>
+          <p class="bg-red pad round-3">
+            <i class="fa fa-times pull-right text-cursor-pointer" ng-click="cartProcessError = false;"></i>
+            {{errorMessage}}
+          </p>
         </div>
       </div>
       <div class="row">

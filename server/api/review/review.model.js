@@ -59,7 +59,35 @@ ReviewSchema.methods = {
     } else if (vote === 3) {
       this.abuses = this.abuses + 1;
     }
+  },
+
+  /**
+   * Set product information in review.
+   * @param {Object} item Product
+   */
+  setProduct: function(item) {
+    this.product = {
+      title: item.title,
+      description: item.description,
+      image: item.mainImage
+    };
   }
 };
+
+/**
+ * Pre-save hook:
+ *   Check if rating is in valid range 
+ *   and if review is coming from a certified buyer or not.
+ */
+ReviewSchema.pre('save', function(next) {
+  if (!this.isNew) { return next(); }
+  if (this.customerId) {
+    this.certified = true;
+  }
+  if (this.rating > 5) {
+    this.rating = 5;
+  }
+  next();
+});
 
 module.exports = mongoose.model('Review', ReviewSchema);
