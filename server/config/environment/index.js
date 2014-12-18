@@ -3,6 +3,7 @@
 var path = require('path');
 var _ = require('lodash');
 var messages = require('../messages');
+var enums = require('../enums');
 
 function requiredProcessEnv(name) {
   if(!process.env[name]) {
@@ -42,6 +43,12 @@ var all = {
   errorMessages: messages.errors,
   warningMessages: messages.warning,
   successMessages: messages.success,
+
+  // order number prefix
+  orderPrefix: 'ZST',
+
+  // enums constants
+  enums: enums,
 
   // MongoDB connection options
   mongo: {

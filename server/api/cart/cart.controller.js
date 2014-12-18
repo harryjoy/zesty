@@ -5,7 +5,6 @@ var Cart = require('./cart.model');
 var mongoose = require('mongoose');
 var config = require('../../config/environment');
 var Order = require('../order/order.model');
-var Promise = require("bluebird");
 
 // Updates an existing cart in the DB.
 exports.update = function(req, res) {

@@ -2,7 +2,8 @@
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema, 
-    timestamps = require('mongoose-timestamp');
+    timestamps = require('mongoose-timestamp'),
+    config = require('../../config/environment');
 
 var ReviewSchema = new Schema({
 	title: String,
@@ -52,11 +53,11 @@ ReviewSchema.methods = {
    * @param {[type]} vote [description]
    */
   addReviewVote: function(vote) {
-    if (vote === 1) {
+    if (vote === config.enums.REVIEW_VOTE_TYPE.helpful) {
       this.helpful = this.helpful + 1;
-    } else if (vote === 2) {
+    } else if (vote === config.enums.REVIEW_VOTE_TYPE.unhelpful) {
       this.unhelpful = this.unhelpful + 1;
-    } else if (vote === 3) {
+    } else if (vote === config.enums.REVIEW_VOTE_TYPE.abuse) {
       this.abuses = this.abuses + 1;
     }
   },

@@ -11,6 +11,7 @@ var Favorite = require('../favorite/favorite.model');
 var Item = require('../item/item.model');
 var Cart = require('../cart/cart.model');
 var Order = require('../order/order.model');
+var Notification = require('../notification/notification.model');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -75,11 +76,19 @@ exports.changePassword = function(req, res, next) {
     if(user.authenticate(oldPass)) {
       user.password = newPass;
       user.save(function(err) {
-        if (err) return validationError(res, err);
-        res.send(200);
+        if (err) {
+          req.err = err;
+          req.code = 422;
+          req.success = false;
+        } else {
+          req.success = true;
+        }
+        next();
       });
     } else {
-      res.send(403);
+      req.code = 403;
+      req.success = false;
+      next();
     }
   });
 };
@@ -354,6 +363,36 @@ exports.myCart = function(req, res, next) {
       return res.json(200, cart);
     }
   });
+};
+
+// get user's notifications
+exports.notifications = function(req, res, next) {
+  var pageSize = req.query.pageSize || config.pagination.size;
+  var pageNumber = req.query.pageNumber || 0;
+  var end = new Date(), start = new Date();
+  start.setMonth(start.getMonth() - 6);
+  var query = {
+    customerId: mongoose.Types.ObjectId(req.params.id),
+    tme: {
+      '$lt': end,
+      '$gte': start
+    }
+  };
+  Notification.count(query, function(err, count) {
+    if(err) { return handleError(res, err); }
+    if(count === 0) { return res.send(404); }
+    var result = {
+      count: count
+    };
+    Notification.find(query).limit(pageSize).skip(pageNumber * pageSize).sort('-createdAt').exec(function(err, notifications) {
+      if(err) { return handleError(res, err); }
+      if(!notifications || notifications.length === 0) { return res.send(404); }
+      result.data = notifications;
+      req.result = result;
+      next();
+    });
+  });
+  
 };
 
 // get user's orders

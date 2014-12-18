@@ -12,53 +12,53 @@
     Upto 6 months old notifications are displayed here. <br/>
     For older notifications please make a request <a class="alert-link" href="/contact">here</a> with your account details.
   </div>
-  <div class="row">
+  <div class="row" ng-hide="totalItems === 0">
     <div class="col-lg-12 col-md-12 col-sm-12">
       <div class="card card-success">
         <div class="card-body">
           <div class="row">
             <div class="col-md-12 notification-list-box" ng-repeat="notification in notifications">
               <div class="row">
-                <div class="col-md-1">
+                <div class="col-md-1 text-center" ng-class="{'text-navy': notification.isSuccess, 'text-orange': !notification.isSuccess}">
                   <span ng-switch="notification.type">
+                    <span ng-switch-when="0">
+                      <i class="fa fa-cubes fa-3x fa-fw"></i>
+                    </span>
                     <span ng-switch-when="1">
-                      <i class="fa fa-truck fa-3x fa-fw text-navy"></i>
+                      <i class="fa fa-user fa-3x fa-fw"></i>
                     </span>
                     <span ng-switch-when="2">
-                      <i class="fa fa-plane fa-3x fa-fw text-navy"></i>
+                      <i class="fa fa-gift fa-3x fa-fw"></i>
                     </span>
                     <span ng-switch-when="3">
-                      <i class="fa fa-user fa-3x fa-fw text-navy"></i>
-                    </span>
-                    <span ng-switch-when="4">
-                      <i class="fa fa-gift fa-3x fa-fw text-navy"></i>
+                      <i class="fa fa-truck fa-3x fa-fw"></i>
                     </span>
                   </span>
                 </div>
-                <div class="col-md-11">
-                  <div class="text-normal"><em>{{notification.date}}</em></div>
-                  <div>{{notification.notes}}</div>
+                <div class="col-md-11 notification" ng-class="{'new-success': !notification.read && notification.isSuccess, 'new-fail': !notification.read && !notification.isSuccess}">
+                  <div class="text-small pull-right"><em>{{notification.displayTime}}</em></div>
+                  <div class="text-bolder" ng-class="{'text-navy': notification.isSuccess, 'text-orange': !notification.isSuccess}">
+                    <span class="label label-info" ng-hide="notification.read">new</span>
+                    {{notification.message}}
+                  </div>
+                  <div>{{notification.summary}}</div>
                 </div>
               </div>
             </div> <!-- col end -->
           </div>
         </div> <!-- card body end -->
-        <div class="card-footer">
-          <div class="row">
-            <div class="col-md-12 col-sm-12">
-              <nav class="text-center">
-                <ul class="pagination pagination-sm user-review-pagination">
-                  <li class="disabled"><a href="#"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
-                  <li class="active"><a href="#">1</a></li>
-                  <li><a href="#">2</a></li>
-                  <li><a href="#"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
-                </ul>
-              </nav>
-            </div> <!-- col end -->
-          </div>
+        <div class="card-footer text-center">
+          <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm no-margin" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="10" ng-change="pageChanged()"></pagination>
         </div>
-      </div>
-
+      </div> <!-- end of card -->
     </div>
   </div> <!-- end of row -->
+
+  <div class="row" ng-show="totalItems === 0">
+    <div class="col-md-12 col-sm-12">
+      <h4 class="alert alert-warning text-center">
+        No notifications to display.
+      </h4>
+    </div>
+  </div>
 </div>

@@ -164,6 +164,19 @@
   &:first-child {
     padding-top: 5px;
   }
+
+  .notification {
+    border-left: 1px solid #dddddd;
+
+    &.new-success {
+      border-left-color: #00A65A;
+    }
+
+    &.new-fail {
+      border-left-color: #FF851B;
+    }
+  }
+  
 }
 
 .user-info-box {

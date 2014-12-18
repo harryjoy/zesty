@@ -15,6 +15,8 @@ angular.module('zesty')
             $timeout(function() {
               $scope.message = '';
             }, 3000);
+            $scope.submitted = false;
+            $scope.user.newPassword = $scope.user.confirmPassword = $scope.user.oldPassword = '';
           })
           .catch( function() {
             form.password.$setValidity('mongoose', false);

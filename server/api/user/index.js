@@ -4,16 +4,19 @@ var express = require('express');
 var controller = require('./user.controller');
 var config = require('../../config/environment');
 var auth = require('../../auth/auth.service');
+var notificationController = require('../notification/notification.controller');
 
 var router = express.Router();
 
 router.get('/', auth.hasRole('admin'), controller.index);
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);
 router.get('/me', auth.isAuthenticated(), controller.me);
-router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.put('/:id', auth.isAuthenticated(), controller.update);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);
+
+router.put('/:id/password', auth.isAuthenticated(), controller.changePassword,
+	notificationController.notifyChangePassword);
 
 router.post('/:id/addresses', auth.isAuthenticated(), controller.addAddress);
 router.put('/:id/addresses', auth.isAuthenticated(), controller.editAddress);
@@ -30,7 +33,8 @@ router.get('/:id/ratings', auth.isAuthenticated(), controller.ratings);
 router.get('/:id/favorites', auth.isAuthenticated(), controller.favorites);
 
 router.get('/:id/cart', auth.isAuthenticated(), controller.myCart);
-
+router.get('/:id/notifications', auth.isAuthenticated(), controller.notifications,
+	notificationController.updateReadStatus);
 router.get('/:id/orders', auth.isAuthenticated(), controller.orders);
 
 module.exports = router;

@@ -1,30 +1,53 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('NotificationCtrl', ['$scope',
-    function ($scope) {
+  .controller('NotificationCtrl', ['$scope', 'User', 'PaginationServ',
+    function ($scope, User, PaginationServ) {
 
-  $scope.notifications= [{
-    type: 1,
-    date: '1 month ago',
-    notes: 'Your shipment for order #123 has been shipped successfully to desired address.' +
-      'Hope you enjoy the poroduct.' +
-      ' And as its COD please arrange necessary cash with you.'
-  }, {
-    type: 3,
-    date: '1 month ago',
-    notes: 'Your order for HP is confirmed.'
-  }, {
-    type: 4,
-    date: '2 months ago',
-    notes: 'You got EGift Voucher from us worth 500. Happy Shopping.'
-  }, {
-    type: 2,
-    date: '2 months ago',
-    notes: 'Your shipment for order #123 will be delivered today and as its COD' +
-      'please arrange necessary cash with you.' +
-      'Your shipment for order #123 will be delivered today and as its COD' +
-      'please arrange necessary cash with you.'
-  }];
+  $scope.notifications = [];
+  $scope.totalItems = 0;
+  $scope.init = function () {
+    User.notifications({
+      id: $scope.user._id,
+      pageSize: 10
+    }).$promise.then(function (result) {
+      PaginationServ.refreshData();
+      if (result && result.data && result.data.length > 0) {
+        $scope.notifications = result.data;
+        $scope.totalItems = result.count;
+        PaginationServ.setPageData(1, result.data);
+      } else {
+        $scope.notifications = [];
+        $scope.totalItems = 0;
+      }
+    }).catch(function (err) {
+      $scope.errors = err;
+    });
+  };
+
+  $scope.init(); // init the list for the first time.
+
+  /**
+   * Called when page is changed.
+   */
+  $scope.pageChanged = function() {
+    var notifications = PaginationServ.getPageData($scope.currentPage);
+    if (!notifications || notifications === null) {
+      User.notifications({
+        id: $scope.getCurrentUser()._id,
+        pageNumber: $scope.currentPage - 1,
+        pageSize: 10
+      }).$promise.then(function (result) {
+        $scope.notifications = result.data;
+        $scope.totalItems = result.count;
+        PaginationServ.setPageData($scope.currentPage, result.data);
+      }).catch(function (err) {
+        $scope.errors = err;
+      });
+    } else {
+      $scope.notifications = notifications;
+    }
+    $scope.scrollToTop();
+  };
 
 }]);

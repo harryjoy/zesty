@@ -98,6 +98,12 @@ angular.module('zesty')
         params: {
           controller: 'orders'
         }
+      },
+      notifications: {
+        method: 'GET',
+        params: {
+          controller: 'notifications'
+        }
       }
 	  });
   });

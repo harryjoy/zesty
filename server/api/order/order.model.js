@@ -58,4 +58,17 @@ var OrderSchema = new Schema({
 
 OrderSchema.plugin(timestamps);
 
+OrderSchema.methods = {
+  /**
+   * Get order number to be displayed on UI.
+   * @param  {String} orderPrefix Prefix to add to order number.
+   */
+  getOrderDisplayNumber: function(orderPrefix) {
+    if (!this.orderNumber || this.orderNumber.indexOf('-') === -1) {
+      return this.orderNumber;
+    }
+    return orderPrefix + '' + this.orderNumber.substring(this.orderNumber.lastIndexOf('-') + 1);
+  }
+};
+
 module.exports = mongoose.model('Order', OrderSchema);
