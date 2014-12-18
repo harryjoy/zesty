@@ -1,16 +1,31 @@
-The MIT License (MIT)
-
+Zesty
 Copyright (c) 2014 Harsh Raval
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+License
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Subject to the conditions below, you may use, copy, modify and/or merge copies
+of this software and associated content and documentation files (the ”Software”)
+to test, develop, publish, distribute and/or sell new software derived from
+or incorporating the Software:
+
+This file, unmodified, shall be included with all copies or substantial portions
+of the Software that are distributed in source code form.
+
+Any person dealing with the Software shall not misrepresent the source of the Software.
+
+You may edit, improve and redistribute this software always under the terms of this license.
+
+You can use this software for free only for a personal or non-profit projects.
+If you'd like to use this software in a commercial project, you need to contact the
+author (Harsh Raval) of the software and ask for his permission and fulfill his conditions.
+
+You cannot sell or re-sell this software without any permission from the author (Harsh Raval).
+
+This software may be sold if used inside a software which uses it as dependency,
+in any case, this license must be included in the software and only after it fulfills
+the author's conditions.
+
+Disclaimer
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -20,3 +35,5 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+Author (Harsh Raval) retains the right to make changes to this document at any
+time, without notice.
