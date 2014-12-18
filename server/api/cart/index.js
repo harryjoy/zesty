@@ -18,6 +18,7 @@ router.get('/:id/promocode', controller.checkPromoCode);
 router.post('/:id/promocode', promocodeController.check, controller.applyPromoCode);
 router.delete('/:id/promocode', controller.removePromoCode);
 
-router.get('/:id/checklimits', auth.isAuthenticated(), controller.checkCartLimits);
+router.get('/:id/checklimits', auth.isAuthenticated(), controller.checkCartLimits,
+	controller.checkCartMonthlyLimits, controller.checkCartYearlyLimits);
 
 module.exports = router;
