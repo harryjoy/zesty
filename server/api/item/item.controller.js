@@ -20,13 +20,21 @@ exports.index = function(req, res) {
   });
 };
 
-// Get a single item
-exports.show = function(req, res) {
+// Get a single item and put it in req object.
+// This method will only be used as step for other methods.
+exports.getItem = function(req, res, next) {
   Item.findById(req.params.id, function (err, item) {
     if(err) { return handleError(res, err); }
     if(!item) { return res.send(404); }
-    return res.json(item);
+    req.item = item;
+    next();
   });
+};
+
+// Get and return a single item
+exports.show = function(req, res) {
+  if(!req.item) { return res.send(404); }
+  return res.json(req.item);
 };
 
 // Creates a new item in the DB.
@@ -40,26 +48,20 @@ exports.create = function(req, res) {
 // Updates an existing item in the DB.
 exports.update = function(req, res) {
   if(req.body._id) { delete req.body._id; }
-  Item.findById(req.params.id, function (err, item) {
+  if(!req.item) { return res.send(404); }
+  var updated = _.merge(req.item, req.body);
+  updated.save(function (err) {
     if (err) { return handleError(res, err); }
-    if(!item) { return res.send(404); }
-    var updated = _.merge(item, req.body);
-    updated.save(function (err) {
-      if (err) { return handleError(res, err); }
-      return res.json(200, item);
-    });
+    return res.json(200, updated);
   });
 };
 
 // Deletes a item from the DB.
 exports.destroy = function(req, res) {
-  Item.findById(req.params.id, function (err, item) {
+  if(!req.item) { return res.send(404); }
+  req.item.remove(function(err) {
     if(err) { return handleError(res, err); }
-    if(!item) { return res.send(404); }
-    item.remove(function(err) {
-      if(err) { return handleError(res, err); }
-      return res.send(204);
-    });
+    return res.send(204);
   });
 };
 
@@ -90,79 +92,72 @@ exports.reviews = function(req, res) {
 };
 
 // add review for selected item.
-exports.addReview = function(req, res) {
-  Item.findById(req.params.id, function (err, item) {
+exports.addReview = function(req, res, next) {
+  if(!req.item) { return res.send(404); }
+  var item = req.item;
+  Review.count({'productId': req.params.id}, function(err, count) {
     if(err) { return handleError(res, err); }
-    if(!item) { return res.send(404); }
-    Review.count({'productId': req.params.id}, function(err, count) {
+    var review = new Review(req.body);
+    review.first = (count === 0);
+    review.setProduct(item);
+    Review.create(review, function(err, review) {
       if(err) { return handleError(res, err); }
-      var review = new Review(req.body);
-      review.first = (count === 0);
-      review.setProduct(item);
-      Review.create(review, function(err, review) {
-        if(err) { return handleError(res, err); }
-        item.reviews = item.reviews + 1;
-        Review.aggregate().match({'productId': mongoose.Types.ObjectId(req.params.id)}).group({
-          _id: '$productId',
-          average: {
-            $avg: '$rating'
-          } 
-        }).exec(function (err, result){
-          if(err) { return handleError(res, err); }
-          item.rating = numeral(result[0].average).format('0.00');
-          item.save(function (err) {
-            if (err) { return handleError(res, err); }
-            return res.json(201, review);
-          });
-        });
-      });
+      item.reviews = item.reviews + 1;
+      req.item = item;
+      req.review = review;
+      next();
     });
   });
 };
 
 // edit item review
-exports.editReview = function(req, res) {
-  Item.findById(req.params.id, function (err, item) {
+exports.editReview = function(req, res, next) {
+  if(!req.item) { return res.send(404); }
+  var item = req.item;
+  Review.findById(req.body._id, function(err, review) {
+    var updated = _.merge(review, req.body);
+    updated.save(function (err) {
+      if (err) { return handleError(res, err); }
+      req.item = item;
+      req.review = review;
+      next();
+    });
+  });
+};
+
+// update overall ratings for an item
+exports.updateItemRatings = function(req, res, next) {
+  if (!req.item || !req.review) { return res.send(404); }
+  var item = req.item, review = req.review;
+  Review.aggregate().match({'productId': item._id}).group({
+    _id: '$productId',
+    average: {
+      $avg: '$rating'
+    } 
+  }).exec(function (err, result){
     if(err) { return handleError(res, err); }
-    if(!item) { return res.send(404); }
-    Review.findById(req.body._id, function(err, review) {
-      var updated = _.merge(review, req.body);
-      updated.save(function (err) {
-        if (err) { return handleError(res, err); }
-        Review.aggregate().match({'productId': mongoose.Types.ObjectId(req.params.id)}).group({
-          _id: '$productId',
-          average: {
-            $avg: '$rating'
-          } 
-        }).exec(function (err, result){
-          if(err) { return handleError(res, err); }
-          item.rating = numeral(result[0].average).format('0.00');
-          item.save(function (err) {
-            if (err) { return handleError(res, err); }
-            return res.json(201, review);
-          });
-        });
-      });
+    item.rating = numeral(result[0].average).format('0.00');
+    item.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(201, review);
     });
   });
 };
 
 // get related items for selected item.
 exports.related = function(req, res) {
-  Item.findById(req.params.id, function (err, item) {
+  if(!req.item) { return res.send(404); }
+  var item = req.item;
+  var categories = [];
+  _.forEach(item.categories, function (category) {
+    categories.push(category.name);
+  });
+  Item.find({
+    'categories.name' : { '$in' : categories },
+    '_id' : { '$ne' : item._id }
+  }, function (err, items) {
     if(err) { return handleError(res, err); }
-    if(!item) { return res.send(404); }
-    var categories = [];
-    _.forEach(item.categories, function (category) {
-      categories.push(category.name);
-    });
-    Item.find({
-      'categories.name' : { '$in' : categories },
-      '_id' : { '$ne' : item._id }
-    }, function (err, items) {
-      if(err) { return handleError(res, err); }
-      return res.json(200, items);
-    });
+    return res.json(200, items);
   });
 };
 
@@ -181,19 +176,17 @@ exports.ratings = function(req, res, next) {
 
 // add selected item to favorite
 exports.addToFavorite = function(req, res, next) {
+  if(!req.item) { return res.send(404); }
+  var item = req.item;
   Favorite.findOne({
     'productId': req.params.id, 
     'customerId': req.user._id
   }, function(err, favorite) {
     if(err) { return handleError(res, err); }
     if(favorite) { return res.send(200, favorite); }
-    Item.findById(req.params.id, function (err, item) {
+    Favorite.create(req.body, function(err, fav) {
       if(err) { return handleError(res, err); }
-      if(!item) { return res.send(404); }
-      Favorite.create(req.body, function(err, fav) {
-        if(err) { return handleError(res, err); }
-        return res.json(201, fav);
-      });
+      return res.json(201, fav);
     });
   })
 };

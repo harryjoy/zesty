@@ -7,20 +7,20 @@ var auth = require('../../auth/auth.service');
 var router = express.Router();
 
 router.get('/', controller.index);
-router.get('/:id', controller.show);
+router.get('/:id', controller.getItem, controller.show);
 router.post('/', controller.create);
-router.put('/:id', controller.update);
-router.patch('/:id', controller.update);
-router.delete('/:id', controller.destroy);
+router.put('/:id', controller.getItem, controller.update);
+router.patch('/:id', controller.getItem, controller.update);
+router.delete('/:id', controller.getItem, controller.destroy);
 
 router.get('/:id/reviews', controller.reviews);
-router.post('/:id/reviews', controller.addReview);
-router.put('/:id/reviews', controller.editReview);
+router.post('/:id/reviews', controller.getItem, controller.addReview, controller.updateItemRatings);
+router.put('/:id/reviews', controller.getItem, controller.editReview, controller.updateItemRatings);
 
-router.get('/:id/related', controller.related);
+router.get('/:id/related', controller.getItem, controller.related);
 router.get('/:id/ratings', controller.ratings);
 
-router.post('/:id/favorite', auth.isAuthenticated(), controller.addToFavorite);
+router.post('/:id/favorite', auth.isAuthenticated(), controller.getItem, controller.addToFavorite);
 router.delete('/:id/favorite', auth.isAuthenticated(), controller.removeFavorite);
 
 module.exports = router;

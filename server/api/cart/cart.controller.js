@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var Cart = require('./cart.model');
 var mongoose = require('mongoose');
+var config = require('../../config/environment');
 
 // Updates an existing cart in the DB.
 exports.update = function(req, res) {
@@ -48,7 +49,7 @@ exports.applyPromoCode = function(req, res, next) {
       } else {
         return res.send(404, {
           isError: true,
-          message: "Entered promocode is not valid for current cart items."
+          message: config.errorMessages.PROMO_CODE_CATEGORY_NOT_VALID
         });
       }
     }
@@ -191,14 +192,15 @@ exports.checkPromoCode = function(req, res, next) {
 // check if user is logged in and cart does not exceed his budget limits
 exports.checkCartLimits = function(req, res, next) {
   if (!req.user) { return res.send(404); }
-  var limits = req.user.cartLimits;
+  var user = req.user;
+  var limits = user.cartLimits;
   Cart.findById(req.params.id, function (err, cart) {
     if (err) { return handleError(res, err); }
     if(!cart) { return res.send(404); }
     if (limits.price > 0 && cart.grandTotal > limits.price) {
       return res.send(400, {
         isError: true,
-        message: 'Cart total exceeds your in a cart limit.'
+        message: config.errorMessages.CART_PRICE_LIMIT_EXCEED
       });
     }
     var cartItems = 0;
@@ -208,7 +210,7 @@ exports.checkCartLimits = function(req, res, next) {
     if (limits.items > 0 && cartItems > limits.items) {
       return res.send(400, {
         isError: true,
-        message: 'Items in cart exceeds your in a cart items limit.'
+        message: config.errorMessages.CART_ITEMS_LIMIT_EXCEED
       });
     }
     return res.send(200, cart);
@@ -228,7 +230,7 @@ exports.checkCartLimits = function(req, res, next) {
  * @param  {Response} res  The HTTP response.
  */
 function updateCartPromoCode(cart, pc, res) {
-  cart.applyPromoCode();
+  cart.applyPromoCode(pc);
   cart.calculateCartValues();
   cart.save(function (err) {
     if (err) { return handleError(res, err); }

@@ -2,6 +2,7 @@
 
 var path = require('path');
 var _ = require('lodash');
+var messages = require('../messages');
 
 function requiredProcessEnv(name) {
   if(!process.env[name]) {
@@ -36,6 +37,11 @@ var all = {
   pagination: {
     size: 3
   },
+
+  // messages for response status
+  errorMessages: messages.errors,
+  warningMessages: messages.warning,
+  successMessages: messages.success,
 
   // MongoDB connection options
   mongo: {

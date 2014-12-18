@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Promocode = require('./promocode.model');
+var config = require('../../config/environment');
 
 // Get list of promocodes
 exports.index = function(req, res) {
@@ -66,7 +67,7 @@ exports.check = function(req, res, next) {
     if(err) { return handleError(res, err); }
     if(!promocode) { return res.send(404, {
       isError: true,
-      message: 'Entered promo code not found.'
+      message: config.errorMessages.PROMO_CODE_NOT_FOUND
     }); }
     req.promocode = promocode;
     next();
