@@ -120,6 +120,6 @@
 // Opacity for an element
 @mixin opacity($opt) {
   opacity: $opt;
-  filter: alpha(opacity=$opt);
-  -ms-filter: "alpha(Opacity="+$opt+")";
+  filter: alpha(opacity=$opt * 100);
+  -ms-filter: "alpha(Opacity="+$opt * 100+")";
 }

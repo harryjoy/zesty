@@ -1,5 +1,3 @@
-@import 'shared/appmixins/_mixins.scss';
-
 .login-note {
 	margin-top: 20px;
 	margin-bottom: 0px;
@@ -17,7 +15,7 @@
 		margin: 0px 0px;
 		padding: 12px 18px 12px 25px;
 		vertical-align: top;
-		background: #ffffff;
+		background: $white;
 		color: rgba(0, 0, 0, 0.8);
 		@include box-shadow(0px 0px 0px 1px rgba(0, 0, 0, 0.15));
 		@include border-radius(0px);
@@ -31,9 +29,8 @@
 			top: 50%;
 			right: 0px;
 			border: medium none;
-			background-color: #ffffff;
-			width: 18px;
-			height: 18px;
+			background-color: $white;
+			@include square(18px);
 			border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 			border-right: 1px solid rgba(0, 0, 0, 0.1);
 			@include transform(translateY(-50%) translateX(50%) rotate(-45deg));
@@ -49,7 +46,7 @@
 			@include border-radius-sep(0px, 2px, 0px, 2px);
 
 			&:after {
-				display: none;
+				@extend .hide;
 			}
 		}
 
@@ -57,13 +54,13 @@
 			@include border-radius(2px);
 
 			&:after {
-				display: none;
+				@extend .hide;
 			}
 		}
 
 		&.active {
 			cursor: auto;
-			background: #f0f0f0;
+			background: $gray;
 
 			.cart_step_icon {
 				//color: #00a2a2;
@@ -77,7 +74,7 @@
 			}
 
 			&:after {
-				background: #f0f0f0;
+				background: $gray;
 			}
 
 			.cart_step_done {
@@ -88,7 +85,7 @@
 		&.disabled {
 			color: #c2c2c2;
 			cursor: auto;
-			background: #ffffff;
+			background: $white;
 			pointer-events: none;
 
 			.cart_step_description {
@@ -117,16 +114,16 @@
 			width: 1%;
 
 			.cart_check {
-				font-size: 25px;
-				background: #00A65A;
+				font-size: $font-size-h3;
+				background: $success;
 				@include border-radius(50%);
-				padding: 5px;
-				color: #fafafa;
+				@extend .pad-5;
+				color: $light-white;
 			}
 		}
 
 		.cart_step_icon {
-			font-size: 35px;
+			font-size: $font-size-h1;
 			margin: 0px;
 			padding-right: 15px;
 			display: table-cell;
@@ -138,16 +135,16 @@
 			vertical-align: middle;
 
 			.cart_step_heading {
-				font-size: 20px;
+				font-size: $font-size-large;
 				font-weight: bold;
 				margin-bottom: 0px;
 				margin-top: 0px;
 			}
 
 			.cart_step_description {
-				font-size: 11px;
+				font-size: $font-size-small;
 				color: #888;
-				margin-top: 1px;
+				@extend .margin-top-1;
 			}
 		}
 	}
@@ -158,27 +155,27 @@
 }
 
 .payment_header {
-	border-bottom: 1px solid #e0e0e0;
-	padding-bottom: 5px;
+	@extend .border-bottom;
+	@extend .pad-bottom-5;
 	margin: 0px;
 }
 
 .cc-box {
-	background: #f6f6f6;
+	background: $light-white;
 	margin: 10px auto;
 	width: 75%;
-	padding: 10px;
+	@extend .pad;
 	@include border-radius(5px);
 }
 
 .payment-foot-note {
-	font-size: 12px;
+	font-size: $font-size-small;
 	padding: 5px;
 }
 
 .save-card-notice {
-	background: #fff;
-	padding: 5px 0px;
+	background: $white;
+	@extend .pad-vertical-5;
 	margin: 0px auto;
 	width: 75%;
 }

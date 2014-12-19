@@ -4,20 +4,20 @@
 
 @font-face {
   font-family: 'lora';
-  src: url(shared/fonts/Lora-Regular.ttf);
+  src: url(../shared/fonts/Lora-Regular.ttf);
 }
 @font-face {
   font-family: 'lora';
-  src: url(shared/fonts/Lora-Italic.ttf);
+  src: url(../shared/fonts/Lora-Italic.ttf);
   font-style: italic, oblique;
 }
 @font-face {
   font-family: 'raleway-light';
-  src: url(shared/fonts/Raleway-Light.ttf);
+  src: url(../shared/fonts/Raleway-Light.ttf);
 }
 @font-face {
   font-family: 'raleway';
-  src: url(shared/fonts/Raleway-Regular.ttf);
+  src: url(../shared/fonts/Raleway-Regular.ttf);
 }
 
 html, body {
@@ -210,6 +210,9 @@ a {
 .no-border {
   border: 0px !important;
 }
+.clear-border { // same as no-border but not forcing
+  border: 0px;
+}
 .no-padding {
   padding: 0px !important;
 }
@@ -229,16 +232,32 @@ a {
 .padding-base {
   padding-top: $padding-base-horizontal;
 }
-@for $i from 1 through 10 {
-  .pad-#{$i} { padding: 1px * $i; }
-}
-
 // 10px padding and margins
 .pad {
   padding: 10px;
 }
 .margin {
   margin: 10px;
+}
+
+// utility classes for padding and margins.
+@for $i from 1 through 10 {
+  .pad-#{$i} { padding: 1px * $i; }
+  .pad-left-#{$i} { padding-left: 1px * $i; }
+  .pad-right-#{$i} { padding-right: 1px * $i; }
+  .pad-top-#{$i} { padding-top: 1px * $i; }
+  .pad-bottom-#{$i} { padding-bottom: 1px * $i; }
+  .pad-vertical-#{$i} { padding-top: 1px * $i; padding-bottom: 1px * $i; }
+  .pad-horizontal-#{$i} { padding-left: 1px * $i; padding-right: 1px * $i; }
+
+  .margin-#{$i} { margin: 1px * $i; }
+  .margin-left-#{$i} { margin-left: 1px * $i; }
+  .margin-right-#{$i} { margin-right: 1px * $i; }
+  .margin-top-#{$i} { margin-top: 1px * $i; }
+  .margin-bottom-#{$i} { margin-bottom: 1px * $i; }
+  .margin-vertical-#{$i} { margin-top: 1px * $i; margin-bottom: 1px * $i; }
+  .margin-vertical-auto-#{$i} { margin: 1px * $i auto; }
+  .margin-horizontal-auto-#{$i} { margin: auto 1px * $i; }
 }
 
 .inline {
@@ -326,6 +345,36 @@ table.text-center {
   font-family: 'lora';
 }
 
+// utility classes for border
 .border-red {
   border-color: $red;
+}
+.border-top {
+  border-top: 1px solid $gray;
+}
+.border-bottom {
+  border-bottom: 1px solid $gray;
+}
+.border-left {
+  border-left: 1px solid $gray;
+}
+.border-right {
+  border-right: 1px solid $gray;
+}
+.border-vertical {
+  @extend .border-top;
+  @extend .border-bottom;
+}
+.border-horizontal {
+  @extend .border-left;
+  @extend .border-right;
+}
+.border {
+  @extend .border-top;
+  @extend .border-bottom;
+  @extend .border-left;
+  @extend .border-right;
+}
+.border-2x {
+  border-width: 2px;
 }

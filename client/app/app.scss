@@ -17,6 +17,21 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 
 // Component styles are injected through grunt
 // injector
+@import 'appmixins/_component-mixins.scss';
+@import 'appmixins/_mixins.scss';
+@import 'basic/_vars.scss';
+@import 'basic/_vcore.scss';
+@import 'modules/_alerts.scss';
+@import 'modules/_buttons.scss';
+@import 'modules/_callouts.scss';
+@import 'modules/_cards.scss';
+@import 'modules/_messages.scss';
+@import 'modules/_navigation.scss';
+@import 'modules/_product.scss';
+@import 'modules/_progress-bars.scss';
+@import 'pages/_error.scss';
+@import 'pages/_navbar.scss';
+@import 'pages/_offer-modal.scss';
 @import 'account/account.scss';
 @import 'account/login/login.scss';
 @import 'admin/admin.scss';
@@ -41,21 +56,6 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'new/new.scss';
 @import 'product/product.scss';
 @import 'productReviews/productReviews.scss';
-@import 'shared/appmixins/_component-mixins.scss';
-@import 'shared/appmixins/_mixins.scss';
-@import 'shared/basic/_vars.scss';
-@import 'shared/basic/_vcore.scss';
-@import 'shared/modules/_alerts.scss';
-@import 'shared/modules/_buttons.scss';
-@import 'shared/modules/_callouts.scss';
-@import 'shared/modules/_cards.scss';
-@import 'shared/modules/_messages.scss';
-@import 'shared/modules/_navigation.scss';
-@import 'shared/modules/_product.scss';
-@import 'shared/modules/_progress-bars.scss';
-@import 'shared/pages/_error.scss';
-@import 'shared/pages/_navbar.scss';
-@import 'shared/pages/_offer-modal.scss';
 @import 'writeReview/writeReview.scss';
 @import 'modal/modal.scss';
 // endinjector

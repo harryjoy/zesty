@@ -16,36 +16,34 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
       <div class="card card-success">
         <div class="card-body">
-          <div class="row">
-            <div class="col-md-12 notification-list-box" ng-repeat="notification in notifications">
-              <div class="row">
-                <div class="col-md-1 text-center" ng-class="{'text-navy': notification.isSuccess, 'text-orange': !notification.isSuccess}">
-                  <span ng-switch="notification.type">
-                    <span ng-switch-when="0">
-                      <i class="fa fa-cubes fa-3x fa-fw"></i>
-                    </span>
-                    <span ng-switch-when="1">
-                      <i class="fa fa-user fa-3x fa-fw"></i>
-                    </span>
-                    <span ng-switch-when="2">
-                      <i class="fa fa-gift fa-3x fa-fw"></i>
-                    </span>
-                    <span ng-switch-when="3">
-                      <i class="fa fa-truck fa-3x fa-fw"></i>
-                    </span>
+          <div class="notification-list-box" ng-repeat="notification in notifications">
+            <div class="row">
+              <div class="col-md-1 text-center" ng-class="{'text-navy': notification.isSuccess, 'text-orange': !notification.isSuccess}">
+                <span ng-switch="notification.type">
+                  <span ng-switch-when="0">
+                    <i class="fa fa-cubes fa-3x fa-fw"></i>
                   </span>
-                </div>
-                <div class="col-md-11 notification" ng-class="{'new-success': !notification.read && notification.isSuccess, 'new-fail': !notification.read && !notification.isSuccess}">
-                  <div class="text-small pull-right"><em>{{notification.displayTime}}</em></div>
-                  <div class="text-bolder" ng-class="{'text-navy': notification.isSuccess, 'text-orange': !notification.isSuccess}">
-                    <span class="label label-info" ng-hide="notification.read">new</span>
-                    {{notification.message}}
-                  </div>
-                  <div>{{notification.summary}}</div>
-                </div>
+                  <span ng-switch-when="1">
+                    <i class="fa fa-user fa-3x fa-fw"></i>
+                  </span>
+                  <span ng-switch-when="2">
+                    <i class="fa fa-gift fa-3x fa-fw"></i>
+                  </span>
+                  <span ng-switch-when="3">
+                    <i class="fa fa-truck fa-3x fa-fw"></i>
+                  </span>
+                </span>
               </div>
-            </div> <!-- col end -->
-          </div>
+              <div class="col-md-11 notification" ng-class="{'new-success': !notification.read && notification.isSuccess, 'new-fail': !notification.read && !notification.isSuccess}">
+                <div class="text-small pull-right"><em>{{notification.displayTime}}</em></div>
+                <div class="text-bolder" ng-class="{'text-navy': notification.isSuccess, 'text-orange': !notification.isSuccess}">
+                  <span class="label label-info" ng-hide="notification.read">new</span>
+                  {{notification.message}}
+                </div>
+                <div>{{notification.summary}}</div>
+              </div>
+            </div>
+          </div> <!-- col end -->
         </div> <!-- card body end -->
         <div class="card-footer text-center">
           <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm no-margin" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="10" ng-change="pageChanged()"></pagination>

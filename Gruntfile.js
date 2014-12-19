@@ -82,12 +82,12 @@ module.exports = function (grunt) {
       },
       injectSass: {
         files: [
-          '<%= zesty.client %>/{app,components}/**/*.{scss,sass}'],
+          '<%= zesty.client %>/{app,components,shared}/**/*.{scss,sass}'],
         tasks: ['injector:sass']
       },
       sass: {
         files: [
-          '<%= zesty.client %>/{app,components}/**/*.{scss,sass}'],
+          '<%= zesty.client %>/{app,components,shared}/**/*.{scss,sass}'],
         tasks: ['sass', 'autoprefixer']
       },
       gruntfile: {
@@ -310,7 +310,7 @@ module.exports = function (grunt) {
     ngtemplates: {
       options: {
         // This should be the name of your apps angular module
-        module: 'fullApp',
+        module: 'zesty',
         htmlmin: {
           collapseBooleanAttributes: true,
           collapseWhitespace: true,
@@ -469,10 +469,12 @@ module.exports = function (grunt) {
         options: {
           loadPath: [
             '<%= zesty.client %>/bower_components',
+            '<%= zesty.client %>/shared',
             '<%= zesty.client %>/app',
             '<%= zesty.client %>/components'
           ],
-          compass: false
+          compass: false,
+          //style: 'compressed'
         },
         files: {
           '.tmp/app/app.css' : '<%= zesty.client %>/app/app.scss'
@@ -511,6 +513,7 @@ module.exports = function (grunt) {
           transform: function(filePath) {
             filePath = filePath.replace('/client/app/', '');
             filePath = filePath.replace('/client/components/', '');
+            filePath = filePath.replace('/client/shared/', '');
             return '@import \'' + filePath + '\';';
           },
           starttag: '// injector',
@@ -518,6 +521,7 @@ module.exports = function (grunt) {
         },
         files: {
           '<%= zesty.client %>/app/app.scss': [
+          '<%= zesty.client %>/shared/**/*.{scss,sass}',
             '<%= zesty.client %>/{app,components}/**/*.{scss,sass}',
             '!<%= zesty.client %>/app/app.{scss,sass}'
           ]
@@ -569,7 +573,7 @@ module.exports = function (grunt) {
       return grunt.task.run([
         'clean:server',
         'env:all',
-        'injector:sass', 
+        'injector:sass',
         'concurrent:server',
         'injector',
         'wiredep',
@@ -581,7 +585,7 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'env:all',
-      'injector:sass', 
+      'injector:sass',
       'concurrent:server',
       'injector',
       'wiredep',

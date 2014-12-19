@@ -1,5 +1,5 @@
 .ratings {
-	margin-top: 10px;
+	@extend .margin-top-10;
 }
 
 .review-list-summary-box {
@@ -26,7 +26,7 @@
 
 	&:hover {
 		color: #f0ad4e;
-		background-color: #fff;
+		background-color: $white;
 		border-color: #eea236;
 	}
 }

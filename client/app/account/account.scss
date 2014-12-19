@@ -1,18 +1,18 @@
 .account_box {
 
   .account_header {
-    padding-bottom: 5px;
-    border-bottom: 1px solid #e0e0e0;
-    margin-top: 5px;
+    @extend .pad-bottom-5;
+    @extend .border-bottom;
+    @extend .margin-top-5;
   }
 
   .card-footer {
     padding: 5px !important;
-    background-color: #fafafa !important;
+    background-color: $light-gray !important;
   }
 
   .default_selection {
-    font-size: 12px;
+    font-size: $font-size-small;
   }
 
   label {
@@ -24,21 +24,21 @@
     .header {
       text-transform: uppercase;
       font-weight: bold;
-      font-size: 14px;
+      font-size: $font-size-base;
     }
   }
 
   .wishlist_history {
 
     .card-body {
-      padding: 5px;
+      @extend .pad-5;
     }
 
     .product_image {
       @include square(60px);
       display: table-cell;
-      float: left;
-      margin-right: 5px;
+      @extend .pull-left;
+      @extend .margin-right-5;
     }
 
     .product_description {
@@ -51,7 +51,7 @@
   }
 
   .dataTables_length {
-    display: none;
+    @extend .hide;
   }
 }
 
@@ -60,18 +60,17 @@
   margin-bottom: 20px;
 
   img {
-    width: 50px;
-    height: 50px;
+    @include square(50px);
     display: inline-block;
-    float: left;
-    margin-right: 10px;
+    @extend .pull-left;
+    @extend .margin-right-10;
   }
 
   .recently-rated-box-descr {
 
     h5 {
       margin-top: 0px;
-      margin-bottom: 5px;
+      @extend .margin-bottom-5;
     }
   }
 }
@@ -90,83 +89,80 @@
   }
 
   .user-review-header {
-    padding: 10px;
-    border-bottom: 1px solid #f6f6f6;
+    @extend .pad;
+    border-bottom: 1px solid $light-white;
 
     img {
-      width: 50px;
-      height: 50px;
+      @include square(50px);
       display: inline-block;
-      float: left;
-      margin-right: 10px;
+      @extend .pull-left;
+      @extend .margin-right-10;
     }
 
     .user-review-header-descr {
 
       h5 {
         margin-top: 0px;
-        margin-bottom: 5px;
-        font-size: 14px;
+        @extend .margin-bottom-5;
+        font-size: $font-size-base;
         padding-bottom: 0px;
         border-bottom: none;
       }
 
       .user-review-header-product-description {
-        font-size: 12px;
+        font-size: $font-size-small;
       }
     }
   }
 
   .user-review-title {
-    font-size: 14px;
+    font-size: $font-size-base;
   }
 
   .user-review-comments {
-    font-size: 12px;
+    font-size: $font-size-small;
   }
-}
-
-.user-review-pagination {
-  margin: 0px;
 }
 
 .invoice {
   position: relative;
   width: 95%;
-  margin: 10px auto;
-  background: #fff !important;
-  border: 1px solid #f4f4f4;
+  //margin: 10px auto;
+  @extend .margin-vertical-auto-10;
+  background: $white !important;
+  border: 1px solid $gray;
 }
 
 .security-guarantee-box {
 
   .security-guarantee-description {
-    float: left;
+    @extend .pull-left;
     display: inline-block;
   }
 
   .security-guarantee-image {
-    float: right;
+    @extend .pull-right;
     display: inline-block;
-    margin-left: 10px;
+    @extend .margin-left-10;
   }
 }
 
 .notification-list-box {
-  border-bottom: 1px solid #f6f6f6;
-  padding: 10px;
+  //border-bottom: 1px solid $light-white;
+  @extend .border-bottom;
+  @extend .pad;
 
   &:last-child {
     border-bottom: none;
-    padding-bottom: 5px;
+    @extend .pad-bottom-5;
   }
 
   &:first-child {
-    padding-top: 5px;
+    @extend .pad-top-5;
   }
 
   .notification {
-    border-left: 1px solid #dddddd;
+    @extend .border-left;
 
     &.new-success {
       border-left-color: #00A65A;
@@ -180,8 +176,9 @@
 }
 
 .user-info-box {
-  border: 1px solid #f6f6f6;
-  padding: 5px;
+  //border: 1px solid #f6f6f6;
+  @extend .border;
+  @extend .pad-5;
 
   .user-image-box, .user-name-box {
     display: table-cell;
@@ -190,15 +187,14 @@
   }
 
   .user-image-box {
-    border-right: 1px solid #ddd;
-    color: #fff;
-    background-color: #428bca;
-    border-color: #428bca;
+    color: $white;
+    background-color: $primary;
+    border-color: $primary;
     text-align: center;
   }
 
   .user-name-box {
-    padding-left: 5px;
+    @extend .pad-left-5;
 
     p {
       margin: 0 0 2px 2px;
@@ -210,7 +206,7 @@
   margin-bottom: 10px !important;
 
   .order-details {
-    padding-bottom: 5px;
+    @extend .pad-bottom-5;
 
     .order-items {
       margin-left: 25px;
@@ -218,27 +214,23 @@
   }
 
   .order-grand-total {
-    margin-top: 5px;
-    padding-top: 5px;
-    border-top: 1px solid #eee;
+    @extend .margin-top-5;
+    @extend .pad-top-5;
+    @extend .border-top;
   }
 
   .order-products {
     padding: 3px 0px;
     margin: 10px 0px;
-    border-top: 1px solid #eee;
+    @extend .border-top;
 
     .order-product {
-      padding: 5px 0px;
+      @extend .pad-vertical-5;
 
       .order-product-review-button {
         overflow: hidden;
         width: 35px;
-        -webkit-transition: all .5s ease-in;
-        -moz-transition: all .5s ease-in;
-        -o-transition: all .5s ease-in;
-        -ms-transition: all .5s ease-in;
-        transition: all .5s ease-in;
+        @include transitions(all .5s ease-in);
 
         .text {
           display: none;
@@ -254,18 +246,18 @@
       }
 
       .order-product-details {
-        font-size: 14px;
+        font-size: $font-size-base;
         vertical-align: top;
 
         .order-product-image {
           @include square(75px);
           display: table-cell;
-          float: left;
-          margin-right: 5px;
+          @extend .pull-left;
+          @extend .margin-right-5;
         }
 
         .order-product-name {
-          margin-right: 5px;
+          @extend .margin-right-5;
 
           .order-product-description {
             font-size: 11px;

@@ -1,10 +1,31 @@
 <div class="container">
-  <h1 class="page-header">Users</h1>
-  <ul class="list-group">
-    <li class="list-group-item" ng-repeat="user in users">
-      <strong>{{user.name}}</strong><br>
-      <span class="text-muted">{{user.email}}</span>
-      <a ng-click="delete(user)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
-    </li>
-  </ul>
+  <div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-4">
+      <div class="list-group">
+        <a href="/admin" class="list-group-item" ng-class="{active: isActive('/admin/users')}">
+          <i class="fa fa-dashboard fa-fw"></i> Dashboard
+        </a>
+        <a href="/admin/users" class="list-group-item" ng-class="{active: isActive('/admin')}">
+          <i class="fa fa-users fa-fw"></i> Users
+        </a>
+      </div>
+    </div>
+
+    <div class="col-lg-9 col-md-9 col-sm-8">
+      <div class="card card-solid card-info">
+        <div class="card-header">
+          <h1 class="card-title">
+            <i class="fa fa-users fa-fw"></i> Users
+          </h1>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item clear-border border-bottom border-2x" ng-repeat="user in users">
+            <strong>{{user.firstName}} {{user.lastName}}</strong><br>
+            <span class="text-muted">{{user.email}}</span>
+            <a ng-click="delete(user)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
