@@ -9,7 +9,7 @@ angular.module('zesty')
         _id: item._id,
         title: item.title,
         description: item.description,
-        qty: 1,
+        qty: item.qty || 1,
         price: item.price,
         currency: item.currency,
         img: item.mainImage,

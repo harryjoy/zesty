@@ -157,7 +157,7 @@ angular.module('zesty')
      * @return {Object} cart
      */
     addItemToCart: function(item) {
-      item.qty = 1;
+      if(!item.qty) { item.qty = 1; }
       CartServ.resource().addToCart({
         id: cart._id
       }, CartServ.convertItem(item), function(updatedCart) {

@@ -78,10 +78,12 @@ angular.module('zesty')
 
   $scope.$on('cart.updated', function() {
     $scope.addedToCart = false;
+    $scope.itemDetails.qty = 1;
     if ($scope.cart.products && $scope.cart.products.length > 0 && $scope.itemDetails) {
       _.forEach($scope.cart.products, function(currentProduct) {
         if (currentProduct._id === $scope.itemDetails._id) {
           $scope.addedToCart = true;
+          $scope.itemDetails.qty = currentProduct.qty;
         }
       });
     }
@@ -92,6 +94,7 @@ angular.module('zesty')
       throw new Error('No product details found for selected item.');
     }
     $scope.itemDetails = ProductUtil.convertItem(product);
+    $scope.itemDetails.qty = 1;
     $scope.largeImageSrc = $scope.itemDetails.mainImage;
     $scope.totalItems = $scope.itemDetails.reviewsCount;
 
@@ -111,6 +114,7 @@ angular.module('zesty')
       _.forEach($scope.cart.products, function(currentProduct) {
         if (currentProduct._id === $scope.itemDetails._id) {
           $scope.addedToCart = true;
+          $scope.itemDetails.qty = currentProduct.qty;
         }
       });
     }
@@ -242,6 +246,17 @@ angular.module('zesty')
       }, function (err) {
         console.log(err);
       });
+    }
+  };
+
+  $scope.increaseQty = function() {
+    if ($scope.itemDetails) {
+      $scope.itemDetails.qty++;
+    }
+  };
+  $scope.decreaseQty = function() {
+    if ($scope.itemDetails && $scope.itemDetails.qty > 1) {
+      $scope.itemDetails.qty--;
     }
   };
 
