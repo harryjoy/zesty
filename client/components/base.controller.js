@@ -5,6 +5,7 @@ angular.module('zesty')
     function ($scope, $location, Auth, $window) {
 
   $scope.moment = moment;
+  $scope.fullDateFormate = 'MMMM Do YYYY HH:mm:ss';
   $scope.dateFormate = 'MMMM Do YYYY';
   $scope.smDateFormate = 'MMM DD YYYY';
   $scope.minDateFormate = 'MM Do YY';

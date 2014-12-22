@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('zesty.admin', []);
+angular.module('zesty.charts', []);
 
 angular.module('zesty', [
   'ngCookies',
@@ -15,7 +16,8 @@ angular.module('zesty', [
   'ImageZoom',
   'green.inputmask4angular',
   'zesty.utils',
-  'zesty.admin'
+  'zesty.admin',
+  'zesty.charts'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, reCAPTCHAProvider) {
     $urlRouterProvider

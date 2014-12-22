@@ -1,0 +1,14 @@
+<div class="card card-solid card-info">
+  <div class="card-header">
+    <h1 class="card-title">
+      <i class="fa fa-users fa-fw"></i> Users
+    </h1>
+  </div>
+  <ul class="list-group">
+    <li class="list-group-item clear-border border-bottom border-2x" ng-repeat="user in users">
+      <strong>{{user.firstName}} {{user.lastName}}</strong><br>
+      <span class="text-muted">{{user.email}}</span>
+      <a ng-click="delete(user)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
+    </li>
+  </ul>
+</div>

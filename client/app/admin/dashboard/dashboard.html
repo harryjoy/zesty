@@ -1,0 +1,278 @@
+<div class="card card-solid card-info">
+  <div class="card-header">
+    <h1 class="card-title">
+      <i class="fa fa-dashboard fa-fw"></i> Dashboard
+    </h1>
+  </div>
+  <div class="card-body admin-dashboard-body">
+    
+    <div class="row margin-vertical-10">
+      <div class="col-md-6 col-sm-12">
+        <div class="card card-small">
+          <div class="card-header">
+            <h2 class="card-title">Overview</h2>
+            <div class="card-tools pull-right">
+              <button tooltip="Refresh Data" class="btn btn-default no-border btn-xs"><i class="fa fa-refresh"></i></button>
+            </div>
+          </div>
+          <div class="morris-area full" zmorris-line ng-model="areaData" is-area="true" xkey="y" ykeys="a,b" labels="A,B"></div>
+          <div class="card-content morris-area-footer">
+            <div class="row border-bottom pad-bottom-3 margin-bottom-5">
+              <div class="col-md-8 col-sm-12">
+                <h4 class="border-bottom pad-bottom-3">Today</h4>
+                <table width="100%">
+                  <tr class="">
+                    <td class="pad-vertical-3 text-left">
+                      Sales:
+                    </td>
+                    <td class="pad-vertical-3 text-right">
+                      <span class="badge">80</span>
+                    </td>
+                  </tr>
+                  <tr class="">
+                    <td class="pad-vertical-3 text-left">
+                      Registrations:
+                    </td>
+                    <td class="pad-vertical-3 text-right">
+                      <span class="badge bg-green">400</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="pad-vertical-3 text-left">
+                      Orders:
+                    </td>
+                    <td class="pad-vertical-3 text-right">
+                      <span class="badge bg-yellow">2</span>
+                    </td>
+                  </tr>
+                </table>
+              </div> <!-- ./col-9 -->
+              <div class="col-md-4 col-sm-12 text-normal">
+                <h4 class="border-bottom pad-bottom-3">Last Month</h4>
+                <div class="text-left">
+                  <i class="fa fa-users"></i> Users 
+                  <p class="margin-vertical-2" ng-model="orderCounts" zspark type="line" height="22" opts="{{lineOpts}}"></p>
+                  <i class="fa fa-shopping-cart"></i> Orders 
+                  <p class="margin-vertical-2" ng-model="orderCounts" zspark type="line" height="22" opts="{{lineOpts}}"></p>
+                </div>
+              </div> <!-- ./col-3 -->
+            </div> <!-- ./row -->
+            <em class="text-normal">
+              *This information is collected on: {{moment().format(fullDateFormate)}}
+            </em>
+          </div>
+        </div>
+      </div> <!-- col-6 area-chart -->
+
+      <div class="col-md-6 col-sm-12">
+        <div calss="row">
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-solid text-center">
+              <div class="card-body bg-green">
+                <span ng-model="orderCounts" zspark type="bar" height="100" bar-width="3" opts="{{lineOpts}}"></span>
+              </div>
+              <div class="card-footer">
+                <i class="fa fa-line-chart"></i> Sales
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-solid text-center">
+              <div class="card-body bg-red">
+                <span ng-model="orderCounts" zspark type="line" height="100" opts="{{lineOpts}}"></span>
+              </div>
+              <div class="card-footer">
+                <i class="fa fa-ban"></i> Return & Cancellation
+              </div>
+            </div>
+          </div>
+        </div> <!-- ./row 1 -->
+        <div calss="row">
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-solid text-center">
+              <div class="card-body bg-maroon">
+                <span ng-model="orderCounts" zspark type="pie" height="100" bar-width="3" opts="{{donutOpts}}"></span>
+              </div>
+              <div class="card-footer">
+                <i class="fa fa-shopping-cart"></i> Orders by categories
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-solid text-center">
+              <div class="card-body bg-yellow">
+                <span ng-model="orderCounts" zspark type="bar" height="100" bar-width="3" opts="{{lineOpts}}"></span>
+              </div>
+              <div class="card-footer">
+                <i class="fa fa-users"></i> Subscriptions
+              </div>
+            </div>
+          </div>
+        </div> <!-- ./row 2 -->
+      </div> <!-- ./ col-md-6 beside area chart -->
+    </div> <!-- ./ main-row -->
+    
+    <div class="row margin-vertical-10">
+      <div class="col-md-3 col-sm-6">
+        <div class="bg-white pad dashboard-card">
+          <div class="dashboard-card-left">
+            <span class="dashboard-card-icon success">
+              <i class="fa fa-user fa-2x fa-fw"></i>
+            </span>
+          </div>
+          <div class="dashboard-card-right">
+            <p class="no-margin text-big">241</p>
+            <p class="text-muted no-margin">Registered User</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="bg-white pad dashboard-card">
+          <div class="dashboard-card-left">
+            <span class="dashboard-card-icon primary">
+              <i class="fa fa-cube fa-2x fa-fw"></i>
+            </span>
+          </div>
+          <div class="dashboard-card-right">
+            <p class="no-margin text-big">200</p>
+            <p class="text-muted no-margin">Items Shipped</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="bg-white pad dashboard-card">
+          <div class="dashboard-card-left">
+            <span class="dashboard-card-icon warning">
+              <i class="fa fa-shopping-cart fa-2x fa-fw"></i>
+            </span>
+          </div>
+          <div class="dashboard-card-right">
+            <p class="no-margin text-big">50</p>
+            <p class="text-muted no-margin">Orders <small>this month</small></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="bg-white pad dashboard-card">
+          <div class="dashboard-card-left">
+            <span class="dashboard-card-icon danger">
+              <i class="fa fa-comments fa-2x fa-fw"></i>
+            </span>
+          </div>
+          <div class="dashboard-card-right">
+            <p class="no-margin text-big">500</p>
+            <p class="text-muted no-margin">Reviews</p>
+          </div>
+        </div>
+      </div>
+    </div> <!-- ./row white-boxes 4 -->
+
+    <div class="row margin-vertical-10">
+      <div class="col-md-2 col-sm-4">
+        <div class="card card-small bg-blue">
+          <div class="card-content text-center border-bottom">
+            <i class="fa fa-comments fa-3x fa-fw"></i>
+          </div>
+          <div class="card-content text-center">
+            <h4 class="no-margin">
+              200
+            </h4>
+            <div class="text-uppercase text-normal">Reviews</div>
+            <hr class="margin-top-5 margin-bottom-5" />
+            <div class="text-normal">
+              <i class="fa fa-user"></i> 150 certified user's
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-4">
+        <div class="card card-small bg-navy">
+          <div class="card-content text-center border-bottom">
+            <i class="fa fa-cubes fa-3x fa-fw"></i>
+          </div>
+          <div class="card-content text-center">
+            <h4 class="no-margin">
+              345
+            </h4>
+            <div class="text-uppercase text-normal">Shipments</div>
+            <hr class="margin-top-5 margin-bottom-5" />
+            <div class="text-normal">
+              <i class="fa fa-cube"></i> 520 items
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-4">
+        <div class="card card-small bg-yellow">
+          <div class="card-content text-center border-bottom">
+            <i class="fa fa-users fa-3x fa-fw"></i>
+          </div>
+          <div class="card-content text-center">
+            <h4 class="no-margin">
+              500
+            </h4>
+            <div class="text-uppercase text-normal">New Users</div>
+            <hr class="margin-top-5 margin-bottom-5" />
+            <div class="text-normal">
+              <i class="fa fa-users"></i> 999+ total users
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-4">
+        <div class="card card-small bg-green">
+          <div class="card-content text-center border-bottom">
+            <i class="fa fa-shopping-cart fa-3x fa-fw"></i>
+          </div>
+          <div class="card-content text-center">
+            <h4 class="no-margin">
+              345
+            </h4>
+            <div class="text-uppercase text-normal">Orders</div>
+            <hr class="margin-top-5 margin-bottom-5" />
+            <div class="text-normal">
+              <i class="fa fa-money"></i> Rs. 99999+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-4">
+        <div class="card card-small bg-red">
+          <div class="card-content text-center border-bottom">
+            <i class="fa fa-envelope fa-3x fa-fw"></i>
+          </div>
+          <div class="card-content text-center">
+            <h4 class="no-margin">
+              62
+            </h4>
+            <div class="text-uppercase text-normal">New requests</div>
+            <hr class="margin-top-5 margin-bottom-5" />
+            <div class="text-normal">
+              <i class="fa fa-cubes"></i> 30 - items <br/>
+              <i class="fa fa-mail-reply"></i> 30 - return <br/>
+              <i class="fa fa-times"></i> 2 - cancellation
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-4">
+        <div class="card card-small bg-light-blue">
+          <div class="card-content text-center border-bottom">
+            <i class="fa fa-plus-circle fa-3x fa-fw"></i>
+          </div>
+          <div class="card-content text-center">
+            <h4 class="no-margin">
+              20
+            </h4>
+            <div class="text-uppercase text-normal">New items</div>
+            <hr class="margin-top-5 margin-bottom-5" />
+            <div class="text-normal">
+              <i class="fa fa-male"></i> 5 new sellers
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> <!-- ./row colorful-boxes 6 -->
+
+  </div>
+</div>

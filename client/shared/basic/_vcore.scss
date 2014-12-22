@@ -131,6 +131,12 @@ a {
 .text-bolder {
   font-weight: 600;
 }
+.text-uppercase {
+  text-transform: uppercase;
+}
+.text-lowercase {
+  text-transform: lowercase;
+}
 
 // Text colors
 .text-red {

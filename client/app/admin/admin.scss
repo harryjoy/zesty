@@ -1,1 +1,105 @@
-.trash { color:rgb(209, 91, 71); }
+.trash {
+  color:rgb(209, 91, 71);
+}
+
+.jqstooltip {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+.admin-dashboard-body {
+  padding: 20px 25px 0;
+  background-color: #e5ecf0;
+}
+
+.card {
+
+  .morris-area {
+    position: relative;
+    height: 150px;
+
+    &.full {
+      margin: 0 -25px 0 -25px;
+      overflow: hidden;
+      bottom: -25px;
+    }
+  }
+
+  .morris-area-footer {
+    background: rgb(10, 135, 208) !important;
+    color: $white;
+  }
+
+  .sales-chart {
+    position: relative;
+    height: 100px;
+  }
+}
+
+.progress-bar-extra-small {
+  height: 2px !important;
+
+  .progress-bar-transparent {
+    @include progress-bar-variant(rgba(51, 122, 183, 0.5));
+  }
+}
+
+.dashboard-card {
+  background-color: $white;
+  box-shadow: 0 2px 0 rgba(0,0,0,.05);
+  @include border-radius(2px);
+  border: 0;
+
+  .dashboard-card-left {
+    display: table-cell;
+    vertical-align: top;
+    @extend .pad-right-10;
+
+    .dashboard-card-icon {
+      @include border-radius(50%);
+      background-color: $gray;
+      color: $black;
+      display: inline-block;
+      padding: 12px;
+      text-align: center;
+
+      &.success {
+        background-color: $success;
+        color: $white;
+      }
+
+      &.info {
+        background-color: $info;
+        color: $white;
+      }
+
+      &.primary {
+        background-color: $primary;
+        color: $white;
+      }
+
+      &.danger {
+        background-color: $danger;
+        color: $white;
+      }
+
+      &.warning {
+        background-color: $warning;
+        color: $white;
+      }
+
+      i {
+        display: block;
+        line-height: 1em;
+        width: 1em;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .dashboard-card-right {
+    display: table-cell;
+    vertical-align: top;
+  }
+}
