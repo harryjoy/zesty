@@ -143,6 +143,16 @@
   }
 }
 
+a.list-group-item-black {
+  background: $black;
+  color: $white;
+
+  &.active, &.active:focus {
+    background-color: #31708f;
+    border-color: #31708f;
+  }
+}
+
 .subitem {
   margin-bottom: 0 !important;
   @extend .margin-horizontal-1;

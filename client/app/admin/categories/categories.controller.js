@@ -17,7 +17,9 @@ angular.module('zesty.admin')
   // initialize category list
   $scope.init = function() {
     $scope.categoriesLoading = true;
-    CategoryServ.query().$promise.then(function(categories) {
+    CategoryServ.query({
+      productCounts: true
+    }).$promise.then(function(categories) {
       $scope.categories = categories;
       $scope.categoriesLoading = false;
     });
@@ -118,6 +120,7 @@ angular.module('zesty.admin')
       }
     }
     if (form.$valid) {
+      $scope.category.slug = $scope.getCategorySlugFromName(angular.lowercase($scope.category.slug));
       if ($scope.isEdit) {
         CategoryServ.update({
           id: $scope.category._id
@@ -142,6 +145,7 @@ angular.module('zesty.admin')
     }
   });
 
+  // get category slug based on category name.
   $scope.getCategorySlugFromName = function(name) {
     if (!name) {
       return name;

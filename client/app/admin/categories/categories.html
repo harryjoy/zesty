@@ -28,6 +28,18 @@
                 Slug can not be empty.
               </p>
               <p class="help-block"
+                 ng-show="(form.name.$error.maxlength) && (form.name.$dirty || submitted)">
+                Name must be less than 50 characters.
+              </p>
+              <p class="help-block"
+                 ng-show="(form.slug.$error.maxlength) && (form.slug.$dirty || submitted)">
+                Slug must be less than 50 characters.
+              </p>
+              <p class="help-block"
+                 ng-show="(form.info.$error.maxlength) && (form.info.$dirty || submitted)">
+                Description must be less than 350 characters.
+              </p>
+              <p class="help-block"
                  ng-show="imageMissing && submitted">
                 Category Icon is required.
               </p>
@@ -37,24 +49,31 @@
         <div class="col-lg-6 col-md-6 col-sm-12">
           <div class="form-group" ng-class="{ 'has-success': form.name.$valid && submitted, 'has-error': form.name.$invalid && submitted }">
             <label class="text-cursor-pointer control-label" for="name">Name*:</label>
-            <input type="text" name="name" id="name" class="form-control" ng-model="category.name" required mongoose-error placeholder="Category Name"/>
+            <input type="text" name="name" id="name" class="form-control" ng-model="category.name" required mongoose-error placeholder="Category Name" ng-maxlength="50"/>
           </div>
           <div class="form-group" ng-class="{ 'has-success': form.slug.$valid && submitted, 'has-error': form.slug.$invalid && submitted }">
             <label class="text-cursor-pointer control-label" for="slug">Slug*:</label>
-            <input type="text" name="slug" id="slug" class="form-control" ng-model="category.slug" required mongoose-error placeholder="URL Slug"/>
+            <input type="text" name="slug" id="slug" class="form-control" ng-model="category.slug" required mongoose-error placeholder="URL Slug" ng-maxlength="50"/>
             <span class="helper text-small">
               The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.
             </span>
           </div>
           <div class="form-group" ng-class="{ 'has-success': form.info.$valid && submitted, 'has-error': form.info.$invalid && submitted }">
             <label class="text-cursor-pointer control-label" for="info">Description:</label>
-            <textarea rows="5" cols="26" name="info" class="form-control" id="info" ng-model="category.info" placeholder="Category Description" ng-max-length="350"></textarea>
+            <textarea rows="5" cols="26" name="info" class="form-control" id="info" ng-model="category.info" placeholder="Category Description" ng-maxlength="350"></textarea>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12">
           <div class="form-group relative-position pad-10">
             <label class="text-cursor-pointer control-label" for="image">Image:</label>
-            <input type="file" name="image" id="image" />
+            <div class="row">
+              <div class="col-md-9 col-sm-9">
+                <input type="file" name="image" id="image" />
+              </div>
+              <div class="col-md-3 col-sm-3">
+                <img src="../../../assets/images/no.png" width="64" height="64" />
+              </div>
+            </div>
             <span class="text-small helper">
               Preferred image size is 64x64 px.
             </span>
@@ -117,7 +136,7 @@
   <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-hover table-compact bg-white border">
     <thead>
       <tr class="bg-teal">
-        <th>
+        <th class="text-center">
           <input type="checkbox" id="check_all" ng-model="allCheck" ng-click="checkAllCatgory();"/>
         </th>
         <th>Image</th>
@@ -125,15 +144,19 @@
         <th>Slug</th>
         <th>Description</th>
         <th>Date</th>
+        <th>Products</th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="category in categories" class="product-admin-box">
-        <td width="5%">
+        <td width="5%" class="text-center">
           <input type="checkbox" id="check_for_{{category._id}}" ng-model="category.isChecked" />
         </td>
-        <td width="10%">
-          <span ng-switch="category.isIcon">
+        <td width="5%" class="text-center">
+          <span ng-show="{{!category.image || category.image === ''}}">
+            <img src="../../../assets/images/no.png" width="40" height="40" />
+          </span>
+          <span ng-switch="category.isIcon" ng-show="{{category.image && category.image !== ''}}">
             <img ng-switch-when="false" class="product-image" src="{{category.image}}" />
             <i ng-switch-when="true" class="fa fa-2x fa-fw {{category.image}}"></i>
           </span>
@@ -145,7 +168,7 @@
           <div class="actions">
             <a href="#" class="text-small text-underline" ng-click="editCategory(category);">Edit</a>
             |
-            <a href="#" class="text-small text-underline" ng-click="deleteCategory(category.name, category._id);">Delete</a>
+            <a href="#" class="text-small text-danger text-underline" ng-click="deleteCategory(category.name, category._id);">Delete</a>
             |
             <a href="#" class="text-small text-underline" ng-click="duplicateCategory(category);">Duplicate</a>
           </div>
@@ -158,6 +181,9 @@
         </td>
         <td width="15%">
           <span class="text-muted">{{moment(category.createdAt).format(fullDateFormate)}}</span>
+        </td>
+        <td width="5%" class="text-right">
+          <span class="text-muted">{{category.productCount}}</span>
         </td>
       </tr>
     </tbody>

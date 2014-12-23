@@ -4,11 +4,41 @@ var _ = require('lodash');
 var Category = require('./category.model');
 var Item = require('../item/item.model');
 
-// Get list of categorys
+// Get list of categories
 exports.index = function(req, res) {
-  Category.find(function (err, categorys) {
+  Category.find(function (err, categories) {
     if(err) { return handleError(res, err); }
-    return res.json(200, categorys);
+    if (!categories || categories.length === 0) { res.send(404); }
+    if (!req.query.productCounts) {
+      return res.json(200, categories);
+    } else {
+      var categoryIds = [];
+      _.forEach(categories, function(category) {
+        categoryIds.push(category._id);
+      });
+      Item.aggregate().match({
+        'categories._id': {
+          '$in': categoryIds
+        }
+      }).group({
+        '_id': '$categories._id',
+        count: {
+          $sum: 1
+        }
+      }).exec(function(err, counts) {
+        if (!err) {
+          _.forEach(categories, function(category) {
+            category.productCount = 0;
+            _.forEach(counts, function(count) {
+              if (_.isEqual(category._id, count._id[0])) {
+                category.productCount = count.count;
+              }
+            });
+          });
+        }
+        return res.json(200, categories);
+      });
+    }
   });
 };
 
