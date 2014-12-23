@@ -10,6 +10,7 @@ router.get('/:id', controller.show);
 router.post('/', controller.create);
 router.put('/:id', controller.update);
 router.patch('/:id', controller.update);
+router.delete('/delete', controller.destroyMultiple);
 router.delete('/:id', controller.destroy);
 router.get('/:id/items', controller.items);
 

@@ -55,6 +55,21 @@ exports.destroy = function(req, res) {
   });
 };
 
+// Deletes all categories whose id mathces with req param ids from the DB.
+exports.destroyMultiple = function(req, res) {
+  if (!Array.isArray(req.query.ids)) {
+    req.query.ids = [req.query.ids];
+  }
+  Category.remove({
+    '_id': {
+      '$in': req.query.ids
+    }
+  }, function(err) {
+    if(err) { return handleError(res, err); }
+    return res.send(204);
+  });
+};
+
 // Get items of this category
 exports.items = function(req, res) {
   Item.find({'categories._id' : req.params.id}, function (err, items) {

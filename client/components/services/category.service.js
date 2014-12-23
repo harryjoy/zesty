@@ -12,6 +12,18 @@ angular.module('zesty')
           controller:'items'
         },
         isArray:true
+      },
+      update: {
+        method: 'PUT',
+        params: {
+          id: '@id'
+        }
+      },
+      deleteMulti :{
+        method: 'DELETE',
+        params: {
+          'id': 'delete'
+        }
       }
     });
   }]);

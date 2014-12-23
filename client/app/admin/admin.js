@@ -27,5 +27,11 @@ angular.module('zesty')
         templateUrl: 'app/admin/items/items.html',
         controller: 'AdminItemsCtrl',
         authenticate: true
+      })
+      .state('admin.categories', {
+        url: '/categories',
+        templateUrl: 'app/admin/categories/categories.html',
+        controller: 'AdminCategoriesCtrl',
+        authenticate: true
       });
   });

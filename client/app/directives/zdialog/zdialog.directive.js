@@ -12,6 +12,8 @@ angular.module('zesty')
         scope.title = attrs.title;
         scope.showModalHeader = attrs.header;
         scope.extraClassForContent = attrs.contentclass;
+        scope.extraClassForDialog = attrs.dialogClass;
+        scope.extraClassForBody = attrs.bodyClass;
 
         scope.$watch(attrs.visible, function(value) {
           if(value === true) {
@@ -19,6 +21,10 @@ angular.module('zesty')
           } else {
             $(element).modal('hide');
           }
+        });
+
+        scope.$watch('title', function(value) {
+          scope.title = value + '';
         });
 
         $(element).on('shown.bs.modal', function() {

@@ -1,19 +1,30 @@
-    <div class="col-lg-1 col-md-1 col-sm-4">
-      <div class="list-group">
-        <a href="/admin" class="list-group-item text-center" ng-class="{active: isActive('/admin')}" tooltip="Dashboard" tooltip-placement="right">
-          <i class="fa fa-dashboard fa-fw fa-2x"></i>
-        </a>
-        <a href="/admin/users" class="list-group-item text-center" ng-class="{active: isActive('/admin/users')}" tooltip="Users" tooltip-placement="right">
-          <i class="fa fa-users fa-fw fa-2x"></i>
-        </a>
-        <a href="/admin/products" class="list-group-item text-center" ng-class="{active: isActive('/admin/products')}" tooltip="Products" tooltip-placement="right">
-          <i class="fa fa-cubes fa-fw fa-2x"></i>
-        </a>
-      </div>
+<div class="col-lg-1 col-md-1 col-sm-4">
+  <div class="list-group">
+    <a href="/admin" class="list-group-item list-group-item-info text-center" ng-class="{active: isActive('/admin')}" tooltip="Dashboard" tooltip-placement="right">
+      <i class="fa fa-dashboard fa-fw fa-2x"></i>
+    </a>
+    <a href="/admin/users" class="list-group-item list-group-item-info text-center" ng-class="{active: isActive('/admin/users')}" tooltip="Users" tooltip-placement="right">
+      <i class="fa fa-users fa-fw fa-2x"></i>
+    </a>
+    <a class="list-group-item list-group-item-info text-center" href="#" ng-click="productSubMenuVisible=!productSubMenuVisible" ng-class="{active: isActiveMultiple(['/admin/products', '/admin/categories'])}" tooltip="Product Options" tooltip-placement="right">
+      <i class="fa fa-cubes fa-fw fa-2x"></i>
+    </a>
+    <div id="users" class="list-group subitem collapse" collapse="!productSubMenuVisible">  
+      <a href="/admin/products" class="list-group-item text-center" ng-class="{active: isActive('/admin/products')}" tooltip="Products" tooltip-placement="right">
+        <i class="fa fa-cube fa-fw"></i>
+      </a>
+      <a href="/admin/categories" class="list-group-item text-center" ng-class="{active: isActive('/admin/categories')}" tooltip="Categories" tooltip-placement="right">
+        <i class="fa fa-tags fa-fw"></i>
+      </a>
     </div>
+    <a class="list-group-item list-group-item-info text-center" href="#">
+      <i class="fa fa-cogs fa-fw fa-2x"></i>
+    </a>
+  </div>
+</div>
 
-    <div class="col-lg-11 col-md-11 col-sm-8">
-      <div ui-view=""></div>
-    </div>
+<div class="col-lg-11 col-md-11 col-sm-8">
+  <div ui-view=""></div>
+</div>
 
 <clearfix></clearfix>

@@ -265,6 +265,7 @@ a {
   .margin-top-#{$i} { margin-top: 1px * $i; }
   .margin-bottom-#{$i} { margin-bottom: 1px * $i; }
   .margin-vertical-#{$i} { margin-top: 1px * $i; margin-bottom: 1px * $i; }
+  .margin-horizontal-#{$i} { margin-left: 1px * $i; margin-right: 1px * $i; }
   .margin-vertical-auto-#{$i} { margin: 1px * $i auto; }
   .margin-horizontal-auto-#{$i} { margin: auto 1px * $i; }
 }
@@ -386,4 +387,8 @@ table.text-center {
 }
 .border-2x {
   border-width: 2px;
+}
+
+.relative-position {
+  position: relative;
 }

@@ -1,7 +1,8 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    timestamps = require('mongoose-timestamp');
 
 var CategorySchema = new Schema({
   name: String,
@@ -11,7 +12,10 @@ var CategorySchema = new Schema({
     type: Boolean,
     default: true
   },
+  slug: String,
   active: Boolean
 });
+
+CategorySchema.plugin(timestamps);
 
 module.exports = mongoose.model('Category', CategorySchema);
