@@ -1,34 +1,20 @@
 'use strict';
 
 angular.module('zesty.admin')
-  .controller('AdminDashboardCtrl', ['$scope',
-  function ($scope) {
+  .controller('AdminDashboardCtrl', ['$scope', '$timeout',
+  function ($scope, $timeout) {
 
-  $scope.orderCounts = [20, 10, 5, 20, 40, 57, 42, 18, 5, 20, 10, 5, 24, 32, 15, 20, 10, 5, 20, 10, 5, 20, 10, 5, 20, 10, 5, 24, 32, 15];
-  
-  $scope.data = [
-    { year: '2008', value: 20 },
-    { year: '2009', value: 10 },
-    { year: '2010', value: 5 },
-    { year: '2011', value: 5 },
-    { year: '2012', value: 20 }
-  ];
-  $scope.sales = [
-    { label: '2008', value: 20 },
-    { label: '2009', value: 10 },
-    { label: '2010', value: 5 },
-    { label: '2011', value: 5 },
-    { label: '2012', value: 20 }
-  ];
+  $scope.orderCounts = [20, 10, 5, 20, 40, 57, 42, 18, 5, 20, 10, 5, 24, 32, 15, 20,
+    10, 5, 20, 10, 5, 20, 10, 5, 20, 40, 65, 24, 32, 75];
 
   $scope.areaData = [
     { y: '2006', a: 100, b: 90 },
-    { y: '2007', a: 75,  b: 65 },
-    { y: '2008', a: 50,  b: 40 },
-    { y: '2009', a: 75,  b: 65 },
-    { y: '2010', a: 50,  b: 40 },
-    { y: '2011', a: 75,  b: 65 },
-    { y: '2012', a: 100, b: 90 }
+    { y: '2007', a: 34,  b: 24 },
+    { y: '2008', a: 89,  b: 79 },
+    { y: '2009', a: 56,  b: 46 },
+    { y: '2010', a: 150,  b: 140 },
+    { y: '2011', a: 23,  b: 13 },
+    { y: '2012', a: 75, b: 65 }
   ];
 
   $scope.lineOpts = {
@@ -56,9 +42,16 @@ angular.module('zesty.admin')
         1: 'Category'
       }
     },
-    sliceColors: ['#2d4859','#fe7211','#7ad689','#128376', '#ddd', '#649614',
-    '#FFF', '#F012BE', '#FF851B', '#01FF70', '#3D9970', '#39CCCC', '#001F3F',
-    '#0073b7']
+    sliceColors: ['#fe7211','#7ad689','#128376', '#ddd', '#649614',
+    '#FFF', '#F012BE', '#FF851B', '#01FF70', '#3D9970', '#39CCCC']
+  };
+
+  $scope.overvierLoading = false;
+  $scope.refreshOverview = function() {
+    $scope.overvierLoading = true;
+    $timeout(function() {
+      $scope.overvierLoading = false;
+    }, 2500);
   };
 }]);
 

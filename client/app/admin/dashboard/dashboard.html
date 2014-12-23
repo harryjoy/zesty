@@ -12,9 +12,9 @@
           <div class="card-header">
             <h2 class="card-title">Overview</h2>
             <div class="card-tools pull-right">
-              <button tooltip="Refresh Data" class="btn btn-default no-border btn-xs"><i class="fa fa-refresh"></i></button>
+              <button tooltip="Refresh Data" class="btn btn-default no-border btn-xs" ng-click="refreshOverview()"><i class="fa fa-refresh"></i></button>
             </div>
-          </div>
+          </div> <!-- ./card-header-->
           <div class="morris-area full" zmorris-line ng-model="areaData" is-area="true" xkey="y" ykeys="a,b" labels="A,B"></div>
           <div class="card-content morris-area-footer">
             <div class="row border-bottom pad-bottom-3 margin-bottom-5">
@@ -60,56 +60,55 @@
             <em class="text-normal">
               *This information is collected on: {{moment().format(fullDateFormate)}}
             </em>
+          </div><!-- ./card-content -->
+          <div class="card-overlay" ng-show="overvierLoading">
+            <span class="card-overlay-icon text-black">
+              <i class="fa fa-refresh fa-spin fa-2x"></i>
+            </span>
           </div>
         </div>
       </div> <!-- col-6 area-chart -->
 
-      <div class="col-md-6 col-sm-12">
-        <div calss="row">
-          <div class="col-md-6 col-sm-12">
-            <div class="card card-solid text-center">
-              <div class="card-body bg-green">
-                <span ng-model="orderCounts" zspark type="bar" height="100" bar-width="3" opts="{{lineOpts}}"></span>
-              </div>
-              <div class="card-footer">
-                <i class="fa fa-line-chart"></i> Sales
-              </div>
-            </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="card card-solid text-center">
+          <div class="card-body bg-green">
+            <span ng-model="orderCounts" zspark type="bar" height="100" bar-width="3" opts="{{lineOpts}}"></span>
           </div>
-          <div class="col-md-6 col-sm-12">
-            <div class="card card-solid text-center">
-              <div class="card-body bg-red">
-                <span ng-model="orderCounts" zspark type="line" height="100" opts="{{lineOpts}}"></span>
-              </div>
-              <div class="card-footer">
-                <i class="fa fa-ban"></i> Return & Cancellation
-              </div>
-            </div>
+          <div class="card-footer">
+            <i class="fa fa-line-chart"></i> Sales
           </div>
-        </div> <!-- ./row 1 -->
-        <div calss="row">
-          <div class="col-md-6 col-sm-12">
-            <div class="card card-solid text-center">
-              <div class="card-body bg-maroon">
-                <span ng-model="orderCounts" zspark type="pie" height="100" bar-width="3" opts="{{donutOpts}}"></span>
-              </div>
-              <div class="card-footer">
-                <i class="fa fa-shopping-cart"></i> Orders by categories
-              </div>
-            </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="card card-solid text-center">
+          <div class="card-body bg-red">
+            <span ng-model="orderCounts" zspark type="line" height="100" opts="{{lineOpts}}"></span>
           </div>
-          <div class="col-md-6 col-sm-12">
-            <div class="card card-solid text-center">
-              <div class="card-body bg-yellow">
-                <span ng-model="orderCounts" zspark type="bar" height="100" bar-width="3" opts="{{lineOpts}}"></span>
-              </div>
-              <div class="card-footer">
-                <i class="fa fa-users"></i> Subscriptions
-              </div>
-            </div>
+          <div class="card-footer">
+            <i class="fa fa-ban"></i> Return & Cancellation
           </div>
-        </div> <!-- ./row 2 -->
-      </div> <!-- ./ col-md-6 beside area chart -->
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="card card-solid text-center">
+          <div class="card-body bg-navy">
+            <span ng-model="orderCounts" zspark type="pie" height="100" bar-width="3" opts="{{donutOpts}}"></span>
+          </div>
+          <div class="card-footer">
+            <i class="fa fa-shopping-cart"></i> Orders by categories
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="card card-solid text-center">
+          <div class="card-body bg-yellow">
+            <span ng-model="orderCounts" zspark type="bar" height="100" bar-width="3" opts="{{lineOpts}}"></span>
+          </div>
+          <div class="card-footer">
+            <i class="fa fa-users"></i> Subscriptions
+          </div>
+        </div>
+      </div>
     </div> <!-- ./ main-row -->
     
     <div class="row margin-vertical-10">
@@ -129,7 +128,7 @@
       <div class="col-md-3 col-sm-6">
         <div class="bg-white pad dashboard-card">
           <div class="dashboard-card-left">
-            <span class="dashboard-card-icon primary">
+            <span class="dashboard-card-icon bg-maroon">
               <i class="fa fa-cube fa-2x fa-fw"></i>
             </span>
           </div>
@@ -142,7 +141,7 @@
       <div class="col-md-3 col-sm-6">
         <div class="bg-white pad dashboard-card">
           <div class="dashboard-card-left">
-            <span class="dashboard-card-icon warning">
+            <span class="dashboard-card-icon bg-black">
               <i class="fa fa-shopping-cart fa-2x fa-fw"></i>
             </span>
           </div>
@@ -155,7 +154,7 @@
       <div class="col-md-3 col-sm-6">
         <div class="bg-white pad dashboard-card">
           <div class="dashboard-card-left">
-            <span class="dashboard-card-icon danger">
+            <span class="dashboard-card-icon bg-orange">
               <i class="fa fa-comments fa-2x fa-fw"></i>
             </span>
           </div>

@@ -13,6 +13,45 @@
   background-color: #e5ecf0;
 }
 
+.product-filter {
+  height: 30px;
+}
+
+.product-admin-box {
+  clear: both;
+
+  .product-image {
+    display: table-cell;
+    @extend .pull-left;
+    @extend .margin-right-5;
+    @include square(50px);
+  }
+
+  .product-description {
+    display: table-cell;
+  }
+
+  .actions{
+    display: none;
+  }
+
+  &:hover {
+
+    .actions{
+      display: block;
+    }
+  }
+}
+
+.products-admin-title {
+  // @extend .pull-left;
+  @extend .no-margin;
+  position: absolute;
+  z-index: 990;
+  top: -9px;
+  left: 16px;
+}
+
 .card {
 
   .morris-area {

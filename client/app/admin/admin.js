@@ -21,5 +21,11 @@ angular.module('zesty')
         templateUrl: 'app/admin/users/users.html',
         controller: 'AdminUsersCtrl',
         authenticate: true
+      })
+      .state('admin.products', {
+        url: '/products',
+        templateUrl: 'app/admin/items/items.html',
+        controller: 'AdminItemsCtrl',
+        authenticate: true
       });
   });

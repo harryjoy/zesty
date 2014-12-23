@@ -1,17 +1,18 @@
-    <div class="col-lg-3 col-md-3 col-sm-4">
+    <div class="col-lg-1 col-md-1 col-sm-4">
       <div class="list-group">
-        <a href="/admin" class="list-group-item" ng-class="{active: isActive('/admin')}">
-          <i class="fa fa-dashboard fa-fw"></i> Dashboard
-          <i class="fa fa-angle-right pull-right"></i>
+        <a href="/admin" class="list-group-item text-center" ng-class="{active: isActive('/admin')}" tooltip="Dashboard" tooltip-placement="right">
+          <i class="fa fa-dashboard fa-fw fa-2x"></i>
         </a>
-        <a href="/admin/users" class="list-group-item" ng-class="{active: isActive('/admin/users')}">
-          <i class="fa fa-users fa-fw"></i> Users
-          <i class="fa fa-angle-right pull-right"></i>
+        <a href="/admin/users" class="list-group-item text-center" ng-class="{active: isActive('/admin/users')}" tooltip="Users" tooltip-placement="right">
+          <i class="fa fa-users fa-fw fa-2x"></i>
+        </a>
+        <a href="/admin/products" class="list-group-item text-center" ng-class="{active: isActive('/admin/products')}" tooltip="Products" tooltip-placement="right">
+          <i class="fa fa-cubes fa-fw fa-2x"></i>
         </a>
       </div>
     </div>
 
-    <div class="col-lg-9 col-md-9 col-sm-8">
+    <div class="col-lg-11 col-md-11 col-sm-8">
       <div ui-view=""></div>
     </div>
 

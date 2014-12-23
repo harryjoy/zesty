@@ -235,6 +235,38 @@
       color: #f9f9f9;
     }
   }
+
+  .card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    text-align: center;
+    vertical-align: middle;
+    background: rgba(255, 255, 255, 0.75);
+    color: $black;
+    z-index: 995;
+
+    &:before {
+      content: "";
+      display: inline-block;
+      height: 100%;
+      width: 1px;
+      vertical-align: middle;
+      margin-left: -5px;
+    }
+
+    .card-overlay-title {
+      @extend .margin-top-10;
+      @extend .margin-bottom-5;
+    }
+
+    .card-overlay-content, .card-overlay-icon {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
 }
 
 @media screen and (max-width: $screen-xs) {
