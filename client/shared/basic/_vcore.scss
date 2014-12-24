@@ -392,3 +392,11 @@ table.text-center {
 .relative-position {
   position: relative;
 }
+
+.thumb {
+  @extend .pull-left;
+  display: table-cell;
+  @extend .margin-right-5;
+  @extend .thumbnail;
+  @extend .margin-bottom-1;
+}

@@ -1,52 +1,49 @@
 <h1 class="page-title no-margin pad border-bottom">
   <i class="fa fa-tags"></i> Product Categories
-  <div class="btn-group pull-right" role="group">
-    <button type="button" class="btn btn-default" ng-click="addCategory();">
-      <i class="fa fa-plus"></i> Add New
-    </button>
-  </div>
 </h1>
 
-<!-- category form started -->
-<zdialog visible="showCategoryForm" header="true" title="Product Category" dialog-class="modal-lg" body-class="category-form-dialog">
-  <div class="category-form">
-    <form class="form" name="form" novalidate ng-submit="submitCategory(form)">
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-          <div class="form-group">
-            <div class="alert alert-danger" role="alert" ng-show="!form.$valid && submitted">
-              <i class="fa fa-warning"></i>
-              <p class="help-block" ng-show="form.name.$error.mongoose || form.slug.$error.mongoose">
-              {{ errors.other }}
-              </p>
-              <p class="help-block"
-                 ng-show="(form.name.$error.required) && (form.name.$dirty || submitted)">
-                Name can not be empty.
-              </p>
-              <p class="help-block"
-                 ng-show="(form.slug.$error.required) && (form.slug.$dirty || submitted)">
-                Slug can not be empty.
-              </p>
-              <p class="help-block"
-                 ng-show="(form.name.$error.maxlength) && (form.name.$dirty || submitted)">
-                Name must be less than 50 characters.
-              </p>
-              <p class="help-block"
-                 ng-show="(form.slug.$error.maxlength) && (form.slug.$dirty || submitted)">
-                Slug must be less than 50 characters.
-              </p>
-              <p class="help-block"
-                 ng-show="(form.info.$error.maxlength) && (form.info.$dirty || submitted)">
-                Description must be less than 350 characters.
-              </p>
-              <p class="help-block"
-                 ng-show="imageMissing && submitted">
-                Category Icon is required.
-              </p>
-            </div>
-          </div>
+<zdialog visible="true" header="true" title-text="Select Category Image" dialog-class="modal-lg">
+  <image-uploader></image-uploader>
+</zdialog>
+
+<div class="row margin-vertical-10">
+  <div class="col-md-4 col-sm-4">
+    <div class="card card-solid category-form" data-spy="affix" data-offset-top="60" data-offset-bottom="200">
+      <form class="form" name="form" novalidate ng-submit="submitCategory(form)">
+        <div class="card-header" id="category-form-header">
+          <h2 class="card-title">{{isEdit ? 'Edit' : 'Add new'}} Category</h2>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="card-body">
+          <div class="alert alert-danger" role="alert" ng-show="!form.$valid && submitted">
+            <i class="fa fa-warning"></i>
+            <p class="help-block" ng-show="form.name.$error.mongoose || form.slug.$error.mongoose">
+            {{ errors.other }}
+            </p>
+            <p class="help-block"
+               ng-show="(form.name.$error.required) && (form.name.$dirty || submitted)">
+              Name can not be empty.
+            </p>
+            <p class="help-block"
+               ng-show="(form.slug.$error.required) && (form.slug.$dirty || submitted)">
+              Slug can not be empty.
+            </p>
+            <p class="help-block"
+               ng-show="(form.name.$error.maxlength) && (form.name.$dirty || submitted)">
+              Name must be less than 50 characters.
+            </p>
+            <p class="help-block"
+               ng-show="(form.slug.$error.maxlength) && (form.slug.$dirty || submitted)">
+              Slug must be less than 50 characters.
+            </p>
+            <p class="help-block"
+               ng-show="(form.info.$error.maxlength) && (form.info.$dirty || submitted)">
+              Description must be less than 350 characters.
+            </p>
+            <p class="help-block"
+               ng-show="imageMissing && submitted">
+              Category Icon is required.
+            </p>
+          </div>
           <div class="form-group" ng-class="{ 'has-success': form.name.$valid && submitted, 'has-error': form.name.$invalid && submitted }">
             <label class="text-cursor-pointer control-label" for="name">Name*:</label>
             <input type="text" name="name" id="name" class="form-control" ng-model="category.name" required mongoose-error placeholder="Category Name" ng-maxlength="50"/>
@@ -62,130 +59,111 @@
             <label class="text-cursor-pointer control-label" for="info">Description:</label>
             <textarea rows="5" cols="26" name="info" class="form-control" id="info" ng-model="category.info" placeholder="Category Description" ng-maxlength="350"></textarea>
           </div>
+          <div class="form-group margin-bottom-1">
+            <label class="text-cursor-pointer control-label" for="image">Category Image:</label>
+            <div ng-if="!category.image || category.image === ''">
+              <img src="../../../assets/images/no.png" width="64" height="64" class="thumb" />
+              <span class="btn btn-default btn-sm">Upload image</span>
+            </div>
+            <div ng-if="category.image && category.image !== ''">
+              <span ng-switch="category.isIcon">
+                <img ng-switch-when="false" class="thumb" src="{{category.image}}" width="64" height="64" />
+                <i ng-switch-when="true" class="fa fa-3x fa-fw {{category.image}} thumb"></i>
+                <span class="btn btn-default btn-sm">Change</span>
+                <span class="btn btn-danger btn-sm" ng-click="removeCategoryImage();">Remove</span>
+              </span>
+            </div>
+          </div>
+          <clearfix></clearfix>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-12">
-          <div class="form-group relative-position pad-10">
-            <label class="text-cursor-pointer control-label" for="image">Image:</label>
-            <div class="row">
-              <div class="col-md-9 col-sm-9">
-                <input type="file" name="image" id="image" />
-              </div>
-              <div class="col-md-3 col-sm-3">
-                <img src="../../../assets/images/no.png" width="64" height="64" />
-              </div>
-            </div>
-            <span class="text-small helper">
-              Preferred image size is 64x64 px.
-            </span>
-            <div class="select-image-overlay" ng-hide="!category.isIcon">
-              <div class="select-image-overlay-content">
-                Select Icon from the list below.
-              </div>
-            </div>
-          </div>
-          <div class="form-group relative-position" ng-class="{ 'has-success': !imageMissing && submitted, 'has-error': imageMissing && submitted }">
-            <input class="" type="checkbox" id="isIcon" name="isIcon" ng-model="category.isIcon" /> <label class="text-cursor-pointer control-label" for="isIcon">Use Icon Instead?</label>
-          </div>
-          <div class="form-group relative-position" ng-class="{ 'has-success': !imageMissing && submitted, 'has-error': imageMissing && submitted }">
-            <div class="category-icons">
-              <div class="btn-group">
-                <label class="btn btn-mini btn-info" data-ng-repeat="icon in icons" tooltip="{{icon.replace('fa-','').replace('-o','')}}" btn-radio="icon" ng-model="category.image">
-                  <i class="fa {{icon}} fa-fw"></i>
-                </label>
-              </div>
-            </div>
-            <div class="select-image-overlay" ng-hide="category.isIcon">
-              <div class="select-image-overlay-content">
-                Browse for Category Image above.
-              </div>
-            </div>
-          </div>
-        </div> <!-- ./col -->
-        <div class="col-md-12 col-sm-12 bg-gray pad-5 category-form-footer">
-          <button class="btn btn-success" type="submit">Save changes</button>
-        </div> <!-- ./col -->
-      </div><!-- row end -->
-    </form>
-  </div>
-</zdialog>
-<!-- ./category form end -->
-
-<div class="row margin-vertical-10">
-  <div class="col-md-9 col-sm-9 margin-top-10">
-    <div class="btn-group" role="group">
-      <button type="button" tooltip="For Selected Categories" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-        Bulk Action
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu" role="menu">
-        <li><a href="#" class="text-red" ng-click="bulkDelete('Selected Categories')">Delete</a></li>
-      </ul>
+        <div class="card-footer">
+          <button class="btn btn-success" type="submit">{{isEdit ? 'Edit' : 'Add new'}} category</button>
+          <a href="#" class="btn btn-default" type="reset" role="button" ng-click="reset();" ng-show="isEdit">Cancel</a>
+        </div>
+      </form>
     </div>
   </div>
-  <div class="col-md-3 col-sm-3 margin-top-10 text-right">
-    <span class="text-muted text-italic">{{categories.length}} categories</span>
+  <div class="col-md-8 col-sm-8">
+    <div class="row">
+      <div class="col-md-9 col-sm-9 margin-top-10">
+        <div class="btn-group" role="group">
+          <button type="button" tooltip="For Selected Categories" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            Bulk Action
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" class="text-red" ng-click="bulkDelete('Selected Categories')">Delete</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-3 margin-top-10 text-right">
+        <span class="text-muted text-italic">{{categories.length}} categories</span>
+      </div>
+    </div>
+    <div class="card card-solid pad-10 margin-top-10">
+      <div class="card-overlay" ng-show="categoriesLoading">
+        <span class="card-overlay-icon text-black">
+          <i class="fa fa-refresh fa-spin fa-2x"></i>
+        </span>
+      </div>
+      <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-hover table-compact bg-white border">
+        <thead>
+          <tr class="bg-teal">
+            <th class="text-center">
+              <input type="checkbox" id="check_all" ng-model="allCheck" ng-click="checkAllCatgory();"/>
+            </th>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Slug</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Products</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="category in categories" class="product-admin-box">
+            <td width="5%" class="text-center">
+              <input type="checkbox" id="check_for_{{category._id}}" ng-model="category.isChecked" />
+            </td>
+            <td width="5%" class="text-center">
+              <span ng-show="!category.image || category.image === ''">
+                <img src="../../../assets/images/no.png" width="40" height="40" />
+              </span>
+              <span ng-switch="category.isIcon" ng-show="category.image && category.image !== ''">
+                <img ng-switch-when="false" class="product-image" src="{{category.image}}" />
+                <i ng-switch-when="true" class="fa fa-2x fa-fw {{category.image}}"></i>
+              </span>
+            </td>
+            <td width="25%">
+              <a href="/category/{{category._id}}">
+                {{category.name}}
+              </a>
+              <div class="actions">
+                <a href="#" class="text-small text-underline" ng-click="editCategory(category);">Edit</a>
+                |
+                <a href="#" class="text-small text-danger text-underline" ng-click="deleteCategory(category.name, category._id);">Delete</a>
+                |
+                <a href="#" class="text-small text-underline" ng-click="duplicateCategory(category);">Duplicate</a>
+              </div>
+            </td>
+            <td width="15%">
+              <span class="text-muted">{{category.slug ? category.slug : category._id}}</span>
+            </td>
+            <td width="30%">
+              <span class="text-muted">{{category.info}}</span>
+            </td>
+            <td width="15%">
+              <span class="text-muted">{{moment(category.createdAt).format(fullDateFormate)}}</span>
+            </td>
+            <td width="5%" class="text-right">
+              <span class="text-muted">{{category.productCount}}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+  
 </div>
 
-<div class="card card-solid pad-10">
-  <div class="card-overlay" ng-show="categoriesLoading">
-    <span class="card-overlay-icon text-black">
-      <i class="fa fa-refresh fa-spin fa-2x"></i>
-    </span>
-  </div>
-  <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-hover table-compact bg-white border">
-    <thead>
-      <tr class="bg-teal">
-        <th class="text-center">
-          <input type="checkbox" id="check_all" ng-model="allCheck" ng-click="checkAllCatgory();"/>
-        </th>
-        <th>Image</th>
-        <th>Name</th>
-        <th>Slug</th>
-        <th>Description</th>
-        <th>Date</th>
-        <th>Products</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="category in categories" class="product-admin-box">
-        <td width="5%" class="text-center">
-          <input type="checkbox" id="check_for_{{category._id}}" ng-model="category.isChecked" />
-        </td>
-        <td width="5%" class="text-center">
-          <span ng-show="{{!category.image || category.image === ''}}">
-            <img src="../../../assets/images/no.png" width="40" height="40" />
-          </span>
-          <span ng-switch="category.isIcon" ng-show="{{category.image && category.image !== ''}}">
-            <img ng-switch-when="false" class="product-image" src="{{category.image}}" />
-            <i ng-switch-when="true" class="fa fa-2x fa-fw {{category.image}}"></i>
-          </span>
-        </td>
-        <td width="25%">
-          <a href="/category/{{category._id}}">
-            {{category.name}}
-          </a>
-          <div class="actions">
-            <a href="#" class="text-small text-underline" ng-click="editCategory(category);">Edit</a>
-            |
-            <a href="#" class="text-small text-danger text-underline" ng-click="deleteCategory(category.name, category._id);">Delete</a>
-            |
-            <a href="#" class="text-small text-underline" ng-click="duplicateCategory(category);">Duplicate</a>
-          </div>
-        </td>
-        <td width="15%">
-          <span class="text-muted">{{category.slug ? category.slug : category._id}}</span>
-        </td>
-        <td width="30%">
-          <span class="text-muted">{{category.info}}</span>
-        </td>
-        <td width="15%">
-          <span class="text-muted">{{moment(category.createdAt).format(fullDateFormate)}}</span>
-        </td>
-        <td width="5%" class="text-right">
-          <span class="text-muted">{{category.productCount}}</span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+

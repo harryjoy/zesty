@@ -8,6 +8,10 @@
   box-sizing: content-box;
 }
 
+table.dataTable.no-footer {
+  @extend .border-bottom;
+}
+
 .admin-dashboard-body {
   padding: 20px 25px 0;
   background-color: #e5ecf0;
@@ -167,34 +171,6 @@ a.list-group-item-black {
 
 .category-form {
 
-  .select-image-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    text-align: center;
-    vertical-align: middle;
-    background: rgba(0, 0, 0, 0.65);
-    color: $white;
-    z-index: 995;
-
-    &:before {
-      content: "";
-      display: inline-block;
-      height: 100%;
-      width: 1px;
-      vertical-align: middle;
-      margin-left: -5px;
-    }
-
-    .select-image-overlay-content {
-      display: inline-block;
-      vertical-align: middle;
-      font-size: $font-size-large;
-    }
-  }
-
   .category-form-footer {
     @include border-radius-sep(0, 0, 6px, 6px);
   }
@@ -202,25 +178,4 @@ a.list-group-item-black {
 
 .category-form-dialog {
   padding: 0 15px;
-}
-
-.category-icons {
-  @extend .border;
-  padding: 3px 8px;
-
-  .btn-group {
-
-    > .btn {
-      @extend .margin-5;
-
-      &.active, &:hover {
-        background: $warning;
-        border-color: $warning;
-      }
-    }
-    
-    > .btn:first-child, > .btn:last-child {
-      @include border-radius(0);
-    }
-  }
 }

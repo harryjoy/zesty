@@ -9,7 +9,7 @@ angular.module('zesty')
       replace: true,
       scope: true,
       link: function (scope, element, attrs) {
-        scope.title = attrs.title;
+        scope.title = attrs.title || attrs.titleText || '';
         scope.showModalHeader = attrs.header;
         scope.extraClassForContent = attrs.contentclass;
         scope.extraClassForDialog = attrs.dialogClass;

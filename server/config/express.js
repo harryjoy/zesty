@@ -18,6 +18,9 @@ var passport = require('passport');
 var session = require('express-session');
 var mongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
+var busboy = require('connect-busboy'); //middleware for form/file upload
+var path = require('path');     //used for file path
+var fs = require('fs-extra');       //File System - for file manipulation
 
 module.exports = function(app) {
   var env = app.get('env');
@@ -31,6 +34,7 @@ module.exports = function(app) {
   app.use(methodOverride());
   app.use(cookieParser());
   app.use(passport.initialize());
+  app.use(busboy());
 
   // Persist sessions with mongoStore
   // We need to enable sessions for passport twitter because its an oauth 1.0 strategy

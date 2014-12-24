@@ -2,12 +2,12 @@
 
 angular.module('zesty.admin')
   .controller('AdminCategoriesCtrl', ['$scope', 'CategoryServ', 'DTOptionsBuilder',
-    'DTColumnDefBuilder', 'FileServ', 'Modal', 'AlertServ',
-    function ($scope, CategoryServ, DTOptionsBuilder, DTColumnDefBuilder, FileServ, Modal, AlertServ) {
+    'DTColumnDefBuilder', 'Modal', 'AlertServ',
+    function ($scope, CategoryServ, DTOptionsBuilder, DTColumnDefBuilder, Modal, AlertServ) {
 
   // options for data tables.
   $scope.dtOptions = DTOptionsBuilder.newOptions().withBootstrap()
-    .withOption('info', false).withOption('order', [2, 'asc'])
+    .withOption('info', false).withOption('order', [6, 'desc'])
     .withOption('bPaginate', false);
   $scope.dtColumnDefs = [
     DTColumnDefBuilder.newColumnDef(0).notSortable(),
@@ -25,29 +25,25 @@ angular.module('zesty.admin')
     });
     $scope.category = {};
     $scope.imageMissing = $scope.submitted = $scope.isEdit = false;
-    $scope.showCategoryForm = false;
   };
 
-  // read category icons from extenal config file.
-  FileServ.readFile('../../../assets/conf/category-icons.json').then(
-    function(data){
-      $scope.icons = data;
-    }
-  );
   $scope.init();
 
   // open dialog for add category.
   $scope.addCategory = function() {
     $scope.category = {};
     $scope.imageMissing = $scope.submitted = $scope.isEdit = false;
-    $scope.showCategoryForm = true;
   };
 
   // open dialog for edit category.
   $scope.editCategory = function(category) {
-    $scope.category = category;
+    $scope.category = angular.copy(category);
     $scope.imageMissing = $scope.submitted = false;
-    $scope.showCategoryForm = $scope.isEdit = true;
+    $scope.isEdit = true;
+    // scroll to form heading for editing
+    $('html, body').animate({
+      scrollTop: $('#category-form-header').offset().top
+    }, 500);
   };
 
   // open dialog for edit category.
@@ -55,7 +51,7 @@ angular.module('zesty.admin')
     $scope.category = angular.copy(category);
     $scope.category.name = $scope.category.name + ' (Copy)';
     $scope.category.slug = $scope.getCategorySlugFromName(angular.lowercase($scope.category.name));
-    $scope.category.createdAt = $scope.category.updatedAt = new Date();
+    $scope.category.updatedAt = new Date();
     $scope.category._id = undefined;
     $scope.isEdit = $scope.imageMissing = $scope.submitted = false;
     $scope.showCategoryForm = true;
@@ -135,6 +131,18 @@ angular.module('zesty.admin')
         });
       }
     }
+  };
+
+  // reset category form
+  $scope.reset = function() {
+    $scope.category = {};
+    $scope.imageMissing = $scope.submitted = $scope.isEdit = false;
+  };
+
+  // remove category image
+  $scope.removeCategoryImage = function() {
+    $scope.category.image = undefined;
+    $scope.category.isIcon = false;
   };
 
   // watch for changes in category name while adding new category

@@ -9,6 +9,8 @@ angular.module('zesty')
   $scope.dateFormate = 'MMMM Do YYYY';
   $scope.smDateFormate = 'MMM DD YYYY';
   $scope.minDateFormate = 'MM Do YY';
+
+  $scope.publicFolderPath = '../assets/images/items/';
   
   $scope.appName = 'Zesty';
   $scope.siteName = 'Zesty';

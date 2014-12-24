@@ -1,9 +1,9 @@
 'use strict';
 
-describe('Directive: uiLadda', function () {
+describe('Directive: ngThumb', function () {
 
   // load the directive's module
-  beforeEach(module('zesty'));
+  beforeEach(module('zestyApp'));
 
   var element,
     scope;
@@ -13,8 +13,8 @@ describe('Directive: uiLadda', function () {
   }));
 
   it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<ui-ladda></ui-ladda>');
+    element = angular.element('<ng-thumb></ng-thumb>');
     element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the uiLadda directive');
+    expect(element.text()).toBe('this is the ngThumb directive');
   }));
 });

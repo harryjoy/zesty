@@ -17,7 +17,8 @@ angular.module('zesty', [
   'green.inputmask4angular',
   'zesty.utils',
   'zesty.admin',
-  'zesty.charts'
+  'zesty.charts',
+  'angularFileUpload'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, reCAPTCHAProvider) {
     $urlRouterProvider

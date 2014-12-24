@@ -38,7 +38,8 @@
     "lodash": "~2.4.1",
     "angular-inputmask": "*",
     "ngtoast": "~1.2.0",
-    "jquery.sparkline": "http://omnipotent.net/jquery.sparkline/latest/jquery.sparkline.js"
+    "jquery.sparkline": "http://omnipotent.net/jquery.sparkline/latest/jquery.sparkline.js",
+    "angular-file-upload": "~1.1.5"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",
