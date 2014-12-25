@@ -2,13 +2,13 @@
   <i class="fa fa-tags"></i> Product Categories
 </h1>
 
-<zdialog visible="true" header="true" title-text="Select Category Image" dialog-class="modal-lg">
+<zdialog visible="openUploadImageDialog" header="true" title-text="Select Category Image" dialog-class="modal-lg">
   <image-uploader></image-uploader>
 </zdialog>
 
 <div class="row margin-vertical-10">
   <div class="col-md-4 col-sm-4">
-    <div class="card card-solid category-form" data-spy="affix" data-offset-top="60" data-offset-bottom="200">
+    <div class="card card-solid category-form">
       <form class="form" name="form" novalidate ng-submit="submitCategory(form)">
         <div class="card-header" id="category-form-header">
           <h2 class="card-title">{{isEdit ? 'Edit' : 'Add new'}} Category</h2>
@@ -61,11 +61,11 @@
           </div>
           <div class="form-group margin-bottom-1">
             <label class="text-cursor-pointer control-label" for="image">Category Image:</label>
-            <div ng-if="!category.image || category.image === ''">
+            <div ng-show="!category.image || category.image === ''">
               <img src="../../../assets/images/no.png" width="64" height="64" class="thumb" />
-              <span class="btn btn-default btn-sm">Upload image</span>
+              <span class="btn btn-default btn-sm" ng-click="openUploadImageDialog=true;">Upload image</span>
             </div>
-            <div ng-if="category.image && category.image !== ''">
+            <div ng-show="category.image && category.image !== ''">
               <span ng-switch="category.isIcon">
                 <img ng-switch-when="false" class="thumb" src="{{category.image}}" width="64" height="64" />
                 <i ng-switch-when="true" class="fa fa-3x fa-fw {{category.image}} thumb"></i>
