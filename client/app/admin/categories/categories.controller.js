@@ -2,8 +2,8 @@
 
 angular.module('zesty.admin')
   .controller('AdminCategoriesCtrl', ['$scope', 'CategoryServ', 'DTOptionsBuilder',
-    'DTColumnDefBuilder', 'Modal', 'AlertServ',
-    function ($scope, CategoryServ, DTOptionsBuilder, DTColumnDefBuilder, Modal, AlertServ) {
+    'DTColumnDefBuilder', 'Modal', 'AlertServ', 'Uploader',
+    function ($scope, CategoryServ, DTOptionsBuilder, DTColumnDefBuilder, Modal, AlertServ, Uploader) {
 
   // options for data tables.
   $scope.dtOptions = DTOptionsBuilder.newOptions().withBootstrap()
@@ -161,5 +161,10 @@ angular.module('zesty.admin')
     return name.replace(/([~!@#$%^&*()_+=`{}\[\]\|\\:;'<>,.\/? ])+/g, '-') // replace special characters
         .replace(/^(-)+|(-)+$/g,''); // replace trailing -
   };
+
+  $scope.openUploder = Uploader.openImageSelector(function(selected, selection) {
+    $scope.category.isIcon = (selection === 2);
+    $scope.category.image = selected;
+  });
 
 }]);

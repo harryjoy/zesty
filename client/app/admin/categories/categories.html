@@ -2,10 +2,6 @@
   <i class="fa fa-tags"></i> Product Categories
 </h1>
 
-<zdialog visible="openUploadImageDialog" header="true" title-text="Select Category Image" dialog-class="modal-lg">
-  <image-uploader></image-uploader>
-</zdialog>
-
 <div class="row margin-vertical-10">
   <div class="col-md-4 col-sm-4">
     <div class="card card-solid category-form">
@@ -63,13 +59,13 @@
             <label class="text-cursor-pointer control-label" for="image">Category Image:</label>
             <div ng-show="!category.image || category.image === ''">
               <img src="../../../assets/images/no.png" width="64" height="64" class="thumb" />
-              <span class="btn btn-default btn-sm" ng-click="openUploadImageDialog=true;">Upload image</span>
+              <span class="btn btn-default btn-sm" ng-click="openUploder()">Upload image</span>
             </div>
             <div ng-show="category.image && category.image !== ''">
               <span ng-switch="category.isIcon">
-                <img ng-switch-when="false" class="thumb" src="{{category.image}}" width="64" height="64" />
+                <img ng-switch-when="false" class="thumb" src="{{getImageUrl(category.image)}}" width="64" height="64" />
                 <i ng-switch-when="true" class="fa fa-3x fa-fw {{category.image}} thumb"></i>
-                <span class="btn btn-default btn-sm">Change</span>
+                <span class="btn btn-default btn-sm" ng-click="openUploder()">Change</span>
                 <span class="btn btn-danger btn-sm" ng-click="removeCategoryImage();">Remove</span>
               </span>
             </div>
@@ -130,7 +126,7 @@
                 <img src="../../../assets/images/no.png" width="40" height="40" />
               </span>
               <span ng-switch="category.isIcon" ng-show="category.image && category.image !== ''">
-                <img ng-switch-when="false" class="product-image" src="{{category.image}}" />
+                <img ng-switch-when="false" class="product-image" src="{{getImageUrl(category.image)}}" width="40" height="40" />
                 <i ng-switch-when="true" class="fa fa-2x fa-fw {{category.image}}"></i>
               </span>
             </td>

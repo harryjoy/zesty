@@ -105,4 +105,12 @@ angular.module('zesty')
     $window.scrollTo(0,0);
   };
 
+  $scope.getImageUrl = function(img) {
+    if (img.indexOf('http') !== -1) {
+      return img;
+    } else {
+      return './assets/images/items/' + img;
+    }
+  };
+
 }]);

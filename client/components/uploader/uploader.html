@@ -1,0 +1,58 @@
+<div class="modal-header">
+  <button ng-if="modal.dismissable" type="button" ng-click="$dismiss()" class="close">&times;</button>
+  <h4 ng-if="modal.title" ng-bind="modal.title" class="modal-title"></h4>
+</div>
+<div class="modal-body modal-lg">
+  <div class="category-form">
+	  <tabset>
+	    <tab heading="Upload Image" select="updateSelection(1);">
+	      <div class="form-group relative-position icons-grid">
+	        <div class="margin-top-5 help-block text-normal pull-right">
+	          You can select the uploaded images from "Select from Images" tab.
+	        </div>
+	        <input type="file" nv-file-select uploader="uploader" multiple/>
+	        <div class="row margin-top-10 icons-grid no-border">
+	          <div class="col-md-2 col-sm-4" ng-repeat="item in uploader.queue" ng-hide="item.isSuccess || item.isFail">
+	            <div class="border pad-5 relative-position text-center">
+	              <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-show="item.isUploading">
+	                <i class="fa fa-times fa-fw"></i>
+	              </button>
+	              <div class="margin-top-10" ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 64, width: 64 }"></div>
+	              <div class="select-image-overlay text-cursor-pointer" ng-hide="item.isSuccess || item.isFail">
+	                <div class="select-image-overlay-content progress" style="margin-bottom: 0;width: 90%;">
+	                  <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+	                </div>
+	              </div>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </tab>
+	    <tab heading="Select from Icons" select="updateSelection(2);">
+	      <div class="form-group relative-position">
+	        <div class="icons-grid">
+	          <div class="btn-group">
+	            <label class="btn btn-mini btn-info" data-ng-repeat="icon in icons" tooltip="{{icon.replace('fa-','').replace('-o','')}}" btn-radio="icon" ng-model="media.icon" uncheckable>
+	              <i class="fa {{icon}} fa-fw"></i>
+	            </label>
+	          </div>
+	        </div>
+	      </div>
+	    </tab>
+	    <tab heading="Select from Images" select="updateSelection(3);" active="true">
+	      <div class="form-group relative-position">
+	        <div class="icons-grid image-grid">
+	          <div class="btn-group">
+	            <label class="btn btn-mini btn-default" data-ng-repeat="icon in images" btn-radio="icon" ng-model="media.image" uncheckable>
+	              <img src="../../assets/images/items/{{icon}}" width="64" height="64" />
+	            </label>
+	          </div>
+	        </div>
+	      </div>
+	    </tab>
+	  </tabset>
+	</div>
+</div>
+<div class="modal-footer">
+  <button ng-repeat="button in modal.buttons" ng-class="button.classes" ng-click="button.click($event)" ng-bind="button.text" class="btn" ng-show="selection!=1"></button>
+</div>
