@@ -105,8 +105,13 @@ angular.module('zesty')
     $window.scrollTo(0,0);
   };
 
+  /**
+   * Check and add image url.
+   * @param  {[type]} img [description]
+   * @return {[type]}     [description]
+   */
   $scope.getImageUrl = function(img) {
-    if (img.indexOf('http') !== -1) {
+    if (!img || img === '' || img.indexOf('http') !== -1) {
       return img;
     } else {
       return './assets/images/items/' + img;

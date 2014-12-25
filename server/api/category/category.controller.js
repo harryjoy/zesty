@@ -6,7 +6,19 @@ var Item = require('../item/item.model');
 
 // Get list of categories
 exports.index = function(req, res) {
-  Category.find(function (err, categories) {
+  var query = Category.find().sort({
+    'name': 1
+  });
+  if (req.query.limit && req.query.limit !== '') {
+    if (isNaN(req.query.limit)) {
+      return res.send(400, {
+        isError: true,
+        message: 'Limit must be number.'
+      });
+    }
+    query.limit(req.query.limit);
+  }
+  query.exec(function (err, categories) {
     if(err) { return handleError(res, err); }
     if (!categories || categories.length === 0) { res.send(404); }
     if (!req.query.productCounts) {
@@ -39,7 +51,7 @@ exports.index = function(req, res) {
         return res.json(200, categories);
       });
     }
-  });
+  })
 };
 
 // Get a single category

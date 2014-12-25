@@ -57,7 +57,9 @@ angular.module('zesty')
   $scope.slides = [];
   Item.getItems();
   
-  CategoryServ.query().$promise.then(function(categories) {
+  CategoryServ.query({
+    limit: 20
+  }).$promise.then(function(categories) {
     $scope.categories = categories;
   });
 
