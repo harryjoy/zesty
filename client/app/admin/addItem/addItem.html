@@ -113,20 +113,30 @@
                 <div class="row">
                   <div class="col-md-6 col-sm-12 border-right">
                     <h2 class="margin-top-1">Main Image</h2>
-                    <!-- <img src="../../../assets/images/no.png" class="thumbnail img-responsive" style="min-width:200px" /> -->
-                    <button class="btn btn-default">
-                      <i class="fa fa-plus-circle"></i> Add Main Image
-                    </button>
+                    <div ng-show="!product.mainImage || product.mainImage === ''">
+                      <span class="btn btn-default btn-sm" ng-click="openImageUploder();">
+                        <i class="fa fa-plus-circle"></i> Add Main Image
+                      </span>
+                    </div>
+                    <div ng-show="product.mainImage && product.mainImage !== ''">
+                      <img class="thumbnail img-responsive" src="{{getImageUrl(product.mainImage)}}" style="min-width:200px;" />
+                      <span class="btn btn-default btn-sm" ng-click="openImageUploder();">Change</span>
+                      <span class="btn btn-danger btn-sm" ng-click="removeMainImage();">Remove</span>
+                    </div>
                   </div>
-                  <div class="col-md-6 col-sm-12">
+                  <div class="col-md-6 col-sm-12 border-left">
                     <h2 class="margin-top-1">Additional Images</h2>
-                    <!-- <img src="../../../assets/images/no.png" class="thumb" width="64px" /> -->
-                    <button class="btn btn-default">
+                    <span class="btn btn-default" ng-click="openGalleryUploder();">
                       <i class="fa fa-plus-circle"></i> Add Images
-                    </button> <br/>
+                    </span> <br/>
                     <span class="helper text-small">
                       You can add upto 5 additional images.
-                    </span>
+                    </span> <br/> <br/>
+                    <div ng-repeat="image in product.images" class="product-images">
+                      <img src="{{getImageUrl(image)}}" class="thumb" width="64px" />
+                      <i class="fa fa-trash product-image-remove-icon" ng-click="removeImage(image);"></i>
+                    </div>
+                    <clearfix></clearfix>
                   </div>
                 </div>
               </div><!-- /.images tab -->
@@ -134,40 +144,39 @@
                 Add custom attributes for product here.
               </div><!-- /.attributes tab -->
               <div class="tab" ng-class="{'active': (selection === 4)}">
-                
                 <div class="form-group">
                   <label class="text-cursor-pointer control-label" for="upsells">
                     Up-Sells:
                     <i ng-show="loadingUpsells" class="fa fa-refresh fa-spin"></i>
                   </label>
+                  <span class="help-block text-normal">
+                    Up Sells are products which you recommend instead of currently viewed product,
+                    for example, products that are more profitable or better quality or less expensive.
+                  </span>
                   <ui-select multiple  ng-model="product.upsells" ng-disabled="disabled" style="width: 100%;" reset-search-input="true">
                     <ui-select-match placeholder="Search products">{{$item.title}}</ui-select-match>
                     <ui-select-choices refresh="refreshProducts($select.search)" refresh-delay="0" repeat="product in products track by $index | filter:$select.search">
                       {{product.title}}
                     </ui-select-choices>
                   </ui-select>
-                  <span class="help-block text-small">
-                    Up Sells are products which you recommend instead of currently viewed product,
-                    for example, products that are more profitable or better quality or less expensive.
-                    <br/>
-                    Enter minimum 3 characters.
-                  </span>
                 </div>
+                <hr class="margin-top-3 margin-bottom-10" />
                 <div class="form-group">
                   <label class="text-cursor-pointer control-label" for="crosssells">
                     Cross-Sells:
                     <i ng-show="loadingCrosssells" class="fa fa-refresh fa-spin"></i>
                   </label>
+                  <span class="help-block text-normal">
+                    Cross sells are products which you promote on the cart based on current product.
+                  </span>
                   <ui-select multiple  ng-model="product.crosssells" ng-disabled="disabled" style="width: 100%;" reset-search-input="true">
                     <ui-select-match placeholder="Search products">{{$item.title}}</ui-select-match>
                     <ui-select-choices refresh="refreshProducts($select.search)" refresh-delay="0" repeat="product in products track by $index | filter:$select.search">
                       {{product.title}}
                     </ui-select-choices>
                   </ui-select>
-                  <span class="help-block text-small">
-                    Cross sells are products which you promote on the cart based on current product.
-                    <br/>
-                    Enter minimum 3 characters.
+                  <span class="help-block">
+                    <span class="text-small">Enter minimum 3 characters to get suggestions.</span>
                   </span>
                 </div>
               </div><!-- /.linked products tab -->
@@ -204,14 +213,34 @@
                         <label class="btn btn-sm btn-default" btn-radio="1" ng-model="product.type">
                           Simple
                         </label>
-                        <label class="btn btn-sm btn-default" btn-radio="2" ng-model="product.type">
+                        <label class="btn btn-sm btn-default" btn-radio="2" ng-model="product.type" tooltip="Virtual products are intangible and aren't shipped.">
                           Virtual
                         </label>
-                        <label class="btn btn-sm btn-default" btn-radio="3" ng-model="product.type">
+                        <label class="btn btn-sm btn-default" btn-radio="3" ng-model="product.type" tooltip="Downloadable products give access to a file upon purchase.">
                           Downloadable
                         </label>
                       </div>
-                    </div>
+                    </div> <!-- ./product type selection -->
+                    <div class="card-body border margin-top-10" collapse="product.type !== 3">
+                      <div class="form-group">
+                        <label class="text-cursor-pointer control-label" for="download_files">Downloadable Files:</label><br/>
+                        <button class="btn btn-default btn-sm">Add Files</button>
+                      </div>
+                      <div class="form-group">
+                        <label class="text-cursor-pointer control-label" for="download_limit">Download Limit:</label>
+                        <input type="number" name="download_limit" id="download_limit" ng-model="product.files.limit" placeholder="Unlimited" class="form-control input-sm" />
+                        <span class="help-block text-normal">
+                          Enter number of downloads allowed to user after purchase or leave blank for unlimited re-downloads.
+                        </span>
+                      </div>
+                      <div class="form-group margin-bottom-1">
+                        <label class="text-cursor-pointer control-label" for="download_expiry">Download Expiry:</label>
+                        <input type="number" name="download_expiry" id="download_expiry" ng-model="product.files.expiry" placeholder="Never" class="form-control input-sm" />
+                        <span class="help-block text-normal">
+                          Enter number of days before a download links expires, or leave blank for never expiring links.
+                        </span>
+                      </div>
+                    </div> <!-- ./downloadable product type form -->
                   </div> <!-- ./col-md-4 righ side -->
                 </div> <!-- ./exta row -->
               </div><!-- /.extra tab -->

@@ -14,6 +14,7 @@ angular.module('zesty.admin')
     DTColumnDefBuilder.newColumnDef(1).notSortable()
   ];
 
+  $scope.images = [];
   // initialize category list
   $scope.init = function() {
     $scope.categoriesLoading = true;
@@ -24,6 +25,7 @@ angular.module('zesty.admin')
       $scope.categoriesLoading = false;
     });
     $scope.category = {};
+    _.remove($scope.images);
     $scope.imageMissing = $scope.submitted = $scope.isEdit = false;
   };
 
@@ -32,6 +34,7 @@ angular.module('zesty.admin')
   // open dialog for add category.
   $scope.addCategory = function() {
     $scope.category = {};
+    _.remove($scope.images);
     $scope.imageMissing = $scope.submitted = $scope.isEdit = false;
   };
 
@@ -50,7 +53,7 @@ angular.module('zesty.admin')
   $scope.duplicateCategory = function(category) {
     $scope.category = angular.copy(category);
     $scope.category.name = $scope.category.name + ' (Copy)';
-    $scope.category.slug = $scope.getCategorySlugFromName(angular.lowercase($scope.category.name));
+    $scope.category.slug = $scope.getSlugFromName(angular.lowercase($scope.category.name));
     $scope.category.updatedAt = new Date();
     $scope.category._id = undefined;
     $scope.isEdit = $scope.imageMissing = $scope.submitted = false;
@@ -116,7 +119,7 @@ angular.module('zesty.admin')
       }
     }
     if (form.$valid) {
-      $scope.category.slug = $scope.getCategorySlugFromName(angular.lowercase($scope.category.slug));
+      $scope.category.slug = $scope.getSlugFromName(angular.lowercase($scope.category.slug));
       if ($scope.isEdit) {
         CategoryServ.update({
           id: $scope.category._id
@@ -136,12 +139,14 @@ angular.module('zesty.admin')
   // reset category form
   $scope.reset = function() {
     $scope.category = {};
+    _.remove($scope.images);
     $scope.imageMissing = $scope.submitted = $scope.isEdit = false;
   };
 
   // remove category image
   $scope.removeCategoryImage = function() {
     $scope.category.image = undefined;
+    _.remove($scope.images);
     $scope.category.isIcon = false;
   };
 
@@ -149,22 +154,18 @@ angular.module('zesty.admin')
   // to auto add slug for the category.
   $scope.$watch('category.name', function(newValue) {
     if (newValue && !$scope.isEdit) {
-      $scope.category.slug = $scope.getCategorySlugFromName(angular.lowercase($scope.category.name));
+      $scope.category.slug = $scope.getSlugFromName(angular.lowercase($scope.category.name));
     }
   });
 
-  // get category slug based on category name.
-  $scope.getCategorySlugFromName = function(name) {
-    if (!name) {
-      return name;
-    }
-    return name.replace(/([~!@#$%^&*()_+=`{}\[\]\|\\:;'<>,.\/? ])+/g, '-') // replace special characters
-        .replace(/^(-)+|(-)+$/g,''); // replace trailing -
-  };
-
-  $scope.openUploder = Uploader.openImageSelector(function(selected, selection) {
+  $scope.openUploder = Uploader.openImageSelector(true, false, {
+    icons: $scope.images,
+    images: $scope.images
+  }, function(selected, selection) {
     $scope.category.isIcon = (selection === 2);
     $scope.category.image = selected;
+    _.remove($scope.images);
+    $scope.images.push(selected);
   });
 
 }]);

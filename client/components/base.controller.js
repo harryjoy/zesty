@@ -118,4 +118,17 @@ angular.module('zesty')
     }
   };
 
+  /**
+   * get slug based on name.
+   * @param  {[type]} name [description]
+   * @return {[type]}      [description]
+   */
+  $scope.getSlugFromName = function(name) {
+    if (!name) {
+      return name;
+    }
+    return name.replace(/([~!@#$%^&*()_+=`{}\[\]\|\\:;'<>,.\/? ])+/g, '-') // replace special characters
+        .replace(/^(-)+|(-)+$/g,''); // replace trailing -
+  };
+
 }]);

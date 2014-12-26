@@ -199,4 +199,27 @@ a.list-group-item-black {
       @extend .form-control;
     }
   }
+
+  .product-images {
+    position: relative;
+    display: table-cell;
+    @extend .margin-right-10;
+    float: left;
+
+    .thumb {
+      border-color: $warning;
+    }
+
+    .product-image-remove-icon {
+      background: $warning;
+      color: $white;
+      position: absolute;
+      right: -5px;
+      top: -10px;
+      @extend .border;
+      @extend .pad-5;
+      @include border-radius(50%);
+    }
+  }
+  
 }

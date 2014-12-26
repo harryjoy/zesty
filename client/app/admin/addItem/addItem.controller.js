@@ -1,16 +1,18 @@
 'use strict';
 
 angular.module('zesty.admin')
-  .controller('AdminAddItemsCtrl', ['$scope', 'CategoryServ', 'ProductServ',
-  function ($scope, CategoryServ, ProductServ) {
+  .controller('AdminAddItemsCtrl', ['$scope', 'CategoryServ', 'ProductServ', 'Uploader',
+  function ($scope, CategoryServ, ProductServ, Uploader) {
 
   $scope.loading = false;
   $scope.selection = 1;
+  $scope.products = $scope.categories = $scope.images = [];
   $scope.product = {
     specialPriceStartDate: moment().format('DD-MMMM-YYYY'),
     specialPriceEndDate: moment().format('DD-MMMM-YYYY'),
     type: 1,
-    currency: 'Rs'
+    currency: 'Rs',
+    images: []
   };
 
   $('#summary').wysihtml5({
@@ -39,69 +41,10 @@ angular.module('zesty.admin')
     $scope.endOpened = !$scope.endOpened;
   };
 
-  $scope.categories = [];
   CategoryServ.query().$promise.then(function(categories) {
     $scope.categories = categories;
   });
 
-  // Call search api for the product.
-  $scope.searchProducts = function(val) {
-    return ProductServ.search({
-      name: val,
-      pageSize: 25
-    }).$promise.then(function(response) {
-      if (response && response.length > 0) {
-        return response.map(function(item) {
-          return item.title;
-        });
-      }
-      return [];
-    });
-  };
-
-  $scope.opts = {
-    minimumInputLength: 3,
-    maximumSelectionSize: 3,
-    multiple: true,
-    ajax: {
-      url: '/api/items/search',
-      data: function(term, page) {
-        return {
-          name: term || '',
-          pageSize: 25,
-          pageNumber: page - 1
-        };
-      },
-      results: function(data) {
-        // var response = [];
-        // _.forEach(data, function(item) {
-        //   response.push({
-        //     id: item._id,
-        //     text: item.title
-        //   });
-        // });
-        // return {
-        //   results: response
-        // };
-        return {
-          results: data
-        };
-      }
-    },
-    formatResult: function(obj) {
-      return obj.title;
-    },
-    formatSelection: function(obj) {
-      return obj.title;
-    },
-    id: function(data) {
-      return data._id;
-    },
-    initSelection: function() {
-    }
-  };
-
-  $scope.products = [];
   // function to get products based on user's entered value.
   $scope.refreshProducts = function(val) {
     if (!val || val.length < 3) {
@@ -116,6 +59,31 @@ angular.module('zesty.admin')
         $scope.products = response;
       }
     });
+  };
+
+  // open image selector
+  $scope.openImageUploder = Uploader.openImageSelector(false, false, {
+    images: $scope.images
+  }, function(selected) {
+    $scope.product.mainImage = selected;
+    _.remove($scope.images);
+    $scope.images.push(selected);
+  });
+  $scope.openGalleryUploder = Uploader.openImageSelector(false, true, {
+    images: $scope.product.images
+  }, function(selected) {
+    if (selected) {
+      $.each(selected, function(k) {
+        $scope.product.images.push(k);
+      });
+    }
+  });
+  $scope.removeMainImage = function() {
+    $scope.product.mainImage = undefined;
+    _.remove($scope.images);
+  };
+  $scope.removeImage = function(img) {
+    _.pull($scope.product.images, img);
   };
 
 }]);

@@ -13,6 +13,12 @@ angular.module('zesty')
   function loadFileList(modalScope) {
     FileServ.getImageList().then(function(data) {
       modalScope.images = data;
+      console.log(modalScope.hiddenData);
+      if (modalScope.hiddenData && modalScope.hiddenData.images && modalScope.hiddenData.images.length > 0) {
+        _.forEach(modalScope.hiddenData.images, function(img) {
+          _.pull(modalScope.images, img);
+        });
+      }
     });
   }
 
@@ -66,8 +72,13 @@ angular.module('zesty')
     };
 
     // read icons from extenal config file.
-    FileServ.readFile('../../assets/conf/category-icons.json').then(function(data){
+    FileServ.readFile('../../assets/conf/category-icons.json').then(function(data) {
       modalScope.icons = data;
+      if (modalScope.hiddenData && modalScope.hiddenData.icons && modalScope.hiddenData.icons.length > 0) {
+        _.forEach(modalScope.hiddenData.icons, function(img) {
+          _.pull(modalScope.icons, img);
+        });
+      }
     });
 
     modalScope.$watch('media.image', function(value) {
@@ -107,10 +118,14 @@ angular.module('zesty')
   return {
     /**
      * Create a function to open a image selection dialog.
-     * @param  {Function} cb - callback, ran when image is selected
-     * @return {Function}    - the function to open the modal
+     * @param {Boolean} icon Whether to provide option for selecting icons or not.
+     * @param {Boolean} multiple Whether multiple selecion is allowed or not.
+     * @param {Object} data Already selected data. 
+     *        format for data: {icons: ['fa-check', 'fa-male'], images: ['abc.png', 'xyz.png']}
+     * @param  {Function} cb - callback, ran when image is selected.
+     * @return {Function}    - the function to open the modal.
      */
-    openImageSelector: function(cb) {
+    openImageSelector: function(icon, multiple, data, cb) {
       cb = cb || angular.noop;
 
       /**
@@ -122,6 +137,9 @@ angular.module('zesty')
             deleteModal;
 
         deleteModal = openModal({
+          isIcon: icon,
+          isMultiple: multiple,
+          hiddenData: data,
           modal: {
             dismissable: true,
             title: 'Media Library (Images)',
@@ -131,7 +149,7 @@ angular.module('zesty')
               click: function(e) {
                 var selected = getSelectedValue();
                 if (!selected || selected === '') {
-                  AlertServ.alert('Please select image or icon.');
+                  AlertServ.alert('Please select image' + (icon ? ' or icon' : '') + '.');
                 } else {
                   deleteModal.close(e);
                 }
