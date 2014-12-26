@@ -51,12 +51,20 @@
                 <span class="text-blue text-cursor-pointer" ng-click="addCategoryVisible=!addCategoryVisible;">Add new category</span>
               </div>
               <div class="card-footer" collapse="!addCategoryVisible">
+                <div class="alert alert-danger" ng-show="errors.category && errors.category !== ''">
+                  <i class="fa fa-warning"></i>
+                  {{errors.category}}
+                </div>
+                <div class="alert alert-success" ng-show="errors.categorySuccess && errors.categorySuccess !== ''">
+                  <i class="fa fa-check"></i>
+                  {{errors.categorySuccess}}
+                </div>
                 <div class="form-group">
                   <label class="text-cursor-pointer control-label" for="category_name">Category Name:</label>
                   <input type="text" name="category_name" class="form-control input-sm" id="category_name" ng-model="category.name" placeholder="Category Name" ng-maxlength="50" />
                 </div>
                 <div class="form-group">
-                  <button class="btn btn-default btn-sm">Add category</button>
+                  <span class="btn btn-default btn-sm" ng-click="addNewCategory();">Add category</span>
                 </div>
               </div> <!-- ./categories -->
             </div>
@@ -133,15 +141,51 @@
                       You can add upto 5 additional images.
                     </span> <br/> <br/>
                     <div ng-repeat="image in product.images" class="product-images">
-                      <img src="{{getImageUrl(image)}}" class="thumb" width="64px" />
-                      <i class="fa fa-trash product-image-remove-icon" ng-click="removeImage(image);"></i>
+                      <img src="{{getImageUrl(image)}}" class="thumb" width="64px" height="64px" />
+                      <i class="fa fa-times product-image-remove-icon text-cursor-pointer" tooltip="Remove" ng-click="removeImage(image);"></i>
                     </div>
                     <clearfix></clearfix>
                   </div>
                 </div>
               </div><!-- /.images tab -->
               <div class="tab" ng-class="{'active': (selection === 3)}">
-                Add custom attributes for product here.
+                <div class="margin-bottom-10" ng-show="product.attrs && product.attrs.length > 0">
+                  <h2 class="page-header">Product Attributes</h2>
+                  <div class="form-group border margin-vertical-3 pad-5 bg-light-white" ng-repeat="attr in product.attrs">
+                    <div class="pull-right">
+                      <span class="text-blue text-small text-underline text-cursor-pointer">Edit</span> | 
+                      <span class="text-blue text-small text-underline text-cursor-pointer" ng-click="removeCustomAttr(attr);">Delete</span>
+                    </div>
+                    <div class="product-attr-name">
+                      <strong>{{attr.name}}</strong>
+                    </div>
+                    <div class="product-attr-values">
+                      {{attr.values}}
+                    </div>
+                  </div>
+                </div>
+                <hr ng-show="product.attrs && product.attrs.length > 0" />
+                <div>
+                  <h2 class="page-header">Add new attribute</h2>
+                  <div class="alert alert-danger" ng-show="errors.attr && errors.attr !== ''">
+                    <i class="fa fa-warning"></i>
+                    {{errors.attr}}
+                  </div>
+                  <div class="form-group">
+                    <label class="text-cursor-pointer control-label" for="attr_name">Name:</label>
+                    <input type="text" name="attr_name" id="attr_name" class="form-control input-sm" ng-model="attr.name" />
+                  </div>
+                  <div class="form-group">
+                    <label class="text-cursor-pointer control-label" for="attr_values">Value(s):</label>
+                    <textarea id="attr_values" name="attr_values" rows="5" cols="30" class="form-control" ng-model="attr.values"></textarea>
+                    <span class="help-block text-normal">
+                      Separate values by pipe (|) sign.
+                    </span>
+                  </div>
+                  <div class="form-group">
+                    <span class="btn btn-default btn-sm" ng-click="addCustomAttr();">Add Custom Attribute</span>
+                  </div>
+                </div>
               </div><!-- /.attributes tab -->
               <div class="tab" ng-class="{'active': (selection === 4)}">
                 <div class="form-group">

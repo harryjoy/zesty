@@ -5,14 +5,16 @@ angular.module('zesty.admin')
   function ($scope, CategoryServ, ProductServ, Uploader) {
 
   $scope.loading = false;
-  $scope.selection = 1;
+  $scope.selection = 3;
   $scope.products = $scope.categories = $scope.images = [];
+  $scope.errors = $scope.attr = $scope.category = {};
   $scope.product = {
     specialPriceStartDate: moment().format('DD-MMMM-YYYY'),
     specialPriceEndDate: moment().format('DD-MMMM-YYYY'),
     type: 1,
     currency: 'Rs',
-    images: []
+    images: [],
+    attrs: []
   };
 
   $('#summary').wysihtml5({
@@ -61,6 +63,32 @@ angular.module('zesty.admin')
     });
   };
 
+  // add new category
+  $scope.addNewCategory = function() {
+    $scope.errors.categorySuccess = $scope.errors.category = '';
+    if(!$scope.category.name || $scope.category.name === '') {
+      $scope.errors.category = 'Category name can not be blank.';
+    } else {
+      $scope.category.slug = $scope.getSlugFromName($scope.category.name);
+      var match = false;
+      _.forEach($scope.categories, function(category) {
+        if (angular.lowercase(category.name) === angular.lowercase($scope.category.name)) {
+          match = true;
+          return false;
+        }
+      });
+      if (match) {
+        $scope.errors.category = 'Category already exist.';
+      } else {
+        CategoryServ.save($scope.category, function(category) {
+          $scope.categories.push(category);
+          $scope.category = {};
+          $scope.errors.categorySuccess = 'Category added successfully.';
+        });
+      }
+    }
+  };
+
   // open image selector
   $scope.openImageUploder = Uploader.openImageSelector(false, false, {
     images: $scope.images
@@ -84,6 +112,23 @@ angular.module('zesty.admin')
   };
   $scope.removeImage = function(img) {
     _.pull($scope.product.images, img);
+  };
+
+  // add new custom attribute to product.
+  $scope.addCustomAttr = function() {
+    $scope.errors.attr = '';
+    if(!$scope.attr.name || $scope.attr.name === '') {
+      $scope.errors.attr = 'Attribute name can not be blank.';
+    } else if (!$scope.attr.values || $scope.attr.values === '') {
+      $scope.errors.attr = 'Attribute values can not be blank.';
+    } else {
+      $scope.product.attrs.push($scope.attr);
+      $scope.attr = {};
+    }
+  };
+  // remove custom attribute of product.
+  $scope.removeCustomAttr = function(attr) {
+    _.pull($scope.product.attrs, attr);
   };
 
 }]);
