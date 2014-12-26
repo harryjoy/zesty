@@ -134,11 +134,12 @@ exports.authCallback = function(req, res, next) {
  * add address for a user
  */
 exports.addAddress = function(req, res, next) {
-  if(req.body._id) { delete req.body._id; }
   User.findById(req.params.id, function (err, user) {
     if (err) { return handleError(res, err); }
     if(!user) { return res.send(404); }
-    user.addresses.push(req.body)
+    var address = req.body;
+    address._id = mongoose.Types.ObjectId();
+    user.addresses.push(address)
     user.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.json(200, user);

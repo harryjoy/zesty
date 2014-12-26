@@ -4,7 +4,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var AddressSchema = new Schema({
-	_id: Schema.Types.ObjectId,
   title: String,
   firstName: String,
   lastName: String,

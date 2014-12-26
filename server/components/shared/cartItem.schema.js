@@ -4,7 +4,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var CartItemSchema = new Schema({
-  _id: Schema.Types.ObjectId,
   qty: Number,
   price: Number,
   title: String,
