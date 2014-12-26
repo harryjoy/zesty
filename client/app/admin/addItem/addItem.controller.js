@@ -24,7 +24,7 @@ angular.module('zesty.admin')
 
   // watch for changes in product name while adding new product
   // to auto add slug for the product.
-  $scope.$watch('product.name', function(newValue) {
+  $scope.$watch('product.title', function(newValue) {
     if (!$scope.isEdit) {
       $scope.product.slug = $scope.getSlugFromName(angular.lowercase(newValue));
     }
