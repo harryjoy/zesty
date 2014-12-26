@@ -4,19 +4,33 @@ angular.module('zesty.admin')
   .controller('AdminAddItemsCtrl', ['$scope', 'CategoryServ', 'ProductServ', 'Uploader',
   function ($scope, CategoryServ, ProductServ, Uploader) {
 
-  $scope.loading = false;
-  $scope.selection = 3;
+  $scope.loading = $scope.isEdit = false;
+  $scope.selection = 1;
   $scope.products = $scope.categories = $scope.images = [];
   $scope.errors = $scope.attr = $scope.category = {};
+
+  // initial product setup.
   $scope.product = {
     specialPriceStartDate: moment().format('DD-MMMM-YYYY'),
     specialPriceEndDate: moment().format('DD-MMMM-YYYY'),
     type: 1,
     currency: 'Rs',
     images: [],
-    attrs: []
+    attrs: [],
+    categories: [],
+    isSpecialDiscount: false,
+    active: true
   };
 
+  // watch for changes in product name while adding new product
+  // to auto add slug for the product.
+  $scope.$watch('product.name', function(newValue) {
+    if (!$scope.isEdit) {
+      $scope.product.slug = $scope.getSlugFromName(angular.lowercase(newValue));
+    }
+  });
+
+  // wysiwys editor settings for summary
   $('#summary').wysihtml5({
     toolbar: {
       image: false,
@@ -26,6 +40,7 @@ angular.module('zesty.admin')
     }
   });
 
+  // special price date settings
   $scope.dateOptions = {
     formatYear: 'yy',
     startingDay: 1,
@@ -82,6 +97,7 @@ angular.module('zesty.admin')
       } else {
         CategoryServ.save($scope.category, function(category) {
           $scope.categories.push(category);
+          $scope.product.categories.push(category);
           $scope.category = {};
           $scope.errors.categorySuccess = 'Category added successfully.';
         });

@@ -82,14 +82,13 @@
               <div class="tab" ng-class="{'active': (selection === 1)}">
                 <div class="form-group">
                   <label class="text-cursor-pointer control-label" for="price">Regular Price:</label>
-                  <input type="text" name="price" class="form-control" id="price" ng-model="product.price" placeholder="Regular Price" ng-maxlength="50" />
+                  <input type="text" name="price" class="form-control" id="price" ng-model="product.price" placeholder="Regular Price" ng-maxlength="50" only-digits allow-decimal="true" />
                 </div>
                 <div class="form-group">
                   <label class="text-cursor-pointer control-label" for="special_price">Special Price:</label>
-                  <input type="text" name="special_price" class="form-control" id="special_price" ng-model="product.specialPrice" placeholder="Special Price" ng-maxlength="50" />
-                  <span class="helper text-small">
-                    Add % at the end to give specific discounted price as special price.
-                  </span>
+                  <input type="text" name="special_price" class="form-control" id="special_price" ng-model="product.specialPrice" placeholder="Special Price" ng-maxlength="50" only-digits allow-decimal="true" />
+                  <input type="checkbox" ng-model="product.isSpecialDiscount" name="speical_discount" id="speical_discount" />
+                  <label class="text-cursor-pointer control-label text-normal" for="speical_discount">Value is in percentage.</label>
                   <span class="text-small text-blue text-cursor-pointer pull-right margin-top-5" ng-click="specialPriceScheduleVisible=!specialPriceScheduleVisible;">
                     Schedule special price
                   </span>
@@ -113,8 +112,23 @@
                     </div>
                   </div>
                 </div>
-                <p class="card-footer text-small">
-                  All prices are in {{product.currency}}.
+                <p class="card-footer">
+                  <span class="text-normal">All prices are in {{product.currency}}.</span>
+                  <span class="pull-right" ng-show="product.price && product.price > 0">
+                    Product price preview: 
+                    <span ng-class="{'text-strike': product.specialPrice && product.specialPrice !== '' && product.specialPrice > 0, 'text-bold': !product.specialPrice || product.specialPrice === '' || product.specialPrice === 0}">
+                      {{product.currency}} {{product.price}}
+                    </span>
+                    <span ng-switch="product.isSpecialDiscount" ng-show="product.specialPrice && product.specialPrice !== '' && product.specialPrice > 0">
+                      <span ng-switch-when="false" class="text-bold">
+                        &nbsp; {{product.currency}} {{product.specialPrice}}
+                      </span>
+                      <span ng-switch-when="true" class="text-bold">
+                        &nbsp; {{product.currency}} {{product.price - ((product.price * product.specialPrice) / 100)}}
+                      </span>
+                    </span>
+                    
+                  </span>
                 </p>
               </div><!-- /.price tab -->
               <div class="tab" ng-class="{'active': (selection === 2)}">
@@ -231,7 +245,8 @@
                       <label class="text-cursor-pointer control-label" for="slug">Slug:</label>
                       <input type="text" name="slug" class="form-control" id="slug" ng-model="product.slug" placeholder="Slug" ng-maxlength="50" />
                       <span class="helper text-small">
-                        The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.
+                        The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens. <br/>
+                        This will be auto generated from product name, so don't edit it unless you really need to do so.
                       </span>
                     </div> <!-- ./slug information -->
                   </div> <!-- ./col-md-4 left side -->
