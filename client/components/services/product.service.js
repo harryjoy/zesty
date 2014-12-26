@@ -50,6 +50,13 @@ angular.module('zesty')
         params: {
           controller:'favorite'
         }
+      },
+      search: {
+        method: 'GET',
+        params: {
+          id:'search'
+        },
+        isArray:true
       }
     });
   }]);

@@ -2,9 +2,12 @@
 	<div class="row pull-right">
 		<div class="col-md-12">
 		  <h2 title="{{category.info}}">
-        <span ng-switch="category.isIcon">
-          <i class="fa {{category.image}} fa-fw" ng-switch-when="true"></i> 
-          <img src="{{category.image}}" width="24" height="24" ng-switch-default /> 
+        <span ng-show="!category.image || category.image === ''">
+          <img src="../../../assets/images/no.png" width="24" height="24" />
+        </span>
+        <span ng-switch="category.isIcon" ng-show="category.image && category.image !== ''">
+          <img ng-switch-when="false" class="product-image" src="{{getImageUrl(category.image)}}" width="24" height="24" />
+          <i ng-switch-when="true" class="fa fa-fw {{category.image}}"></i>
         </span>
         {{category.name}}
       </h2>

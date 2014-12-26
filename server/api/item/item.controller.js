@@ -20,6 +20,26 @@ exports.index = function(req, res) {
   });
 };
 
+// search for items
+exports.search = function(req, res, next) {
+  var pageSize = req.query.pageSize || config.pagination.size;
+  var pageNumber = req.query.pageNumber || 0;
+  var name = req.query.name || '';
+  var searchForBlank = req.query.searchBlank || false;
+  if (name === '' && !searchForBlank) { // name is blank and searchForBlank flag is not active
+    return res.send(200, []);
+  }
+  Item.find({
+    title: new RegExp(name, "i") // for like query
+  }, {
+    title: 1
+  }).limit(pageSize).skip(pageNumber * pageSize)
+  .sort('title').exec(function (err, items) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, items);
+  });
+};
+
 // Get a single item and put it in req object.
 // This method will only be used as step for other methods.
 exports.getItem = function(req, res, next) {

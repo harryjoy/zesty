@@ -6,6 +6,16 @@
   margin-bottom: 20px;
   background: transparent;
 
+  &.nav-tabs-holder-flat {
+
+    .nav-tabs li.active, .nav-tabs li.active:hover, 
+    .nav-tabs li.active > a, .nav-tabs li.active:hover > a,
+    .tab-contents {
+      @include border-radius(0px);
+    }
+
+  }
+
   .nav-tabs {
     margin: 0px;
     border-bottom-color: $dim-gray;
@@ -23,6 +33,16 @@
             border-left-width: 1px;
             border-right-width: 1px;
           }
+        }
+      }
+    }
+
+    &.nav-tabs-info {
+
+      li {
+
+        &.active {
+          border-top-color: $info;
         }
       }
     }

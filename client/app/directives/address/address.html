@@ -41,10 +41,12 @@
         </div>
         <div class="form-group">
           <label for="bill_addr_country">Country</label>
-          <select id="bill_addr_country" ui-select2 ng-model="address.country" placeholder="Select Country" style="width: 100%" class="flat">
-            <option value=""></option>
-            <option ng-repeat="country in countries" value="{{country.code}}">{{country.name}}</option>
-          </select>
+          <ui-select ng-model="address.country" ng-disabled="disabled" style="width: 100%;" theme="bootstrap">
+            <ui-select-match placeholder="Select Country">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="country.code as country in countries | filter:$select.search">
+              <div ng-bind-html="country.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
         </div>
       </div>
       <div class="col-md-6 col-sm-12">

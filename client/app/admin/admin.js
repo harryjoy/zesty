@@ -28,6 +28,12 @@ angular.module('zesty')
         controller: 'AdminItemsCtrl',
         authenticate: true
       })
+      .state('admin.addProduct', {
+        url: '/add-product',
+        templateUrl: 'app/admin/addItem/addItem.html',
+        controller: 'AdminAddItemsCtrl',
+        authenticate: true
+      })
       .state('admin.categories', {
         url: '/categories',
         templateUrl: 'app/admin/categories/categories.html',

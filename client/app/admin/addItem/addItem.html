@@ -1,0 +1,228 @@
+<div class="card card-solid">
+  <div class="card-header">
+    <h1 class="card-title text-big">
+      <i class="fa fa-cubes"></i> Add Product
+    </h1>
+  </div>
+  <div class="card-overlay" ng-show="loading">
+    <span class="card-overlay-icon text-black">
+      <i class="fa fa-refresh fa-spin fa-2x"></i>
+    </span>
+  </div>
+  <form name="form" role="form" novalidate>
+    <div class="card-body product-form">
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <div class="card card-info">
+            <div class="card-header">
+              <h1 class="card-title">
+                Basic Product Information
+              </h1>
+            </div>
+            <div class="card-body border-bottom">
+              <div class="form-group">
+                <label class="text-cursor-pointer control-label" for="name">Name:</label>
+                <input type="text" name="name" class="form-control" id="name" ng-model="product.name" placeholder="Name" ng-maxlength="50" />
+              </div>
+              <div class="form-group">
+                <label class="text-cursor-pointer control-label" for="info">Description:</label>
+                <textarea rows="5" cols="26" name="info" class="form-control" id="info" ng-model="product.description" placeholder="Description" ng-maxlength="250"></textarea>
+                <span class="helper text-small">
+                  This will be a short information about the product. Mostly inlude features that needs to be highlighted.
+                </span>
+              </div>
+              <div class="form-group">
+                <label class="text-cursor-pointer control-label" for="summary">Summary:</label>
+                <textarea rows="10" cols="26" name="summary" class="form-control" id="summary" ng-model="product.summary" placeholder="Summary"></textarea>
+                <span class="helper text-small">
+                  In summary you can add all the information about product and it can be decorated to be rich text as well.
+                </span>
+              </div>
+              <div class="form-group">
+                <label class="text-cursor-pointer control-label" for="categories">Product Categories:</label>
+                <ui-select multiple ng-model="product.categories" style="width: 100%" theme="bootstrap" close-on-select="false" reset-search-input="true">
+                  <ui-select-match placeholder="Select Categories">{{$item.name}}</ui-select-match>
+                  <ui-select-choices repeat="category in categories | filter: {name: $select.search}">
+                    <div ng-bind-html="category.name | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+              <div class="card-body">
+                <span class="text-blue text-cursor-pointer" ng-click="addCategoryVisible=!addCategoryVisible;">Add new category</span>
+              </div>
+              <div class="card-footer" collapse="!addCategoryVisible">
+                <div class="form-group">
+                  <label class="text-cursor-pointer control-label" for="category_name">Category Name:</label>
+                  <input type="text" name="category_name" class="form-control input-sm" id="category_name" ng-model="category.name" placeholder="Category Name" ng-maxlength="50" />
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-default btn-sm">Add category</button>
+                </div>
+              </div> <!-- ./categories -->
+            </div>
+          </div> <!-- ./info -->
+
+          <div class="nav-tabs-holder nav-tabs-holder-flat bg-white border-top">
+            <ul class="nav nav-tabs nav-tabs-info border-horizontal">
+              <li ng-class="{'active': selection === 1}" ng-click="selection = 1;" class="text-cursor-pointer"><a href="#"><i class="fa fa-money"></i> Price</a></li>
+              <li ng-class="{'active': selection === 2}" ng-click="selection = 2;" class="text-cursor-pointer"><a href="#"><i class="fa fa-image"></i> Images</a></li>
+              <li ng-class="{'active': selection === 3}" ng-click="selection = 3;" class="text-cursor-pointer"><a href="#"><i class="fa fa-list"></i> Attributes</a></li>
+              <li ng-class="{'active': selection === 4}" ng-click="selection = 4;" class="text-cursor-pointer"><a href="#"><i class="fa fa-link"></i> Linked Products</a></li>
+              <li ng-class="{'active': selection === 5}" ng-click="selection = 5;" class="text-cursor-pointer"><a href="#"><i class="fa fa-barcode"></i> Extra</a></li>
+            </ul>
+            <div class="tab-contents">
+              <div class="tab" ng-class="{'active': (selection === 1)}">
+                <div class="form-group">
+                  <label class="text-cursor-pointer control-label" for="price">Regular Price:</label>
+                  <input type="text" name="price" class="form-control" id="price" ng-model="product.price" placeholder="Regular Price" ng-maxlength="50" />
+                </div>
+                <div class="form-group">
+                  <label class="text-cursor-pointer control-label" for="special_price">Special Price:</label>
+                  <input type="text" name="special_price" class="form-control" id="special_price" ng-model="product.specialPrice" placeholder="Special Price" ng-maxlength="50" />
+                  <span class="helper text-small">
+                    Add % at the end to give specific discounted price as special price.
+                  </span>
+                  <span class="text-small text-blue text-cursor-pointer pull-right margin-top-5" ng-click="specialPriceScheduleVisible=!specialPriceScheduleVisible;">
+                    Schedule special price
+                  </span>
+                  <clearfix></clearfix>
+                  <div class="row margin-top-10" collapse="!specialPriceScheduleVisible">
+                    <div class="col-md-6 col-sm-12">
+                      <p class="input-group">
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default btn-sm" ng-click="openStartDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                        <input type="text" class="form-control input-sm" datepicker-popup="{{'dd-MMMM-yyyy'}}" ng-model="product.specialPriceStartDate" is-open="startOpened" datepicker-options="dateOptions" ng-required="true" min-date="minDate" close-text="Close" />
+                      </p>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                      <p class="input-group">
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default btn-sm" ng-click="openEndDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                        <input type="text" class="form-control input-sm" datepicker-popup="{{'dd-MMMM-yyyy'}}" ng-model="product.specialPriceEndDate" is-open="endOpened" datepicker-options="dateOptions" ng-required="true" min-date="minDate" close-text="Close" />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <p class="card-footer text-small">
+                  All prices are in {{product.currency}}.
+                </p>
+              </div><!-- /.price tab -->
+              <div class="tab" ng-class="{'active': (selection === 2)}">
+                <div class="row">
+                  <div class="col-md-6 col-sm-12 border-right">
+                    <h2 class="margin-top-1">Main Image</h2>
+                    <!-- <img src="../../../assets/images/no.png" class="thumbnail img-responsive" style="min-width:200px" /> -->
+                    <button class="btn btn-default">
+                      <i class="fa fa-plus-circle"></i> Add Main Image
+                    </button>
+                  </div>
+                  <div class="col-md-6 col-sm-12">
+                    <h2 class="margin-top-1">Additional Images</h2>
+                    <!-- <img src="../../../assets/images/no.png" class="thumb" width="64px" /> -->
+                    <button class="btn btn-default">
+                      <i class="fa fa-plus-circle"></i> Add Images
+                    </button> <br/>
+                    <span class="helper text-small">
+                      You can add upto 5 additional images.
+                    </span>
+                  </div>
+                </div>
+              </div><!-- /.images tab -->
+              <div class="tab" ng-class="{'active': (selection === 3)}">
+                Add custom attributes for product here.
+              </div><!-- /.attributes tab -->
+              <div class="tab" ng-class="{'active': (selection === 4)}">
+                
+                <div class="form-group">
+                  <label class="text-cursor-pointer control-label" for="upsells">
+                    Up-Sells:
+                    <i ng-show="loadingUpsells" class="fa fa-refresh fa-spin"></i>
+                  </label>
+                  <ui-select multiple  ng-model="product.upsells" ng-disabled="disabled" style="width: 100%;" reset-search-input="true">
+                    <ui-select-match placeholder="Search products">{{$item.title}}</ui-select-match>
+                    <ui-select-choices refresh="refreshProducts($select.search)" refresh-delay="0" repeat="product in products track by $index | filter:$select.search">
+                      {{product.title}}
+                    </ui-select-choices>
+                  </ui-select>
+                  <span class="help-block text-small">
+                    Up Sells are products which you recommend instead of currently viewed product,
+                    for example, products that are more profitable or better quality or less expensive.
+                    <br/>
+                    Enter minimum 3 characters.
+                  </span>
+                </div>
+                <div class="form-group">
+                  <label class="text-cursor-pointer control-label" for="crosssells">
+                    Cross-Sells:
+                    <i ng-show="loadingCrosssells" class="fa fa-refresh fa-spin"></i>
+                  </label>
+                  <ui-select multiple  ng-model="product.crosssells" ng-disabled="disabled" style="width: 100%;" reset-search-input="true">
+                    <ui-select-match placeholder="Search products">{{$item.title}}</ui-select-match>
+                    <ui-select-choices refresh="refreshProducts($select.search)" refresh-delay="0" repeat="product in products track by $index | filter:$select.search">
+                      {{product.title}}
+                    </ui-select-choices>
+                  </ui-select>
+                  <span class="help-block text-small">
+                    Cross sells are products which you promote on the cart based on current product.
+                    <br/>
+                    Enter minimum 3 characters.
+                  </span>
+                </div>
+              </div><!-- /.linked products tab -->
+              <div class="tab" ng-class="{'active': (selection === 5)}">
+                <div class="row">
+                  <div class="col-md-4 col-sm-12 margin-top-5">
+                    <div class="form-group margin-bottom-1">
+                      <label class="text-cursor-pointer control-label" for="slug">Slug:</label>
+                      <input type="text" name="slug" class="form-control" id="slug" ng-model="product.slug" placeholder="Slug" ng-maxlength="50" />
+                      <span class="helper text-small">
+                        The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.
+                      </span>
+                    </div> <!-- ./slug information -->
+                  </div> <!-- ./col-md-4 left side -->
+                  <div class="col-md-4 col-sm-12 margin-top-5">
+                    <div class="form-group">
+                      <input type="checkbox" name="active" id="active" ng-model="product.active" />
+                      <label class="text-cursor-pointer control-label" for="active">Product is {{product.active ? '' : 'in'}}active</label>
+                      <i class="fa fa-question-circle" tooltip="Inactive products are like saved draft. Make product active to be listed on the site. Making product inactive will remove it from the list on site."></i>
+                    </div>
+                    <div class="form-group" tooltip="Whether people will be able to search this product or not?">
+                      <input type="checkbox" name="searchable" id="searchable" ng-model="product.searchable" />
+                      <label class="text-cursor-pointer control-label" for="searchable">Product {{product.searchable ? 'is' : 'is not'}} searchable</label>
+                    </div>
+                    <div class="form-group margin-bottom-1" tooltip="Whether people will be able to give review about this product or not?">
+                      <input type="checkbox" name="reviewEnabled" id="reviewEnabled" ng-model="product.reviewEnabled" />
+                      <label class="text-cursor-pointer control-label" for="reviewEnabled">Product {{product.reviewEnabled ? 'is' : 'is not'}} open for review.</label>
+                    </div> <!-- ./publishing information -->
+                  </div> <!-- ./col-md-4 center -->
+                  <div class="col-md-4 col-sm-12 margin-top-5">
+                    <div class="form-group margin-bottom-1">
+                      <label class="text-cursor-pointer control-label" for="type">Product Type:</label>
+                      <div class="btn-group">
+                        <label class="btn btn-sm btn-default" btn-radio="1" ng-model="product.type">
+                          Simple
+                        </label>
+                        <label class="btn btn-sm btn-default" btn-radio="2" ng-model="product.type">
+                          Virtual
+                        </label>
+                        <label class="btn btn-sm btn-default" btn-radio="3" ng-model="product.type">
+                          Downloadable
+                        </label>
+                      </div>
+                    </div>
+                  </div> <!-- ./col-md-4 righ side -->
+                </div> <!-- ./exta row -->
+              </div><!-- /.extra tab -->
+            </div><!-- /.tab-contents -->
+          </div> <!-- ./tabs-holder -->
+        </div> <!-- ./col-md-12 left side -->
+      </div> <!-- ./row -->
+    
+    </div><!-- ./card-body -->
+    <div class="card-footer">
+      <button class="btn btn-success">Submit</button>
+    </div>
+  </form>
+</div>

@@ -179,3 +179,24 @@ a.list-group-item-black {
 .category-form-dialog {
   padding: 0 15px;
 }
+
+.product-form {
+  background: $light-gray;
+
+  .product-category-selection {
+    overflow: auto;
+    height: 200px;
+
+    .form-group {
+      margin-bottom: 5px;
+    }
+  }
+
+  .select2-container-multi {
+
+    .select2-choices {
+      padding: 3px 6px 0px;
+      @extend .form-control;
+    }
+  }
+}

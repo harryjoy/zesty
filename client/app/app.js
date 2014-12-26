@@ -12,7 +12,7 @@ angular.module('zesty', [
   'ui.bootstrap',
   'datatables',
   'reCAPTCHA',
-  'ui.select2',
+  'ui.select',
   'ImageZoom',
   'green.inputmask4angular',
   'zesty.utils',
