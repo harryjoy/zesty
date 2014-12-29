@@ -57,6 +57,13 @@ angular.module('zesty')
           id:'search'
         },
         isArray:true
+      },
+      featured: {
+        method: 'GET',
+        params: {
+          id:'featured'
+        },
+        isArray:true
       }
     });
   }]);

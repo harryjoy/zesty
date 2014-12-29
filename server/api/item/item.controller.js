@@ -40,6 +40,19 @@ exports.search = function(req, res, next) {
   });
 };
 
+// get featured items.
+exports.featured = function(req, res, next) {
+  var pageSize = req.query.pageSize || config.pagination.size;
+  var pageNumber = req.query.pageNumber || 0;
+  Item.find({
+    featured: true
+  }).limit(pageSize).skip(pageNumber * pageSize)
+  .sort('-createdAt').exec(function (err, items) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, items);
+  });
+};
+
 // Get a single item and put it in req object.
 // This method will only be used as step for other methods.
 exports.getItem = function(req, res, next) {

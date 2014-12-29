@@ -9,11 +9,11 @@
 <div class="container">
   <div class="slider-lg">
     <carousel interval="5000">
-      <slide ng-repeat="slide in slides" active="slide.active">
-        <img ng-src="{{slide.image}}">
+      <slide ng-repeat="slide in featuredItems" active="slide.active">
+        <img ng-src="{{getImageUrl(slide.mainImage)}}" class="banner-img">
         <div class="carousel-caption">
-          <h4>{{slide.title}}</h4>
-          <p>{{slide.text}}</p>
+          <h4 class="text-black">{{slide.title}}</h4>
+          <p class="text-black">{{slide.description}}</p>
         </div>
       </slide>
     </carousel>
@@ -101,17 +101,11 @@
       <h2 class="card-title"><i class="fa fa-certificate fa-fw"></i> Featured</h2>
     </div>
     <div class="card-body row">
-      <div class="col-md-3 col-sm-3 col-xs-6">
-        <a href="#"><img src="http://placehold.it/750x400/5cb85c/ffffff&text=Featured Item 1" class="img-responsive" alt="img"></a>
-      </div>
-      <div class="col-md-3 col-sm-3 col-xs-6">
-        <a href="#"><img src="http://placehold.it/750x400/F56954/ffffff&text=Featured Item 2" class="img-responsive" alt="img"></a>
-      </div>
-      <div class="col-md-3 col-sm-3 col-xs-6">
-        <a href="#"><img src="http://placehold.it/750x400/932ab6/ffffff&text=Featured Item 3" class="img-responsive" alt="img"></a>
-      </div>
-      <div class="col-md-3 col-sm-3 col-xs-6">
-        <a href="#"><img src="http://placehold.it/750x400/3c8dbc/ffffff&text=Featured Item 4" class="img-responsive" alt="img"></a>
+      <div class="col-md-3 col-sm-3 col-xs-6 featured-img" ng-repeat="item in featuredItems">
+        <a href="{{item.link}}">
+          <img src="{{getImageUrl(item.mainImage)}}" class="" alt="img">
+          <div class="featured-item-name">{{item.title}}</div>
+        </a>
       </div>
     </div>
   </div>

@@ -8,7 +8,9 @@ angular.module('zesty')
   var Item = {
     getItems: function () {
       $scope.loading = true;
-      var queryParams = {};
+      var queryParams = {
+        pageSize: 9
+      };
       if ($scope.items && $scope.items.length > 0) {
         queryParams.time = $scope.items[$scope.items.length - 1].updated;
       }
@@ -16,17 +18,6 @@ angular.module('zesty')
         if (items && items.length > 0) {
           $.each(items, function (key, item) {
             $scope.items.push(ProductUtil.convertItem(item));
-            var imgUrl = 'http://placehold.it/1250x400/5cb85c/ffffff&text=' + item.title;
-            if (key % 3 === 0) {
-              imgUrl = 'http://placehold.it/1250x400/428bca/ffffff&text=' + item.title;
-            } else if (key % 3 === 1) {
-              imgUrl = 'http://placehold.it/1250x400/d9534f/ffffff&text=' + item.title;
-            }
-            $scope.slides.push({
-              image: imgUrl,
-              title: item.title,
-              text: item.description
-            });
           });
           if ($scope.loggedIn) {
             $scope.checkForProductFav();
@@ -52,12 +43,23 @@ angular.module('zesty')
 
   $scope.items = [];
   $scope.slides = [];
+  $scope.featuredItems = [];
   Item.getItems();
   
   CategoryServ.query({
     limit: 20
   }).$promise.then(function(categories) {
     $scope.categories = categories;
+  });
+
+  ProductServ.featured({
+    pageSize: 4
+  }).$promise.then(function(items) {
+    if (items && items.length > 0) {
+      $.each(items, function (key, item) {
+        $scope.featuredItems.push(ProductUtil.convertItem(item));
+      });
+    }
   });
 
   Auth.isLoggedInAsync(function(loggedIn) {
