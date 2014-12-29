@@ -33,6 +33,7 @@
               </div>
               <div class="form-group">
                 <label class="text-cursor-pointer control-label" for="summary">Summary:</label>
+                {{product}}
                 <textarea rows="10" cols="26" name="summary" class="form-control" id="summary" ng-model="product.summary" placeholder="Summary"></textarea>
                 <span class="helper text-small">
                   In summary you can add all the information about product and it can be decorated to be rich text as well.
@@ -41,9 +42,25 @@
               <div class="form-group">
                 <label class="text-cursor-pointer control-label" for="categories">Product Categories:</label>
                 <ui-select multiple ng-model="product.categories" style="width: 100%" theme="bootstrap" close-on-select="false" reset-search-input="true">
-                  <ui-select-match placeholder="Select Categories">{{$item.name}}</ui-select-match>
+                  <ui-select-match placeholder="Select Categories">
+                    <span ng-show="!$item.image || $item.image === ''">
+                      <img src="../../../assets/images/no.png" width="16" height="16" />
+                    </span>
+                    <span ng-switch="$item.isIcon" ng-show="$item.image && $item.image !== ''">
+                      <img ng-switch-when="false" class="product-image" src="{{getImageUrl($item.image)}}" width="16" height="16" />
+                      <i ng-switch-when="true" class="fa fa-fw {{$item.image}}"></i>
+                    </span>
+                    {{$item.name}}
+                  </ui-select-match>
                   <ui-select-choices repeat="category in categories | filter: {name: $select.search}">
-                    <div ng-bind-html="category.name | highlight: $select.search"></div>
+                    <span ng-show="!category.image || category.image === ''">
+                      <img src="../../../assets/images/no.png" width="16" height="16" />
+                    </span>
+                    <span ng-switch="category.isIcon" ng-show="category.image && category.image !== ''">
+                      <img ng-switch-when="false" class="product-image" src="{{getImageUrl(category.image)}}" width="16" height="16" />
+                      <i ng-switch-when="true" class="fa fa-fw {{category.image}}"></i>
+                    </span>
+                    <span ng-bind-html="category.name | highlight: $select.search"></span>
                   </ui-select-choices>
                 </ui-select>
               </div>
@@ -167,7 +184,7 @@
                   <h2 class="page-header">Product Attributes</h2>
                   <div class="form-group border margin-vertical-3 pad-5 bg-light-white" ng-repeat="attr in product.attrs">
                     <div class="pull-right">
-                      <span class="text-blue text-small text-underline text-cursor-pointer">Edit</span> | 
+                      <span class="text-blue text-small text-underline text-cursor-pointer" ng-click="editCustomAttr(attr);">Edit</span> | 
                       <span class="text-blue text-small text-underline text-cursor-pointer" ng-click="removeCustomAttr(attr);">Delete</span>
                     </div>
                     <div class="product-attr-name">
@@ -269,32 +286,37 @@
                     <div class="form-group margin-bottom-1">
                       <label class="text-cursor-pointer control-label" for="type">Product Type:</label>
                       <div class="btn-group">
-                        <label class="btn btn-sm btn-default" btn-radio="1" ng-model="product.type">
+                        <label class="btn btn-sm btn-default" btn-radio="1" ng-model="product.productType">
                           Simple
                         </label>
-                        <label class="btn btn-sm btn-default" btn-radio="2" ng-model="product.type" tooltip="Virtual products are intangible and aren't shipped.">
+                        <label class="btn btn-sm btn-default" btn-radio="2" ng-model="product.productType" tooltip="Virtual products are intangible and aren't shipped.">
                           Virtual
                         </label>
-                        <label class="btn btn-sm btn-default" btn-radio="3" ng-model="product.type" tooltip="Downloadable products give access to a file upon purchase.">
+                        <label class="btn btn-sm btn-default" btn-radio="3" ng-model="product.productType" tooltip="Downloadable products give access to a file upon purchase.">
                           Downloadable
                         </label>
                       </div>
                     </div> <!-- ./product type selection -->
-                    <div class="card-body border margin-top-10" collapse="product.type !== 3">
+                    <div class="card-body border margin-top-10" collapse="product.productType !== 3">
                       <div class="form-group">
                         <label class="text-cursor-pointer control-label" for="download_files">Downloadable Files:</label><br/>
-                        <button class="btn btn-default btn-sm">Add Files</button>
+                        <div ng-repeat="file in product.files.items" class="btn-info display-block pad-5 margin-bottom-5">
+                          <zfile></zfile>
+                          <i tooltip="remove" class="fa fa-trash pull-right text-cursor-pointer" ng-click="removeFile(file);"></i>
+                          <clearfix></clearfix>
+                        </div>
+                        <span class="btn btn-default btn-sm" ng-click="openFileUploder()">Add Files</span>
                       </div>
                       <div class="form-group">
                         <label class="text-cursor-pointer control-label" for="download_limit">Download Limit:</label>
-                        <input type="number" name="download_limit" id="download_limit" ng-model="product.files.limit" placeholder="Unlimited" class="form-control input-sm" />
+                        <input type="number" name="download_limit" id="download_limit" ng-model="product.files.limit" placeholder="Unlimited" class="form-control input-sm" only-digits />
                         <span class="help-block text-normal">
                           Enter number of downloads allowed to user after purchase or leave blank for unlimited re-downloads.
                         </span>
                       </div>
                       <div class="form-group margin-bottom-1">
                         <label class="text-cursor-pointer control-label" for="download_expiry">Download Expiry:</label>
-                        <input type="number" name="download_expiry" id="download_expiry" ng-model="product.files.expiry" placeholder="Never" class="form-control input-sm" />
+                        <input type="number" name="download_expiry" id="download_expiry" ng-model="product.files.expiry" placeholder="Never" class="form-control input-sm" only-digits />
                         <span class="help-block text-normal">
                           Enter number of days before a download links expires, or leave blank for never expiring links.
                         </span>

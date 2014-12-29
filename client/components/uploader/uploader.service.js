@@ -4,19 +4,32 @@ angular.module('zesty')
   .factory('Uploader', ['$rootScope', '$modal', 'FileServ', 'FileUploader', 'AlertServ',
     function ($rootScope, $modal, FileServ, FileUploader, AlertServ) {
 
-  var selection = 3, image, icon;
+  var selection = 3, image, icon, fileSelection = 2, file;
 
   /**
    * Get images from public folder.
    * @param  {[type]} modalScope The Modal Scope
    */
-  function loadFileList(modalScope) {
+  function loadImageList(modalScope) {
     FileServ.getImageList().then(function(data) {
       modalScope.images = data;
-      console.log(modalScope.hiddenData);
       if (modalScope.hiddenData && modalScope.hiddenData.images && modalScope.hiddenData.images.length > 0) {
         _.forEach(modalScope.hiddenData.images, function(img) {
           _.pull(modalScope.images, img);
+        });
+      }
+    });
+  }
+  /**
+   * Get images from public folder.
+   * @param  {[type]} modalScope The Modal Scope
+   */
+  function loadFileList(modalScope) {
+    FileServ.getFileList().then(function(data) {
+      modalScope.files = data;
+      if (modalScope.hiddenData && modalScope.hiddenData.files && modalScope.hiddenData.files.length > 0) {
+        _.forEach(modalScope.hiddenData.files, function(img) {
+          _.pull(modalScope.files, img);
         });
       }
     });
@@ -28,7 +41,7 @@ angular.module('zesty')
    * @param  {String} modalClass - (optional) class(es) to be applied to the modal
    * @return {Object}            - the instance $modal.open() returns
    */
-  function openModal(scope, modalClass) {
+  function openImageModal(scope, modalClass) {
     var modalScope = $rootScope.$new();
     scope = scope || {};
     modalClass = modalClass || 'modal-default';
@@ -50,7 +63,7 @@ angular.module('zesty')
       selection = select;
     };
 
-    loadFileList(modalScope);
+    loadImageList(modalScope);
 
     // filter for image only.
     uploader.filters.push({
@@ -63,7 +76,7 @@ angular.module('zesty')
 
     // uploading done listener.
     uploader.onCompleteAll = function() {
-      loadFileList(modalScope);
+      loadImageList(modalScope);
     };
 
     // to clear value of file dialog after file selection.
@@ -82,18 +95,74 @@ angular.module('zesty')
     });
 
     modalScope.$watch('media.image', function(value) {
-      if (value && value !== '') {
-        image = value;
-      }
+      image = value;
     });
     modalScope.$watch('media.icon', function(value) {
-      if (value && value !== '') {
-        icon = value;
-      }
+      icon = value;
     });
 
     return $modal.open({
       templateUrl: 'components/uploader/uploader.html',
+      windowClass: modalClass,
+      scope: modalScope,
+      size: 'lg'
+    });
+  }
+
+  /**
+   * Opens a file selection modal
+   * @param  {Object} scope      - an object to be merged with modal's scope
+   * @param  {String} modalClass - (optional) class(es) to be applied to the modal
+   * @return {Object}            - the instance $modal.open() returns
+   */
+  function openFileModal(scope, modalClass) {
+    var modalScope = $rootScope.$new();
+    scope = scope || {};
+    modalClass = modalClass || 'modal-default';
+
+    angular.extend(modalScope, scope);
+
+    modalScope.files = [];
+    modalScope.media = {};
+    modalScope.selection = 2;
+
+    // file uploader instance
+    var uploader = modalScope.uploader = new FileUploader({
+      url: '/api/upload/file',
+      autoUpload: true
+    });
+    // filter for no images.
+    // uploader.filters.push({
+    //   name: 'noImageFilter',
+    //   fn: function(item /*{File|FileLikeObject}*/) {
+    //     var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+    //     return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) === -1;
+    //   }
+    // });
+
+    modalScope.updateSelection = function(select) {
+      modalScope.selection = select;
+      fileSelection = select;
+    };
+
+    loadFileList(modalScope);
+
+    // uploading done listener.
+    uploader.onCompleteAll = function() {
+      loadFileList(modalScope);
+    };
+
+    // to clear value of file dialog after file selection.
+    FileUploader.FileSelect.prototype.isEmptyAfterSelection = function() {
+      return true;
+    };
+
+    modalScope.$watch('media.file', function(value) {
+      file = value;
+    });
+
+    return $modal.open({
+      templateUrl: 'components/uploader/fileuploader.html',
       windowClass: modalClass,
       scope: modalScope,
       size: 'lg'
@@ -112,6 +181,17 @@ angular.module('zesty')
       selectedImage = image;
     }
     return selectedImage;
+  }
+  /**
+   * Get selected file.
+   * @return {String} selected file item.
+   */
+  function getSelectedFileValue() {
+    var selected;
+    if (fileSelection === 2) {
+      selected = file;
+    }
+    return selected;
   }
 
   // Public API here
@@ -136,7 +216,7 @@ angular.module('zesty')
         var args = Array.prototype.slice.call(arguments),
             deleteModal;
 
-        deleteModal = openModal({
+        deleteModal = openImageModal({
           isIcon: icon,
           isMultiple: multiple,
           hiddenData: data,
@@ -151,7 +231,21 @@ angular.module('zesty')
                 if (!selected || selected === '') {
                   AlertServ.alert('Please select image' + (icon ? ' or icon' : '') + '.');
                 } else {
-                  deleteModal.close(e);
+                  if (multiple) {
+                    var match = false;
+                    $.each(selected, function(k, val) {
+                      if (val) {
+                        match = true;
+                        return false;
+                      }
+                    });
+                    if (match) { deleteModal.close(e); }
+                    else {
+                      AlertServ.alert('Please select image' + (icon ? ' or icon' : '') + '.');
+                    }
+                  } else {
+                    deleteModal.close(e);
+                  }
                 }
               }
             }, {
@@ -167,6 +261,73 @@ angular.module('zesty')
         deleteModal.result.then(function(event) {
           args.push(getSelectedValue());
           args.push(selection);
+          cb.apply(event, args);
+        });
+      };
+    },
+    /**
+     * Create a function to open a file selection dialog.
+     * @param {Boolean} multiple Whether multiple selecion is allowed or not.
+     * @param {Object} data Already selected data. 
+     *        format for data: {files: ['abc.png', 'xyz.png']}
+     * @param  {Function} cb - callback, ran when file is selected.
+     * @return {Function}    - the function to open the modal.
+     */
+    openFileSelector: function(multiple, data, cb) {
+      cb = cb || angular.noop;
+
+      /**
+       * Open a delete confirmation modal
+       * @param  {All}  - any additional args are passed staight to cb callback
+       */
+      return function() {
+        var args = Array.prototype.slice.call(arguments),
+            deleteModal;
+
+        deleteModal = openFileModal({
+          isMultiple: multiple,
+          hiddenData: data,
+          modal: {
+            dismissable: true,
+            title: 'Media Library (Files)',
+            buttons: [{
+              classes: 'btn-success',
+              text: 'Select',
+              click: function(e) {
+                var selected = getSelectedFileValue();
+                if (!selected || selected === '') {
+                  AlertServ.alert('Please select a file.');
+                } else {
+                  if (multiple) {
+                    var match = false;
+                    $.each(selected, function(k, val) {
+                      if (val) {
+                        match = true;
+                        return false;
+                      }
+                    });
+                    if (match) { deleteModal.close(e); }
+                    else {
+                      AlertServ.alert('Please select file.');
+                    }
+                  } else {
+                    deleteModal.close(e);
+                  }
+                }
+              }
+            }, {
+              classes: 'btn-default',
+              text: 'Cancel',
+              click: function(e) {
+                deleteModal.dismiss(e);
+              }
+            }]
+          }
+        });
+
+        deleteModal.result.then(function(event) {
+          args.push(getSelectedFileValue());
+          args.push(fileSelection);
           cb.apply(event, args);
         });
       };

@@ -17,6 +17,38 @@ var ItemSchema = new Schema({
   rating: Number,
   reviews: Number,
 
+  slug: String,
+  productType: {
+    type: Number,
+    default: 1 
+  },
+  searchable: {
+    type: Boolean,
+    default: true
+  },
+  reviewEnabled: {
+    type: Boolean,
+    default: true
+  },
+
+  specialPrice: { type: Number, min: 0 },
+  isSpecialDiscount: Boolean,
+  specialPriceStartDate: Date,
+  specialPriceEndDate: Date,
+
+  attrs: [{
+    name: String,
+    values: String,
+  }],
+  upsells: [{
+    id: Schema.Types.ObjectId,
+    title: String
+  }],
+  crosssells: [{
+    id: Schema.Types.ObjectId,
+    title: String
+  }],
+
   categories: [{
     id: Schema.Types.ObjectId,
     name: String

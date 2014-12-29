@@ -13,13 +13,18 @@ angular.module('zesty.admin')
   $scope.product = {
     specialPriceStartDate: moment().format('DD-MMMM-YYYY'),
     specialPriceEndDate: moment().format('DD-MMMM-YYYY'),
-    type: 1,
+    productType: 1,
     currency: 'Rs',
     images: [],
     attrs: [],
     categories: [],
+    files: {
+      items: []
+    },
     isSpecialDiscount: false,
-    active: true
+    active: true,
+    searchable: true,
+    reviewEnabled: true
   };
 
   // watch for changes in product name while adding new product
@@ -117,8 +122,10 @@ angular.module('zesty.admin')
     images: $scope.product.images
   }, function(selected) {
     if (selected) {
-      $.each(selected, function(k) {
-        $scope.product.images.push(k);
+      $.each(selected, function(k, val) {
+        if (val) {
+          $scope.product.images.push(k);
+        }
       });
     }
   });
@@ -145,6 +152,28 @@ angular.module('zesty.admin')
   // remove custom attribute of product.
   $scope.removeCustomAttr = function(attr) {
     _.pull($scope.product.attrs, attr);
+  };
+  // edit custom attribute.
+  $scope.editCustomAttr = function(attr) {
+    $scope.removeCustomAttr(attr);
+    $scope.attr = attr;
+  };
+
+  // open file selector.
+  $scope.openFileUploder = Uploader.openFileSelector(true, {
+    files: $scope.product.files.items
+  }, function(selected) {
+    if (selected) {
+      $.each(selected, function(k, val) {
+        if (val) {
+          $scope.product.files.items.push(k);
+        }
+      });
+    }
+  });
+  // remove files from product file array.
+  $scope.removeFile = function(file) {
+    _.pull($scope.product.files.items, file);
   };
 
 }]);

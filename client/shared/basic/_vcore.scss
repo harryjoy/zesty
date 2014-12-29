@@ -409,3 +409,7 @@ table.text-center {
   @extend .thumbnail;
   @extend .margin-bottom-1;
 }
+
+.display-block {
+  display: block;
+}

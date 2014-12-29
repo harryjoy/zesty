@@ -1,0 +1,52 @@
+<div class="modal-header">
+  <button ng-if="modal.dismissable" type="button" ng-click="$dismiss()" class="close">&times;</button>
+  <h4 ng-if="modal.title" ng-bind="modal.title" class="modal-title"></h4>
+</div>
+<div class="modal-body modal-lg">
+  <div class="category-form">
+    <tabset>
+      <tab heading="Upload Files" select="updateSelection(1);">
+        <div class="form-group relative-position icons-grid">
+          <div class="margin-top-5 help-block text-normal pull-right">
+            You can select the uploaded files from "Select Files" tab.
+          </div>
+          <input type="file" nv-file-select uploader="uploader" multiple/>
+          <div class="row margin-top-10 icons-grid no-border">
+            <div class="col-md-2 col-sm-4" ng-repeat="item in uploader.queue" ng-hide="item.isSuccess || item.isFail">
+              <div class="border pad-5 relative-position text-center">
+                <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-show="item.isUploading">
+                  <i class="fa fa-times fa-fw"></i>
+                </button>
+                <div class="margin-top-10" ng-show="uploader.isHTML5" style="word-wrap: break-word;">
+                  <h2 class="no-margin">{{item._file.name}}</h2>
+                </div>
+                <div class="select-image-overlay text-cursor-pointer" ng-hide="item.isSuccess || item.isFail">
+                  <div class="select-image-overlay-content progress" style="margin-bottom: 0;width: 90%;">
+                    <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tab>
+      <tab heading="Select Files" select="updateSelection(2);" active="true">
+        <div class="form-group relative-position">
+          <div class="icons-grid">
+            <div class="btn-group">
+              <div class="btn btn-mini btn-info" data-ng-repeat="file in files" btn-radio="file" ng-model="media.file" uncheckable ng-show="!isMultiple">
+                <zfile></zfile>
+              </div>
+              <div class="btn btn-mini btn-info" data-ng-repeat="file in files" ng-model="media.file[file]" btn-checkbox ng-show="isMultiple">
+                <zfile></zfile>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tab>
+    </tabset>
+  </div>
+</div>
+<div class="modal-footer">
+  <button ng-repeat="button in modal.buttons" ng-class="button.classes" ng-click="button.click($event)" ng-bind="button.text" class="btn" ng-show="selection!=1"></button>
+</div>
