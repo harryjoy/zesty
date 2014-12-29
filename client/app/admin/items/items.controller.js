@@ -32,7 +32,8 @@ angular.module('zesty.admin')
       ProductServ.query(queryParams).$promise.then(function (items) {
         if (items && items.length > 0) {
           $.each(items, function (key, item) {
-            $scope.items.push(Item.convertToItem(item));
+            console.log(item.title, item.productType);
+            $scope.items.push(ProductUtil.convertItem(item));
           });
         } else {
           $scope.noMoreItems = true;
@@ -48,9 +49,6 @@ angular.module('zesty.admin')
         $scope.noMoreItems = true;
         $scope.loading = false;
       });
-    },
-    convertToItem: function (item) {
-      return ProductUtil.convertItem(item);
     }
   };
 

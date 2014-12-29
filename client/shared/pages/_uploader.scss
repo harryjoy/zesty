@@ -36,6 +36,7 @@
 
       &.active, &:hover {
         background: $white;
+        color: $black;
         @include box-shadow(none);
       }
 

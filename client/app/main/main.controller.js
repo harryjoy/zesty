@@ -15,7 +15,7 @@ angular.module('zesty')
       ProductServ.query(queryParams).$promise.then(function (items) {
         if (items && items.length > 0) {
           $.each(items, function (key, item) {
-            $scope.items.push(Item.convertToItem(item));
+            $scope.items.push(ProductUtil.convertItem(item));
             var imgUrl = 'http://placehold.it/1250x400/5cb85c/ffffff&text=' + item.title;
             if (key % 3 === 0) {
               imgUrl = 'http://placehold.it/1250x400/428bca/ffffff&text=' + item.title;
@@ -40,9 +40,6 @@ angular.module('zesty')
         $scope.noMoreItems = true;
         $scope.loading = false;
       });
-    },
-    convertToItem: function (item) {
-      return ProductUtil.convertItem(item);
     }
   };
 

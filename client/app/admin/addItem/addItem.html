@@ -3,13 +3,26 @@
     <h1 class="card-title text-big">
       <i class="fa fa-cubes"></i> Add Product
     </h1>
+    <small class="pull-right margin-right-10 back-to-list-link">
+      <a href="/admin/products">
+        <i class="fa fa-angle-double-left"></i> Back to list
+      </a>
+    </small>
   </div>
   <div class="card-overlay" ng-show="loading">
     <span class="card-overlay-icon text-black">
       <i class="fa fa-refresh fa-spin fa-2x"></i>
     </span>
   </div>
-  <form name="form" role="form" novalidate>
+  <div class="card-overlay" ng-show="success">
+    <span class="card-overlay-icon text-black">
+      <h2 class="text-green">Product submitted successfully.</h2>
+      <a href="/admin/products">
+        <i class="fa fa-angle-double-left"></i> Back to list
+      </a>
+    </span>
+  </div>
+  <form name="form" role="form" novalidate ng-submit="submitProduct(form);">
     <div class="card-body product-form">
       <div class="row">
         <div class="col-md-12 col-sm-12">
@@ -20,28 +33,88 @@
               </h1>
             </div>
             <div class="card-body border-bottom">
+              <div class="alert alert-danger" role="alert" ng-show="(form.name.$error.required || form.name.$error.maxlength || form.info.$error.required || form.info.$error.maxlength) && submitted">
+                <i class="fa fa-warning"></i>
+                <p class="help-block" ng-show="form.name.$error.mongoose">
+                {{ errors.other }}
+                </p>
+                <p class="help-block"
+                   ng-show="(form.name.$error.required) && (form.name.$dirty || submitted)">
+                  Name can not be empty.
+                </p>
+                <p class="help-block"
+                   ng-show="(form.name.$error.maxlength) && (form.name.$dirty || submitted)">
+                  Name must be less than 50 characters.
+                </p>
+                <p class="help-block"
+                   ng-show="(form.info.$error.required) && (form.info.$dirty || submitted)">
+                  Description can not be empty.
+                </p>
+                <p class="help-block"
+                   ng-show="(form.info.$error.maxlength) && (form.info.$dirty || submitted)">
+                  Description must be less than 350 characters.
+                </p>
+              </div>
+              <div class="alert alert-danger" role="alert" ng-show="(!product.summary || product.summary === '') && submitted">
+                <i class="fa fa-warning"></i>
+                <p class="help-block">
+                  Summary can not be blank.
+                </p>
+              </div>
+              <div class="alert alert-danger" role="alert" ng-show="(!product.categories || product.categories.length === 0) && submitted">
+                <i class="fa fa-warning"></i>
+                <p class="help-block">
+                  Select at least one product category.
+                </p>
+              </div>
+              <div class="alert alert-danger" role="alert" ng-show="(form.price.$error.required || form.price.$error.maxlength || form.special_price.$error.maxlength) && submitted">
+                  <i class="fa fa-warning"></i>
+                  <p class="help-block"
+                     ng-show="(form.price.$error.required) && (form.price.$dirty || submitted)">
+                    Price can not be empty.
+                  </p>
+                  <p class="help-block"
+                     ng-show="(form.price.$error.maxlength) && (form.price.$dirty || submitted)">
+                    Price must be less than 50 characters.
+                  </p>
+                  <p class="help-block"
+                     ng-show="(form.special_price.$error.maxlength) && (form.special_price.$dirty || submitted)">
+                    Special Price must be less than 50 characters.
+                  </p>
+                </div>
+              <div class="alert alert-danger" role="alert" ng-show="(!product.mainImage || product.mainImage === '') && submitted">
+                <i class="fa fa-warning"></i>
+                <p class="help-block">
+                  Product main image is required.
+                </p>
+              </div>
               <div class="form-group">
                 <label class="text-cursor-pointer control-label" for="name">Name:</label>
-                <input type="text" name="name" class="form-control" id="name" ng-model="product.title" placeholder="Name" ng-maxlength="50" />
+                <input type="text" name="name" class="form-control" id="name" ng-model="product.title" placeholder="Name" ng-maxlength="50" required ng-disabled="loading" />
               </div>
               <div class="form-group">
                 <label class="text-cursor-pointer control-label" for="info">Description:</label>
-                <textarea rows="5" cols="26" name="info" class="form-control" id="info" ng-model="product.description" placeholder="Description" ng-maxlength="250"></textarea>
+                <textarea rows="5" cols="26" name="info" class="form-control" id="info" ng-model="product.description" placeholder="Description" ng-maxlength="250" required ng-disabled="loading"></textarea>
                 <span class="helper text-small">
                   This will be a short information about the product. Mostly inlude features that needs to be highlighted.
                 </span>
               </div>
               <div class="form-group">
                 <label class="text-cursor-pointer control-label" for="summary">Summary:</label>
-                {{product}}
-                <textarea rows="10" cols="26" name="summary" class="form-control" id="summary" ng-model="product.summary" placeholder="Summary"></textarea>
+                <div class="row">
+                  <div class="col-md-6 col-sm-12 margin-bottom-10" text-angular-toolbar name="toolbar1" ta-toolbar="[['h1','h2','h3', 'h4'],['bold','italics','underline'],['p','pre','quote']]">
+                  </div>
+                  <div class="col-md-6 col-sm-12" text-angular-toolbar name="toolbar2" ta-toolbar="[['ul','ol','indent','outdent'],['justifyLeft','justifyCenter','justifyRight','clear'],['insertImage','insertLink']]">
+                  </div>
+                </div>
+                <div text-angular ta-target-toolbars="toolbar1,toolbar2" ng-model="product.summary" placeholder="Enter product summary and use formatting tools for making it rich." ta-disabled="loading" required="true"></div>
                 <span class="helper text-small">
                   In summary you can add all the information about product and it can be decorated to be rich text as well.
                 </span>
               </div>
               <div class="form-group">
                 <label class="text-cursor-pointer control-label" for="categories">Product Categories:</label>
-                <ui-select multiple ng-model="product.categories" style="width: 100%" theme="bootstrap" close-on-select="false" reset-search-input="true">
+                <ui-select multiple ng-model="product.categories" style="width: 100%" theme="bootstrap" close-on-select="false" reset-search-input="true" ng-required="true" ng-disabled="loading">
                   <ui-select-match placeholder="Select Categories">
                     <span ng-show="!$item.image || $item.image === ''">
                       <img src="../../../assets/images/no.png" width="16" height="16" />
@@ -78,7 +151,7 @@
                 </div>
                 <div class="form-group">
                   <label class="text-cursor-pointer control-label" for="category_name">Category Name:</label>
-                  <input type="text" name="category_name" class="form-control input-sm" id="category_name" ng-model="category.name" placeholder="Category Name" ng-maxlength="50" />
+                  <input type="text" name="category_name" class="form-control input-sm" id="category_name" ng-model="category.name" placeholder="Category Name" ng-maxlength="50" ng-disabled="loading" />
                 </div>
                 <div class="form-group">
                   <span class="btn btn-default btn-sm" ng-click="addNewCategory();">Add category</span>
@@ -99,11 +172,11 @@
               <div class="tab" ng-class="{'active': (selection === 1)}">
                 <div class="form-group">
                   <label class="text-cursor-pointer control-label" for="price">Regular Price:</label>
-                  <input type="text" name="price" class="form-control" id="price" ng-model="product.price" placeholder="Regular Price" ng-maxlength="50" only-digits allow-decimal="true" />
+                  <input type="text" name="price" class="form-control" id="price" ng-model="product.price" placeholder="Regular Price" ng-maxlength="50" required only-digits allow-decimal="true" ng-disabled="loading" />
                 </div>
                 <div class="form-group">
                   <label class="text-cursor-pointer control-label" for="special_price">Special Price:</label>
-                  <input type="text" name="special_price" class="form-control" id="special_price" ng-model="product.specialPrice" placeholder="Special Price" ng-maxlength="50" only-digits allow-decimal="true" />
+                  <input type="text" name="special_price" class="form-control" id="special_price" ng-model="product.specialPrice" placeholder="Special Price" ng-maxlength="50" only-digits allow-decimal="true" ng-disabled="loading" />
                   <input type="checkbox" ng-model="product.isSpecialDiscount" name="speical_discount" id="speical_discount" />
                   <label class="text-cursor-pointer control-label text-normal" for="speical_discount">Value is in percentage.</label>
                   <span class="text-small text-blue text-cursor-pointer pull-right margin-top-5" ng-click="specialPriceScheduleVisible=!specialPriceScheduleVisible;">
@@ -116,7 +189,7 @@
                         <span class="input-group-btn">
                           <button type="button" class="btn btn-default btn-sm" ng-click="openStartDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
-                        <input type="text" class="form-control input-sm" datepicker-popup="{{'dd-MMMM-yyyy'}}" ng-model="product.specialPriceStartDate" is-open="startOpened" datepicker-options="dateOptions" ng-required="true" min-date="minDate" close-text="Close" />
+                        <input type="text" class="form-control input-sm" datepicker-popup="{{'dd-MMMM-yyyy'}}" ng-model="product.specialPriceStartDate" is-open="startOpened" datepicker-options="dateOptions" ng-required="true" min-date="minDate" close-text="Close" ng-disabled="loading" />
                       </p>
                     </div>
                     <div class="col-md-6 col-sm-12">
@@ -124,7 +197,7 @@
                         <span class="input-group-btn">
                           <button type="button" class="btn btn-default btn-sm" ng-click="openEndDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
-                        <input type="text" class="form-control input-sm" datepicker-popup="{{'dd-MMMM-yyyy'}}" ng-model="product.specialPriceEndDate" is-open="endOpened" datepicker-options="dateOptions" ng-required="true" min-date="minDate" close-text="Close" />
+                        <input type="text" class="form-control input-sm" datepicker-popup="{{'dd-MMMM-yyyy'}}" ng-model="product.specialPriceEndDate" is-open="endOpened" datepicker-options="dateOptions" ng-required="true" min-date="minDate" close-text="Close" ng-disabled="loading" />
                       </p>
                     </div>
                   </div>
@@ -144,7 +217,6 @@
                         &nbsp; {{product.currency}} {{product.price - ((product.price * product.specialPrice) / 100)}}
                       </span>
                     </span>
-                    
                   </span>
                 </p>
               </div><!-- /.price tab -->
@@ -204,11 +276,11 @@
                   </div>
                   <div class="form-group">
                     <label class="text-cursor-pointer control-label" for="attr_name">Name:</label>
-                    <input type="text" name="attr_name" id="attr_name" class="form-control input-sm" ng-model="attr.name" />
+                    <input type="text" name="attr_name" id="attr_name" class="form-control input-sm" ng-model="attr.name" ng-disabled="loading" />
                   </div>
                   <div class="form-group">
                     <label class="text-cursor-pointer control-label" for="attr_values">Value(s):</label>
-                    <textarea id="attr_values" name="attr_values" rows="5" cols="30" class="form-control" ng-model="attr.values"></textarea>
+                    <textarea id="attr_values" name="attr_values" rows="5" cols="30" class="form-control" ng-model="attr.values" ng-disabled="loading"></textarea>
                     <span class="help-block text-normal">
                       Separate values by pipe (|) sign.
                     </span>
@@ -228,7 +300,7 @@
                     Up Sells are products which you recommend instead of currently viewed product,
                     for example, products that are more profitable or better quality or less expensive.
                   </span>
-                  <ui-select multiple  ng-model="product.upsells" ng-disabled="disabled" style="width: 100%;" reset-search-input="true">
+                  <ui-select multiple  ng-model="product.upsells" ng-disabled="disabled" style="width: 100%;" reset-search-input="true" ng-disabled="loading">
                     <ui-select-match placeholder="Search products">{{$item.title}}</ui-select-match>
                     <ui-select-choices refresh="refreshProducts($select.search)" refresh-delay="0" repeat="product in products track by $index | filter:$select.search">
                       {{product.title}}
@@ -244,7 +316,7 @@
                   <span class="help-block text-normal">
                     Cross sells are products which you promote on the cart based on current product.
                   </span>
-                  <ui-select multiple  ng-model="product.crosssells" ng-disabled="disabled" style="width: 100%;" reset-search-input="true">
+                  <ui-select multiple  ng-model="product.crosssells" ng-disabled="disabled" style="width: 100%;" reset-search-input="true" ng-disabled="loading">
                     <ui-select-match placeholder="Search products">{{$item.title}}</ui-select-match>
                     <ui-select-choices refresh="refreshProducts($select.search)" refresh-delay="0" repeat="product in products track by $index | filter:$select.search">
                       {{product.title}}
@@ -258,9 +330,24 @@
               <div class="tab" ng-class="{'active': (selection === 5)}">
                 <div class="row">
                   <div class="col-md-4 col-sm-12 margin-top-5">
+                    <div class="alert alert-danger" role="alert" ng-show="(form.slug.$error.required || form.slug.$error.mongoose || form.slug.$error.maxlength) && submitted">
+                      <i class="fa fa-warning"></i>
+                      <p class="help-block" ng-show="form.slug.$error.mongoose">
+                      {{ errors.other }}
+                      </p>
+                      <p class="help-block"
+                         ng-show="(form.slug.$error.required) && (form.slug.$dirty || submitted)">
+                        Slug can not be empty.
+                      </p>
+                      <p class="help-block"
+                         ng-show="(form.slug.$error.maxlength) && (form.slug.$dirty || submitted)">
+                        Slug must be less than 50 characters.
+                      </p>
+                    </div>
                     <div class="form-group margin-bottom-1">
+                      <span class="text-blue text-cursor-pointer text-small pull-right" ng-click="editSlug=!editSlug;">{{editSlug ? 'Cancel' : 'Edit'}}</span>
                       <label class="text-cursor-pointer control-label" for="slug">Slug:</label>
-                      <input type="text" name="slug" class="form-control" id="slug" ng-model="product.slug" placeholder="Slug" ng-maxlength="50" />
+                      <input type="text" name="slug" class="form-control" id="slug" ng-model="product.slug" placeholder="Slug" ng-maxlength="50" ng-disabled="!editSlug || loading" required />
                       <span class="helper text-small">
                         The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens. <br/>
                         This will be auto generated from product name, so don't edit it unless you really need to do so.
@@ -270,15 +357,18 @@
                   <div class="col-md-4 col-sm-12 margin-top-5">
                     <div class="form-group">
                       <input type="checkbox" name="active" id="active" ng-model="product.active" />
-                      <label class="text-cursor-pointer control-label" for="active">Product is {{product.active ? '' : 'in'}}active</label>
-                      <i class="fa fa-question-circle" tooltip="Inactive products are like saved draft. Make product active to be listed on the site. Making product inactive will remove it from the list on site."></i>
+                      <label class="text-cursor-pointer control-label" for="active" tooltip="Inactive products are like saved draft. Make product active to be listed on the site. Making product inactive will remove it from the list on site.">Product is {{product.active ? '' : 'in'}}active</label>
+                    </div>
+                    <div class="form-group">
+                      <input type="checkbox" name="featured" id="featured" ng-model="product.featured" />
+                      <label class="text-cursor-pointer control-label" for="featured">Product is {{product.featured ? '' : 'not'}} featured</label>
                     </div>
                     <div class="form-group" tooltip="Whether people will be able to search this product or not?">
-                      <input type="checkbox" name="searchable" id="searchable" ng-model="product.searchable" />
+                      <input type="checkbox" name="searchable" id="searchable" ng-model="product.searchable" ng-disabled="!product.active" />
                       <label class="text-cursor-pointer control-label" for="searchable">Product {{product.searchable ? 'is' : 'is not'}} searchable</label>
                     </div>
                     <div class="form-group margin-bottom-1" tooltip="Whether people will be able to give review about this product or not?">
-                      <input type="checkbox" name="reviewEnabled" id="reviewEnabled" ng-model="product.reviewEnabled" />
+                      <input type="checkbox" name="reviewEnabled" id="reviewEnabled" ng-model="product.reviewEnabled" ng-disabled="!product.active" />
                       <label class="text-cursor-pointer control-label" for="reviewEnabled">Product {{product.reviewEnabled ? 'is' : 'is not'}} open for review.</label>
                     </div> <!-- ./publishing information -->
                   </div> <!-- ./col-md-4 center -->
@@ -298,9 +388,13 @@
                       </div>
                     </div> <!-- ./product type selection -->
                     <div class="card-body border margin-top-10" collapse="product.productType !== 3">
+                      <div class="alert alert-danger" ng-show="errors.download && errors.download !== ''">
+                        <i class="fa fa-warning"></i>
+                        {{errors.download}}
+                      </div>
                       <div class="form-group">
                         <label class="text-cursor-pointer control-label" for="download_files">Downloadable Files:</label><br/>
-                        <div ng-repeat="file in product.files.items" class="btn-info display-block pad-5 margin-bottom-5">
+                        <div ng-repeat="file in product.files.items" class="btn-primary display-block pad-5 margin-bottom-5">
                           <zfile></zfile>
                           <i tooltip="remove" class="fa fa-trash pull-right text-cursor-pointer" ng-click="removeFile(file);"></i>
                           <clearfix></clearfix>
@@ -309,7 +403,7 @@
                       </div>
                       <div class="form-group">
                         <label class="text-cursor-pointer control-label" for="download_limit">Download Limit:</label>
-                        <input type="number" name="download_limit" id="download_limit" ng-model="product.files.limit" placeholder="Unlimited" class="form-control input-sm" only-digits />
+                        <input type="number" name="download_limit" id="download_limit" ng-model="product.files.limits" placeholder="Unlimited" class="form-control input-sm" only-digits />
                         <span class="help-block text-normal">
                           Enter number of downloads allowed to user after purchase or leave blank for unlimited re-downloads.
                         </span>

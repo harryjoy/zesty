@@ -30,6 +30,11 @@ var ItemSchema = new Schema({
     type: Boolean,
     default: true
   },
+  featured: {
+    type: Boolean,
+    default: false
+  },
+
 
   specialPrice: { type: Number, min: 0 },
   isSpecialDiscount: Boolean,
@@ -48,6 +53,17 @@ var ItemSchema = new Schema({
     id: Schema.Types.ObjectId,
     title: String
   }],
+  files: {
+    items: [String],
+    limits: {
+      type: Number,
+      default: -1
+    },
+    expiration: {
+      type: Number,
+      default: -1
+    }
+  },
 
   categories: [{
     id: Schema.Types.ObjectId,

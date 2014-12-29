@@ -95,7 +95,7 @@ angular.module('zesty')
     }
     $scope.itemDetails = ProductUtil.convertItem(product);
     $scope.itemDetails.qty = 1;
-    $scope.largeImageSrc = $scope.itemDetails.mainImage;
+    $scope.largeImageSrc = $scope.getImageUrl($scope.itemDetails.mainImage);
     $scope.totalItems = $scope.itemDetails.reviewsCount;
 
     if ($scope.loggedIn) {

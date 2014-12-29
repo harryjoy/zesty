@@ -18,7 +18,8 @@ angular.module('zesty', [
   'zesty.utils',
   'zesty.admin',
   'zesty.charts',
-  'angularFileUpload'
+  'angularFileUpload',
+  'textAngular'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, reCAPTCHAProvider) {
     $urlRouterProvider

@@ -1,7 +1,9 @@
 .product {
   border: 1px solid $gray;
   display: block;
-  height: auto;
+  height: 410px; 
+  max-height: 410px;
+  min-height: 410px;
   @include transitions(all 0.3s ease 0s);
   margin-bottom: 20px;
   overflow: hidden;
@@ -29,11 +31,18 @@
     }
   }
 
+  .p-description {
+    max-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .image {
     @include transitions(all 0.5s ease 0s);
     max-height: 240px;
     max-width: 240px;
     margin: 0 auto;
+    min-height: 240px;
   }
 
   .promotion {

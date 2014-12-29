@@ -18,7 +18,12 @@ angular.module('zesty.utils')
         'rating': product.rating ? product.rating : 0,
         'suppliers': product.suppliers,
         'categories': product.categories,
-        'updated': product.createdAt
+        'updated': product.createdAt,
+        'active': product.active,
+        'productType': product.productType,
+        'specialPrice': product.specialPrice,
+        'isSpecialDiscount': product.isSpecialDiscount,
+        'featured': product.featured
       };
     }
   };

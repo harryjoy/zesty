@@ -8,6 +8,17 @@
   box-sizing: content-box;
 }
 
+.ta-editor, .ta-scroll-window.form-control, .ta-scroll-window > .ta-bind {
+  min-height: 200px;
+}
+
+.ta-editor {
+  height: auto;
+  overflow: auto;
+  font-family: inherit;
+  font-size: 100%;
+}
+
 table.dataTable.no-footer {
   @extend .border-bottom;
 }
@@ -19,6 +30,11 @@ table.dataTable.no-footer {
 
 .product-filter {
   height: 30px;
+}
+
+.back-to-list-link {
+  line-height: 40px;
+  font-size: $font-size-base;
 }
 
 .product-admin-box {

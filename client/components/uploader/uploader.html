@@ -31,7 +31,7 @@
       <tab heading="Select from Icons" select="updateSelection(2);" ng-show="isIcon">
         <div class="form-group relative-position">
           <div class="icons-grid">
-            <div class="btn-group">
+            <div class="btn-group" ng-show="icons && icons.length > 0">
               <label class="btn btn-mini btn-info" data-ng-repeat="icon in icons" tooltip="{{icon.replace('fa-','').replace('-o','')}}" btn-radio="icon" ng-model="media.icon" uncheckable ng-show="!isMultiple">
                 <i class="fa {{icon}} fa-fw"></i>
               </label>
@@ -39,19 +39,25 @@
                 <i class="fa {{icon}} fa-fw"></i>
               </label>
             </div>
+            <div class="alert alert-warning" ng-hide="icons && icons.length > 0">
+              No more icons to select.
+            </div>
           </div>
         </div>
       </tab>
       <tab heading="Select from Images" select="updateSelection(3);" active="true">
         <div class="form-group relative-position">
           <div class="icons-grid image-grid">
-            <div class="btn-group">
+            <div class="btn-group" ng-show="images && images.length > 0">
               <label class="btn btn-mini btn-default" data-ng-repeat="icon in images" btn-radio="icon" ng-model="media.image" uncheckable ng-show="!isMultiple">
                 <img src="../../assets/images/items/{{icon}}" width="64" height="64" />
               </label>
               <label class="btn btn-mini btn-default" data-ng-repeat="icon in images" ng-model="media.image[icon]" btn-checkbox ng-show="isMultiple">
                 <img src="../../assets/images/items/{{icon}}" width="64" height="64" />
               </label>
+            </div>
+            <div class="alert alert-warning" ng-hide="images && images.length > 0">
+              No more images to select. Please upload more images to select from.
             </div>
           </div>
         </div>

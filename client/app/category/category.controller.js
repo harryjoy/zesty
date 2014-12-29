@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('CategoryCtrl', ['$scope', '$stateParams', 'CategoryServ', 'Auth', 'FavoriteServ',
-    function ($scope, $stateParams, CategoryServ, Auth, FavoriteServ) {
+  .controller('CategoryCtrl', ['$scope', '$stateParams', 'CategoryServ', 'Auth', 'FavoriteServ', 'ProductUtil',
+    function ($scope, $stateParams, CategoryServ, Auth, FavoriteServ, ProductUtil) {
 
   var categoryId = $stateParams.id;
   CategoryServ.get({id: categoryId}).$promise.then(function(category) {
@@ -17,18 +17,7 @@ angular.module('zesty')
   CategoryServ.items({id: categoryId}).$promise.then(function(items) {
     if (items && items.length > 0) {
       $.each(items, function (key, item) {
-        $scope.items.push({
-          '_id': item._id,
-          'link': '/product/' + item._id,
-          'title': item.title,
-          'currency': item.currency,
-          'price': item.price,
-          'reviewCount': item.reviews ? item.reviews : 0,
-          'description': item.description,
-          'categories': item.categories,
-          'mainImage': item.mainImage,
-          'rating': item.rating ? item.rating : 0
-        });
+        $scope.items.push(ProductUtil.convertItem(item));
       });
       if ($scope.loggedIn) {
         $scope.checkForProductFav();

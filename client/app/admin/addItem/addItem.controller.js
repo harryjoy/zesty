@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('zesty.admin')
-  .controller('AdminAddItemsCtrl', ['$scope', 'CategoryServ', 'ProductServ', 'Uploader',
-  function ($scope, CategoryServ, ProductServ, Uploader) {
+  .controller('AdminAddItemsCtrl', ['$scope', 'CategoryServ', 'ProductServ', 'Uploader', 'AlertServ',
+  function ($scope, CategoryServ, ProductServ, Uploader, AlertServ) {
 
-  $scope.loading = $scope.isEdit = false;
+  $scope.loading = $scope.isEdit = $scope.submitted = $scope.success = false;
   $scope.selection = 1;
   $scope.products = $scope.categories = $scope.images = [];
   $scope.errors = $scope.attr = $scope.category = {};
@@ -24,7 +24,8 @@ angular.module('zesty.admin')
     isSpecialDiscount: false,
     active: true,
     searchable: true,
-    reviewEnabled: true
+    reviewEnabled: true,
+    featured: false
   };
 
   // watch for changes in product name while adding new product
@@ -32,16 +33,6 @@ angular.module('zesty.admin')
   $scope.$watch('product.title', function(newValue) {
     if (!$scope.isEdit) {
       $scope.product.slug = $scope.getSlugFromName(angular.lowercase(newValue));
-    }
-  });
-
-  // wysiwys editor settings for summary
-  $('#summary').wysihtml5({
-    toolbar: {
-      image: false,
-      blockquote: false,
-      size: 'sm',
-      fa: true
     }
   });
 
@@ -163,6 +154,7 @@ angular.module('zesty.admin')
   $scope.openFileUploder = Uploader.openFileSelector(true, {
     files: $scope.product.files.items
   }, function(selected) {
+    $scope.errors.download = '';
     if (selected) {
       $.each(selected, function(k, val) {
         if (val) {
@@ -174,6 +166,65 @@ angular.module('zesty.admin')
   // remove files from product file array.
   $scope.removeFile = function(file) {
     _.pull($scope.product.files.items, file);
+  };
+
+  $scope.submitProduct = function(form) {
+    $scope.submitted = true;
+    $scope.errors.summary = $scope.errors.download = '';
+    if ($scope.product.productType === 3) {
+      if ($scope.product.files.items.length === 0) {
+        $scope.errors.download = 'Please select at least one file that can be attached' +
+        'to product for user to download after purchase.';
+        form.$valid = false;
+      }
+      if ($scope.product.files.limits < 0) {
+        if ($scope.errors.download !== '') {
+          $scope.errors.download += '<br/>';
+        }
+        $scope.errors.download += 'Pleaes enter limit value as 0 or grater than 0.';
+        form.$valid = false;
+      }
+      if ($scope.product.files.expiration < 0) {
+        if ($scope.errors.download !== '') {
+          $scope.errors.download += '<br/>';
+        }
+        $scope.errors.download += 'Pleaes enter expiration time value as 0 or grater than 0.';
+        form.$valid = false;
+      }
+    }
+    if (!$scope.product.summary || $scope.product.summary === '' ||
+      !$scope.product.categories || $scope.product.categories.length === 0 ||
+      !$scope.product.mainImage || $scope.product.mainImage === '') {
+      form.$valid = false;
+    }
+    if (form.$valid) {
+      $scope.loading = true;
+      $scope.submitted = $scope.success = false;
+      $scope.product.slug = $scope.getSlugFromName(angular.lowercase($scope.product.slug));
+      if ($scope.isEdit) {
+        ProductServ.update({
+          id: $scope.product._id
+        }, $scope.product, function(product) {
+          $scope.product = product;
+          $scope.loading = false;
+          $scope.success = true;
+        }, function(err) {
+          console.log(err);
+          AlertServ.alert('Error while updating product, please try again later.');
+          $scope.loading = false;
+        });
+      } else {
+        ProductServ.save($scope.product, function(product) {
+          $scope.product = product;
+          $scope.loading = false;
+          $scope.success = true;
+        }, function(err) {
+          console.log(err);
+          AlertServ.alert('Error while saving product, please try again later.');
+          $scope.loading = false;
+        });
+      }
+    }
   };
 
 }]);

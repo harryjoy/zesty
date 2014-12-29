@@ -32,14 +32,17 @@
       </tab>
       <tab heading="Select Files" select="updateSelection(2);" active="true">
         <div class="form-group relative-position">
-          <div class="icons-grid">
-            <div class="btn-group">
-              <div class="btn btn-mini btn-info" data-ng-repeat="file in files" btn-radio="file" ng-model="media.file" uncheckable ng-show="!isMultiple">
+          <div class="icons-grid image-grid">
+            <div class="btn-group" ng-show="files && files.length > 0">
+              <div class="btn btn-mini btn-info pad-horizontal-10" data-ng-repeat="file in files" btn-radio="file" ng-model="media.file" uncheckable ng-show="!isMultiple">
                 <zfile></zfile>
               </div>
-              <div class="btn btn-mini btn-info" data-ng-repeat="file in files" ng-model="media.file[file]" btn-checkbox ng-show="isMultiple">
+              <div class="btn btn-mini btn-info pad-horizontal-10" data-ng-repeat="file in files" ng-model="media.file[file]" btn-checkbox ng-show="isMultiple">
                 <zfile></zfile>
               </div>
+            </div>
+            <div class="alert alert-warning" ng-hide="files && files.length > 0">
+              No more files to select. Please upload new files to select from.
             </div>
           </div>
         </div>
