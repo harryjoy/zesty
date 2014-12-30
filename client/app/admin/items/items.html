@@ -16,14 +16,14 @@
       </div>
       <div class="pull-right">
         <select class="dropdown-toggle btn btn-default pad product-filter">
-          <option value="1">All Categories</option>
-          <option value="2">Furniture</option>
-          <option value="3">Electronics</option>
+          <option value="-1">All Categories</option>
+          <option ng-repeat="category in categories" value="{{category._id}}">{{category.name}}</option>
         </select>
         <select class="dropdown-toggle btn btn-default pad product-filter">
-          <option value="1">All Product Types</option>
-          <option value="2">Simple</option>
-          <option value="3">Virtual</option>
+          <option value="-1">All Product Types</option>
+          <option value="1">Simple</option>
+          <option value="2">Virtual</option>
+          <option value="3">Downloadable</option>
         </select>
         <button type="button" class="btn btn-info btn-sm">
           <i class="fa fa-filter"></i> Filter Products
@@ -114,14 +114,14 @@
           </span>
         </td>
         <td width="15%">
-          <span class="text-muted" ng-class="{'text-strike text-orange': item.specialPrice && item.specialPrice !== '' && item.specialPrice > 0, 'text-bold': !item.specialPrice || item.specialPrice === '' || item.specialPrice === 0}">
+          <span class="text-muted" ng-class="{'text-strike text-normal': item.specialPrice && item.specialPrice !== '' && item.specialPrice > 0, 'text-bolder': !item.specialPrice || item.specialPrice === '' || item.specialPrice === 0}">
             {{item.currency}} {{item.price}}
           </span>
           <span ng-switch="item.isSpecialDiscount" ng-show="item.specialPrice && item.specialPrice !== '' && item.specialPrice > 0">
-            <span ng-switch-when="false" class="text-bold text-muted">
+            <span ng-switch-when="false" class="text-bolder text-muted">
               &nbsp; {{item.currency}} {{item.specialPrice}}
             </span>
-            <span ng-switch-when="true" class="text-bold text-muted">
+            <span ng-switch-when="true" class="text-bolder text-muted">
               &nbsp; {{item.currency}} {{item.price - ((item.price * item.specialPrice) / 100)}}
             </span>
           </span>

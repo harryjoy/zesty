@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('zesty.admin')
-  .controller('AdminItemsCtrl', ['$scope', 'ProductServ', 'ProductUtil', 'DTOptionsBuilder', 'DTColumnDefBuilder',
-  function ($scope, ProductServ, ProductUtil, DTOptionsBuilder, DTColumnDefBuilder) {
+  .controller('AdminItemsCtrl', ['$scope', 'ProductServ', 'ProductUtil',
+    'DTOptionsBuilder', 'DTColumnDefBuilder', 'CategoryServ',
+  function ($scope, ProductServ, ProductUtil, DTOptionsBuilder, DTColumnDefBuilder, CategoryServ) {
 
   $scope.dtOptions = DTOptionsBuilder.newOptions().withBootstrap()
     .withOption('info', false).withOption('order', [1, 'asc'])
@@ -19,6 +20,10 @@ angular.module('zesty.admin')
     DTColumnDefBuilder.newColumnDef(8).notSortable()
   ];
   $scope.pageSize = 10;
+
+  CategoryServ.query().$promise.then(function(categories) {
+    $scope.categories = categories;
+  });
 
   var Item = {
     getItems: function () {

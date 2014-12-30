@@ -19,6 +19,7 @@ angular.module('zesty.utils')
         'suppliers': product.suppliers,
         'categories': product.categories,
         'updated': product.createdAt,
+        'createdAt': product.createdAt,
         'active': product.active,
         'productType': product.productType,
         'specialPrice': product.specialPrice,

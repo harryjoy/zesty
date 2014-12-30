@@ -5,11 +5,12 @@ angular.module('zesty')
     'CategoryServ', 'Auth', 'ProductServ', 'FavoriteServ', 'ProductUtil',
     function ($scope, $http, socket, CategoryServ, Auth, ProductServ, FavoriteServ, ProductUtil) {
 
+  var itemPageSize = 9;
   var Item = {
     getItems: function () {
       $scope.loading = true;
       var queryParams = {
-        pageSize: 9
+        pageSize: itemPageSize
       };
       if ($scope.items && $scope.items.length > 0) {
         queryParams.time = $scope.items[$scope.items.length - 1].updated;
@@ -21,6 +22,9 @@ angular.module('zesty')
           });
           if ($scope.loggedIn) {
             $scope.checkForProductFav();
+          }
+          if (items.length < itemPageSize) {
+            $scope.noMoreItems = true;
           }
         } else {
           $scope.noMoreItems = true;
@@ -44,7 +48,6 @@ angular.module('zesty')
   $scope.items = [];
   $scope.slides = [];
   $scope.popularItems = [];
-  $scope.slides = {};
   Item.getItems();
   
   CategoryServ.query({
@@ -57,21 +60,9 @@ angular.module('zesty')
     pageSize: 12
   }).$promise.then(function(items) {
     if (items && items.length > 0) {
-      var i = 0, k = 0;
-      var tempCollection = [];
       $.each(items, function (key, item) {
         $scope.popularItems.push(ProductUtil.convertItem(item));
-        tempCollection.push(ProductUtil.convertItem(item));
-        i++;
-        if (i === 4) {
-          $scope.slides[k++] = angular.copy(tempCollection);
-          _.remove(tempCollection);
-          i = 0;
-        }
       });
-      if (i > 0) {
-        $scope.slides[k++] = angular.copy(tempCollection);
-      }
     }
   });
 

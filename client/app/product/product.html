@@ -12,10 +12,10 @@
               <div class="thumbnail img-responsive" image-src="{{largeImageSrc}}" image-zoom data-template-url="app/product/image-zoom.html"></div>
             </div>
             <div class="col-md-2 col-sm-4">
-              <img src="{{getImageUrl(itemDetails.mainImage)}}" ng-click="displayLargeImg(getImageUrl(itemDetails.mainImage));" class="thumbnail img-responsive text-cursor-pointer" />
+              <img src="{{getImageUrl(itemDetails.mainImage)}}" ng-click="displayLargeImg(getImageUrl(itemDetails.mainImage));" class="thumbnail img-responsive text-cursor-pointer" ng-class="{'bg-orange': largeImageSrc === getImageUrl(itemDetails.mainImage)}" />
             </div>
             <div class="col-md-2 col-sm-4" ng-repeat="img in itemDetails.images">
-              <img src="{{getImageUrl(img)}}" ng-click="displayLargeImg(getImageUrl(img));" class="thumbnail img-responsive text-cursor-pointer" />
+              <img src="{{getImageUrl(img)}}" ng-click="displayLargeImg(getImageUrl(img));" class="thumbnail img-responsive text-cursor-pointer" ng-class="{'bg-orange': largeImageSrc === getImageUrl(img)}" />
             </div>
           </div>
         </div> <!-- image col end -->

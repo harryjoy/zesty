@@ -1,4 +1,4 @@
-<div class="navbar navbar-default navbar-static-top navbar-inverse" ng-controller="NavbarCtrl">
+<div class="navbar navbar-default navbar-static-top navbar-inverse margin-bottom-1" ng-controller="NavbarCtrl">
   <div class="container">
     <div class="navbar-header">
       <button class="navbar-toggle" type="button" ng-click="isCollapsed = !isCollapsed">
@@ -14,18 +14,104 @@
         <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
             <a ng-href="{{item.link}}">{{item.title}}</a>
         </li>
-        <!--<li ng-show="isLoggedIn()" ng-class="{active: isActive('/dashboard')}"><a href="/dashboard">Dashboard</a></li>-->
-        <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
+        <li ng-show="isAdmin()" ng-class="{active: isActiveMultiple(['/admin'])}"><a href="/admin">Admin</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
+        <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
+        <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
+        <li ng-show="isLoggedIn()"><p class="navbar-text">Hello {{ getCurrentUser().name }}</p> </li>
+        <li ng-show="isLoggedIn()" ng-class="{active: isActiveMultiple(['/my'])}"><a href="/my"><span class="fa fa-cog"></span></a></li>
+        <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout()">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="navbar navbar-default" scroll-nav-fixed ng-controller="NavbarCtrl" ng-class="{'navbar-static-top': !onTop, 'navbar-fixed-top': onTop}">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" ng-click="isCollapsed = !isCollapsed">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="/" class="navbar-brand" ng-show="onTop"><img class="nav-bar-logo" title="{{appName}}" alt="{{appName}}" src="../../assets/images/shopping_bag.png" /></a>
+    </div>
+    <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-sub">
+      <ul class="nav navbar-nav">
+        <li ng-show="isAdmin() && onTop" ng-class="{active: isActiveMultiple(['/admin'])}"><a href="/admin">Admin</a></li>
         <form class="navbar-form navbar-left" role="search">
           <div class="form-group">
             <input type="text" class="form-control" placeholder="Search">
           </div>
         </form>
+        <li class="menu-dropdown mega-menu-dropdown">
+          <p class="navbar-text text-bolder text-cursor-pointer dropdown-toggle" data-toggle="dropdown">Product Highlights</p>
+          <ul class="dropdown-menu mega-dropdown-menu">
+            <li>
+              <div class="mega-menu-content">
+                <div class="row">
+                  <div class="col-md-6 col-sm-12" ng-show="newItems && newItems.length > 0">
+                    <h3 class="margin-top-1 border-bottom">New Products</h3>
+                    <ul class="list-unstyled">
+                      <li class="mega-menu-item-hover margin-vertical-3 pad-5" ng-repeat="item in newItems">
+                        <a href="{{item.link}}" class="text-black text-vertical-top">
+                          <img class="pull-right margin-left-5" src="{{getImageUrl(item.mainImage)}}" width="45" height="45" />
+                          {{item.title}}
+                          <div class="text-normal">
+                            <span ng-switch="item.isSpecialDiscount" ng-show="item.specialPrice && item.specialPrice !== '' && item.specialPrice > 0">
+                              <span ng-switch-when="false" class="text-bolder text-muted">
+                                {{item.currency}} {{item.specialPrice}}
+                              </span>
+                              <span ng-switch-when="true" class="text-bolder text-muted">
+                                {{item.currency}} {{item.price - ((item.price * item.specialPrice) / 100)}}
+                              </span>
+                            </span>
+                            <span class="text-muted" ng-hide="item.specialPrice && item.specialPrice !== '' && item.specialPrice > 0">
+                              {{item.currency}} {{item.price}}
+                            </span>
+                          </div>
+                          <clearfix></clearfix>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-md-6 col-sm-12" ng-show="popularItems && popularItems.length > 0">
+                    <h3 class="margin-top-1 border-bottom">Featured Products</h3>
+                    <ul class="list-unstyled">
+                      <li class="mega-menu-item-hover margin-vertical-3 pad-5" ng-repeat="item in popularItems">
+                        <a href="{{item.link}}" class="text-black text-vertical-top">
+                          <img class="pull-right margin-left-5" src="{{getImageUrl(item.mainImage)}}" width="45" height="45" />
+                          {{item.title}}
+                          <div class="text-normal">
+                            <span ng-switch="item.isSpecialDiscount" ng-show="item.specialPrice && item.specialPrice !== '' && item.specialPrice > 0">
+                              <span ng-switch-when="false" class="text-bolder text-muted">
+                                {{item.currency}} {{item.specialPrice}}
+                              </span>
+                              <span ng-switch-when="true" class="text-bolder text-muted">
+                                {{item.currency}} {{item.price - ((item.price * item.specialPrice) / 100)}}
+                              </span>
+                            </span>
+                            <span class="text-muted" ng-hide="item.specialPrice && item.specialPrice !== '' && item.specialPrice > 0">
+                              {{item.currency}} {{item.price}}
+                            </span>
+                          </div>
+                          <clearfix></clearfix>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categories <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" dropdown-menu-hover data-toggle="dropdown" data-close-others="true" aria-expanded="false">Categories <span class="caret"></span></a>
           <ul class="dropdown-menu categories-dd-menu">
             <li ng-repeat="category in categories">
               <a href="/category/{{category._id}}">
@@ -41,30 +127,30 @@
             </li>
           </ul>
         </li>
-        <li ng-class="{active: isActive('/cart')}">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-shopping-cart"></i><span class="badge text-muted" style="background-color: transparent;" ng-show="cart.products.length > 0">{{cart.products.length}}</span></a>
-            <div class="dropdown-menu cart-dropdown">
-              <div class="body">
-                <cart-popup-item ng-repeat="item in cart.products"></cart-popup-item>
-              </div> <!--/.body-->
-              <div class="cart-footer" ng-hide="cart.products.length > 0">
-                <h4>There are no items in your cart.</h4>
-              </div>
-              <div class="cart-footer text-right" ng-show="cart.products.length > 0">
-                <h3 class="text-right subtotal"> Subtotal: {{cart.currency}} {{cart.subTotal}} </h3>
-                <a href="/cart" class="btn btn-sm btn-danger">
-                  <i class="fa fa-shopping-cart"> </i> VIEW CART
-                </a>
-                <!-- <a href="/auth" class="btn btn-sm btn-primary"> CHECKOUT </a>  -->
-              </div>
-              <!--/.footer--> 
+        <li class="dropdown" ng-class="{active: isActive('/cart')}">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-shopping-cart"></i><span class="badge text-muted text-black" style="background-color: transparent;" ng-show="cart.products.length > 0">{{cart.products.length}}</span></a>
+          <div class="dropdown-menu cart-dropdown">
+            <div class="body">
+              <cart-popup-item ng-repeat="item in cart.products"></cart-popup-item>
+            </div> <!--/.body-->
+            <div class="cart-footer" ng-hide="cart.products.length > 0">
+              <h4>There are no items in your cart.</h4>
             </div>
+            <div class="cart-footer text-right" ng-show="cart.products.length > 0">
+              <h3 class="text-right subtotal"> Subtotal: {{cart.currency}} {{cart.subTotal}} </h3>
+              <a href="/cart" class="btn btn-sm btn-danger">
+                <i class="fa fa-shopping-cart"> </i> VIEW CART
+              </a>
+              <!-- <a href="/auth" class="btn btn-sm btn-primary"> CHECKOUT </a>  -->
+            </div>
+            <!--/.footer--> 
+          </div>
         </li>
-        <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
-        <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
-        <li ng-show="isLoggedIn()"><p class="navbar-text">Hello {{ getCurrentUser().name }}</p> </li>
-        <li ng-show="isLoggedIn()" ng-class="{active: isActiveMultiple(['/my'])}"><a href="/my"><span class="fa fa-cog"></span></a></li>
-        <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout()">Logout</a></li>
+        <li ng-hide="isLoggedIn() || !onTop" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
+        <li ng-hide="isLoggedIn() || !onTop" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
+        <li ng-show="isLoggedIn() && onTop"><p class="navbar-text">Hello {{ getCurrentUser().name }}</p> </li>
+        <li ng-show="isLoggedIn() && onTop" ng-class="{active: isActiveMultiple(['/my'])}"><a href="/my"><span class="fa fa-cog"></span></a></li>
+        <li ng-show="isLoggedIn() && onTop" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout()">Logout</a></li>
       </ul>
     </div>
   </div>
