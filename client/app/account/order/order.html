@@ -49,7 +49,7 @@
                 <strong>{{product.currency}} {{product.price * product.qty}}</strong>
               </small>
               <div class="order-product-details">
-                <img src="{{product.img}}" alt="{{product.title}}" class="order-product-image" />
+                <img src="{{getImageUrl(product.img)}}" alt="{{product.title}}" class="order-product-image" />
                 <span class="order-product-name">
                   <strong>
                     <a class="text-medium" href="/product/{{product._id}}">{{product.title}}</a>

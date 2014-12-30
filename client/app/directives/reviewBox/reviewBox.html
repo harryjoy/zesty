@@ -2,7 +2,7 @@
   <div class="card card-black review-list-box">
     <div class="card-header" ng-show="withProduct">
       <div class="user-review-header">
-        <img src="{{review.product.image}}" height="50" width="50" />
+        <img src="{{getImageUrl(review.product.image)}}" height="50" width="50" />
         <div class="user-review-header-descr">
           <h5 class="page-header"><a href="/product/{{review.productId}}">{{review.product.title}}</a></h5>
           <div class="user-review-header-product-description">{{review.product.description}}</div>

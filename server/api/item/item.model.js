@@ -15,7 +15,10 @@ var ItemSchema = new Schema({
   images: [String],
   tags: [String],
   rating: Number,
-  reviews: Number,
+  reviews: {
+    type: Number,
+    default: 0
+  },
 
   slug: String,
   productType: {
@@ -34,7 +37,6 @@ var ItemSchema = new Schema({
     type: Boolean,
     default: false
   },
-
 
   specialPrice: { type: Number, min: 0 },
   isSpecialDiscount: Boolean,
@@ -72,8 +74,7 @@ var ItemSchema = new Schema({
 
   extraFields: [{
     name: String,
-    values: [String],
-    type: Number
+    values: [String]
   }],
   
   suppliers: [{

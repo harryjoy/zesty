@@ -19,12 +19,12 @@ angular.module('zesty')
           autoHeight: false,
 
           // Navigation
-          navigation: false,
-          rewindNav : false,
+          navigation: true,
+          rewindNav : true,
           scrollPerPage : true,
 
           // Pagination
-          pagination : true,
+          pagination : false,
           paginationNumbers: false,
 
           // Responsive
@@ -52,9 +52,10 @@ angular.module('zesty')
           }
         };
         scope.$watch(attrs.watch, function (newVal, oldVal) {
-          console.log('called', oldVal, newVal);
           if (newVal && newVal.length > 0) {
-            scope.init();
+            if (oldVal.length !== newVal.length) {
+              scope.init();
+            }
           } else {
             scope.destroyCarousel();
           }

@@ -44,6 +44,7 @@ angular.module('zesty')
   $scope.items = [];
   $scope.slides = [];
   $scope.popularItems = [];
+  $scope.slides = {};
   Item.getItems();
   
   CategoryServ.query({
@@ -56,15 +57,21 @@ angular.module('zesty')
     pageSize: 12
   }).$promise.then(function(items) {
     if (items && items.length > 0) {
+      var i = 0, k = 0;
+      var tempCollection = [];
       $.each(items, function (key, item) {
-        $scope.popularItems.push({
-          _id: item._id,
-          title: item.title,
-          description: item.description,
-          mainImage: item.mainImage,
-          active: item.active
-        });
+        $scope.popularItems.push(ProductUtil.convertItem(item));
+        tempCollection.push(ProductUtil.convertItem(item));
+        i++;
+        if (i === 4) {
+          $scope.slides[k++] = angular.copy(tempCollection);
+          _.remove(tempCollection);
+          i = 0;
+        }
       });
+      if (i > 0) {
+        $scope.slides[k++] = angular.copy(tempCollection);
+      }
     }
   });
 

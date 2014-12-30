@@ -17,7 +17,7 @@
           <div class="col-md-7 col-sm-6" ng-hide="noReviews">
             <h4 class="page-header text-medium">Recently rated</h4>
             <div class="recently-rated-box" ng-repeat="rating in recentRatings">
-              <img src="{{rating.image}}" />
+              <img src="{{getImageUrl(rating.image)}}" />
               <div class="recently-rated-box-descr">
                 <h5><a href="/product/{{rating.id}}">{{rating.title}}</a></h5>
                 <rating ng-model="rating.rate" readonly="true" />
@@ -29,7 +29,7 @@
             <h4 class="page-header text-medium">Reviews by {{getCurrentUser().name}} ({{totalItems}})</h4>
           </div> <!-- col end -->
           <span ng-hide="noReviews">
-            <review-box ng-repeat="review in reviews" review="review" with-product="true" is-logged-in="{{loggedInNow}}" customer-id="{{customerId}}"></review-box>
+            <review-box ng-repeat="review in reviews" review="review" with-product="true" is-logged-in="{{loggedInNow}}" customer-id="{{customerId}}" get-image-url="getImageUrl"></review-box>
           </span>
 
           <div class="col-md-12 col-sm-12 text-center" ng-hide="noReviews">

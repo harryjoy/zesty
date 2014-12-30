@@ -78,8 +78,8 @@ angular.module('zesty')
 
   $scope.$on('cart.updated', function() {
     $scope.addedToCart = false;
-    $scope.itemDetails.qty = 1;
     if ($scope.cart.products && $scope.cart.products.length > 0 && $scope.itemDetails) {
+      $scope.itemDetails.qty = 1;
       _.forEach($scope.cart.products, function(currentProduct) {
         if (currentProduct._id === $scope.itemDetails._id) {
           $scope.addedToCart = true;
@@ -97,6 +97,7 @@ angular.module('zesty')
     $scope.itemDetails.qty = 1;
     $scope.largeImageSrc = $scope.getImageUrl($scope.itemDetails.mainImage);
     $scope.totalItems = $scope.itemDetails.reviewsCount;
+    console.log($scope.itemDetails);
 
     if ($scope.loggedIn) {
       FavoriteServ.check({

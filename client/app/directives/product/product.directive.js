@@ -8,8 +8,11 @@ angular.module('zesty')
     scope: true,
     link: function (scope, element) {
       var small = $(element).attr('small');
+      var big = $(element).attr('big');
       if (small) {
         scope.sizeClass = 'col-sm-4 col-md-3';
+      } else if(big) {
+        scope.sizeClass = 'col-sm-12 col-md-12';
       } else {
         scope.sizeClass = 'col-sm-6 col-md-4';
       }

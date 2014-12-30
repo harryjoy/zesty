@@ -262,7 +262,7 @@ a {
 }
 
 // utility classes for padding and margins.
-@for $i from 1 through 10 {
+@for $i from 1 through 15 {
   .pad-#{$i} { padding: 1px * $i; }
   .pad-left-#{$i} { padding-left: 1px * $i; }
   .pad-right-#{$i} { padding-right: 1px * $i; }

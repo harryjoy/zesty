@@ -6,7 +6,8 @@ angular.module('zesty')
       templateUrl: 'app/directives/reviewBox/reviewBox.html',
       restrict: 'E',
       scope: {
-        review: '='
+        review: '=',
+        getImageUrl: '='
       },
       link: function (scope, element, attrs) {
         scope.noFooter = attrs.noFooter;

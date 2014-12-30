@@ -135,6 +135,9 @@ exports.addReview = function(req, res, next) {
     review.setProduct(item);
     Review.create(review, function(err, review) {
       if(err) { return handleError(res, err); }
+      if (!item.reviews) {
+        item.review = 0;
+      }
       item.reviews = item.reviews + 1;
       req.item = item;
       req.review = review;

@@ -81,6 +81,7 @@ angular.module('zesty')
           $scope.reviewSubmitted = true;
           $scope.review = review;
         }).catch(function (err) {
+          console.log(err);
           $scope.errors.other = err;
           $scope.reviewLoader = false;
         });
@@ -94,6 +95,7 @@ angular.module('zesty')
           $scope.reviewSubmitted = true;
           $scope.review = review;
         }).catch(function (err) {
+          console.log(err);
           $scope.errors.other = err;
           $scope.reviewLoader = false;
         });
