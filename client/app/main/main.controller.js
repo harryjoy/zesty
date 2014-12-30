@@ -43,7 +43,7 @@ angular.module('zesty')
 
   $scope.items = [];
   $scope.slides = [];
-  $scope.featuredItems = [];
+  $scope.popularItems = [];
   Item.getItems();
   
   CategoryServ.query({
@@ -53,11 +53,17 @@ angular.module('zesty')
   });
 
   ProductServ.featured({
-    pageSize: 4
+    pageSize: 12
   }).$promise.then(function(items) {
     if (items && items.length > 0) {
       $.each(items, function (key, item) {
-        $scope.featuredItems.push(ProductUtil.convertItem(item));
+        $scope.popularItems.push({
+          _id: item._id,
+          title: item.title,
+          description: item.description,
+          mainImage: item.mainImage,
+          active: item.active
+        });
       });
     }
   });
