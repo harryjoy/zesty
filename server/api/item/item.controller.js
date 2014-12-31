@@ -293,70 +293,45 @@ exports.counts = function(req, res, next) {
 
 // Deletes all items whose id mathces with req param ids from the DB.
 exports.destroyMultiple = function(req, res) {
-  if (!req.query.ids) {
-    return res.send(400);
-  }
-  if (!Array.isArray(req.query.ids)) {
-    req.query.ids = [req.query.ids];
-  }
-  Item.update({
-    '_id': {
-      '$in': req.query.ids
-    }
-  }, {
-    deleted: true
-  }, {
-    multi: true
-  }, function(err) {
-    if(err) { return handleError(res, err); }
-    return res.send(204);
-  });
+  operateMultiple(req.query.ids, 'deleted', true, res, 204);
 };
 
 // Recover all items whose id mathces with req param ids from the DB.
 exports.recoverMultiple = function(req, res) {
-  if (!req.body.ids) {
-    return res.send(400);
-  }
-  if (!Array.isArray(req.body.ids)) {
-    req.body.ids = [req.body.ids];
-  }
-  Item.update({
-    '_id': {
-      '$in': req.body.ids
-    }
-  }, {
-    deleted: false
-  }, {
-    multi: true
-  }, function(err) {
-    if(err) { return handleError(res, err); }
-    return res.send(200);
-  });
+  operateMultiple(req.body.ids, 'deleted', false, res, 200);
 };
 
 // Publish all items whose id mathces with req param ids from the DB.
 exports.publishMultiple = function(req, res) {
-  if (!req.body.ids) {
-    return res.send(400);
-  }
-  if (!Array.isArray(req.body.ids)) {
-    req.body.ids = [req.body.ids];
-  }
-  Item.update({
-    '_id': {
-      '$in': req.body.ids
-    }
-  }, {
-    active: true
-  }, {
-    multi: true
-  }, function(err) {
-    if(err) { return handleError(res, err); }
-    return res.send(200);
-  });
+  operateMultiple(req.body.ids, 'active', true, res, 200);
 };
 
+/**
+ * Operate on multiple at the same time.
+ * @param  {[String]} ids        Array of item ids.
+ * @param  {String} field      Name of fields to be updated.
+ * @param  {Object} value      Value of updated field.
+ * @param  {Object} res        Response object.
+ * @param  {Number} statusCode Response status code to be returened in case of success.
+ */
+function operateMultiple(ids, field, value, res, statusCode) {
+  if (!ids) {
+    return res.send(400);
+  }
+  if (!Array.isArray(ids)) {
+    ids = [ids];
+  }
+  var updated = {};
+  updated[field] = value;
+  Item.update({
+    '_id': { '$in': ids }
+  }, updated, { multi: true }, function(err) {
+    if(err) { return handleError(res, err); }
+    return res.send(statusCode);
+  });
+}
+
+// handle erroneous response
 function handleError(res, err) {
   return res.send(500, err);
 }
