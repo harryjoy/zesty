@@ -80,11 +80,6 @@ var ItemSchema = new Schema({
     id: Schema.Types.ObjectId,
     name: String
   }],
-
-  extraFields: [{
-    name: String,
-    values: [String]
-  }],
   
   suppliers: [{
     id: Schema.Types.ObjectId,

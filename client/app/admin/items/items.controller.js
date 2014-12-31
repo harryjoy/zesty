@@ -7,7 +7,8 @@ angular.module('zesty.admin')
 
   $scope.dtOptions = DTOptionsBuilder.newOptions().withBootstrap()
     .withOption('info', false).withOption('order', [6, 'desc'])
-    .withOption('bPaginate', false).withDOM('none');
+    .withOption('bPaginate', false).withDOM('none')
+    .withOption('language', {'emptyTable': 'No data available.'});
   $scope.dtColumnDefs = [
     DTColumnDefBuilder.newColumnDef(0).notSortable(),
     DTColumnDefBuilder.newColumnDef(1),

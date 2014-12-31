@@ -20,7 +20,27 @@ exports.index = function(req, res) {
   if (req.query.published) {
     query.active = true;
   }
-  Item.find(query).limit(pageSize).sort('-createdAt').exec(function (err, items) {
+  Item.find(query, {
+    mainImage: 1,
+    title: 1,
+    categories: 1,
+    active: 1,
+    deleted: 1,
+    price: 1,
+    specialPrice: 1,
+    isSpecialDiscount: 1,
+    isSpecialScheduled: 1,
+    specialPriceStartDate: 1,
+    specialPriceEndDate: 1,
+    createdAt: 1,
+    featured: 1,
+    productType: 1,
+    currency: 1,
+    description: 1,
+    reviews: 1,
+    rating: 1,
+    slug: 1
+  }).limit(pageSize).sort('-createdAt').exec(function (err, items) {
     if(err) { return handleError(res, err); }
     return res.json(200, items);
   });
