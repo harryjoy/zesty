@@ -1,19 +1,17 @@
 <div class="container">
-	<div class="row pull-right">
-		<div class="col-md-12">
-		  <h2 title="{{category.info}}">
-        <span ng-show="!category.image || category.image === ''">
-          <img src="../../../assets/images/no.png" width="24" height="24" />
-        </span>
-        <span ng-switch="category.isIcon" ng-show="category.image && category.image !== ''">
-          <img ng-switch-when="false" class="product-image" src="{{getImageUrl(category.image)}}" width="24" height="24" />
-          <i ng-switch-when="true" class="fa fa-fw {{category.image}}"></i>
-        </span>
-        {{category.name}}
-      </h2>
-	  </div>
-	</div>
-	<h1 class="page-header">Prodcuts</h1>
+	<h1 class="page-header">
+    <div title="{{category.info}}" class="pull-right">
+      <span ng-show="!category.image || category.image === ''">
+        <img src="../../../assets/images/no.png" width="24" height="24" />
+      </span>
+      <span ng-switch="category.isIcon" ng-show="category.image && category.image !== ''">
+        <img ng-switch-when="false" class="product-image" src="{{getImageUrl(category.image)}}" width="24" height="24" />
+        <i ng-switch-when="true" class="fa fa-fw {{category.image}}"></i>
+      </span>
+      {{category.name}}
+    </div>
+    Prodcuts
+  </h1>
   <div class="row">
   	<div class="col-sm-12 col-md-12 warningMessage" ng-show="items && items.length == 0">
   		<div class="alert alert-danger" role="alert"><i class="fa fa-warning"></i> No products available in {{category.name}} category. Go to <a href="/" class="alert-link">home page</a> and browse other products.</div>

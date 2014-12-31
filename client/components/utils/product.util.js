@@ -27,7 +27,8 @@ angular.module('zesty.utils')
         'featured': product.featured,
         'specialPriceStartDate': product.specialPriceStartDate,
         'specialPriceEndDate': product.specialPriceEndDate,
-        'isSpecialScheduled': product.isSpecialScheduled
+        'isSpecialScheduled': product.isSpecialScheduled,
+        'deleted': product.deleted
       };
     },
     calculatePrice: function(product) {

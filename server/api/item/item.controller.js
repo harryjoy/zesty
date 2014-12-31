@@ -12,9 +12,15 @@ var mongoose = require('mongoose');
 exports.index = function(req, res) {
   var pageSize = req.query.pageSize || config.pagination.size;
   var timeToFilter = req.query.time || new Date();
-  Item.find({
-    createdAt: { $lt : timeToFilter }
-  }).limit(pageSize).sort('-createdAt').exec(function (err, items) {
+  var isDeleted = req.query.isDeleted || false;
+  var query = {
+    createdAt: { $lt : timeToFilter },
+    deleted: isDeleted
+  };
+  if (req.query.published) {
+    query.active = true;
+  }
+  Item.find(query).limit(pageSize).sort('-createdAt').exec(function (err, items) {
     if(err) { return handleError(res, err); }
     return res.json(200, items);
   });
@@ -30,7 +36,8 @@ exports.search = function(req, res, next) {
     return res.send(200, []);
   }
   Item.find({
-    title: new RegExp(name, "i") // for like query
+    title: new RegExp(name, "i"),  // for like query
+    deleted: false
   }, {
     title: 1
   }).limit(pageSize).skip(pageNumber * pageSize)
@@ -45,7 +52,8 @@ exports.featured = function(req, res, next) {
   var pageSize = req.query.pageSize || config.pagination.size;
   var pageNumber = req.query.pageNumber || 0;
   Item.find({
-    featured: true
+    featured: true,
+    deleted: false
   }).limit(pageSize).skip(pageNumber * pageSize)
   .sort('-createdAt').exec(function (err, items) {
     if(err) { return handleError(res, err); }
@@ -95,6 +103,16 @@ exports.destroy = function(req, res) {
   req.item.remove(function(err) {
     if(err) { return handleError(res, err); }
     return res.send(204);
+  });
+};
+
+// Enable/Disable the deleted flag of an item.
+exports.updateDeletedFlag = function(req, res) {
+  if(!req.item) { return res.send(404); }
+  req.item.deleted = !req.item.deleted;
+  req.item.save(function (err) {
+    if (err) { return handleError(res, err); }
+    return res.json(200, req.item);
   });
 };
 
@@ -190,7 +208,8 @@ exports.related = function(req, res) {
   });
   Item.find({
     'categories.name' : { '$in' : categories },
-    '_id' : { '$ne' : item._id }
+    '_id' : { '$ne' : item._id },
+    deleted: false
   }, function (err, items) {
     if(err) { return handleError(res, err); }
     return res.json(200, items);
@@ -240,6 +259,101 @@ exports.removeFavorite = function(req, res, next) {
       if(err) { return handleError(res, err); }
       return res.json(204);
     });
+  });
+};
+
+// get different product counts
+exports.counts = function(req, res, next) {
+  var result = {
+    all: 0,
+    published: 0,
+    deleted: 0
+  };
+  Item.countAsync({
+    deleted: false
+  }).then(function(count) {
+    if(count <= 0) { return res.send(404); }
+    result.all = count;
+    return Item.countAsync({
+      deleted: true
+    });
+  }).then(function(count) {
+    result.deleted = count;
+    return Item.countAsync({
+      active: true,
+      deleted: false
+    });
+  }).then(function(count) {
+    result.published = count;
+    return res.send(200, result);
+  }).catch(function(err) {
+    return handleError(res, err);
+  });
+};
+
+// Deletes all items whose id mathces with req param ids from the DB.
+exports.destroyMultiple = function(req, res) {
+  if (!req.query.ids) {
+    return res.send(400);
+  }
+  if (!Array.isArray(req.query.ids)) {
+    req.query.ids = [req.query.ids];
+  }
+  Item.update({
+    '_id': {
+      '$in': req.query.ids
+    }
+  }, {
+    deleted: true
+  }, {
+    multi: true
+  }, function(err) {
+    if(err) { return handleError(res, err); }
+    return res.send(204);
+  });
+};
+
+// Recover all items whose id mathces with req param ids from the DB.
+exports.recoverMultiple = function(req, res) {
+  if (!req.body.ids) {
+    return res.send(400);
+  }
+  if (!Array.isArray(req.body.ids)) {
+    req.body.ids = [req.body.ids];
+  }
+  Item.update({
+    '_id': {
+      '$in': req.body.ids
+    }
+  }, {
+    deleted: false
+  }, {
+    multi: true
+  }, function(err) {
+    if(err) { return handleError(res, err); }
+    return res.send(200);
+  });
+};
+
+// Publish all items whose id mathces with req param ids from the DB.
+exports.publishMultiple = function(req, res) {
+  if (!req.body.ids) {
+    return res.send(400);
+  }
+  if (!Array.isArray(req.body.ids)) {
+    req.body.ids = [req.body.ids];
+  }
+  Item.update({
+    '_id': {
+      '$in': req.body.ids
+    }
+  }, {
+    active: true
+  }, {
+    multi: true
+  }, function(err) {
+    if(err) { return handleError(res, err); }
+    return res.send(200);
   });
 };
 

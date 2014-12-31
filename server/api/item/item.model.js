@@ -2,7 +2,8 @@
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema, 
-    timestamps = require('mongoose-timestamp');
+    timestamps = require('mongoose-timestamp'),
+    Promise = require('bluebird');
 
 var ItemSchema = new Schema({
   title: String,
@@ -18,6 +19,10 @@ var ItemSchema = new Schema({
   reviews: {
     type: Number,
     default: 0
+  },
+  deleted: {
+    type: Boolean,
+    default: false
   },
 
   slug: String,
@@ -95,4 +100,7 @@ var ItemSchema = new Schema({
 
 ItemSchema.plugin(timestamps);
 
-module.exports = mongoose.model('Item', ItemSchema);
+var Item = mongoose.model('Item', ItemSchema);
+Promise.promisifyAll(Item);
+Promise.promisifyAll(Item.prototype);
+module.exports = Item;

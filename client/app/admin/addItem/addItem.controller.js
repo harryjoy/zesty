@@ -26,7 +26,8 @@ angular.module('zesty.admin')
     searchable: true,
     reviewEnabled: true,
     featured: false,
-    isSpecialScheduled: false
+    isSpecialScheduled: false,
+    deleted: false
   };
 
   // watch for changes in product name while adding new product
