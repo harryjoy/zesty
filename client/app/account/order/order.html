@@ -40,24 +40,24 @@
             <span class="order-date pull-right">{{moment(order.orderDate).format(dateFormate)}}</span>
           </div>
           <div class="order-products" collapse="!showProductInfo">
-            <div class="order-product" ng-repeat="product in order.products">
+            <div class="order-product" ng-repeat="item in order.products">
               <small class="order-product-price pull-right">
-                ({{product.currency}} {{product.price}} 
+                (<product-price show-regular-price="false" item="item" moment="moment"></product-price>
                 <i class="fa fa-times text-small text-muted"></i> 
-                {{product.qty}}) 
+                {{item.qty}}) 
                 = 
-                <strong>{{product.currency}} {{product.price * product.qty}}</strong>
+                <strong>{{item.currency}} {{calculateCartPrice(item)}}</strong>
               </small>
               <div class="order-product-details">
-                <img src="{{getImageUrl(product.img)}}" alt="{{product.title}}" class="order-product-image" />
+                <img src="{{getImageUrl(item.img)}}" alt="{{item.title}}" class="order-product-image" />
                 <span class="order-product-name">
                   <strong>
-                    <a class="text-medium" href="/product/{{product._id}}">{{product.title}}</a>
+                    <a class="text-medium" href="/product/{{item._id}}">{{item.title}}</a>
                   </strong>
                   <br/>
-                  <span class="order-product-description">{{product.description}}</span>
+                  <span class="order-product-description">{{item.description}}</span>
                   <br/>
-                  <a tooltip="Write a Review for {{product.title}}" class="btn btn-sm btn-default order-product-review-button" href="/write-review/{{product._id}}"> 
+                  <a tooltip="Write a Review for {{item.title}}" class="btn btn-sm btn-default order-product-review-button" href="/write-review/{{item._id}}"> 
                     <i class="fa fa-pencil fa-fw"></i> 
                     <span class="text">Write a Review</span>
                   </a>

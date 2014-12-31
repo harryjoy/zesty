@@ -24,8 +24,33 @@ angular.module('zesty.utils')
         'productType': product.productType,
         'specialPrice': product.specialPrice,
         'isSpecialDiscount': product.isSpecialDiscount,
-        'featured': product.featured
+        'featured': product.featured,
+        'specialPriceStartDate': product.specialPriceStartDate,
+        'specialPriceEndDate': product.specialPriceEndDate,
+        'isSpecialScheduled': product.isSpecialScheduled
       };
+    },
+    calculatePrice: function(product) {
+      var price = product.price;
+      if (product.specialPrice && product.specialPrice !== '' && product.specialPrice > 0) {
+        var spPrice = product.specialPrice;
+        if (product.isSpecialDiscount) {
+          spPrice = product.price - ((product.specialPrice * product.price) / 100);
+        }
+        if (product.isSpecialScheduled) {
+          var date = moment();
+          if ((moment(product.specialPriceStartDate).diff(date, 'days') <= 0) &&
+            (moment(product.specialPriceEndDate).diff(date, 'days') >= 0)) {
+            price = spPrice;
+          }
+        } else {
+          price = spPrice;
+        }
+      }
+      return price;
+    },
+    calculateCartPrice: function(product) {
+      return this.calculatePrice(product) * product.qty;
     }
   };
 }]);

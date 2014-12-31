@@ -25,7 +25,14 @@ var CartItemSchema = new Schema({
   supplier: {
     _id: Schema.Types.ObjectId,
     name: String
-  }
+  },
+
+  productType: Number,
+  specialPrice: Number,
+  isSpecialDiscount: {type: Boolean, default: false},
+  specialPriceStartDate: Date,
+  specialPriceEndDate: Date,
+  isSpecialScheduled: {type: Boolean, default: false}
 });
 
 module.exports = CartItemSchema;

@@ -12,7 +12,7 @@
     <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav">
         <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
-            <a ng-href="{{item.link}}">{{item.title}}</a>
+          <a ng-href="{{item.link}}">{{item.title}}</a>
         </li>
         <li ng-show="isAdmin()" ng-class="{active: isActiveMultiple(['/admin'])}"><a href="/admin">Admin</a></li>
       </ul>
@@ -59,18 +59,8 @@
                         <a href="{{item.link}}" class="text-black text-vertical-top">
                           <img class="pull-right margin-left-5" src="{{getImageUrl(item.mainImage)}}" width="45" height="45" />
                           {{item.title}}
-                          <div class="text-normal">
-                            <span ng-switch="item.isSpecialDiscount" ng-show="item.specialPrice && item.specialPrice !== '' && item.specialPrice > 0">
-                              <span ng-switch-when="false" class="text-bolder text-muted">
-                                {{item.currency}} {{item.specialPrice}}
-                              </span>
-                              <span ng-switch-when="true" class="text-bolder text-muted">
-                                {{item.currency}} {{item.price - ((item.price * item.specialPrice) / 100)}}
-                              </span>
-                            </span>
-                            <span class="text-muted" ng-hide="item.specialPrice && item.specialPrice !== '' && item.specialPrice > 0">
-                              {{item.currency}} {{item.price}}
-                            </span>
+                          <div class="text-normal text-muted">
+                            <product-price show-regular-price="false" item="item" moment="moment"></product-price>
                           </div>
                           <clearfix></clearfix>
                         </a>
@@ -84,18 +74,8 @@
                         <a href="{{item.link}}" class="text-black text-vertical-top">
                           <img class="pull-right margin-left-5" src="{{getImageUrl(item.mainImage)}}" width="45" height="45" />
                           {{item.title}}
-                          <div class="text-normal">
-                            <span ng-switch="item.isSpecialDiscount" ng-show="item.specialPrice && item.specialPrice !== '' && item.specialPrice > 0">
-                              <span ng-switch-when="false" class="text-bolder text-muted">
-                                {{item.currency}} {{item.specialPrice}}
-                              </span>
-                              <span ng-switch-when="true" class="text-bolder text-muted">
-                                {{item.currency}} {{item.price - ((item.price * item.specialPrice) / 100)}}
-                              </span>
-                            </span>
-                            <span class="text-muted" ng-hide="item.specialPrice && item.specialPrice !== '' && item.specialPrice > 0">
-                              {{item.currency}} {{item.price}}
-                            </span>
+                          <div class="text-normal text-muted">
+                            <product-price show-regular-price="false" item="item" moment="moment"></product-price>
                           </div>
                           <clearfix></clearfix>
                         </a>

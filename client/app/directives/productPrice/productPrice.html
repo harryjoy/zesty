@@ -1,0 +1,14 @@
+<span ng-class="{'text-strike text-normal': showSpecialPrice, 'text-bolder': !showSpecialPrice}" ng-show="showRegularPrice || !showSpecialPrice">
+  {{item.currency}} {{item.price}}
+</span>
+<br ng-show="breakPoint"/>
+<span ng-switch="item.isSpecialDiscount" ng-show="showSpecialPrice">
+  <span ng-switch-when="false" class="text-bolder">
+    <span ng-show="showRegularPrice && !breakPoint">&nbsp;</span>
+    {{item.currency}} {{item.specialPrice}}
+  </span>
+  <span ng-switch-when="true" class="text-bolder">
+    <span ng-show="showRegularPrice && !breakPoint">&nbsp;</span>
+    {{item.currency}} {{item.price - ((item.price * item.specialPrice) / 100)}}
+  </span>
+</span>

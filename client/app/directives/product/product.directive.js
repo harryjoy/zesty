@@ -6,7 +6,7 @@ angular.module('zesty')
     templateUrl: 'app/directives/product/product.html',
     restrict: 'E',
     scope: true,
-    link: function (scope, element) {
+    link: function (scope, element, attrs) {
       var small = $(element).attr('small');
       var big = $(element).attr('big');
       if (small) {
@@ -16,6 +16,7 @@ angular.module('zesty')
       } else {
         scope.sizeClass = 'col-sm-6 col-md-4';
       }
+      scope.showFeaturedLabel = !attrs.showFeaturedLabel;
 
       scope.toogleFav = function() {
         if (!scope.loggedIn) {

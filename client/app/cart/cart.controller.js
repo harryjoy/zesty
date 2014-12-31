@@ -1,11 +1,13 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('CartCtrl', ['$scope', 'Auth', '$location', 'CartServ',
-  function ($scope, Auth, $location, CartServ) {
+  .controller('CartCtrl', ['$scope', 'Auth', '$location', 'CartServ', 'ProductUtil',
+  function ($scope, Auth, $location, CartServ, ProductUtil) {
  
   $scope.deleteItem = Auth.removeItemFromCart;
   $scope.updateCart = Auth.updateCart;
+  $scope.calculatePrice = ProductUtil.calculatePrice;
+  $scope.calculateCartPrice = ProductUtil.calculateCartPrice;
   $scope.errorMessage = 'Error while processing cart, please try again later.';
   $scope.cartProcessError = false;
 

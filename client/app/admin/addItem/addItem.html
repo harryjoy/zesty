@@ -179,11 +179,11 @@
                   <input type="text" name="special_price" class="form-control" id="special_price" ng-model="product.specialPrice" placeholder="Special Price" ng-maxlength="50" only-digits allow-decimal="true" ng-disabled="loading" />
                   <input type="checkbox" ng-model="product.isSpecialDiscount" name="speical_discount" id="speical_discount" />
                   <label class="text-cursor-pointer control-label text-normal" for="speical_discount">Value is in percentage.</label>
-                  <span class="text-small text-blue text-cursor-pointer pull-right margin-top-5" ng-click="specialPriceScheduleVisible=!specialPriceScheduleVisible;">
+                  <span class="text-small text-blue text-cursor-pointer pull-right margin-top-5" ng-click="product.isSpecialScheduled=!product.isSpecialScheduled;">
                     Schedule special price
                   </span>
                   <clearfix></clearfix>
-                  <div class="row margin-top-10" collapse="!specialPriceScheduleVisible">
+                  <div class="row margin-top-10" collapse="!product.isSpecialScheduled">
                     <div class="col-md-6 col-sm-12">
                       <p class="input-group">
                         <span class="input-group-btn">

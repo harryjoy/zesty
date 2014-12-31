@@ -97,7 +97,6 @@ angular.module('zesty')
     $scope.itemDetails.qty = 1;
     $scope.largeImageSrc = $scope.getImageUrl($scope.itemDetails.mainImage);
     $scope.totalItems = $scope.itemDetails.reviewsCount;
-    console.log($scope.itemDetails);
 
     if ($scope.loggedIn) {
       FavoriteServ.check({

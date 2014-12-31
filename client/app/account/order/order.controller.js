@@ -1,11 +1,13 @@
 'use strict';
 
 angular.module('zesty')
-  .controller('OrderCtrl', ['$scope', 'User', 'AlertServ', 'PaginationServ',
-      function ($scope, User, AlertServ, PaginationServ) {
+  .controller('OrderCtrl', ['$scope', 'User', 'AlertServ', 'PaginationServ', 'ProductUtil',
+      function ($scope, User, AlertServ, PaginationServ, ProductUtil) {
   
   $scope.orders = [];
   $scope.totalItems = 0;
+  $scope.calculatePrice = ProductUtil.calculatePrice;
+  $scope.calculateCartPrice = ProductUtil.calculateCartPrice;
   $scope.init = function () {
     User.orders({
       id: $scope.getCurrentUser()._id,

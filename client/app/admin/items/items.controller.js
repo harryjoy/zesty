@@ -37,7 +37,6 @@ angular.module('zesty.admin')
       ProductServ.query(queryParams).$promise.then(function (items) {
         if (items && items.length > 0) {
           $.each(items, function (key, item) {
-            console.log(item.title, item.productType);
             $scope.items.push(ProductUtil.convertItem(item));
           });
         } else {

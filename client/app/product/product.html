@@ -25,17 +25,7 @@
             <button tooltip="Remove from Wishlist" ng-switch-when="true" class="btn btn-warning btn-circle" ng-click="removeFavorite()"><i class="fa fa-star"></i></button>
           </span>
           <h2>
-            <span ng-class="{'text-strike text-normal': itemDetails.specialPrice && itemDetails.specialPrice !== '' && itemDetails.specialPrice > 0, 'text-bold': !itemDetails.specialPrice || itemDetails.specialPrice === '' || itemDetails.specialPrice === 0}">
-              {{itemDetails.currency}} {{itemDetails.price}}
-            </span>
-            <span ng-switch="itemDetails.isSpecialDiscount" ng-show="itemDetails.specialPrice && itemDetails.specialPrice !== '' && itemDetails.specialPrice > 0">
-              <span ng-switch-when="false" class="text-bold">
-                &nbsp; {{itemDetails.currency}} {{itemDetails.specialPrice}}
-              </span>
-              <span ng-switch-when="true" class="text-bold">
-                &nbsp; {{itemDetails.currency}} {{itemDetails.price - ((itemDetails.price * itemDetails.specialPrice) / 100)}}
-              </span>
-            </span>
+            <product-price item="itemDetails" moment="moment"></product-price>
           </h2>
           <p>{{itemDetails.description}}</p>
           <form role="form">

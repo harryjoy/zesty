@@ -114,17 +114,7 @@
           </span>
         </td>
         <td width="15%">
-          <span class="text-muted" ng-class="{'text-strike text-normal': item.specialPrice && item.specialPrice !== '' && item.specialPrice > 0, 'text-bolder': !item.specialPrice || item.specialPrice === '' || item.specialPrice === 0}">
-            {{item.currency}} {{item.price}}
-          </span>
-          <span ng-switch="item.isSpecialDiscount" ng-show="item.specialPrice && item.specialPrice !== '' && item.specialPrice > 0">
-            <span ng-switch-when="false" class="text-bolder text-muted">
-              &nbsp; {{item.currency}} {{item.specialPrice}}
-            </span>
-            <span ng-switch-when="true" class="text-bolder text-muted">
-              &nbsp; {{item.currency}} {{item.price - ((item.price * item.specialPrice) / 100)}}
-            </span>
-          </span>
+          <product-price item="item" moment="moment"></product-price>
         </td>
         <td width="15%">
           <span class="text-muted">{{moment(item.createdAt).format(fullDateFormate)}}</span>

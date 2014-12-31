@@ -39,10 +39,10 @@
                   <input type="number" min="1" class="form-control" placeholder="1" ng-model="item.qty" />
                 </td>
                 <td class="price">
-                  <span>{{item.currency}} {{item.price}}</span>
+                  <product-price show-regular-price="false" item="item" moment="moment"></product-price>
                 </td>
                 <td class="total">
-                  <span>{{item.currency}} {{item.price * item.qty}}</span>
+                  <span>{{item.currency}} {{calculateCartPrice(item)}}</span>
                 </td>
                 <td class="delete">
                   <i class="fa fa-trash" ng-click="deleteItem(item._id)"></i>

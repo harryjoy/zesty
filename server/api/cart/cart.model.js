@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var timestamps = require('mongoose-timestamp');
 var CartItemSchema = require('../../components/shared/cartItem.schema');
 var _ = require('lodash');
+var moment = require('moment');
 
 var CartSchema = new Schema({
   customerId: Schema.Types.ObjectId,
@@ -91,8 +92,24 @@ CartSchema.methods = {
     self.currency = '';
     if (self.products && self.products.length > 0) {
       _.forEach(self.products, function(product) {
-        self.subTotal = self.subTotal + (product.qty * product.price);
-        self.grandTotal = self.grandTotal + (product.qty * product.price);
+        var price = product.price;
+        if (product.specialPrice && product.specialPrice !== '' && product.specialPrice > 0) {
+          var spPrice = product.specialPrice;
+          if (product.isSpecialDiscount) {
+            spPrice = product.price - ((product.specialPrice * product.price) / 100);
+          }
+          if (product.isSpecialScheduled) {
+            var date = moment();
+            if ((moment(product.specialPriceStartDate).diff(date, 'days') <= 0) &&
+              (moment(product.specialPriceEndDate).diff(date, 'days') >= 0)) {
+              price = spPrice;
+            }
+          } else {
+            price = spPrice;
+          }
+        }
+        self.subTotal = self.subTotal + (product.qty * price);
+        self.grandTotal = self.grandTotal + (product.qty * price);
         self.currency = product.currency;
       });
       self.currency = self.products[0].currency;

@@ -102,27 +102,7 @@
     </div>
     <div class="card-body">
       <div id="owl-example" class="owl-carousel owl-theme" owl-carosel watch="popularItems">
-        <product big="true" ng-repeat="item in popularItems"/>
-        <!-- <div class="featured-img text-center bg-white border" ng-repeat="item in popularItems">
-          <a href="{{item.link}}">
-            <img src="{{getImageUrl(item.mainImage)}}" class="width-95" alt="img">
-            <div class="pad-vertical-10 text-center bg-light-white border-top">
-              <span class="text-medium">{{item.title}}</span>
-              <br/>
-              <span ng-class="{'text-strike text-normal': item.specialPrice && item.specialPrice !== '' && item.specialPrice > 0, 'text-bold': !item.specialPrice || item.specialPrice === '' || item.specialPrice === 0}">
-                {{item.currency}} {{item.price}} 
-              </span>
-              <span ng-switch="item.isSpecialDiscount" ng-show="item.specialPrice && item.specialPrice !== '' && item.specialPrice > 0">
-                <span ng-switch-when="false" class="text-bold">
-                  {{item.currency}} {{item.specialPrice}}
-                </span>
-                <span ng-switch-when="true" class="text-bold">
-                  {{item.currency}} {{item.price - ((item.price * item.specialPrice) / 100)}}
-                </span>
-              </span>
-            </div>
-          </a>
-        </div> -->
+        <product big="true" ng-repeat="item in popularItems" show-featured-label="false"/>
       </div>
     </div>
   </div>

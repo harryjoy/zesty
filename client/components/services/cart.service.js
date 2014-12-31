@@ -13,7 +13,13 @@ angular.module('zesty')
         price: item.price,
         currency: item.currency,
         img: item.mainImage,
-        categories: item.categories
+        categories: item.categories,
+        productType: item.productType,
+        specialPrice: item.specialPrice,
+        isSpecialDiscount: item.isSpecialDiscount,
+        specialPriceStartDate: item.specialPriceStartDate,
+        specialPriceEndDate: item.specialPriceEndDate,
+        isSpecialScheduled: item.isSpecialScheduled
       };
     },
     resource: function () {

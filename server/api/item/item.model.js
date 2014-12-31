@@ -42,6 +42,10 @@ var ItemSchema = new Schema({
   isSpecialDiscount: Boolean,
   specialPriceStartDate: Date,
   specialPriceEndDate: Date,
+  isSpecialScheduled: {
+    type: Boolean,
+    default: false
+  },
 
   attrs: [{
     name: String,

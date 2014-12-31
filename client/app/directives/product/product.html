@@ -1,34 +1,29 @@
 <div class="{{sizeClass}}">
   <div class="thumbnail product card">
     <img src="{{getImageUrl(item.mainImage)}}" alt="{{item.title}}" class="image">
-    <!--div class="promotion">
-      <span class="new-product lbl text-normal"> NEW</span>
-      <span class="discount lbl text-normal">15% OFF</span>
-      <span class="exlusive lbl text-normal">Exclusive</span>
-    </div-->
+    <div class="promotion">
+      <!-- <span class="new-product lbl text-normal" ng-show="(moment(item.createdAt).diff(moment(), 'days') <= 0) && (moment(item.createdAt).diff(moment(), 'days') >= -10)">New</span> -->
+      <span class="discount lbl text-normal" ng-show="item.specialPrice && item.specialPrice !== '' && (!item.isSpecialScheduled || ((moment(item.specialPriceStartDate).diff(moment(), 'days') <= 0) && (moment(item.specialPriceEndDate).diff(moment(), 'days') >= 0)))">
+        <span ng-switch="item.isSpecialDiscount">
+          <span ng-switch-when="true"><span class="text-bolder">{{item.specialPrice}}%</span> OFF</span>
+          <span ng-switch-when="false"><span class="text-bolder">{{item.currency}} {{item.price - item.specialPrice}}</span> OFF</span>
+        </span>
+      </span>
+      <span class="exlusive lbl text-normal" ng-show="item.featured && showFeaturedLabel">Featured</span>
+    </div>
     <div class="add-to-cart">
       <a class="fa fa-eye bg-teal" href="#" tooltip="Quick View" tooltip-placement="top">
       </a>
     </div>
-    <button class="added-to-fav" tooltip="Remove from Wishlist" tooltip-placement="right" ng-show="item.myFav" ng-click="toogleFav()">
+    <button class="added-to-fav" tooltip="Remove from Wishlist" tooltip-placement="bottom" ng-show="item.myFav" ng-click="toogleFav()">
       <i class="fa fa-star"></i>
     </button>
-    <button class="add-fav active" tooltip="Add to Wishlist" tooltip-placement="right" ng-hide="item.myFav" ng-click="toogleFav()">
+    <button class="add-fav active" tooltip="Add to Wishlist" tooltip-placement="bottom" ng-hide="item.myFav" ng-click="toogleFav()">
       <i class="glyphicon glyphicon-star"></i>
     </button>
     <div class="caption">
       <h4 class="pull-right">
-        <span ng-class="{'text-strike text-small': item.specialPrice && item.specialPrice !== '' && item.specialPrice > 0, 'text-bold': !item.specialPrice || item.specialPrice === '' || item.specialPrice === 0}">
-          {{item.currency}} {{item.price}}
-        </span>
-        <span ng-switch="item.isSpecialDiscount" ng-show="item.specialPrice && item.specialPrice !== '' && item.specialPrice > 0">
-          <span ng-switch-when="false" class="text-bold">
-            <br/> {{item.currency}} {{item.specialPrice}}
-          </span>
-          <span ng-switch-when="true" class="text-bold">
-            <br/> {{item.currency}} {{item.price - ((item.price * item.specialPrice) / 100)}}
-          </span>
-        </span>
+        <product-price break-point="true" item="item" moment="moment"></product-price>
       </h4>
       <h4><a href="{{item.link}}">{{item.title}}</a>
       </h4>
