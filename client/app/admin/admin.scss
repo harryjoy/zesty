@@ -236,5 +236,12 @@ a.list-group-item-black {
       @include border-radius(50%);
     }
   }
-  
+}
+
+.product-actions-dropdown {
+  padding: 0px;
+
+  li:hover {
+    background: rgba(150, 150, 150, 0.25);
+  }
 }

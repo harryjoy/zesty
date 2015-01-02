@@ -8,11 +8,37 @@ var config = require('../../config/environment');
 var numeral = require('numeral');
 var mongoose = require('mongoose');
 
+// fields to return for multiple item results.
+var itemSelection = {
+  mainImage: 1,
+  title: 1,
+  categories: 1,
+  active: 1,
+  deleted: 1,
+  price: 1,
+  specialPrice: 1,
+  isSpecialDiscount: 1,
+  isSpecialScheduled: 1,
+  specialPriceStartDate: 1,
+  specialPriceEndDate: 1,
+  createdAt: 1,
+  featured: 1,
+  productType: 1,
+  currency: 1,
+  description: 1,
+  reviews: 1,
+  rating: 1,
+  slug: 1
+};
+
 // Get list of items
 exports.index = function(req, res) {
   var pageSize = req.query.pageSize || config.pagination.size;
   var timeToFilter = req.query.time || new Date();
   var isDeleted = req.query.isDeleted || false;
+  var name = req.query.productName || '';
+  var category = req.query.category || '';
+  var productType = req.query.productType || '';
   var query = {
     createdAt: { $lt : timeToFilter },
     deleted: isDeleted
@@ -20,27 +46,16 @@ exports.index = function(req, res) {
   if (req.query.published) {
     query.active = true;
   }
-  Item.find(query, {
-    mainImage: 1,
-    title: 1,
-    categories: 1,
-    active: 1,
-    deleted: 1,
-    price: 1,
-    specialPrice: 1,
-    isSpecialDiscount: 1,
-    isSpecialScheduled: 1,
-    specialPriceStartDate: 1,
-    specialPriceEndDate: 1,
-    createdAt: 1,
-    featured: 1,
-    productType: 1,
-    currency: 1,
-    description: 1,
-    reviews: 1,
-    rating: 1,
-    slug: 1
-  }).limit(pageSize).sort('-createdAt').exec(function (err, items) {
+  if (name && name !== '') {
+    query.title = new RegExp(name, 'i');
+  }
+  if (category && category !== '') {
+    query['categories._id'] = { '$in': [category]};
+  }
+  if (productType && productType !== '') {
+    query.productType = productType;
+  }
+  Item.find(query, itemSelection).limit(pageSize).sort('-createdAt').exec(function (err, items) {
     if(err) { return handleError(res, err); }
     return res.json(200, items);
   });
@@ -56,7 +71,7 @@ exports.search = function(req, res, next) {
     return res.send(200, []);
   }
   Item.find({
-    title: new RegExp(name, "i"),  // for like query
+    title: new RegExp(name, 'i'),  // for like query
     deleted: false
   }, {
     title: 1

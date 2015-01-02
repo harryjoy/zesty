@@ -20,6 +20,19 @@ angular.module('zesty.admin')
     DTColumnDefBuilder.newColumnDef(7).notSortable(),
     DTColumnDefBuilder.newColumnDef(8).notSortable()
   ];
+
+  $scope.loading = false;
+  $scope.noMoreItems = false;
+  $scope.checkAll = false;
+  $scope.items = [];
+  $scope.prSelection = 1;
+  $scope.prType = -1;
+  $scope.prCategory = -1;
+  $scope.counts = {
+    all: 0,
+    published: 0,
+    deleted: 0
+  };
   $scope.pageSize = 10;
 
   var Item = {
@@ -35,6 +48,15 @@ angular.module('zesty.admin')
         queryParams.published = true;
       } else if ($scope.prSelection === 3) {
         queryParams.isDeleted = true;
+      }
+      if ($scope.searchItem && $scope.searchItem !== '') {
+        queryParams.productName = $scope.searchItem;
+      }
+      if ($scope.prType && $scope.prType + '' !== '-1') {
+        queryParams.productType = $scope.prType;
+      }
+      if ($scope.prCategory && $scope.prCategory + '' !== '-1') {
+        queryParams.category = $scope.prCategory;
       }
       ProductServ.query(queryParams).$promise.then(function (items) {
         if (items && items.length > 0) {
@@ -55,29 +77,36 @@ angular.module('zesty.admin')
         $scope.noMoreItems = true;
         $scope.loading = false;
       });
+    },
+    init: function() {
+      if ($scope.items) {
+        _.remove($scope.items);
+      }
+      $scope.noMoreItems = false;
+      Item.getItems();
     }
   };
-
-  $scope.loading = false;
-  $scope.noMoreItems = false;
-  $scope.checkAll = false;
 
   $scope.loadMore = function () {
     Item.getItems();
   };
 
-  $scope.items = [];
-  $scope.prSelection = 1;
-  $scope.counts = {
-    all: 0,
-    published: 0,
-    deleted: 0
-  };
-
   $scope.$watch('prSelection', function() {
-    $scope.items = [];
-    Item.getItems();
-    $scope.noMoreItems = false;
+    if (!$scope.loading) {
+      Item.init();
+    }
+  });
+
+  $scope.$watch('prCategory', function() {
+    if (!$scope.loading) {
+      Item.init();
+    }
+  });
+
+  $scope.$watch('prType', function() {
+    if (!$scope.loading) {
+      Item.init();
+    }
   });
 
   $scope.getCounts = function() {
@@ -86,14 +115,14 @@ angular.module('zesty.admin')
     });
   };
   $scope.getCounts();
-  
+
   CategoryServ.query().$promise.then(function(categories) {
     $scope.categories = categories;
   });
 
   /**
-   * Delete a single item.
-   * @param  {Object} reqItem Item to delete.
+   * Delete a single products.
+   * @param  {Object} reqItem Product to delete.
    */
   $scope.deleteItem = function(reqItem) {
     Modal.confirm.delete(function() { // callback when modal is confirmed
@@ -112,8 +141,8 @@ angular.module('zesty.admin')
   };
 
   /**
-   * Recover a single item.
-   * @param  {Object} reqItem Item to recover.
+   * Recover a single product.
+   * @param  {Object} reqItem Product to recover.
    */
   $scope.recoverItem = function(reqItem) {
     Modal.confirm.recover(function() { // callback when modal is confirmed
@@ -132,7 +161,7 @@ angular.module('zesty.admin')
   };
 
   /**
-   * Either delete or recover multiple items based on selected tab.
+   * Either delete or recover multiple products based on selected tab.
    */
   $scope.operateMultiple = function(str) {
     if ($scope.prSelection !== 3) {
@@ -143,7 +172,7 @@ angular.module('zesty.admin')
   };
 
   /**
-   * Delete multiple items at a time.
+   * Delete multiple products at a time.
    */
   $scope.deleteMultiple = function(str) {
     var itemIds = [];
@@ -159,9 +188,7 @@ angular.module('zesty.admin')
         ProductServ.deleteMultiple({
           ids: itemIds
         }).$promise.then(function() {
-          $scope.items = [];
-          Item.getItems();
-          $scope.noMoreItems = false;
+          Item.init();
           $scope.checkAll = false;
           $scope.getCounts();
         }).catch(function(err) {
@@ -175,7 +202,7 @@ angular.module('zesty.admin')
   };
 
   /**
-   * Recover multiple items at a time.
+   * Recover multiple products at a time.
    */
   $scope.recoverMultiple = function(str) {
     var itemIds = [];
@@ -191,9 +218,7 @@ angular.module('zesty.admin')
         ProductServ.recoverMultiple({
           ids: itemIds
         }).$promise.then(function() {
-          $scope.items = [];
-          Item.getItems();
-          $scope.noMoreItems = false;
+          Item.init();
           $scope.checkAll = false;
           $scope.getCounts();
         }).catch(function(err) {
@@ -207,7 +232,7 @@ angular.module('zesty.admin')
   };
 
   /**
-   * Publish multiple items at a time.
+   * Publish multiple products at a time.
    */
   $scope.publishMultiple = function(str) {
     var itemIds = [];
@@ -223,9 +248,7 @@ angular.module('zesty.admin')
         ProductServ.publishMultiple({
           ids: itemIds
         }).$promise.then(function() {
-          $scope.items = [];
-          Item.getItems();
-          $scope.noMoreItems = false;
+          Item.init();
           $scope.checkAll = false;
           $scope.getCounts();
         }).catch(function(err) {
@@ -239,7 +262,7 @@ angular.module('zesty.admin')
   };
 
   /**
-   * Check/Uncheck all items at once.
+   * Check/Uncheck all products at once.
    */
   $scope.$watch('checkAll', function(newVal){
     if ($scope.items && $scope.items.length > 0) {
